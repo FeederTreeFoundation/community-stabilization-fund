@@ -1,2 +1,36 @@
-# community-stabilization-fund-api.github.io
+# Community Stabilization Fund Api
 API Interface for Community Stabilization Fund
+
+## Table of Contents
+1. [Prerequisites](#prerequisites)
+2. [Running Locally](#running-locally)
+3. [Environments](#environments)
+4. [Project Architecture](#project-architecture)
+5. [Contributing](#contributing)
+
+## Prerequisites
+
+- Latest version of Node.js and NPM
+- [Node Version Manager](https://nvm.io/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+## Running Locally
+
+1. Run `nvm use` 
+2. Run `npm install`
+3. Run `npm run start`
+
+## Environments
+
+|   Env       | Domain                  |
+| ----------- | ----------------------  |
+| Local       | https://localhost:3000  |
+| QA/Prod     | https://github.com/FeederTreeLabs/community-stabilization-fund-api.github.io.git  |
+
+## Project Archittecture
+
+This section is under construction.
+
+## Contributing
+
+See [Contribution guide](Contribution.md)
