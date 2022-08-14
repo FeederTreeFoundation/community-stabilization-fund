@@ -16,9 +16,10 @@ API Interface for Community Stabilization Fund
 
 ## Running Locally
 
-1. Run `nvm use` 
-2. Run `npm install`
-3. Run `npm run start`
+1. Run `cd community-stabilization-fund-api` 
+2. Run `nvm install` (Optional if you're on node v18+)
+3. Run `npm install`
+4. Run `npm run dev`
 
 ## Environments
 
