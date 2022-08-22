@@ -1,16 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-const users: User[] = [
-	{ id: "1", name: 'John Smith', apiToken: '', isDeleted: false },
-	{ id: "2", name: 'Jane Doe', apiToken: '', isDeleted: false },
-];
-
-type User = {
-  id?: string;
-  name?: string;
-  apiToken?: string;
-  isDeleted?: boolean;
-}
+import { User } from "../../../modules/users";
+import { executeQuery } from "../../../src/db";
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query } = req;
@@ -30,8 +20,9 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-const getUserById = (id: string, res: NextApiResponse) => {
-  const user = users.find(user => user.id === id);
+const getUserById = async (id: string, res: NextApiResponse) => {
+  const users: User[] = await executeQuery({sql: 'SELECT * FROM users WHERE id = ?', values: [id]});
+  const user = users.find(user => user.id === parseInt(id));
   if (!user) {
     return res.status(404).json({
       status: 404,
@@ -42,16 +33,17 @@ const getUserById = (id: string, res: NextApiResponse) => {
   return res.json({...user});
 }
 
-const deleteUserById = (id: string, res: NextApiResponse) => {
-  const user = users.find(user => user.id === id);
-  if (!user) {
+const deleteUserById = async (id: string, res: NextApiResponse) => {
+  const sql = 'DELETE FROM users WHERE id = ?';
+  const results = await executeQuery({sql, values: [id]});
+  if (!results) {
     return res.status(404).json({
       status: 404,
       message: 'Not Found'
     });
   }
 
-  return res.json({...user, isDeleted: true});
+  return res.send('Successfully deleted user with id: ' + id);
 }
 
 export default userHandler;
