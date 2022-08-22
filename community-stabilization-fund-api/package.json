@@ -2,11 +2,14 @@
   "name": "community-stabilization-fund",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node src/db/seed_db.js"
+
   },
   "dependencies": {
     "next": "12.2.5",
@@ -20,6 +23,7 @@
     "@types/react-dom": "18.0.6",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.5",
+    "fs": "^0.0.1-security",
     "typescript": "^4.7.4"
   }
 }
