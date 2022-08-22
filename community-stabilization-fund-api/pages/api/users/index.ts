@@ -27,7 +27,7 @@ const getAllUsers = async (res: NextApiResponse) => {
 
 const createUser = async (body: User, res: NextApiResponse) => {
   const sql = 'INSERT INTO users (name) VALUES (?);'
-  const results = await executeQuery({ sql, values: [body.name] });
+  const results = await executeQuery({ sql, values: [body.name || ''] });
   return results && res.status(201).setHeader('Location', `/users/${body.id}`)
 };
 

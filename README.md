@@ -26,7 +26,8 @@ API Interface for Community Stabilization Fund
 |   Env       | Domain                  |
 | ----------- | ----------------------  |
 | Local       | https://localhost:3000  |
-| QA          | https://feedertreelabs.github.io/community-stabilization-fund/ |
+| QA          | https://feedertreelabs.github.io/community-stabilization-fund |
+| Prod        | https://community-stabilization-fund.vercel.app |
 
 ## Project Architecture
 
