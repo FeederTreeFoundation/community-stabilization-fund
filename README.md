@@ -11,7 +11,7 @@ API Interface for Community Stabilization Fund
 
 ## Prerequisites
 
-- Latest version of Node.js and NPM
+- Version 18.7.0 of Node.js and 8.15.0 of NPM
 - [Node Version Manager](https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
