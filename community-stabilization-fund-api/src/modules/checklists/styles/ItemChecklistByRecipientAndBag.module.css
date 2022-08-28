@@ -1,0 +1,57 @@
+@media print {
+    @page {
+      size: 297mm 210mm; /* landscape */
+      /* you can also specify margins here: */
+      margin: 25mm;
+      margin-right: 45mm; /* for compatibility with both A4 and Letter */
+    }
+}
+
+.bolded {
+  font-weight: bold;
+}
+
+.item_checklist_wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+
+  /* a {
+      font-size: 14px
+  } */
+}
+
+.user_info__p {
+  font-size: 35px;
+}
+
+.user_info {
+  font-size:35px;
+  line-height: .5;
+}
+
+
+.table_info, .table_info__td {
+    width:450px;
+    border: 1px solid #333;
+    border-collapse:collapse;
+}
+
+.table_info__td {
+  height: 250px;
+}
+
+.table_info__thead {
+  display: flex;
+  justify-content: center;
+  border-bottom: solid 1px;
+}
+
+.table_info {
+  font-size:25px
+}
+
+/* li{
+  font-size:40pt;
+} */
