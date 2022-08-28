@@ -1,35 +1,28 @@
 import React from "react";
+import styles from './styles/ItemChecklistByRecipientAndBag.module.css';
 
 // Form Responses As Prop Arguments
-function ItemChecklistByRecipientAndBag() {
+const userInfoFields = ["Name", "Phone Number", "Address", "Distribution Method", "COVID concern"]
+const conditionalPunctuation = (text: string) => text === "COVID concern" ? "?" : ":";
+const getUserInfoParagraph = (text: string) => {
+	return <p className={styles.user_info__p}>{text}{conditionalPunctuation(text)}</p>
+};
+
+const ItemChecklistByRecipientAndBag = () => {
 	return (
-		<div id="item-checklist" className="item-checklist-wrapper">
-			<div className="user-information">
-				<p>Name: </p>
-				<p>Phone Number:</p>
-				<p>Address:<a></a></p>
-				<p>Distribution Method:</p>
-				<p>COVID concern?<span className="bolded"></span></p>
+		<div id="item-checklist" className={styles.item_checklist_wrapper}>
+			<div className={styles.user_info}>
+				{userInfoFields.map(field => getUserInfoParagraph(field))}
 			</div>
 
-			<table className="table-information" >
-				<thead>
-					<tr >
-						<th>Grocery Items Bag</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<ul >
-							<li></li>
-							<li></li>
-							<li></li>
-							</ul>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div className={styles.table_info}>
+				<div className={styles.table_info__thead}>Grocery Items Bag</div>
+					<ul >
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+			</div>
 		</div>
 	);
 };
