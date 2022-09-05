@@ -17,12 +17,16 @@ const Layout = ({children}: LayoutProps) => (
   <div className="container">
     <Theme theme="g100">
       <Header aria-label="IBM Platform Name">
-        <HeaderName href="#" prefix="IBM">
-          [Platform]
-        </HeaderName>
+        <Link href="/">
+            <HeaderName prefix="CMB">Community Stabilization Fund</HeaderName>
+        </Link>
         <HeaderNavigation aria-label="IBM [Platform]">
-          <Link href="/form-responses"><HeaderMenuItem isCurrentPage={true} >Form Responses</HeaderMenuItem></Link>
-          <Link href="/checklists"><HeaderMenuItem >Checklists</HeaderMenuItem></Link>
+          <Link href="/form-responses">
+            <HeaderMenuItem isCurrentPage={true} >Form Responses</HeaderMenuItem>
+          </Link>
+          <Link href="/checklists">
+            <HeaderMenuItem >Checklists</HeaderMenuItem>
+          </Link>
           <HeaderMenuItem href="#">Link 3</HeaderMenuItem>
           <HeaderMenu aria-label="Link 4" menuLinkName="Link 4">
             <HeaderMenuItem href="#">Sub-link 1</HeaderMenuItem>
