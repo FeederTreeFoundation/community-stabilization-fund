@@ -1,3 +1,4 @@
+import { ListItem, UnorderedList } from "carbon-components-react";
 import React from "react";
 import styles from './styles/ItemChecklistByRecipientAndBag.module.css';
 
@@ -49,11 +50,17 @@ const ItemChecklistByRecipientAndBag = () => {
 			<div className={styles.table_info}>
 				<div className={styles.table_info__thead}>Grocery Items Bag {/* Number of bags*/}</div>
 				{/* Turn this into iterable list based off form responses */}
-					<ul >
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
+				<UnorderedList nested>
+					<ListItem>
+						Ordered list level 2
+					</ListItem>
+					<ListItem>
+						Ordered list level 2
+					</ListItem>
+					<ListItem>
+						Ordered list level 2
+					</ListItem>
+				</UnorderedList>
 			</div>
 		</div>
 	);
