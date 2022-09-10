@@ -7,10 +7,10 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (method) {
     case 'GET':
-      getAllUsers(res)
+      getAllUsers(res);
       break;
     case 'POST':
-      createUser(body as User, res)
+      createUser(body as User, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
@@ -26,9 +26,9 @@ const getAllUsers = async (res: NextApiResponse) => {
 };
 
 const createUser = async (body: User, res: NextApiResponse) => {
-  const sql = 'INSERT INTO users (name) VALUES (?);'
+  const sql = 'INSERT INTO users (name) VALUES (?);';
   const results = await executeQuery({ sql, values: [body.name || ''] });
-  return results && res.status(201).setHeader('Location', `/users/${body.id}`)
+  return results && res.status(201).setHeader('Location', `/users/${body.id}`);
 };
 
 export default userHandler;
