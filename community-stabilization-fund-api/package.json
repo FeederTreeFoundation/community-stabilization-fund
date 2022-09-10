@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix --ext js,jsx,ts,tsx ./"
   },
   "dependencies": {
     "carbon-components": "^11.12.0",
