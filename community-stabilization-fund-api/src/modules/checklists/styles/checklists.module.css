@@ -40,7 +40,7 @@
 
 
 .table_info, .table_info__td {
-    width:450px;
+    max-width:450px;
     border: 1px solid #333;
     border-collapse:collapse;
 }
@@ -53,6 +53,7 @@
   display: flex;
   justify-content: center;
   border-bottom: solid 1px;
+  padding: 0.2em 0.5em;
 }
 
 .table_info {

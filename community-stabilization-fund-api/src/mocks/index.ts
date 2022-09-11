@@ -1,4 +1,4 @@
-import { FormResponse, GroceryItemProps } from "../modules/checklists";
+import { FormResponse } from "../modules/checklists";
 
 export const formResponseMock: FormResponse = {
   id: "1234",
@@ -33,5 +33,12 @@ export const groceryItemsMock = {
     { name: "Toilet Paper", quantity: 2 },
     { name: "Toothbrush" , quantity: 2 },
     { name: "Toothpaste" , quantity: 1 }
+  ],
+  "Feminine Hygiene": [
+    { name: "Feminine Wipes", quantity: 5 },
+    { name: "Regular Tampons", quantity: 15 },
+    { name: "Super Tampons", quantity: 15 },
+    { name: "Thin Pads", quantity: 15 },
+    { name: "Regular Pads", quantity: 15 }
   ]
 };

@@ -1,3 +1,3 @@
 export * from './ItemChecklistByRecipientAndBag';
-export * from './GroceryItemsTable';
+export * from './ItemChecklistByRecipient';
 export * from './ItemChecklistTableColumn';

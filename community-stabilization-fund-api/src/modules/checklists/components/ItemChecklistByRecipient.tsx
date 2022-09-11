@@ -12,28 +12,28 @@ const formResponseValues = [
   formResponseMock.household_members
 ];
 
-export interface GroceryItemProps {
+export interface ItemChecklistByRecipientProps {
     groceryItems?: { 
       [thead: string]: {
         name: string;
         quantity: number;
       }[]
     };
-    userInfoValues?: any[];
+    recipientInfo?: any[];
 }
 
-const GroceryItemsTable = ({
+const ItemChecklistByRecipient = ({
   groceryItems = groceryItemsMock, 
-  userInfoValues = formResponseValues
-}: GroceryItemProps) => {
-  const userInfoFields = [ 
+  recipientInfo = formResponseValues
+}: ItemChecklistByRecipientProps) => {
+  const recipientInfoFields = [ 
     "Name", "Phone Number", "Address", "Distribution Method", "COVID concern", "# in Household"
   ];
   const conditionalPunctuation = (text: string) => text === "COVID concern" ? "?" : ":";
-  const getUserInfoParagraph = (text: string, id: number) => {
+  const getRecipientInfoParagraph = (text: string, id: number) => {
     return (
       <p key={text+id} className={styles.user_info__p}>
-        {text}{conditionalPunctuation(text)}{" "}{userInfoValues[id]} 
+        {text}{conditionalPunctuation(text)}{" "}{recipientInfo[id]} 
       </p>
     );
   };
@@ -42,15 +42,15 @@ const GroceryItemsTable = ({
     <div id="item-checklist-table" className={styles.item_checklist_wrapper}>
       <>
         <div className={styles.user_info}>
-          {userInfoFields.map((field, id) => getUserInfoParagraph(field, id))}
+          {recipientInfoFields.map((field, id) => getRecipientInfoParagraph(field, id))}
         </div>
 
         <div className={styles.item_checklist_row}>
-          {Object.keys(groceryItems).map(key => {
+          {Object.keys(groceryItems).map((key, id) => {
             const thead = <div className={styles.table_info__thead}>{key}</div>;
             const items = groceryItems[key].map(item => `${item.name} (x${item.quantity})`);
             return (
-              <ItemChecklistTableColumn key={key} items={items}>
+              <ItemChecklistTableColumn key={key} items={items} isFirstIndex={id === 0}>
                 {thead}
               </ItemChecklistTableColumn>
             );
@@ -61,4 +61,4 @@ const GroceryItemsTable = ({
   );
 };
 
-export { GroceryItemsTable };
+export { ItemChecklistByRecipient };
