@@ -33,24 +33,24 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (method) {
     case 'GET':
-      getAllFormResponses(res)
+      getAllFormResponses(res);
       break;
     case 'POST':
-      createFormResponse(body as FormResponse, res)
+      createFormResponse(body as FormResponse, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
-}
+};
 
 const getAllFormResponses = (res: NextApiResponse) => {
   return res.json([...responses]);
-}
+};
 
 const createFormResponse = (body: FormResponse, res: NextApiResponse) => {
-  return res.status(201).send('Successfully created form response with id: ' + body.id)
+  return res.status(201).send('Successfully created form response with id: ' + body.id);
 };
 
 export default formResponseHandler;
