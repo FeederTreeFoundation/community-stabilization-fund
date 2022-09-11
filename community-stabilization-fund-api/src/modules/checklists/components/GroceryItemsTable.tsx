@@ -1,9 +1,9 @@
-import { mockData as formResponseMock } from "../../form-responses";
+import { formResponseMock, groceryItemsMock } from "../../../mocks";
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
 
 import styles from '../styles/checklists.module.css';
 
-export const formResponsesValues = [
+const formResponseValues = [
   `${formResponseMock.first_name + ' ' + formResponseMock.last_name}`,
   formResponseMock.phone_number,
   formResponseMock.address_id,
@@ -12,36 +12,6 @@ export const formResponsesValues = [
   formResponseMock.household_members
 ];
 
-const userInfoFields = [ 
-  "Name", "Phone Number", "Address", "Distribution Method", "COVID concern", "# in Household"
-];
-const conditionalPunctuation = (text: string) => text === "COVID concern" ? "?" : ":";
-const userInfoValues = formResponsesValues;
-const getUserInfoParagraph = (text: string, id: number) => {
-  return (
-    <p key={text+id} className={styles.user_info__p}>
-      {text}{conditionalPunctuation(text)}{" "}{userInfoValues[id]} 
-    </p>
-  );
-};
-
-
-export const groceryItemsMock = {
-  "Groceries": [
-    { name: "Chicken", quantity: 1 },
-    { name: "Eggs", quantity: 2 },
-    { name: "Bread", quantity: 2 }
-  ],
-  "General Hygiene": [
-    { name: "Deodorant", quantity: 2 },
-    { name: "Body Soap", quantity: 2 },
-    { name: "Toilet Paper", quantity: 2 },
-    { name: "Toothbrush" , quantity: 2 },
-    { name: "Toothpaste" , quantity: 1 }
-  ]
-};
-
-
 export interface GroceryItemProps {
     groceryItems?: { 
       [thead: string]: {
@@ -49,10 +19,25 @@ export interface GroceryItemProps {
         quantity: number;
       }[]
     };
+    userInfoValues?: any[];
 }
 
-const GroceryItemsTable = ({groceryItems = groceryItemsMock}: GroceryItemProps) => {
-  // Pass grocreryItems from props instead
+const GroceryItemsTable = ({
+  groceryItems = groceryItemsMock, 
+  userInfoValues = formResponseValues
+}: GroceryItemProps) => {
+  const userInfoFields = [ 
+    "Name", "Phone Number", "Address", "Distribution Method", "COVID concern", "# in Household"
+  ];
+  const conditionalPunctuation = (text: string) => text === "COVID concern" ? "?" : ":";
+  const getUserInfoParagraph = (text: string, id: number) => {
+    return (
+      <p key={text+id} className={styles.user_info__p}>
+        {text}{conditionalPunctuation(text)}{" "}{userInfoValues[id]} 
+      </p>
+    );
+  };
+
   return (
     <div id="item-checklist-table" className={styles.item_checklist_wrapper}>
       <>
