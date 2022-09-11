@@ -1,4 +1,6 @@
 import { formResponseMock, groceryItemsMock } from "../../../mocks";
+import { omit } from "../../../utils";
+
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
 
 import styles from '../styles/checklists.module.css';
@@ -37,6 +39,10 @@ const ItemChecklistByRecipient = ({
       </p>
     );
   };
+  // Only display Feminine Hygiene items if the recipient has them, otherwise guard against the field being passed
+  const filteredGroceryItems = formResponseMock.feminine_health_care_id 
+    ? groceryItems 
+    : omit("Feminine Hygiene", groceryItems);
 
   return (
     <div id="item-checklist-table" className={styles.item_checklist_wrapper}>
