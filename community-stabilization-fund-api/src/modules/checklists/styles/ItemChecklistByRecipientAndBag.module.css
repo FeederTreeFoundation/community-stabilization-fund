@@ -16,10 +16,17 @@
   flex-direction: column;
   margin: 0 auto;
   align-items: center;
+  height: 100%;
+  padding: 15%;
 
   /* a {
       font-size: 14px
   } */
+}
+
+.item_checklist_row {
+  display: flex;
+  flex-direction: row;
 }
 
 .user_info__p {

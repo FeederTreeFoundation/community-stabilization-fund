@@ -1,1 +1,1 @@
-export * from './ItemChecklistByRecipientAndBag';
+export * from './components';

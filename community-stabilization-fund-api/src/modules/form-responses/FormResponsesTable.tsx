@@ -23,7 +23,7 @@ export interface FormResponse {
 	_is_interested_in_memberbership: boolean;
 };
 
-const mockData: FormResponse = {
+export const mockData: FormResponse = {
   id: "1234",
   first_name: "Malcolm",
   last_name: "Moses",
