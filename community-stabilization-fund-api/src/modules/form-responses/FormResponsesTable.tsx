@@ -6,6 +6,7 @@ import { mapBooleanToResponse } from "./utils";
 
 import { BasicTable } from "../../components";
 
+import { formResponseMock } from "../../mocks";
 // import styles from './styles/FormResponsesTable.module.css';
 
 //TODO: Move to interface/type folder

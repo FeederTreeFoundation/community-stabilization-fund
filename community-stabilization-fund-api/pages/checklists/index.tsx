@@ -1,9 +1,12 @@
 import type { NextPage } from 'next';
-import { ItemChecklistByRecipientAndBag } from '../../src/modules/checklists';
+import { ItemChecklistByRecipient, ItemChecklistByRecipientAndBag } from '../../src/modules/checklists';
 
 const Checklists: NextPage = () => {
   return (
-    <ItemChecklistByRecipientAndBag />
+    <>
+      <ItemChecklistByRecipient />
+      <ItemChecklistByRecipientAndBag />
+    </>
   );
 };
 
