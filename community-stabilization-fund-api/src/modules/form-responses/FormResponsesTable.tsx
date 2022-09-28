@@ -1,4 +1,9 @@
+/* eslint-disable react/jsx-key */
 import React from "react";
+
+import { FORM_RESPONSE_QUESTIONS } from "./constants";
+import { mapBooleanToResponse } from "./utils";
+
 import {
   DataTable,
   TableHead,
@@ -11,6 +16,7 @@ import {
   DataTableHeader,
   DataTableCustomRenderProps
 } from 'carbon-components-react';
+
 // import styles from './styles/FormResponsesTable.module.css';
 
 //TODO: Move to interface/type folder
@@ -34,7 +40,7 @@ export interface FormResponse {
 	is_pick_up: boolean;
 	is_volunteering: boolean;
 	is_subscribing: boolean;
-	_is_interested_in_memberbership: boolean;
+	is_interested_in_memberbership: boolean;
 };
 
 const mockData: FormResponse = {
@@ -57,23 +63,25 @@ const mockData: FormResponse = {
   is_pick_up: false,
   is_volunteering: true,
   is_subscribing: true,
-  _is_interested_in_memberbership: false,
+  is_interested_in_memberbership: false,
 };
-
-const formResponseQuestions = [ "Submitted On","First Name", "Last Name", "Email", "Phone Number","Phone Type", "Address",
-  "Is Black", "Live In Pittsburgh Atlanta", "Live In Southside Atlanta", "Has Flu Symptoms","Household Members","Feminine Health Care",
-  "Packages Like To Receive", "Additional Information", "Is Pick Up", "Is Volunteering", "Is Subscribing", "Is Interested In Memberbership"];
 
 const createHeaders = (formResponseQuestions: string[]) => {
   return (
     formResponseQuestions.map(
-      (header: string) => ({key: header.toLowerCase().replace(" ", "_"), header})
+      (header: string) => ({key: header.toLowerCase().replaceAll(" ", "_"), header})
     )
   );
 };
 
 const createRows = (formResponses: FormResponse[]) => {
-  return (formResponses)
+  return (formResponses.map(resp => {
+    const feminine_health_care = !!resp.feminine_health_care_id;
+    const r = {...resp, feminine_health_care};
+
+    FORM_RESPONSE_QUESTIONS.forEach(q => mapBooleanToResponse(r, q));
+    return r;
+  }));
 };
 
 // Form Responses As Prop Arguments
@@ -81,14 +89,12 @@ const createRows = (formResponses: FormResponse[]) => {
 //Have to make the boolean values show on the table
 const FormResponsesTable = () => {
   const rows = createRows([mockData]) as DataTableRow<string>[];
-  const headers = createHeaders(formResponseQuestions) as DataTableHeader<string>[];
-  console.log({rows, headers});
+  const headers = createHeaders(FORM_RESPONSE_QUESTIONS) as DataTableHeader<string>[];
+
   return (
     <div style={{margin: "10em auto"}}>
-      {/* <tr>{createTableColumn(formResponseQuestions)}</tr> */}
-      {/* wes<tr>{createTableData(mockData)}</tr> */}
       <DataTable rows={rows} headers={headers}>
-        {({ rows, headers, getTableProps, getHeaderProps, getRowProps }:DataTableCustomRenderProps) => (
+        {({ rows, headers, getTableProps, getHeaderProps, getRowProps }: DataTableCustomRenderProps) => (
           <Table {...getTableProps()}>
             <TableHead>
               <TableRow>
