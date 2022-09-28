@@ -1,21 +1,10 @@
-/* eslint-disable react/jsx-key */
 import React from "react";
 
 import { FORM_RESPONSE_QUESTIONS } from "./constants";
+import { DataTableHeader, DataTableRow } from "carbon-components-react/lib/components/DataTable";
 import { mapBooleanToResponse } from "./utils";
 
-import {
-  DataTable,
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableBody,
-  TableCell,
-  DataTableRow,
-  Table,
-  DataTableHeader,
-  DataTableCustomRenderProps
-} from 'carbon-components-react';
+import { BasicTable } from "../../components";
 
 // import styles from './styles/FormResponsesTable.module.css';
 
@@ -66,57 +55,33 @@ const mockData: FormResponse = {
   is_interested_in_memberbership: false,
 };
 
-const createHeaders = (formResponseQuestions: string[]) => {
-  return (
-    formResponseQuestions.map(
+interface FormResponsesTableProps {
+  formResponses?: FormResponse[];
+}
+
+const FormResponsesTable = ({formResponses = [mockData]}: FormResponsesTableProps) => {
+  const createHeaders = (formResponseQuestions: string[]) => {
+    return formResponseQuestions.map(
       (header: string) => ({key: header.toLowerCase().replaceAll(" ", "_"), header})
-    )
-  );
-};
+    );
+  };
+  
+  const createRows = (formResponses: FormResponse[]) => {
+    return formResponses.map(resp => {
+      const feminine_health_care = !!resp.feminine_health_care_id;
+      const r = {...resp, feminine_health_care};
+  
+      FORM_RESPONSE_QUESTIONS.forEach(q => mapBooleanToResponse(r, q));
+      return r;
+    });
+  };
 
-const createRows = (formResponses: FormResponse[]) => {
-  return (formResponses.map(resp => {
-    const feminine_health_care = !!resp.feminine_health_care_id;
-    const r = {...resp, feminine_health_care};
-
-    FORM_RESPONSE_QUESTIONS.forEach(q => mapBooleanToResponse(r, q));
-    return r;
-  }));
-};
-
-// Form Responses As Prop Arguments
-// i.e. const ItemChecklistByRecipientAndBag = (props: FormResponse) => {
-//Have to make the boolean values show on the table
-const FormResponsesTable = () => {
-  const rows = createRows([mockData]) as DataTableRow<string>[];
+  const rows = createRows(formResponses) as DataTableRow<string>[];
   const headers = createHeaders(FORM_RESPONSE_QUESTIONS) as DataTableHeader<string>[];
 
   return (
     <div style={{margin: "10em auto"}}>
-      <DataTable rows={rows} headers={headers}>
-        {({ rows, headers, getTableProps, getHeaderProps, getRowProps }: DataTableCustomRenderProps) => (
-          <Table {...getTableProps()}>
-            <TableHead>
-              <TableRow>
-                {headers.map((header) => (
-                  <TableHeader  {...getHeaderProps({ header })}>
-                    {header.header}
-                  </TableHeader>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow  {...getRowProps({ row })}>
-                  {row.cells.map((cell) => (
-                    <TableCell key={cell.id}>{cell.value}</TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </DataTable>
+      <BasicTable rows={rows} headers={headers} />
     </div>
   );
 };
