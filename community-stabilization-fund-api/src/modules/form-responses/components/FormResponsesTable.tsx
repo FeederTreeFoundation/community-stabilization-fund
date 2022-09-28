@@ -1,15 +1,15 @@
 import React from "react";
 
-import { FORM_RESPONSE_QUESTIONS } from "./constants";
-import { mapBooleanToResponse } from "./utils";
-import { formResponseMock } from "../../mocks";
+import { FORM_RESPONSE_QUESTIONS } from "../constants";
+import { mapBooleanToResponse } from "../utils";
+import { formResponseMock } from "../../../mocks";
 
 import type { DataTableHeader, DataTableRow } from "carbon-components-react/lib/components/DataTable";
-import type { FormResponse } from "../../db";
+import type { FormResponse } from "../../../db";
 
-import { BasicTable } from "../../components";
+import { BasicTable } from "../../../components";
 
-// import styles from './styles/FormResponsesTable.module.css';
+import styles from '../styles/form-responses.module.css';
 
 const mockData = formResponseMock;
 
@@ -38,7 +38,7 @@ const FormResponsesTable = ({formResponses = [mockData]}: FormResponsesTableProp
   const headers = createHeaders(FORM_RESPONSE_QUESTIONS) as DataTableHeader<string>[];
 
   return (
-    <div style={{margin: "10em auto"}}>
+    <div className={styles.form_responses_table}>
       <BasicTable rows={rows} headers={headers} />
     </div>
   );
