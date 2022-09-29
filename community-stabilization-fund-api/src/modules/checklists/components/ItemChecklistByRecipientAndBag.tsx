@@ -34,7 +34,7 @@ const ItemChecklistByRecipientAndBag = ({id = 1}: ItemChecklistByRecipientAndBag
   const thead = <div className={styles.table_info__thead}>{`Grocery Items Bag ${id}`}</div>;
   return (
     <div id="item-checklist" className={styles.item_checklist_wrapper}>
-      <ItemChecklistTableColumn items={["Ordered list level 2", "Ordered list level 2"]}>
+      <ItemChecklistTableColumn items={["Unordered list level 2", "Unordered list level 2"]}>
         {thead}
       </ItemChecklistTableColumn>
     </div>

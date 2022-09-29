@@ -1,34 +1,14 @@
 import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
-import { formResponseMock, groceryItemsMock } from "../../../mocks";
+import { formResponseMock, bagItemsMock } from "../../../mocks";
+import { mapFormResponseToRecipientInfo } from "../utils";
 import { omit } from "../../../utils";
 
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
 
 import styles from '../styles/checklists.module.css';
-import { FormResponse } from "../../../db";
-
-const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
-  const { 
-    first_name, 
-    last_name, 
-    phone_number, 
-    address_id,
-    is_pick_up,
-    has_flu_symptoms,
-    household_members
-  } = formResponse;
-
-  return [
-    `${first_name} ${last_name}`,
-    phone_number,
-    address_id,
-    `${is_pick_up ? "Pick Up" : "Drop Off"}`,
-    `${has_flu_symptoms ? "Yes" : "No"}`,
-    household_members
-  ];
-};
 
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
+// const bagItemsMock = mapFormResponseToBagItem(formResponseMock);
 
 export interface BagItemsMap { 
   [id: string]: {
@@ -43,7 +23,7 @@ interface ItemChecklistByRecipientProps {
 }
 
 const ItemChecklistByRecipient = ({
-  bagItemsMap = groceryItemsMock, 
+  bagItemsMap = bagItemsMock, 
   recipientInfo = recipientInfoMock
 }: ItemChecklistByRecipientProps) => {
 

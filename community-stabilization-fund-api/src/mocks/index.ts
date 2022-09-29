@@ -23,7 +23,7 @@ export const formResponseMock: FormResponse =  {
   is_interested_in_memberbership: false,
 };
 
-export const groceryItemsMock = {
+export const bagItemsMock = {
   "Groceries": [
     { name: "Chicken", quantity: 1 },
     { name: "Eggs", quantity: 2 },
