@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS csf_db.users;
+DROP TABLE IF EXISTS csf_db.form_responses;
+
 CREATE TABLE users( 
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   name VARCHAR(20)
@@ -21,7 +24,7 @@ CREATE TABLE form_responses (
   is_pick_up TINYINT NULL,
   is_volunteering TINYINT NULL,
   is_subscribing TINYINT NULL,
-  _is_interested_in_memberbership TINYINT NULL
+  is_interested_in_membership TINYINT NULL
 );
 
 INSERT INTO users
@@ -29,6 +32,5 @@ INSERT INTO users
 VALUES
 ("foo");
 
- 
 SELECT * FROM users;
 SELECT * FROM form_responses;
