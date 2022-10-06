@@ -3,14 +3,14 @@ import { UnorderedList, ListItem } from "carbon-components-react";
 import styles from '../styles/checklists.module.css';
 
 export interface ItemChecklistTableColumnProps {
-    items: string[], 
+    items: string[],
     isFirstIndex?: boolean;
-    children?: JSX.Element|JSX.Element[];
+    thead: string;
 };
 
-const ItemChecklistTableColumn = ({items, isFirstIndex = true, children}: ItemChecklistTableColumnProps) => (
+const ItemChecklistTableColumn = ({items, isFirstIndex = true, thead}: ItemChecklistTableColumnProps) => (
   <div className={styles.table_info} style={!isFirstIndex ? {borderLeft: "medium none"} : {}}>
-    {children as JSX.Element}
+    <div className={styles.table_info__thead}>{thead}</div>
     <UnorderedList nested>
       {items.map((item, id) => <ListItem key={item + id}>{item}</ListItem>)}
     </UnorderedList>

@@ -31,12 +31,10 @@ export interface ItemChecklistByRecipientAndBagProps {
 }
 
 const ItemChecklistByRecipientAndBag = ({id = 1}: ItemChecklistByRecipientAndBagProps) => {
-  const thead = <div className={styles.table_info__thead}>{`Grocery Items Bag ${id}`}</div>;
+  const thead = `Grocery Items Bag ${id}`;
   return (
     <div id="item-checklist" className={styles.item_checklist_wrapper}>
-      <ItemChecklistTableColumn items={["Unordered list level 2", "Unordered list level 2"]}>
-        {thead}
-      </ItemChecklistTableColumn>
+      <ItemChecklistTableColumn thead={thead} items={["Unordered list level 2", "Unordered list level 2"]}/>
     </div>
   );
 };

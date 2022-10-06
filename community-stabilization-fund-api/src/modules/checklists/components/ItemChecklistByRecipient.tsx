@@ -10,7 +10,7 @@ import styles from '../styles/checklists.module.css';
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
 // const bagItemsMock = mapFormResponseToBagItem(formResponseMock);
 
-export interface BagItemsMap { 
+export interface BagItemsMap {
   [id: string]: {
     name: string;
     quantity: number;
@@ -23,7 +23,7 @@ interface ItemChecklistByRecipientProps {
 }
 
 const ItemChecklistByRecipient = ({
-  bagItemsMap = bagItemsMock, 
+  bagItemsMap = bagItemsMock,
   recipientInfo = recipientInfoMock
 }: ItemChecklistByRecipientProps) => {
 
@@ -34,8 +34,8 @@ const ItemChecklistByRecipient = ({
     <p key={field+id} className={styles.user_info__p}>{getRecipientInfo(field, id)}</p>);
 
   // Only display Feminine Hygiene items if the recipient has them, otherwise guard against the field being passed
-  const bagItemsObj: BagItemsMap = formResponseMock.feminine_health_care_id 
-    ? bagItemsMap 
+  const bagItemsObj: BagItemsMap = formResponseMock.feminine_health_care_id
+    ? bagItemsMap
     : omit("Feminine Hygiene", bagItemsMap);
 
   return (
@@ -47,12 +47,10 @@ const ItemChecklistByRecipient = ({
 
         <div className={styles.item_checklist_row}>
           {Object.keys(bagItemsObj).map((key, id) => {
-            const thead = <div className={styles.table_info__thead}>{key}</div>;
+            const thead = key;
             const bagItems = bagItemsObj[key].map(item => `${item.name} (x${item.quantity})`);
             return (
-              <ItemChecklistTableColumn key={key} items={bagItems} isFirstIndex={id === 0}>
-                {thead}
-              </ItemChecklistTableColumn>
+              <ItemChecklistTableColumn thead={thead} key={key} items={bagItems} isFirstIndex={id === 0}/>
             );
           })}
         </div>
