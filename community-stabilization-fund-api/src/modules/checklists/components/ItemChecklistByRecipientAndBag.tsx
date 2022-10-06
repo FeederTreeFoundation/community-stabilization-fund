@@ -22,7 +22,7 @@ additional_information: string;
 is_pick_up: boolean;
 is_volunteering: boolean;
 is_subscribing: boolean;
-_is_interested_in_memberbership: boolean;
+_is_interested_in_membership: boolean;
 }
 
 // TODO: Convert this to a 4x2.5 set of labels printed horizontally
