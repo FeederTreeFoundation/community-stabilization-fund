@@ -1,6 +1,6 @@
 import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
-import { formResponseMock, bagItemsMock } from "../../../mocks";
-import { mapFormResponseToRecipientInfo } from "../utils";
+import { formResponseMock } from "../../../mocks";
+import { mapFormResponseToBagItems, mapFormResponseToRecipientInfo } from "../utils";
 import { omit } from "../../../utils";
 
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
@@ -8,7 +8,7 @@ import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
 import styles from '../styles/checklists.module.css';
 
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
-// const bagItemsMock = mapFormResponseToBagItem(formResponseMock);
+const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 
 export interface BagItemsMap {
   [id: string]: {
