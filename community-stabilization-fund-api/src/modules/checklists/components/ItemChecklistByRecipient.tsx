@@ -1,49 +1,23 @@
 import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
-import { formResponseMock, groceryItemsMock } from "../../../mocks";
+import { BagItemsMap } from "../types";
+import { formResponseMock } from "../../../mocks";
+import { mapFormResponseToBagItems, mapFormResponseToRecipientInfo } from "../utils";
 import { omit } from "../../../utils";
 
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
 
 import styles from '../styles/checklists.module.css';
-import { FormResponse } from "../../../db";
-
-const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
-  const { 
-    first_name, 
-    last_name, 
-    phone_number, 
-    address_id,
-    is_pick_up,
-    has_flu_symptoms,
-    household_members
-  } = formResponse;
-
-  return [
-    `${first_name} ${last_name}`,
-    phone_number,
-    address_id,
-    `${is_pick_up ? "Pick Up" : "Drop Off"}`,
-    `${has_flu_symptoms ? "Yes" : "No"}`,
-    household_members
-  ];
-};
 
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
+const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 
-export interface BagItemsMap { 
-  [id: string]: {
-    name: string;
-    quantity: number;
-  }[]
-};
-
-interface ItemChecklistByRecipientProps {
+export interface ItemChecklistByRecipientProps {
     bagItemsMap?: BagItemsMap;
     recipientInfo?: (string | number)[];
 }
 
 const ItemChecklistByRecipient = ({
-  bagItemsMap = groceryItemsMock, 
+  bagItemsMap = bagItemsMock,
   recipientInfo = recipientInfoMock
 }: ItemChecklistByRecipientProps) => {
 
@@ -54,8 +28,8 @@ const ItemChecklistByRecipient = ({
     <p key={field+id} className={styles.user_info__p}>{getRecipientInfo(field, id)}</p>);
 
   // Only display Feminine Hygiene items if the recipient has them, otherwise guard against the field being passed
-  const bagItemsObj: BagItemsMap = formResponseMock.feminine_health_care_id 
-    ? bagItemsMap 
+  const bagItemsObj: BagItemsMap = formResponseMock.feminine_health_care_id
+    ? bagItemsMap
     : omit("Feminine Hygiene", bagItemsMap);
 
   return (
@@ -67,12 +41,10 @@ const ItemChecklistByRecipient = ({
 
         <div className={styles.item_checklist_row}>
           {Object.keys(bagItemsObj).map((key, id) => {
-            const thead = <div className={styles.table_info__thead}>{key}</div>;
+            const thead = key;
             const bagItems = bagItemsObj[key].map(item => `${item.name} (x${item.quantity})`);
             return (
-              <ItemChecklistTableColumn key={key} items={bagItems} isFirstIndex={id === 0}>
-                {thead}
-              </ItemChecklistTableColumn>
+              <ItemChecklistTableColumn thead={thead} key={key} items={bagItems} isFirstIndex={id === 0}/>
             );
           })}
         </div>

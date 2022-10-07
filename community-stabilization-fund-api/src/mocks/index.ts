@@ -20,10 +20,10 @@ export const formResponseMock: FormResponse =  {
   is_pick_up: false,
   is_volunteering: true,
   is_subscribing: true,
-  is_interested_in_memberbership: false,
+  is_interested_in_membership: false,
 };
 
-export const groceryItemsMock = {
+export const bagItemsMock = {
   "Groceries": [
     { name: "Chicken", quantity: 1 },
     { name: "Eggs", quantity: 2 },
