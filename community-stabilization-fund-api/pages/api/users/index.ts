@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { User } from "../../../src/modules/users";
 import { executeQuery } from "../../../src/db";
+import { User } from "../../../src/modules";
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;

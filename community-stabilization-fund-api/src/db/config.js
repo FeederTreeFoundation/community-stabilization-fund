@@ -1,13 +1,7 @@
-// Require and initialize with default options
-interface mysqlOptions {
-    host?: string,
-    database?: string,
-    user?: string,
-    password?: string,
-    port?: string
-}
+import serverless from 'serverless-mysql';
 
-const local: mysqlOptions = {
+// Require and initialize with default options
+const local = {
   host: process.env.ENDPOINT || 'localhost',
   database: process.env.DATABASE || 'csf_db',
   user: process.env.USERNAME || 'root',
@@ -15,12 +9,12 @@ const local: mysqlOptions = {
   port: process.env.PORT || '3306',
 };
 
-const initMySQL = (config: mysqlOptions) => require('serverless-mysql')({config}); // <-- initialize with function call
+const initMySQL = (config) => serverless({config}); // <-- initialize with function call
 
 // Configure init options based on env
 export const mysql = initMySQL(local);
 
-export const executeQuery = async (query: { sql: string, values?: string[] }) => {
+export const executeQuery = async (query) => {
   try {
     const results = await mysql.query({...query, timeout: 100000});
     await mysql.end();
