@@ -11,7 +11,7 @@ import styles from '../styles/checklists.module.css';
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
 const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 
-interface ItemChecklistByRecipientProps {
+export interface ItemChecklistByRecipientProps {
     bagItemsMap?: BagItemsMap;
     recipientInfo?: (string | number)[];
 }
@@ -32,7 +32,6 @@ const ItemChecklistByRecipient = ({
     ? bagItemsMap
     : omit("Feminine Hygiene", bagItemsMap);
 
-  console.log("Object.keys: ", Object.keys(bagItemsObj))
   return (
     <div id="item-checklist-table" className={styles.item_checklist_wrapper}>
       <>
