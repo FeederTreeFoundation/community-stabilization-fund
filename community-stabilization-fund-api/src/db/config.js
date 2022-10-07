@@ -2,14 +2,14 @@ import serverless from 'serverless-mysql';
 
 // Require and initialize with default options
 const local = {
-    host: process.env.ENDPOINT || 'localhost',
-    database: process.env.DATABASE || 'csf_db',
-    user: process.env.USERNAME || 'root',
-    password: process.env.PASSWORD || '123456789',
-    port: process.env.PORT || '3306',
+  host: process.env.ENDPOINT || 'localhost',
+  database: process.env.DATABASE || 'csf_db',
+  user: process.env.USERNAME || 'root',
+  password: process.env.PASSWORD || '123456789',
+  port: process.env.PORT || '3306',
 };
 
-const initMySQL = (config) => serverless({config}) // <-- initialize with function call
+const initMySQL = (config) => serverless({config}); // <-- initialize with function call
 
 // Configure init options based on env
 export const mysql = initMySQL(local);
