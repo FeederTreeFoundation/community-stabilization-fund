@@ -1,4 +1,5 @@
 import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
+import { BagItemsMap } from "../types";
 import { formResponseMock } from "../../../mocks";
 import { mapFormResponseToBagItems, mapFormResponseToRecipientInfo } from "../utils";
 import { omit } from "../../../utils";
@@ -9,13 +10,6 @@ import styles from '../styles/checklists.module.css';
 
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
 const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
-
-export interface BagItemsMap {
-  [id: string]: {
-    name: string;
-    quantity: number;
-  }[]
-};
 
 interface ItemChecklistByRecipientProps {
     bagItemsMap?: BagItemsMap;
@@ -38,6 +32,7 @@ const ItemChecklistByRecipient = ({
     ? bagItemsMap
     : omit("Feminine Hygiene", bagItemsMap);
 
+  console.log("Object.keys: ", Object.keys(bagItemsObj))
   return (
     <div id="item-checklist-table" className={styles.item_checklist_wrapper}>
       <>

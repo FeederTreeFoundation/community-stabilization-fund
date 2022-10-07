@@ -11,13 +11,57 @@ export interface BagLabelsProps {
 }
 
 const BagLabels = ({}: BagLabelsProps) => {
-// const bagItemLabels = createBagItemMap();
-  const thead = `Grocery Items Bag ${1}`;
-  const bagItems = mapFormResponseToBagItems(formResponseMock).Groceries.map(item => `${item.name} (x${item.quantity})`);
+  let labelCount = 0;
+  const bagItemsMap = mapFormResponseToBagItems(formResponseMock);
+  const bagItemsLabels = Object.keys(bagItemsMap);
+  
+  const bagLabels = bagItemsLabels.map((label) => {
+    const thead = `${label} Bag`;
+
+    if(label === 'Groceries') {
+      const bagItems = bagItemsMap[label].map(item => `${item.name} (x${item.quantity})`);
+      return(
+        <>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems.slice(0,1)}/>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems.slice(1,4)}/>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems.slice(4,6)}/>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems.slice(6)}/>
+        </>
+      );
+    }
+
+    if(label === 'General Hygiene') {
+      const bagItems = bagItemsMap[label].map(item => `${item.name} (x${item.quantity})`);
+      return(
+        <>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems}/>
+        </>
+      );
+    }
+
+    if(label === 'Cleaning/Health Supplies') {
+      const bagItems = bagItemsMap[label].map(item => `${item.name} (x${item.quantity})`);
+      return(
+        <>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems.slice(0, 4)}/>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems.slice(4)}/>
+        </>
+      );
+    }
+
+    if(label === 'Feminine Hygiene') {
+      const bagItems = bagItemsMap[label].map(item => `${item.name} (x${item.quantity})`);
+      return(
+        <>
+          <ItemChecklistTableColumn thead={thead + ` ${++labelCount}`} items={bagItems}/>
+        </>
+      );
+    }
+  });
+
   return (
     <div id="item-checklist" className={styles.item_checklist_wrapper}>
-      <ItemChecklistTableColumn thead={thead} items={bagItems.slice(0,4)}/>
-      <ItemChecklistTableColumn thead={thead} items={bagItems.slice(4)}/>
+      {bagLabels}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { FormResponse } from "../../../db";
+import { BagItemsMap } from "../types";
 
 export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
   const { 
@@ -41,7 +42,7 @@ export const mapFormResponseToBagItems = ({ household_members, feminine_health_c
       { name: "Toothbrush" , quantity: household_members },
       { name: "Toothpaste" , quantity: household_members <= 3 ? 1 : 2 }
     ],
-    "Cleaning Health Supplies" : [
+    "Cleaning/Health Supplies" : [
       { name: "All Purpose Cleaner", quantity: 1},
       { name: "Cleaning Wipes(Packs)", quantity:1},
       { name: "Hand Sanitizer", quantity: household_members},
@@ -57,5 +58,5 @@ export const mapFormResponseToBagItems = ({ household_members, feminine_health_c
       { name: "Thin Pads", quantity: feminine_health_care_id ? 15 : 0 },
       { name: "Regular Pads", quantity: feminine_health_care_id ? 15 : 0 }
     ]
-  });
+  } as BagItemsMap);
 };
