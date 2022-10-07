@@ -1,62 +1,76 @@
+import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
 import { formResponseMock, groceryItemsMock } from "../../../mocks";
 import { omit } from "../../../utils";
 
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
 
 import styles from '../styles/checklists.module.css';
+import { FormResponse } from "../../../db";
 
-const formResponseValues = [
-  `${formResponseMock.first_name + ' ' + formResponseMock.last_name}`,
-  formResponseMock.phone_number,
-  formResponseMock.address_id,
-  formResponseMock.is_pick_up ? "Yes" : "No",
-  formResponseMock.has_flu_symptoms ? "Yes" : "No",
-  formResponseMock.household_members
-];
+const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
+  const { 
+    first_name, 
+    last_name, 
+    phone_number, 
+    address_id,
+    is_pick_up,
+    has_flu_symptoms,
+    household_members
+  } = formResponse;
 
-export interface ItemChecklistByRecipientProps {
-    groceryItems?: { 
-      [thead: string]: {
-        name: string;
-        quantity: number;
-      }[]
-    };
-    recipientInfo?: any[];
+  return [
+    `${first_name} ${last_name}`,
+    phone_number,
+    address_id,
+    `${is_pick_up ? "Pick Up" : "Drop Off"}`,
+    `${has_flu_symptoms ? "Yes" : "No"}`,
+    household_members
+  ];
+};
+
+const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
+
+export interface BagItemsMap { 
+  [id: string]: {
+    name: string;
+    quantity: number;
+  }[]
+};
+
+interface ItemChecklistByRecipientProps {
+    bagItemsMap?: BagItemsMap;
+    recipientInfo?: (string | number)[];
 }
 
 const ItemChecklistByRecipient = ({
-  groceryItems = groceryItemsMock, 
-  recipientInfo = formResponseValues
+  bagItemsMap = groceryItemsMock, 
+  recipientInfo = recipientInfoMock
 }: ItemChecklistByRecipientProps) => {
-  const recipientInfoFields = [ 
-    "Name", "Phone Number", "Address", "Distribution Method", "COVID concern", "# in Household"
-  ];
+
   const conditionalPunctuation = (text: string) => text === "COVID concern" ? "?" : ":";
-  const getRecipientInfoParagraph = (text: string, id: number) => {
-    return (
-      <p key={text+id} className={styles.user_info__p}>
-        {text}{conditionalPunctuation(text)}{" "}{recipientInfo[id]} 
-      </p>
-    );
-  };
+  const getRecipientInfo = (text: string, id: number) => `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
+
+  const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.map((field, id) =>
+    <p key={field+id} className={styles.user_info__p}>{getRecipientInfo(field, id)}</p>);
+
   // Only display Feminine Hygiene items if the recipient has them, otherwise guard against the field being passed
-  const filteredGroceryItems = formResponseMock.feminine_health_care_id 
-    ? groceryItems 
-    : omit("Feminine Hygiene", groceryItems);
+  const bagItemsObj: BagItemsMap = formResponseMock.feminine_health_care_id 
+    ? bagItemsMap 
+    : omit("Feminine Hygiene", bagItemsMap);
 
   return (
     <div id="item-checklist-table" className={styles.item_checklist_wrapper}>
       <>
         <div className={styles.user_info}>
-          {recipientInfoFields.map((field, id) => getRecipientInfoParagraph(field, id))}
+          {recipientInfoList}
         </div>
 
         <div className={styles.item_checklist_row}>
-          {Object.keys(groceryItems).map((key, id) => {
+          {Object.keys(bagItemsObj).map((key, id) => {
             const thead = <div className={styles.table_info__thead}>{key}</div>;
-            const items = groceryItems[key].map(item => `${item.name} (x${item.quantity})`);
+            const bagItems = bagItemsObj[key].map(item => `${item.name} (x${item.quantity})`);
             return (
-              <ItemChecklistTableColumn key={key} items={items} isFirstIndex={id === 0}>
+              <ItemChecklistTableColumn key={key} items={bagItems} isFirstIndex={id === 0}>
                 {thead}
               </ItemChecklistTableColumn>
             );

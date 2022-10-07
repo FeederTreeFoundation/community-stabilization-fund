@@ -1,7 +1,8 @@
-import { FormResponse } from "../modules/checklists";
+import { FormResponse } from "../db";
 
-export const formResponseMock: FormResponse = {
+export const formResponseMock: FormResponse =  {
   id: "1234",
+  submitted_on: "03/04/2022 3:44 pm",
   first_name: "Malcolm",
   last_name: "Moses",
   email: "malc@aol.com",
@@ -9,16 +10,17 @@ export const formResponseMock: FormResponse = {
   phone_type: "Mobile",
   address_id: "2133",
   is_black: true,
-  is_local: true,
+  live_in_pittsburgh_atlanta: false,
+  live_in_southside_atlanta: true,
   has_flu_symptoms: false,
   household_members: 5,
   feminine_health_care_id: "yyyy",
-  item_requests: "all",
+  packages_like_to_receive: "all",
   additional_information: "N/A",
   is_pick_up: false,
   is_volunteering: true,
   is_subscribing: true,
-  _is_interested_in_memberbership: false,
+  is_interested_in_memberbership: false,
 };
 
 export const groceryItemsMock = {
