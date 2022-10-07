@@ -23,6 +23,6 @@ export const executeQuery = async (query) => {
   } catch (error) {
     return { error };
   }
-}
+};
 // To run this code, we have to set env variables. If you’ve ever used webpack, It will be familiar.
 // we can set these variables by making ‘next.config.js’ file.

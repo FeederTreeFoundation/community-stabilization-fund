@@ -8,17 +8,17 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (method) {
     case 'GET':
-      getUserById(userId, res)
+      getUserById(userId, res);
       break;
     case 'DELETE':
-      deleteUserById(userId, res)
+      deleteUserById(userId, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
-}
+};
 
 const getUserById = async (id: string, res: NextApiResponse) => {
   const users: User[] = await executeQuery({sql: 'SELECT * FROM users WHERE id = ?', values: [id]});
@@ -31,7 +31,7 @@ const getUserById = async (id: string, res: NextApiResponse) => {
   }
 
   return res.json({...user});
-}
+};
 
 const deleteUserById = async (id: string, res: NextApiResponse) => {
   const sql = 'DELETE FROM users WHERE id = ?';
@@ -44,6 +44,6 @@ const deleteUserById = async (id: string, res: NextApiResponse) => {
   }
 
   return res.send('Successfully deleted user with id: ' + id);
-}
+};
 
 export default userHandler;
