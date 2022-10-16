@@ -20,3 +20,9 @@ export interface FormResponse {
 	is_subscribing: boolean;
 	is_interested_in_membership: boolean;
 };
+
+export interface User {
+    id: number;
+    name: string;
+	role: string;
+};
