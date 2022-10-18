@@ -1,15 +1,13 @@
-import { UserAdmin, Logout } from "@carbon/icons-react";
+import Link from "next/link";
 import {
   Header,
   HeaderName,
-  HeaderGlobalAction,
-  HeaderGlobalBar,
   HeaderNavigation,
   HeaderMenu,
   HeaderMenuItem,
   Theme
 } from "@carbon/react";
-import Link from "next/link";
+import { UserNavigation } from "./UserNavigation";
 
 interface LayoutProps { children: JSX.Element };
 
@@ -34,14 +32,7 @@ const Layout = ({children}: LayoutProps) => (
             <HeaderMenuItem href="#">Sub-link 3</HeaderMenuItem>
           </HeaderMenu>
         </HeaderNavigation>
-        <HeaderGlobalBar>
-          <HeaderGlobalAction aria-label="Admin Name" onClick={() => {}}>
-            <UserAdmin />
-          </HeaderGlobalAction>
-          <HeaderGlobalAction aria-label="Sign Out" onClick={() => {}}>
-            <Logout />
-          </HeaderGlobalAction>
-        </HeaderGlobalBar>
+        <UserNavigation />
       </Header>
     </Theme>
     {children}

@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { AppProps } from 'next/app';
-
-import { UserContext } from '../src/modules/users';
+import { UserProvider } from '@auth0/nextjs-auth0';
 import { Layout } from '../src/components';
 
 import '../styles/globals.css';
 import '../styles/styles.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [apiKey, setApiKey] = useState('');
-  const currentUser = {apiKey, setApiKey}
-  // console.log({currentUser})
 
   return (
-    <UserContext.Provider value={currentUser}>
-      <Layout><Component {...pageProps} /></Layout>
-    </UserContext.Provider>
+      <UserProvider>
+        <Layout><Component {...pageProps} /></Layout>
+      </UserProvider>
   )
 };
 
