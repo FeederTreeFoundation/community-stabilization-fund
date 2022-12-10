@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const responses: FormResponse[] = [];
 
@@ -45,12 +45,8 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-const getAllFormResponses = (res: NextApiResponse) => {
-  return res.json([...responses]);
-};
+const getAllFormResponses = (res: NextApiResponse) => res.json([...responses]);
 
-const createFormResponse = (body: FormResponse, res: NextApiResponse) => {
-  return res.status(201).send('Successfully created form response with id: ' + body.id);
-};
+const createFormResponse = (body: FormResponse, res: NextApiResponse) => res.status(201).send('Successfully created form response with id: ' + body.id);
 
 export default formResponseHandler;

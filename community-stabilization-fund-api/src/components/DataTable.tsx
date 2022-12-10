@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key */
-import React from 'react';
 import {
   DataTable as CarbonDataTable,
   TableHead,
@@ -7,7 +6,11 @@ import {
   TableHeader,
   TableBody,
   TableCell,
-  Table,
+  Table
+} from 'carbon-components-react';
+import React from 'react';
+
+import type {
   DataTableCustomRenderProps,
   DataTableProps
 } from 'carbon-components-react';
