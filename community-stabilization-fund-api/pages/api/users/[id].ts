@@ -1,5 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { executeQuery, User } from "../../../src/db";
+
+import { executeQuery, queries } from "../../../src/db";
+
+import type { User } from "../../../src/db";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query } = req;
@@ -20,8 +23,9 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getUserById = async (id: string, res: NextApiResponse) => {
-  const users: User[] = await executeQuery({sql: 'SELECT * FROM users WHERE id = ?', values: [id]});
-  const user = users.find(user => user.id === parseInt(id));
+  const sql = queries.makeGetByIdSql('users');
+  const user: User = await executeQuery({sql, values: [id]});
+
   if (!user) {
     return res.status(404).json({
       status: 404,
@@ -33,8 +37,9 @@ const getUserById = async (id: string, res: NextApiResponse) => {
 };
 
 const deleteUserById = async (id: string, res: NextApiResponse) => {
-  const sql = 'DELETE FROM users WHERE id = ?';
+  const sql = queries.makeDeleteSql('users');
   const results = await executeQuery({sql, values: [id]});
+
   if (!results) {
     return res.status(404).json({
       status: 404,
