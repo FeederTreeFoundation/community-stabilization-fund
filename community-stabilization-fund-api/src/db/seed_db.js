@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+
 import * as config from "./config.js";
 const { mysql } = config;
 

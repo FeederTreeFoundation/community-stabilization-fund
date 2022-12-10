@@ -1,4 +1,4 @@
-import { FormResponse } from "../db";
+import type { FormResponse } from "../db";
 
 export const formResponseMock: FormResponse =  {
   id: "1234",
