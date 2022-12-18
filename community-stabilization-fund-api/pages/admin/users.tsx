@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { User } from '../src/modules';
+import { User } from '../../src/modules/';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
