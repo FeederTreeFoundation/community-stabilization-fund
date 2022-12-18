@@ -3,50 +3,57 @@ import getConfig from 'next/config';
 import Router from 'next/router';
 import axios from "axios";
 
+import type { User } from "../../db";
+
 const { publicRuntimeConfig } = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/users`;
 
 let instance = axios.create({
-    headers: {
-      common: {        // can be common or any other method
-        authorization: ''
-      }
+  headers: {
+    common: {        // can be common or any other method
+      authorization: ''
     }
-  })
+  }
+});
 
 const UserService = {
-    login,
-    logout,
-    getById
+  login,
+  logout,
+  getAll,
+  getById,
 };
 
 async function login(apiUser: string, token: string) {
-    const res = await axios.post(`${publicRuntimeConfig?.apiUrl}/authenticate`, { apiUser, token });
-
+  try {
+    const res = await instance.post(`${publicRuntimeConfig?.apiUrl}/users/authenticate`, { apiUser, token });
     instance.defaults.headers.common['authorization'] = token;
-    Router.push(`/login?apiKey=${apiUser}:${token}`, '/login');
-
+    Router.push(`/admin/user`);
     return res;
+  } catch (error) {
+    // WIP: Get error message and return it to Input
+    console.log(error);
+  }
 }
 
+// WIP: Remove authorization token instead of local storage
 async function logout() {
-    // remove user from local storage, publish null to user subscribers and redirect to login page
-    localStorage.removeItem('user');
-    // userSubject.next(null);
-    Router.push('/account/login');
+  // remove user from local storage, publish null to user subscribers and redirect to login page
+  localStorage.removeItem('user');
+  // userSubject.next(null);
+  Router.push('/admin/login');
 }
 
+//WIP
 // function createUser(user: string) {
 //     return axios.post(`${baseUrl}`, user);
 // }
 
-// function getAll() {
-//     return axios.get(baseUrl);
-// }
+async function getAll() {
+  return await instance.get<User[]>(`${publicRuntimeConfig?.apiUrl}/users`);
+}
 
 async function getById(id: string) {
-    console.log('authToken: ', instance.defaults.headers.common['authorization'])
-    return instance.get(`${baseUrl}/${id}`);
+  return await instance.get<User[]>(`${publicRuntimeConfig?.apiUrl}/users/${id}`);
 }
 
 // // function update(id: string, params: any) {
