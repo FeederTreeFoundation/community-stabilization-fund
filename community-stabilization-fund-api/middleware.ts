@@ -8,33 +8,33 @@ const isAuthRoute = (pathname: string) => pathname.startsWith('/api/auth');
 export async function middleware(req: NextRequest) {
   const { headers, cookies, nextUrl, url } = req;
   // TODO: Verify authentication token by directly calling auth0 or validating against our db
-  const token = headers.get("authorization");
-  const isLoggedIn = cookies.get("appSession");
+  const token = headers.get("authorization"); // 
+  const isLoggedIn = cookies.get("appSession"); // create api Key that expires in 24 hours
   const { pathname } = nextUrl;
   console.log({token, pathname});
 
-  if (!isAdminRoute(pathname) && !isLoggedIn) {
-    const newUrl = new URL(`/`, url);
-    return NextResponse.redirect(newUrl);
-  }
+  // if (!isAdminRoute(pathname) && !isLoggedIn) {
+  //   const newUrl = new URL(`/`, url);
+  //   return NextResponse.redirect(newUrl);
+  // }
 
   if (isAuthRoute(pathname)) {
     return NextResponse.next();
   }
 
-  if (isAdminRoute(pathname) && !token) {
-    console.log('1c');
+  // if (isAdminRoute(pathname) && !token) {
+  //   console.log('1c');
     
-    const newUrl = new URL(`/admin/login?redirectPath=${pathname}`, url);
-    return NextResponse.redirect(newUrl);
-  }
+  //   const newUrl = new URL(`/admin/login?redirectPath=${pathname}`, url);
+  //   return NextResponse.redirect(newUrl);
+  // }
 
   console.log('1a');
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/api/:path*', '/form-responses', '/checklists'],
+  matcher: ['/api/:path*', '/admin/user', '/checklists'],
 };
 
 // curl --request POST \
