@@ -1,5 +1,6 @@
-import { BagItemsMap } from "../types";
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
+
+import type { BagItemsMap } from "../types";
 
 interface BagLabelsProps {
     label: string;

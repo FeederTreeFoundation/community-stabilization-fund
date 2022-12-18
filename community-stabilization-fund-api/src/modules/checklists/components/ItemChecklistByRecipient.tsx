@@ -1,10 +1,12 @@
-import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
-import { BagItemsMap } from "../types";
 import { formResponseMock } from "../../../mocks";
-import { mapFormResponseToBagItems, mapFormResponseToRecipientInfo } from "../utils";
 import { omit } from "../../../utils";
+import { RECIPIENT_INFORMATION_FIELDS } from "../constants";
+
+import { mapFormResponseToBagItems, mapFormResponseToRecipientInfo } from "../utils";
 
 import { ItemChecklistTableColumn } from "./ItemChecklistTableColumn";
+
+import type { BagItemsMap } from "../types";
 
 import styles from '../styles/checklists.module.css';
 

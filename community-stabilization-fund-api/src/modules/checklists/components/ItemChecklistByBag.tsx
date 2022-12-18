@@ -1,10 +1,12 @@
 import React from "react";
 
-import { BagItemsMap } from "../types";
 import { formResponseMock } from "../../../mocks";
+
 import { mapFormResponseToBagItems } from "../utils";
 
 import { BagLabels } from "./BagLabels";
+
+import type { BagItemsMap } from "../types";
 
 import styles from '../styles/checklists.module.css';
 
@@ -20,9 +22,7 @@ const ItemChecklistByBag = ({ bagItemsMap = bagItemsMock}: ItemChecklistByBagPro
 
   return (
     <div id="item-checklist" className={styles.item_checklist_wrapper}>
-      {bagItemsLabels.map((label) => {
-        return <BagLabels key={label} label={label} bagItemsMap={bagItemsMap} labelCount={labelCount} />;
-      })}
+      {bagItemsLabels.map((label) => <BagLabels key={label} label={label} bagItemsMap={bagItemsMap} labelCount={labelCount} />)}
     </div>
   );
 };
