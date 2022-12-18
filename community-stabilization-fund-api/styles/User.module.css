@@ -1,0 +1,11 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.intro {
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: 0.03rem;;
+  margin-top: 4.8rem;
+}
