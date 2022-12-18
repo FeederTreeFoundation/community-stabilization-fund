@@ -9,7 +9,7 @@
     "start": "next start",
     "seed": "node src/db/seed_db.js",
     "lint": "next lint --",
-    "lint:fix": "next lint -- --fix --ext js,jsx,ts,tsx ./"
+    "lint:fix": "next lint -- --fix ./"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",

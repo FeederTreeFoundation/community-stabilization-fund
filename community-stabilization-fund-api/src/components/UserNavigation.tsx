@@ -4,35 +4,35 @@ import { HeaderGlobalAction, HeaderGlobalBar, Link } from "carbon-components-rea
 
 
 const UserNavigation = () => {
-    const {user, error, isLoading} = useUser();
+  const {user, error, isLoading} = useUser();
 
-    if(isLoading) return <></>;
+  if(isLoading) return <></>;
 
-    if(error || !user) {
-        return (
-         <HeaderGlobalBar>
-            <HeaderGlobalAction aria-label="Login" onClick={() => {}}>
-              <Link href="/api/auth/login">
-                Login
-              </Link>
-            </HeaderGlobalAction>
-          </HeaderGlobalBar>    
-        )
-    }
-
-    // TODO: Correct logic for displaying admin users
-    return (        
+  if(error || !user) {
+    return (
       <HeaderGlobalBar>
-        <HeaderGlobalAction aria-label="Admin Name" onClick={() => {}}>
-          {user.org_id ? <UserAdmin /> : <User />}
-        </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label="Log Out" onClick={() => {}}>
-          <Link href="/api/auth/logout">
-              <Logout  />
+        <HeaderGlobalAction aria-label="Login" onClick={() => {}}>
+          <Link href="/api/auth/login">
+                Login
           </Link>
         </HeaderGlobalAction>
-      </HeaderGlobalBar>
-    )
+      </HeaderGlobalBar>    
+    );
+  }
+
+  // TODO: Correct logic for displaying admin users
+  return (        
+    <HeaderGlobalBar>
+      <HeaderGlobalAction aria-label="Admin Name" onClick={() => {}}>
+        {user.org_id ? <UserAdmin /> : <User />}
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Log Out" onClick={() => {}}>
+        <Link href="/api/auth/logout">
+          <Logout  />
+        </Link>
+      </HeaderGlobalAction>
+    </HeaderGlobalBar>
+  );
 };
 
 export { UserNavigation };
