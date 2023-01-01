@@ -1,28 +1,30 @@
-import React from "react";
+import React from 'react';
 
-import { formResponseMock } from "../../../mocks";
+import { formResponseMock } from '../../../mocks';
 
-import { mapFormResponseToBagItems } from "../utils";
+import { mapFormResponseToBagItems } from '../utils';
 
-import { BagLabels } from "./BagLabels";
+import { BagLabels } from './BagLabels';
 
-import type { BagItemsMap } from "../types";
+import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
 
 const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 // TODO: Convert this to a 4x2.5 set of labels printed horizontally
 export interface ItemChecklistByBagProps {
-  bagItemsMap?: BagItemsMap
+  bagItemsMap?: BagItemsMap;
 }
 
-const ItemChecklistByBag = ({ bagItemsMap = bagItemsMock}: ItemChecklistByBagProps) => {
+const ItemChecklistByBag = ({
+  bagItemsMap = bagItemsMock,
+}: ItemChecklistByBagProps) => {
   let labelCount = 0;
   const bagItemsLabels = Object.keys(bagItemsMap);
 
   return (
-    <div id="item-checklist" className={styles.item_checklist_wrapper}>
-      {bagItemsLabels.map((label) => <BagLabels key={label} label={label} bagItemsMap={bagItemsMap} labelCount={labelCount} />)}
+    <div id='item-checklist' className={styles.item_checklist_wrapper}>
+      <BagLabels bagItemsMap={bagItemsMap} labelCount={labelCount} />
     </div>
   );
 };

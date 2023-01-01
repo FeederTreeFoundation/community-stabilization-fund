@@ -1,14 +1,17 @@
 @media print {
-    @page {
-      size: 297mm 210mm; /* landscape */
-      /* you can also specify margins here: */
-      margin: 25mm;
-      margin-right: 45mm; /* for compatibility with both A4 and Letter */
-    }
+  @page {
+    /* you can also specify margins here: */
+    /* margin: 25mm; */
+    /* margin-right: 45mm;  for compatibility with both A4 and Letter */
+  }
 }
 
 .bolded {
   font-weight: bold;
+}
+.bag_labels {
+  display: flex;
+  flex-direction: column;
 }
 
 .item_checklist_wrapper {
@@ -18,11 +21,22 @@
   align-items: center;
   height: 100%;
   padding: 15%;
-
+  justify-content: space-between;
+  align-content: space-between;
+  page-break-after: always;
   /* a {
       font-size: 14px
   } */
 }
+
+.bag_labels_wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+/* .bag_labels_wrapper  {
+  margin-bottom: 2.4rem;
+} */
 
 .item_checklist_row {
   display: flex;
@@ -34,15 +48,35 @@
 }
 
 .user_info {
-  font-size:35px;
-  line-height: .5;
+  font-size: 35px;
+  line-height: 0.5;
 }
 
+.table_info {
+  height: 300px;
+  width: 1200px;
+  margin: 0.5rem;
+}
 
-.table_info, .table_info__td {
-    max-width:450px;
-    border: 1px solid #333;
-    border-collapse:collapse;
+.table_info__ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: auto;
+  padding: auto;
+  height: 80%;
+}
+
+.table_info__ul li {
+  font-size: 16px;
+}
+
+.table_info,
+.table_info__td {
+  max-width: 450px;
+  border: 1px solid #333;
+  border-collapse: collapse;
 }
 
 .table_info__td {
@@ -57,7 +91,7 @@
 }
 
 .table_info {
-  font-size:25px
+  font-size: 25px;
 }
 
 /* li{
