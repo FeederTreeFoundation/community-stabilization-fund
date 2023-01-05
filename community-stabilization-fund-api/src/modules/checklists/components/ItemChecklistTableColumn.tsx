@@ -13,10 +13,7 @@ const ItemChecklistTableColumn = ({
   isFirstIndex = true,
   thead,
 }: ItemChecklistTableColumnProps) => (
-  <div
-    className={styles.table_info}
-    style={!isFirstIndex ? { borderLeft: 'medium none' } : {}}
-  >
+  <div className={styles.table_info}>
     <div className={styles.table_info__thead}>{thead}</div>
     <UnorderedList className={styles.table_info__ul} nested>
       {items.map((item, id) => (

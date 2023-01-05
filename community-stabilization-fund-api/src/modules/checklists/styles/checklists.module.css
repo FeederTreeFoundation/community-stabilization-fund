@@ -6,6 +6,12 @@
   }
 }
 
+/* 
+.item_checklist_row .table_info {
+  height: 300px;
+  width: 1200px;
+} */
+
 .bolded {
   font-weight: bold;
 }
@@ -20,10 +26,10 @@
   margin: 0 auto;
   align-items: center;
   height: 100%;
-  padding: 15%;
+  padding: 5%;
   justify-content: space-between;
   align-content: space-between;
-  page-break-after: always;
+
   /* a {
       font-size: 14px
   } */
@@ -32,6 +38,7 @@
 .bag_labels_wrapper {
   display: flex;
   flex-direction: row;
+  page-break-after: always;
 }
 
 /* .bag_labels_wrapper  {
@@ -43,8 +50,12 @@
   flex-direction: row;
 }
 
+.item_checklist_row .table_info {
+  height: 300px;
+}
+
 .user_info__p {
-  font-size: 35px;
+  font-size: 30px;
 }
 
 .user_info {
@@ -53,8 +64,8 @@
 }
 
 .table_info {
-  height: 300px;
-  width: 1200px;
+  height: 217px;
+  width: 340px;
   margin: 0.5rem;
 }
 
@@ -88,6 +99,7 @@
   justify-content: center;
   border-bottom: solid 1px;
   padding: 0.2em 0.5em;
+  font-size: 20px;
 }
 
 .table_info {
