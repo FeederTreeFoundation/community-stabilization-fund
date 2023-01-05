@@ -6,12 +6,6 @@
   }
 }
 
-/* 
-.item_checklist_row .table_info {
-  height: 300px;
-  width: 1200px;
-} */
-
 .bolded {
   font-weight: bold;
 }
@@ -29,10 +23,6 @@
   padding: 5%;
   justify-content: space-between;
   align-content: space-between;
-
-  /* a {
-      font-size: 14px
-  } */
 }
 
 .bag_labels_wrapper {
@@ -40,10 +30,6 @@
   flex-direction: row;
   page-break-after: always;
 }
-
-/* .bag_labels_wrapper  {
-  margin-bottom: 2.4rem;
-} */
 
 .item_checklist_row {
   display: flex;
@@ -105,7 +91,3 @@
 .table_info {
   font-size: 25px;
 }
-
-/* li{
-  font-size:40pt;
-} */
