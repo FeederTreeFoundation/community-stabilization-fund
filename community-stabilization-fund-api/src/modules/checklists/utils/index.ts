@@ -15,7 +15,7 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
   return [
     `${first_name} ${last_name}`,
     phone_number,
-    address_id,
+    address_id ?? '',
     `${is_pick_up ? "Pick Up" : "Drop Off"}`,
     `${has_flu_symptoms ? "Yes" : "No"}`,
     household_members
