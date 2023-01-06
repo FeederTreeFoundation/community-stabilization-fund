@@ -25,9 +25,10 @@ const UserService = {
 
 async function login(apiUser: string, token: string) {
   try {
-    const res = await instance.post(`${publicRuntimeConfig?.apiUrl}/users/authenticate`, { apiUser, token });
+    const res = await instance.post<{id: number}>(`${publicRuntimeConfig?.apiUrl}/users/authenticate`, { apiUser, token });
     instance.defaults.headers.common['authorization'] = token;
-    Router.push(`/admin/user`);
+    localStorage.setItem('api_user', `${res.data.id}`);
+
     return res;
   } catch (error) {
     // WIP: Get error message and return it to Input
@@ -38,7 +39,7 @@ async function login(apiUser: string, token: string) {
 // WIP: Remove authorization token instead of local storage
 async function logout() {
   // remove user from local storage, publish null to user subscribers and redirect to login page
-  localStorage.removeItem('user');
+  localStorage.removeItem('api_user');
   // userSubject.next(null);
   Router.push('/admin/login');
 }

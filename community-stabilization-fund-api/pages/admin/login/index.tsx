@@ -1,12 +1,16 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserService from '../../../src/services/users';
 import { Button, TextInput } from 'carbon-components-react';
+
 
 const AdminLoginPage: NextPage = () => {
   const [apiKey, setApiKey] = useState('');
   const [warn, setWarn] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = (e: any) => {
     const { value } = e.target;
@@ -27,8 +31,18 @@ const AdminLoginPage: NextPage = () => {
     console.log('2');
         
     const [apiUser, token] = apiKey.split(':');
-    UserService.login(apiUser, token).then(console.log);
+    // TODO: Redirect to `admin/users/[id]` to display user info
+    UserService.login(apiUser, token)
+      .then((res)=> { router.push('/admin/user') });
   };
+
+  useEffect(() => {
+    if(localStorage.getItem('api_user')) {
+      const returnUrl = router.query.returnUrl as string ?? `/admin/user`;
+      
+      router.push(returnUrl);
+    } ;
+  }, []);
 
   return (
     <div>

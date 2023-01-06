@@ -4,7 +4,7 @@ export const queries = {
   makeCreateSql: (table: string) => `INSERT INTO ${table} (name) VALUES (?);`,
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
   makeAuthenticateSql: (apiUser: string, token: string) => `
-    SELECT users.name FROM users 
+    SELECT users.id FROM users 
     JOIN api_keys ON users.id = api_keys.user_id 
     WHERE users.name = '${apiUser}' AND api_keys.name = '${token}'
   `,
