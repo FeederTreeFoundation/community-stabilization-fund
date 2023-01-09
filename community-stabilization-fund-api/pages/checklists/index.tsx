@@ -1,13 +1,12 @@
-import type { NextPage } from 'next';
 import { ItemChecklistByRecipient, ItemChecklistByBag } from '../../src/modules/checklists';
 
-const ChecklistsPage: NextPage = () => {
-  return (
-    <>
-      <ItemChecklistByRecipient />
-      <ItemChecklistByBag />
-    </>
-  );
-};
+import type { NextPage } from 'next';
+
+const ChecklistsPage: NextPage = () => (
+  <>
+    <ItemChecklistByRecipient />
+    <ItemChecklistByBag />
+  </>
+);
 
 export default ChecklistsPage;

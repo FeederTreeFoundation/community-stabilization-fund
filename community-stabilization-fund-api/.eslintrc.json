@@ -1,5 +1,10 @@
 {
   "extends": ["next/core-web-vitals"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks"
+  ],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "react/jsx-filename-extension": 0,
@@ -9,6 +14,42 @@
     "comma-dangle": 0,
     "rest-spread-spacing": ["error", "never"],
     "semi": ["warn", "always", { "omitLastInOneLineBlock": true }],
-    "object-curly-spacing": "off"
+    "object-curly-spacing": "off",
+    "arrow-body-style": ["error", "as-needed"],
+    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }   
+    ],
+    "react/self-closing-comp": [
+        "error", { 
+          "component": true,
+          "html": true
+        }
+    ],
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always-and-inside-groups",
+        "groups": [
+          "builtin",
+          "external",
+          ["parent", "sibling", "index"],
+          "type",
+          "object"   
+        ],
+        "pathGroups": [
+          {
+            "pattern": "*.css",
+            "group": "object",
+            "patternOptions": { "matchBase": true },
+            "position": "after"
+          }
+        ],
+        "alphabetize": { "order": "asc" }
+      }
+    ]
   }
 }

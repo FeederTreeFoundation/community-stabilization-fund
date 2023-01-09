@@ -1,7 +1,6 @@
-import React from "react";
+import axios from "axios";
 import getConfig from 'next/config';
 import Router from 'next/router';
-import axios from "axios";
 
 import type { User } from "../../db";
 

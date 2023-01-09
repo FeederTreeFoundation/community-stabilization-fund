@@ -1,8 +1,6 @@
-
-
-import type { NextApiRequest, NextApiResponse } from "next";
 import { executeQuery, queries } from "../../../../src/db";
 
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
