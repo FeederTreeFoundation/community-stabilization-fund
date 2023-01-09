@@ -42,6 +42,7 @@ const AdminLoginPage: NextPage = () => {
       
       router.push(returnUrl);
     } ;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
