@@ -1,7 +1,10 @@
-import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
-import styles from '../styles/checklists.module.css';
-import type { BagItemsMap } from '../types';
 import { createBagItems } from '../utils';
+import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
+
+import type { BagItemsMap } from '../types';
+
+import styles from '../styles/checklists.module.css';
+
 interface BagLabelsProps {
   bagItemsMap: BagItemsMap;
   labelCount: number;

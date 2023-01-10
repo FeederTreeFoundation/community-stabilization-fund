@@ -15,10 +15,10 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
   return [
     `${first_name} ${last_name}`,
     phone_number,
-    address_id,
-    `${is_pick_up ? 'Pick Up' : 'Drop Off'}`,
-    `${has_flu_symptoms ? 'Yes' : 'No'}`,
-    household_members,
+    address_id ?? '',
+    `${is_pick_up ? "Pick Up" : "Drop Off"}`,
+    `${has_flu_symptoms ? "Yes" : "No"}`,
+    household_members
   ];
 };
 
@@ -69,6 +69,4 @@ export const mapFormResponseToBagItems = ({
     ],
   } as BagItemsMap);
 
-export const createBagItems = (label: string, bagItemsMap: BagItemsMap) => {
-  return bagItemsMap[label].map((item) => `${item.name} (x${item.quantity})`);
-};
+export const createBagItems = (label: string, bagItemsMap: BagItemsMap) => bagItemsMap[label].map((item) => `${item.name} (x${item.quantity})`);
