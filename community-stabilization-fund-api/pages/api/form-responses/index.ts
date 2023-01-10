@@ -54,10 +54,10 @@ const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
   const sql = queries.makeGetAllSql('form_responses');
 
   try {
-    const form_responses = await executeQuery({ sql });
+    const form_responses: FormResponse[] = await executeQuery({ sql });
     console.log({ form_responses });
 
-    return res.json([...form_responses]);
+    return res.json(form_responses ? [...form_responses] : []);
   } catch (error) {
     errorHandler(error, res, url);
   }
