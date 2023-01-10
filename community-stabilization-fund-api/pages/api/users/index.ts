@@ -1,8 +1,8 @@
-
 import { executeQuery } from "../../../src/db";
 
-import type { User } from "../../../src/modules";
+import type { User } from "../../../src/db";
 import type { NextApiRequest, NextApiResponse } from "next";
+
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
@@ -23,14 +23,24 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
 const getAllUsers = async (res: NextApiResponse) => {
   const sql =  'SELECT * FROM users';
-  const users = await executeQuery({ sql });
-  return res.json([...users]);
+
+  try {
+    const users: User[] = await executeQuery({ sql });
+    return res.json([...users]);
+  } catch (error) {
+    return res.json({error});
+  }
 };
 
 const createUser = async (body: User, res: NextApiResponse) => {
   const sql = 'INSERT INTO users (name) VALUES (?);';
-  const results = await executeQuery({ sql, values: [body.name || ''] });
-  return results && res.status(201).setHeader('Location', `/users/${body.id}`);
+
+  try {
+    const results = await executeQuery({ sql, values: [body.name || ''] });
+    return results && res.status(201).setHeader('Location', `/users/${body.id}`);
+  } catch (error) {
+    return res.json({error});
+  }
 };
 
 export default userHandler;

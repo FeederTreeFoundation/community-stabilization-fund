@@ -2,11 +2,11 @@ import { ItemChecklistByRecipient, ItemChecklistByBag } from '../../src/modules/
 
 import type { NextPage } from 'next';
 
-const Checklists: NextPage = () => (
+const ChecklistsPage: NextPage = () => (
   <>
     <ItemChecklistByRecipient />
     <ItemChecklistByBag />
   </>
 );
 
-export default Checklists;
+export default ChecklistsPage;

@@ -1,9 +1,17 @@
-DROP TABLE IF EXISTS csf_db.users;
-DROP TABLE IF EXISTS csf_db.form_responses;
+DROP DATABASE IF EXISTS csf_db;
 
-CREATE TABLE users( 
+CREATE DATABASE csf_db;
+USE csf_db;
+
+CREATE TABLE users ( 
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   name VARCHAR(20)
+);
+
+CREATE TABLE api_keys (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+  name VARCHAR(20),
+  user_id INT, FOREIGN KEY (user_id) REFERENCES users(id)
 );
  
 CREATE TABLE form_responses (
@@ -32,5 +40,11 @@ INSERT INTO users
 VALUES
 ("foo");
 
+INSERT INTO api_keys
+(name, user_id)
+VALUES
+("bar", 1);
+
 SELECT * FROM users;
+SELECT * FROM api_keys;
 SELECT * FROM form_responses;

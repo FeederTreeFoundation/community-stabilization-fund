@@ -2,8 +2,8 @@ import { FormResponsesTable } from '../../src/modules/form-responses';
 
 import type { NextPage } from 'next';
 
-const FormResponses: NextPage = () => (
+const FormResponsesPage: NextPage = () => (
   <FormResponsesTable />
 );
 
-export default FormResponses;
+export default FormResponsesPage;
