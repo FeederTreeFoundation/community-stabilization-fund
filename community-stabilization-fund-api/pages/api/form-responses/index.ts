@@ -5,7 +5,6 @@ import { executeQuery, queries } from '../../../src/db';
 
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
-import type { NextApiRequest, NextApiResponse } from 'next';
 const responses: FormResponse[] = [];
 
 type FormResponse = {
@@ -22,7 +21,6 @@ type FormResponse = {
   hasFluSymptoms?: boolean;
   packages: string[];
   feminineHealthCare: {
-    id: number;
     isNeeded: boolean;
     householdMembers: number;
     items: string[];
