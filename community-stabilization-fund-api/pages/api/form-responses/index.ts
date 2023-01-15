@@ -9,30 +9,31 @@ const responses: FormResponse[] = [];
 
 type FormResponse = {
   id: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  phoneNumber: string;
-  phoneType: string;
-  address: string;
-  isBlack: boolean;
-  isLocal: boolean;
-  householdMembers: number;
-  hasFluSymptoms?: boolean;
+  phone_number: string;
+  phone_type: string;
+  address_id: number;
+  is_black: boolean;
+  is_local: boolean;
+  household_members: number;
+  has_flu_symptoms?: boolean;
   packages: string[];
-  feminineHealthCare: {
-    isNeeded: boolean;
-    householdMembers: number;
-    items: string[];
-  };
-  itemRequests: string;
-  additionalInformation: string;
-  isPickUp: boolean;
-  isVolunteering: boolean;
-  isSubscribing: boolean;
-  isJoining: boolean;
+  feminine_health_care_id: number;
+  item_requests: string;
+  additional_information: string;
+  is_pick_up: boolean;
+  is_volunteering: boolean;
+  is_subscribing: boolean;
+  is_joining: boolean;
 };
 
+type FeminineHealthCare = {
+  isNeeded: boolean;
+  householdMembers: number;
+  items: string[];
+};
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body, url } = req;
 
@@ -63,17 +64,22 @@ const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
 };
 
 const createFormResponse = async (body: FormResponse, res: NextApiResponse) => {
+  const col_names = Object.keys(body);
+  const col_values = Object.values(body);
+  const quoted_values = col_values.map((value) =>
+    typeof value === 'string' ? `"${value}"` : value
+  );
+  const sql = queries.makeCreateSql('form_responses', col_names, quoted_values);
   try {
-    const response = await executeQuery({
-      sql: queries.makeFormResponse(body),
+    const result = await executeQuery({
+      sql,
     });
-    return res.json(response);
+    return res
+      .status(201)
+      .send('Successfully created form response with id: ' + result.insertId);
   } catch (error) {
     console.log(error);
   }
-  // return res
-  //   .status(201)
-  //   .send('Successfully created form response with id: ' + body.id);
 };
 
 export default formResponseHandler;
