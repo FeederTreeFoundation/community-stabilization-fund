@@ -1,9 +1,9 @@
-import { HttpStatusCode } from 'axios';
-import { ApiError } from 'next/dist/server/api-utils';
+import { HttpStatusCode } from "axios";
+import { ApiError } from "next/dist/server/api-utils";
 
-import { executeQuery, queries } from '../../../src/db';
+import { executeQuery, queries } from "../../../src/db";
 
-import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const responses: FormResponse[] = [];
 
@@ -37,25 +37,24 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body, url } = req;
 
   switch (method) {
-    case 'GET':
+    case "GET":
       getAllFormResponses(res, url);
       break;
-    case 'POST':
+    case "POST":
       createFormResponse(body as FormResponse, res);
       break;
     default:
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader("Allow", ["GET", "POST"]);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
 };
 
 const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
-  const sql = queries.makeGetAllSql('form_responses');
+  const sql = queries.makeGetAllSql("form_responses");
 
   try {
     const form_responses: FormResponse[] = await executeQuery({ sql });
-    console.log({ form_responses });
 
     return res.json(form_responses ? [...form_responses] : []);
   } catch (error) {
