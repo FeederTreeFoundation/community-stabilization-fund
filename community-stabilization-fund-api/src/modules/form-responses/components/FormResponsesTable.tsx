@@ -49,9 +49,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
       return r;
     });
 
-  const rows = createRows(
-    formResponses ? formResponses : []
-  ) as DataTableRow<string>[];
+  const rows = createRows(formResponses ?? []) as DataTableRow<string>[];
   const headers = createHeaders(
     FORM_RESPONSE_QUESTIONS
   ) as DataTableHeader<string>[];
