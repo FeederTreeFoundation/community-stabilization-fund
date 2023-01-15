@@ -25,14 +25,6 @@ interface FormResponsesTableProps {
   formResponses?: FormResponse[];
 }
 
-export async function getStaticProps() {
-  return {
-    props: {
-      formResponses: formResponses,
-    },
-  };
-}
-
 const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
   const createHeaders = (formResponseQuestions: string[]) =>
     formResponseQuestions.map((header: string) => ({
@@ -60,5 +52,13 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
     </div>
   );
 };
+
+export async function getStaticProps() {
+  return {
+    props: {
+      formResponses: formResponses,
+    },
+  };
+}
 
 export { FormResponsesTable };
