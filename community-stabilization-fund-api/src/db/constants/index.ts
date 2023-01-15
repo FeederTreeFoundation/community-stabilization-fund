@@ -1,7 +1,8 @@
 export const queries = {
   makeGetAllSql: (table: string) => `SELECT * FROM ${table}`,
   makeGetByIdSql: (table: string) => `SELECT * FROM ${table} WHERE id = ?`,
-  makeCreateSql: (table: string) => `INSERT INTO ${table} (name) VALUES (?);`,
+  makeCreateSql: (table: string, names: any[], values: any[]) =>
+    `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`,
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
   makeAuthenticateSql: (apiUser: string, token: string) => `
     SELECT users.id FROM users 
