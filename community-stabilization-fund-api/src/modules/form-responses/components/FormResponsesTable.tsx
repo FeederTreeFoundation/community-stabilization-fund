@@ -53,6 +53,8 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
   );
 };
 
+export { FormResponsesTable };
+
 export async function getStaticProps() {
   return {
     props: {
@@ -60,5 +62,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-export { FormResponsesTable };
