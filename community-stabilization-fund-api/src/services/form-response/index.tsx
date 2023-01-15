@@ -4,7 +4,7 @@ import React from "react";
 
 import type { FormResponse } from "../../db";
 const { publicRuntimeConfig } = getConfig() || {};
-const baseUrl = `${publicRuntimeConfig}.apiUrl/form-response`;
+const baseUrl = `${publicRuntimeConfig?.apiUrl}/form-responses`;
 
 let instance = axios.create({
   headers: {
@@ -15,16 +15,12 @@ let instance = axios.create({
 });
 
 const getAllFormResponses = async () => {
-  const res = await instance.get<FormResponse[]>(
-    `${publicRuntimeConfig?.apiUrl}/form-responses`
-  );
+  const res = await instance.get<FormResponse[]>(`${baseUrl}`);
   return res;
 };
 
 const createFormResponse = async () => {
-  const res = await instance.post<FormResponse>(
-    `${publicRuntimeConfig?.apiUrl}/form-responses`
-  );
+  const res = await instance.post<FormResponse>(`${baseUrl}`);
   return res;
 };
 
