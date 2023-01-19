@@ -24,9 +24,7 @@ export interface ItemChecklistByRecipientProps {
 
 const ItemChecklistByRecipient = ({
   bagItemsMap = bagItemsMock,
-}: // recipientInfo = recipientInfoMock,
-
-ItemChecklistByRecipientProps) => {
+}: ItemChecklistByRecipientProps) => {
   const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
   // Have to fix type error
   const [recipientInfo, setRecipientInfo] = useState<any[]>([]);
