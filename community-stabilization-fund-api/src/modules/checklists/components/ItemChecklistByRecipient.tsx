@@ -54,9 +54,9 @@ const ItemChecklistByRecipient = ({
         first_name,
         phone_number,
         '123ave 456st',
-        'Pick up',
-        'no',
-        3,
+        is_pick_up ? 'Pick up' : 'Drop off',
+        has_flu_symptoms ? 'Yes' : 'No',
+        household_members,
       ]);
     };
     getResponses();
