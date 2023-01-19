@@ -25,10 +25,11 @@ export interface ItemChecklistByRecipientProps {
 const ItemChecklistByRecipient = ({
   bagItemsMap = bagItemsMock,
 }: // recipientInfo = recipientInfoMock,
+
 ItemChecklistByRecipientProps) => {
   const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
   // Have to fix type error
-  const [recipientInfo, setRecipientInfo] = useState<any>([]);
+  const [recipientInfo, setRecipientInfo] = useState<any[]>([]);
 
   useEffect(() => {
     const getResponses = async () => {
@@ -43,13 +44,21 @@ ItemChecklistByRecipientProps) => {
         has_flu_symptoms,
         household_members,
       } = res.data[0];
+      // setRecipientInfo([
+      //   first_name,
+      //   phone_number,
+      //   address_id,
+      //   is_pick_up,
+      //   has_flu_symptoms,
+      //   household_members,
+      // ]);
       setRecipientInfo([
         first_name,
         phone_number,
-        address_id,
-        is_pick_up,
-        has_flu_symptoms,
-        household_members,
+        '123ave 456st',
+        'Pick up',
+        'no',
+        3,
       ]);
     };
     getResponses();
