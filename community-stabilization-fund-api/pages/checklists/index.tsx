@@ -1,4 +1,7 @@
-import { ItemChecklistByRecipient, ItemChecklistByBag } from '../../src/modules/checklists';
+import {
+  ItemChecklistByRecipient,
+  ItemChecklistByBag,
+} from '../../src/modules/checklists';
 
 import type { NextPage } from 'next';
 

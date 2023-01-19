@@ -1,18 +1,19 @@
+import { useState, useEffect } from 'react';
+
+import FormResponseServices from '../../../../src/services/form-response';
 import { formResponseMock } from '../../../mocks';
 import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
-
 import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
-
 import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
 
+import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
-
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
 const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 
@@ -23,8 +24,36 @@ export interface ItemChecklistByRecipientProps {
 
 const ItemChecklistByRecipient = ({
   bagItemsMap = bagItemsMock,
-  recipientInfo = recipientInfoMock,
-}: ItemChecklistByRecipientProps) => {
+}: // recipientInfo = recipientInfoMock,
+ItemChecklistByRecipientProps) => {
+  const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
+  // Have to fix type error
+  const [recipientInfo, setRecipientInfo] = useState<any>([]);
+
+  useEffect(() => {
+    const getResponses = async () => {
+      const res = await FormResponseServices.getAllFormResponses();
+      setFormResponses(res.data);
+      const {
+        first_name,
+        last_name,
+        phone_number,
+        address_id,
+        is_pick_up,
+        has_flu_symptoms,
+        household_members,
+      } = res.data[0];
+      setRecipientInfo([
+        first_name,
+        phone_number,
+        address_id,
+        is_pick_up,
+        has_flu_symptoms,
+        household_members,
+      ]);
+    };
+    getResponses();
+  }, []);
   const conditionalPunctuation = (text: string) =>
     text === 'COVID concern' ? '?' : ':';
   const getRecipientInfo = (text: string, id: number) =>
