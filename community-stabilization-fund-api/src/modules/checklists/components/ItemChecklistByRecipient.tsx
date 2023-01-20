@@ -1,34 +1,49 @@
+import { useState, useEffect } from 'react';
+
 import { formResponseMock } from '../../../mocks';
 import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
-
 import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
-
 import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
 
+import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
-
 const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
 const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 
 export interface ItemChecklistByRecipientProps {
   bagItemsMap?: BagItemsMap;
   recipientInfo?: (string | number)[];
+  formResponse?: FormResponse;
 }
 
 const ItemChecklistByRecipient = ({
   bagItemsMap = bagItemsMock,
-  recipientInfo = recipientInfoMock,
+  formResponse,
 }: ItemChecklistByRecipientProps) => {
+  // Have to fix type error
+  const [recipientInfo, setRecipientInfo] =
+    useState<ItemChecklistByRecipientProps['recipientInfo']>(recipientInfoMock);
+
+  useEffect(() => {
+    if (formResponse) {
+      const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
+      setRecipientInfo(recipientInfo);
+    }
+  }, [formResponse]);
+
   const conditionalPunctuation = (text: string) =>
     text === 'COVID concern' ? '?' : ':';
-  const getRecipientInfo = (text: string, id: number) =>
-    `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
+
+  const getRecipientInfo = (text: string, id: number) => {
+    if (recipientInfo)
+      return `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
+  };
 
   const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.map((field, id) => (
     <p key={field + id} className={styles.user_info__p}>
