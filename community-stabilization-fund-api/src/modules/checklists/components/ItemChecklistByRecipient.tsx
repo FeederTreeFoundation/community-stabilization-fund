@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import FormResponseServices from '../../../../src/services/form-response';
 import { formResponseMock } from '../../../mocks';
 import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
@@ -20,51 +19,31 @@ const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 export interface ItemChecklistByRecipientProps {
   bagItemsMap?: BagItemsMap;
   recipientInfo?: (string | number)[];
+  formResponse?: FormResponse;
 }
 
 const ItemChecklistByRecipient = ({
   bagItemsMap = bagItemsMock,
+  formResponse,
 }: ItemChecklistByRecipientProps) => {
-  const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
   // Have to fix type error
-  const [recipientInfo, setRecipientInfo] = useState<any[]>([]);
+  const [recipientInfo, setRecipientInfo] =
+    useState<ItemChecklistByRecipientProps['recipientInfo']>(recipientInfoMock);
 
   useEffect(() => {
-    const getResponses = async () => {
-      const res = await FormResponseServices.getAllFormResponses();
-      setFormResponses(res.data);
-      const {
-        first_name,
-        last_name,
-        phone_number,
-        address_id,
-        is_pick_up,
-        has_flu_symptoms,
-        household_members,
-      } = res.data[0];
-      // setRecipientInfo([
-      //   first_name,
-      //   phone_number,
-      //   address_id,
-      //   is_pick_up,
-      //   has_flu_symptoms,
-      //   household_members,
-      // ]);
-      setRecipientInfo([
-        first_name,
-        phone_number,
-        '123ave 456st',
-        is_pick_up ? 'Pick up' : 'Drop off',
-        has_flu_symptoms ? 'Yes' : 'No',
-        household_members,
-      ]);
-    };
-    getResponses();
-  }, []);
+    if (formResponse) {
+      const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
+      setRecipientInfo(recipientInfo);
+    }
+  }, [formResponse]);
+
   const conditionalPunctuation = (text: string) =>
     text === 'COVID concern' ? '?' : ':';
-  const getRecipientInfo = (text: string, id: number) =>
-    `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
+
+  const getRecipientInfo = (text: string, id: number) => {
+    if (recipientInfo)
+      return `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
+  };
 
   const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.map((field, id) => (
     <p key={field + id} className={styles.user_info__p}>
