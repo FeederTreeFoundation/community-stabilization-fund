@@ -45,6 +45,11 @@ INSERT INTO api_keys
 VALUES
 ("bar", 1);
 
+INSERT INTO form_responses
+(id,first_name, last_name, email, phone_number, phone_type, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
+VALUES
+(1, "Malcolm", "Moses", "mm@gmail.com", "123-4567", "CELL", 1, 1, 1, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
+
 SELECT * FROM users;
 SELECT * FROM api_keys;
 SELECT * FROM form_responses;
