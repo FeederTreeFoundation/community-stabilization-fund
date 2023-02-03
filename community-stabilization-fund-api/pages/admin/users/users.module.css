@@ -1,0 +1,29 @@
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.mt_6 {
+  margin-top: 6rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header div button:first-of-type {
+  margin-right: 1rem;
+}
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+.form button {
+  display: block;
+  margin-left: auto;
+  margin-top: 1.2rem;
+}
