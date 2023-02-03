@@ -11,7 +11,7 @@ CREATE TABLE users (
 CREATE TABLE api_keys (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   name VARCHAR(20),
-  user_id INT, FOREIGN KEY (user_id) REFERENCES users(id)
+  user_id INT, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
  
 CREATE TABLE form_responses (
