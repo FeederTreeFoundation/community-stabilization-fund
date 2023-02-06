@@ -4,7 +4,7 @@ import type { User } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, query } = req;
+  const { method, query, body } = req;
   const userId = query.id as string;
 
   switch (method) {
@@ -12,7 +12,7 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
       getUserById(userId, res);
       break;
     case 'PUT':
-      updateUserById(userId, res);
+      updateUserById(body, res);
       break;
     case 'DELETE':
       deleteUserById(userId, res);
@@ -38,11 +38,20 @@ const getUserById = async (id: string, res: NextApiResponse) => {
   return res.json({ ...user });
 };
 
-const updateUserById = async (body: User, res: NextApiResponse) => {
-  console.log(body);
-  // return res.json({ id });
-  // const sql = queries.makeUpdate('users');
+const updateUserById = async (body: any, res: NextApiResponse) => {
+  const sql = queries.makeUpdateSql('users', body, `id=${body.id}`);
+  console.log({ sql });
+  try {
+    const result = await executeQuery({
+      sql,
+    });
+    console.log(result);
+    return res.json(result);
+  } catch (error) {
+    console.log(error);
+  }
 };
+
 const deleteUserById = async (id: string, res: NextApiResponse) => {
   const sql = queries.makeDeleteSql('users');
   const results = await executeQuery({ sql, values: [id] });

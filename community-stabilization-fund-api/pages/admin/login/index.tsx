@@ -33,7 +33,7 @@ const AdminLoginPage: NextPage = () => {
     const [apiUser, token] = apiKey.split(':');
     // TODO: Redirect to `admin/users/[id]` to display user info
     UserService.login(apiUser, token).then((res) => {
-      router.push(`admin/users/${res?.data.id}`);
+      router.push(`/admin/users/${res?.data.id}`);
     });
   };
 

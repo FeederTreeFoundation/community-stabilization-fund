@@ -4,62 +4,90 @@ import { Button, TextInput } from 'carbon-components-react';
 
 import { useRouter } from 'next/router';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import UserService from '../../../src/services/users';
 
 import type { User } from '../../../src/db';
+
+import type { ChangeEvent } from 'react';
 
 import type { FormEvent } from 'react';
 
 import styles from './users.module.css';
 
 const AdminPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
+  const id = localStorage.getItem('api_user');
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [user, setUser] = useState<User>({
     id: 0,
     name: '',
   });
+  const inputRef = useRef('');
   useEffect(() => {
     const getUser = async () => {
       const user = await UserService.getById(id as string);
-      // console.log(user?.data[0]);
       setUser(user?.data[0]);
     };
+
     getUser();
   }, [id]);
+
   const handleDelete = async () => {
+    await UserService.logout();
     axios.delete(`/api/users/${user.id}`).then((res) => console.log(res));
+  };
+
+  const handleChange = (e: ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    inputRef.current = value;
+  };
+
+  const handleRevokeAdmin = () => {
+    UserService.logout();
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log('Submitting');
-    axios.put(`/api/users/${user.id}`, {}).then((res) => console.log(res));
+    console.log({ user });
+    const updatedUser = { ...user, name: inputRef.current };
+    UserService.update(`${user.id}`, updatedUser).then((res) => {
+      setUser(updatedUser);
+    });
   };
+
+  const handleEdit = () => setIsEditing(!isEditing);
   return (
     <div className={`${styles.container} ${styles.mt_6}`}>
       <div className={styles.header}>
         <h1>Hi, {`${user?.name}`}</h1>
-        <div className='buttons'>
-          <Button kind='primary' size='md' onClick={handleDelete}>
-            Update User
-          </Button>
-          <Button kind='danger' size='md' onClick={handleDelete}>
-            Delete User
-          </Button>
-        </div>
+      </div>
+      <div className={styles.buttons}>
+        <Button kind='primary' size='md' onClick={handleEdit}>
+          {isEditing ? 'Cancel' : 'Edit'}
+        </Button>
+        <Button kind='danger' size='md' onClick={handleDelete}>
+          Delete User
+        </Button>
+        <Button kind='ghost' size='md' onClick={handleRevokeAdmin}>
+          Logout Admin
+        </Button>
       </div>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <TextInput
-          id='name'
-          labelText='Username'
-          placeholder='Placeholder text'
-        />
-        <Button kind='primary' size='md' type='submit'>
-          Submit
-        </Button>
+        {isEditing && (
+          <>
+            <TextInput
+              id='name'
+              labelText='Username'
+              placeholder='Placeholder text'
+              onChange={handleChange}
+            />
+            <Button kind='primary' size='md' type='submit'>
+              Update
+            </Button>
+          </>
+        )}
       </form>
     </div>
   );

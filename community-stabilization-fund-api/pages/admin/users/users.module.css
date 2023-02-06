@@ -12,8 +12,12 @@
   justify-content: space-between;
 }
 
-.header div button:first-of-type {
+.header div button {
   margin-right: 1rem;
+}
+
+.header div button:last-of-type {
+  margin-right: 0;
 }
 
 .form {
@@ -26,4 +30,13 @@
   display: block;
   margin-left: auto;
   margin-top: 1.2rem;
+}
+
+.buttons {
+  margin-top: 8rem;
+  width: 100%;
+}
+
+.buttons button:first-of-type {
+  margin-right: 1.2rem;
 }
