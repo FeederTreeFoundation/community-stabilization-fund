@@ -26,6 +26,7 @@ const AdminLoginPage: NextPage = () => {
   };
 
   const submitApiKey = () => {
+    if (warn || apiKey.length === 0) return;
     const [apiUser, token] = apiKey.split(':');
     // TODO: Redirect to `admin/users/[id]` to display user info
     UserService.login(apiUser, token).then((res) => {
