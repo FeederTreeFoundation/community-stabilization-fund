@@ -49,8 +49,6 @@ const AdminPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Submitting');
-    console.log({ user });
     const updatedUser = { ...user, name: inputRef.current };
     UserService.update(`${user.id}`, updatedUser).then((res) => {
       setUser(updatedUser);

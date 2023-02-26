@@ -1,9 +1,6 @@
 type Data = Record<string, string>;
 // import type { User } from '../models';
 
-// enum Data {
-//   User,
-// }
 export const queries = {
   makeGetAllSql: (table: string) => `SELECT * FROM ${table}`,
   makeGetByIdSql: (table: string) => `SELECT * FROM ${table} WHERE id = ?`,

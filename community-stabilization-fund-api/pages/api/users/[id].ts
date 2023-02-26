@@ -27,7 +27,7 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 const getUserById = async (id: string, res: NextApiResponse) => {
   const sql = queries.makeGetByIdSql('users');
   const user: User = await executeQuery({ sql, values: [id] });
-  console.log({ user });
+
   if (!user) {
     return res.status(404).json({
       status: 404,
@@ -40,12 +40,12 @@ const getUserById = async (id: string, res: NextApiResponse) => {
 
 const updateUserById = async (body: any, res: NextApiResponse) => {
   const sql = queries.makeUpdateSql('users', body, `id=${body.id}`);
-  console.log({ sql });
+
   try {
     const result = await executeQuery({
       sql,
     });
-    console.log(result);
+
     return res.json(result);
   } catch (error) {
     console.log(error);
@@ -55,7 +55,7 @@ const updateUserById = async (body: any, res: NextApiResponse) => {
 const deleteUserById = async (id: string, res: NextApiResponse) => {
   const sql = queries.makeDeleteSql('users');
   const results = await executeQuery({ sql, values: [id] });
-  console.log(results);
+
   if (!results) {
     return res.status(404).json({
       status: 404,
