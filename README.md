@@ -26,6 +26,26 @@ API Interface for Community Stabilization Fund
 
 ## Setting Up Database
 
+## MySQL installation
+
+1. https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+
+If you have trouble with picking up correct environment variables.
+
+### Troubleshooting
+
+If you have issues with your environment variables.
+
+You can try changing them inside the .bashrc, or .zshrc file in your home folder ~/.
+
+Example:
+export USERNAME='root'
+export PASSWORD='password'
+
+If you come across an error that says Client does not support authentication protocol
+
+https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
+
 **_ in another shell/terminal _**
 
 1. (Optional) Update or add env variables for `db/config.js`
