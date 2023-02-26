@@ -14,35 +14,35 @@ const AdminLoginPage: NextPage = () => {
 
   const handleChange = (e: any) => {
     const { value } = e.target;
-    
-    if(!value.includes(':')) {
+
+    if (!value.includes(':')) {
       setWarn(true);
-    } 
-    if(value.length === 0 || value.includes(':')) {
+    }
+    if (value.length === 0 || value.includes(':')) {
       setWarn(false);
-    } 
+    }
 
     setApiKey(value);
   };
 
   const submitApiKey = () => {
-    console.log('1');
-    if(warn || apiKey.length === 0) return;
-    console.log('2');
-        
+    if (warn || apiKey.length === 0) return;
     const [apiUser, token] = apiKey.split(':');
     // TODO: Redirect to `admin/users/[id]` to display user info
-    UserService.login(apiUser, token)
-      .then((res)=> { router.push('/admin/users') });
+    UserService.login(apiUser, token).then((res) => {
+      router.push(`/admin/users/${res?.data.id}`);
+    });
   };
 
   useEffect(() => {
-    if(localStorage.getItem('api_user')) {
-      const returnUrl = router.query.returnUrl as string ?? `/admin/users`;
-      
+    const userId = localStorage.getItem('api_user');
+    if (userId) {
+      const returnUrl =
+        (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
+
       router.push(returnUrl);
-    } ;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -50,11 +50,11 @@ const AdminLoginPage: NextPage = () => {
       <h1>Enter Your Api Key: </h1>
       <TextInput
         warn={warn}
-        id="api_key_input"
-        warnText="Please include a colon (:)"
-        invalidText="This shit is wrong"
-        labelText="Api Key"
-        placeholder="Insert your colon separated api key (i.e. foo:bar)"
+        id='api_key_input'
+        warnText='Please include a colon (:)'
+        invalidText='This shit is wrong'
+        labelText='Api Key'
+        placeholder='Insert your colon separated api key (i.e. foo:bar)'
         onChange={handleChange}
       />
       <Button onClick={submitApiKey}>Submit</Button>

@@ -1,16 +1,18 @@
+import { executeQuery, queries } from '../../../src/db';
 
-import { executeQuery, queries } from "../../../src/db";
-
-import type { User } from "../../../src/db";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { User } from '../../../src/db';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, query } = req;
+  const { method, query, body } = req;
   const userId = query.id as string;
 
   switch (method) {
     case 'GET':
       getUserById(userId, res);
+      break;
+    case 'PUT':
+      updateUserById(body, res);
       break;
     case 'DELETE':
       deleteUserById(userId, res);
@@ -24,26 +26,40 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
 const getUserById = async (id: string, res: NextApiResponse) => {
   const sql = queries.makeGetByIdSql('users');
-  const user: User = await executeQuery({sql, values: [id]});
+  const user: User = await executeQuery({ sql, values: [id] });
 
   if (!user) {
     return res.status(404).json({
       status: 404,
-      message: 'Not Found'
+      message: 'Not Found',
     });
   }
 
-  return res.json({...user});
+  return res.json({ ...user });
+};
+
+const updateUserById = async (body: any, res: NextApiResponse) => {
+  const sql = queries.makeUpdateSql('users', body, `id=${body.id}`);
+
+  try {
+    const result = await executeQuery({
+      sql,
+    });
+
+    return res.json(result);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const deleteUserById = async (id: string, res: NextApiResponse) => {
   const sql = queries.makeDeleteSql('users');
-  const results = await executeQuery({sql, values: [id]});
+  const results = await executeQuery({ sql, values: [id] });
 
   if (!results) {
     return res.status(404).json({
       status: 404,
-      message: 'Not Found'
+      message: 'Not Found',
     });
   }
 
