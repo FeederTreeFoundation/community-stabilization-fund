@@ -2,7 +2,7 @@ import serverless from 'serverless-mysql';
 
 // Require and initialize with default options
 const local = {
-  host: process.env.CSF_ENDPOINT || 'localhost',
+  host: process.env.CSF_HOSTNAME || 'localhost',
   database: process.env.CSF_DATABASE || 'csf_db',
   user: process.env.CSF_USERNAME || 'root',
   password: process.env.CSF_PASSWORD || '123456789',
