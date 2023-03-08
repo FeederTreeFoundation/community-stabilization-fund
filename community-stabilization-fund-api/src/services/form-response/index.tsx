@@ -24,8 +24,8 @@ const createFormResponse = async () => {
   return res;
 };
 
-const FormResponseServices = {
+const FormResponseService = {
   getAllFormResponses,
   createFormResponse,
 };
-export default FormResponseServices;
+export default FormResponseService;

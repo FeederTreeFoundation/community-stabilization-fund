@@ -25,7 +25,7 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getUserById = async (id: string, res: NextApiResponse) => {
-  const sql = queries.makeGetByIdSql('users');
+  const sql = queries.makeGetByIdSql('api_user');
   const user: User = await executeQuery({ sql, values: [id] });
 
   if (!user) {
@@ -39,7 +39,7 @@ const getUserById = async (id: string, res: NextApiResponse) => {
 };
 
 const updateUserById = async (body: any, res: NextApiResponse) => {
-  const sql = queries.makeUpdateSql('users', body, `id=${body.id}`);
+  const sql = queries.makeUpdateSql('api_user', body, `id=${body.id}`);
 
   try {
     const result = await executeQuery({
@@ -53,7 +53,7 @@ const updateUserById = async (body: any, res: NextApiResponse) => {
 };
 
 const deleteUserById = async (id: string, res: NextApiResponse) => {
-  const sql = queries.makeDeleteSql('users');
+  const sql = queries.makeDeleteSql('api_user');
   const results = await executeQuery({ sql, values: [id] });
 
   if (!results) {
