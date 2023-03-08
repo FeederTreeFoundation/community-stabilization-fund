@@ -8,7 +8,7 @@ type UserDTO = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<UserDTO>) {
-  const sql = queries.makeGetAllSql('users');
+  const sql = queries.makeGetAllSql('api_user');
   const users: User[] = await executeQuery({ sql });
   // const adminUsers = users.filter(user => user.role === 'admin');
 

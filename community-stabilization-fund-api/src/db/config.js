@@ -2,11 +2,11 @@ import serverless from 'serverless-mysql';
 
 // Require and initialize with default options
 const local = {
-  host: process.env.ENDPOINT || 'localhost',
-  database: process.env.DATABASE || 'csf_db',
-  user: process.env.USERNAME || 'root',
-  password: process.env.PASSWORD || '123456789',
-  port: process.env.PORT || '3306',
+  host: process.env.CSF_HOSTNAME || 'localhost',
+  database: process.env.CSF_DATABASE || 'csf_db',
+  user: process.env.CSF_USERNAME || 'root',
+  password: process.env.CSF_PASSWORD || '123456789',
+  port: process.env.CSF_PORT || '3306',
 };
 
 const initMySQL = (config) => serverless({config}); // <-- initialize with function call

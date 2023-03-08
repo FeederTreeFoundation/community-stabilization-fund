@@ -52,7 +52,7 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
-  const sql = queries.makeGetAllSql('form_responses');
+  const sql = queries.makeGetAllSql('form_response');
 
   try {
     const form_responses: FormResponse[] = await executeQuery({ sql });
@@ -69,7 +69,7 @@ const createFormResponse = async (body: FormResponse, res: NextApiResponse) => {
   const quoted_values = col_values.map((value) =>
     typeof value === 'string' ? `"${value}"` : value
   );
-  const sql = queries.makeCreateSql('form_responses', col_names, quoted_values);
+  const sql = queries.makeCreateSql('form_response', col_names, quoted_values);
   try {
     const result = await executeQuery({
       sql,

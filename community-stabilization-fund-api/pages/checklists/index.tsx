@@ -5,7 +5,7 @@ import {
   ItemChecklistByBag,
 } from '../../src/modules/checklists';
 
-import FormResponseServices from '../../src/services/form-response';
+import FormResponseService from '../../src/services/form-response';
 
 import type { FormResponse } from '../../src/db';
 
@@ -15,7 +15,7 @@ const ChecklistsPage: NextPage = () => {
   const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
   useEffect(() => {
     const getResponses = async () => {
-      const res = await FormResponseServices.getAllFormResponses();
+      const res = await FormResponseService.getAllFormResponses();
       setFormResponses(res.data);
     };
     getResponses();
