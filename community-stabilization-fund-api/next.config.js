@@ -7,9 +7,9 @@ const nextConfig = {
     secret: 'THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING'
   },
   publicRuntimeConfig: {
-    apiUrl: process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api` // development api
-      : 'http://localhost:3000/api' // production api
+    apiUrl: process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api` // production & preview
+      : 'http://localhost:3000/api' // local
   }
 };
 
