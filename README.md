@@ -61,7 +61,7 @@ https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-a
 
 ## Project Architecture
 
-This section is under construction.
+Link: https://docs.google.com/document/d/13B5FnmChy6CaXD8icjhWdJsZ0y81uuwRnhoQ9Ca_iTA/edit?usp=sharing
 
 ## Contributing
 
