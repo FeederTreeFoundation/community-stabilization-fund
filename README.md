@@ -16,6 +16,7 @@ API Interface for Community Stabilization Fund
 - Version 18.7.0 of Node.js and 8.15.0 of NPM
 - [Node Version Manager](https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
 
 ## Running Locally
 
@@ -24,13 +25,17 @@ API Interface for Community Stabilization Fund
 3. Run `npm install --legacy-peer-deps`
 4. Run `npm run dev`
 
-## Setting Up Database
+## MySQL
 
-## MySQL installation
+### Setting Up Database
 
-1. https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+**_ in another shell/terminal _**
 
-If you have trouble with picking up correct environment variables.
+1. (Optional) Update or add env variables for `db/config.js`
+2. Run `cd community-stabilization-fund-api`
+3. run `npm config set legacy-peer-deps true`
+4. Run `npm install`
+5. Run `npm run seed`
 
 ### Troubleshooting
 
@@ -45,14 +50,6 @@ export PASSWORD='password'
 If you come across an error that says Client does not support authentication protocol
 
 https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
-
-**_ in another shell/terminal _**
-
-1. (Optional) Update or add env variables for `db/config.js`
-2. Run `cd community-stabilization-fund-api`
-3. run `npm config set legacy-peer-deps true`
-4. Run `npm install`
-5. Run `npm run seed`
 
 ## Environments
 
