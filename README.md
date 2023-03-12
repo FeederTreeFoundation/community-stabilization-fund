@@ -20,8 +20,8 @@ API Interface for Community Stabilization Fund
 ## Running Locally
 
 1. Run `cd community-stabilization-fund-api`
-2. Run `nvm install --legacy-peer-deps` (Optional if you're on node v18+)
-3. Run `npm install`
+2. Run `nvm install` (Optional if you're on node v18+)
+3. Run `npm install --legacy-peer-deps`
 4. Run `npm run dev`
 
 ## Setting Up Database
