@@ -37,7 +37,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     if (!apiUserId && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({
-        pathname: '/401',
+        pathname: '/admin/login',
         query: { returnUrl: router.asPath },
       });
     } else {

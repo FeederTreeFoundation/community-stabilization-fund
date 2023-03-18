@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useState, useEffect, useRef } from 'react';
 
-import UserService from '../../../src/services/users';
+import UserService from '../../../src/services/user';
 
 import type { User } from '../../../src/db';
 

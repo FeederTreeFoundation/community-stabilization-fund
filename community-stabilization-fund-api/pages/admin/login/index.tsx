@@ -2,7 +2,7 @@ import { Button, TextInput } from 'carbon-components-react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import UserService from '../../../src/services/users';
+import UserService from '../../../src/services/user';
 
 import type { NextPage } from 'next';
 

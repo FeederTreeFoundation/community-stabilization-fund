@@ -15,16 +15,20 @@ export async function middleware(req: NextRequest) {
   const { pathname } = nextUrl;
   console.log({ token, pathname });
 
-  if (isAuthRoute(pathname)) {
-    return NextResponse.next();
-  }
+  if(!isLoggedIn && !isAuthRoute(pathname)) {
+    return NextResponse.redirect('/api/auth/login');
+  };
 
-  if (!token) {
+  if (!token && !isAuthRoute(pathname) ) {
     // TODO: Redirect to error page if no token
     const newUrl = nextUrl.clone();
     newUrl.pathname = `/api/errors/401`;
     return NextResponse.redirect(newUrl);
   }
+
+  // if (!token && !isAuthRoute(pathname)) {
+  //   return NextResponse.redirect('/admin/login');
+  // }
 
   return NextResponse.next();
 }

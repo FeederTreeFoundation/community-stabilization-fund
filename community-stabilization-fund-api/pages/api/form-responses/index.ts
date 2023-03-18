@@ -59,7 +59,7 @@ const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
 
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
-    errorHandler(error, res, url);
+    return res.json({ error });
   }
 };
 
@@ -70,15 +70,15 @@ const createFormResponse = async (body: FormResponse, res: NextApiResponse) => {
     typeof value === 'string' ? `"${value}"` : value
   );
   const sql = queries.makeCreateSql('form_response', col_names, quoted_values);
+  console.log({ sql });
+
   try {
-    const result = await executeQuery({
-      sql,
-    });
+    const result = await executeQuery({ sql });
     return res
       .status(201)
       .send('Successfully created form response with id: ' + result.insertId);
   } catch (error) {
-    console.log(error);
+    return res.json({ error });
   }
 };
 
@@ -86,56 +86,56 @@ export default formResponseHandler;
 
 // TODO: Extract to its own file
 
-export function getExceptionStatus(exception: unknown) {
-  return exception instanceof ApiError
-    ? exception.statusCode
-    : HttpStatusCode.InternalServerError;
-}
+// export function getExceptionStatus(exception: unknown) {
+//   return exception instanceof ApiError
+//     ? exception.statusCode
+//     : HttpStatusCode.InternalServerError;
+// }
 
-export function getExceptionMessage(exception: unknown) {
-  return isError(exception) ? exception.message : `Internal Server Error`;
-}
+// export function getExceptionMessage(exception: unknown) {
+//   return isError(exception) ? exception.message : `Internal Server Error`;
+// }
 
-export function getExceptionStack(exception: unknown) {
-  return isError(exception) ? exception.stack : undefined;
-}
+// export function getExceptionStack(exception: unknown) {
+//   return isError(exception) ? exception.stack : undefined;
+// }
 
-export function isError(exception: unknown): exception is Error {
-  return exception instanceof Error;
-}
+// export function isError(exception: unknown): exception is Error {
+//   return exception instanceof Error;
+// }
 
-function errorHandler(exc: any, res: NextApiResponse, url?: string) {
-  const statusCode = getExceptionStatus(exc);
-  const message = getExceptionMessage(exc);
-  const stack = getExceptionStack(exc);
+// function errorHandler(exc: any, res: NextApiResponse, url?: string) {
+//   const statusCode = getExceptionStatus(exc);
+//   const message = getExceptionMessage(exc);
+//   const stack = getExceptionStack(exc);
 
-  const timestamp = new Date().toISOString();
+//   const timestamp = new Date().toISOString();
 
-  const responseBody = {
-    message,
-    statusCode,
-    timestamp,
-    path: url,
-  };
+//   const responseBody = {
+//     message,
+//     statusCode,
+//     timestamp,
+//     path: url,
+//   };
 
-  return res.status(statusCode).send(responseBody);
+//   return res.status(statusCode).send(responseBody);
 
-  // // default to 500 server error
-  // console.error(err);
-  // return res.status(500).json({ message: err.message });
-}
+//   // // default to 500 server error
+//   // console.error(err);
+//   // return res.status(500).json({ message: err.message });
+// }
 
-export async function withErrorHandler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  return async function (handler: NextApiHandler) {
-    try {
-      return handler(req, res);
-    } catch (e) {
-      return errorHandler(e, res, req.url);
-    }
-  };
-}
+// export async function withErrorHandler(
+//   req: NextApiRequest,
+//   res: NextApiResponse
+// ) {
+//   return async function (handler: NextApiHandler) {
+//     try {
+//       return handler(req, res);
+//     } catch (e) {
+//       return errorHandler(e, res, req.url);
+//     }
+//   };
+// }
 
-export { errorHandler };
+// export { errorHandler };
