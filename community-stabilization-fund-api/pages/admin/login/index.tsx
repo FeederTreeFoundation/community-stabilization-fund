@@ -2,7 +2,7 @@ import { Button, TextInput } from 'carbon-components-react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import UserService from '../../../src/services/users';
+import UserService from '../../../src/services/user';
 
 import type { NextPage } from 'next';
 
@@ -28,22 +28,15 @@ const AdminLoginPage: NextPage = () => {
   const submitApiKey = () => {
     if (warn || apiKey.length === 0) return;
     const [apiUser, token] = apiKey.split(':');
-    // TODO: Redirect to `admin/users/[id]` to display user info
+
     UserService.login(apiUser, token).then((res) => {
-      router.push(`/admin/users/${res?.data.id}`);
+      const userId = res?.data.id;
+      const returnUrl = (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
+
+      localStorage.setItem('api_user', `${userId}`);
+      router.push(returnUrl);
     });
   };
-
-  useEffect(() => {
-    const userId = localStorage.getItem('api_user');
-    if (userId) {
-      const returnUrl =
-        (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
-
-      router.push(returnUrl);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div>

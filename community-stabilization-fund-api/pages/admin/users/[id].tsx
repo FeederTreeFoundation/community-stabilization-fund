@@ -1,18 +1,11 @@
 import axios from 'axios';
-
 import { Button, TextInput } from 'carbon-components-react';
-
-import { useRouter } from 'next/router';
-
 import { useState, useEffect, useRef } from 'react';
 
-import UserService from '../../../src/services/users';
+import UserService from '../../../src/services/user';
 
 import type { User } from '../../../src/db';
-
-import type { ChangeEvent } from 'react';
-
-import type { FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 import styles from './users.module.css';
 
@@ -55,7 +48,9 @@ const AdminPage = () => {
     });
   };
 
+  // TODO: Open a modal to edit User when isEditing is true
   const handleEdit = () => setIsEditing(!isEditing);
+
   return (
     <div className={`${styles.container} ${styles.mt_6}`}>
       <div className={styles.header}>
