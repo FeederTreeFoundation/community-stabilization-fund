@@ -9,6 +9,9 @@ import {
 const UserNavigation = () => {
   const { user, error, isLoading } = useUser();
 
+  const userId = localStorage.getItem('api_user');
+  const userPath = userId ? `/admin/users/${userId}` : '/admin/login';
+
   if (isLoading) return <></>;
 
   if (error || !user) {
@@ -24,8 +27,10 @@ const UserNavigation = () => {
   // TODO: Correct logic for displaying admin users
   return (
     <HeaderGlobalBar>
-      <HeaderGlobalAction aria-label='Admin Name' onClick={() => {}}>
-        {user.org_id ? <UserAdmin /> : <User />}
+      <HeaderGlobalAction aria-label='My Profile' onClick={() => {}}>
+        <Link href={userPath}>
+          {user.org_id ? <UserAdmin /> : <User />}
+        </Link>
       </HeaderGlobalAction>
       <HeaderGlobalAction aria-label='Log Out' onClick={() => {}}>
         <Link href='/api/auth/logout'>
