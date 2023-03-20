@@ -17,7 +17,7 @@ export const queries = {
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
   makeAuthenticateSql: (apiUser: string, token: string) => `
     SELECT api_user.id FROM api_user
-    JOIN api_key ON api_user.id = api_key.user_id
+    JOIN api_key ON api_user.id = api_key.api_user_id
     WHERE api_user.name = '${apiUser}' AND api_key.name = '${token}'
   `,
 };
