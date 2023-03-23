@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { Button, TextInput } from 'carbon-components-react';
+
+import { useRouter } from 'next/router';
+
 import { useState, useEffect, useRef } from 'react';
 
 import UserService from '../../../src/services/user';
@@ -16,15 +19,19 @@ const AdminPage = () => {
     id: 0,
     name: '',
   });
+  const router = useRouter();
   const inputRef = useRef('');
   useEffect(() => {
-    const getUser = async () => {
-      const user = await UserService.getById(id as string);
-      setUser(user?.data[0]);
-    };
-
-    getUser();
-  }, [id]);
+    if (!!id) {
+      router.push('/admin/login');
+    } else {
+      const getUser = async () => {
+        const user = await UserService.getById(id as string);
+        setUser(user?.data[0]);
+      };
+      getUser();
+    }
+  }, [id, router]);
 
   const handleDelete = async () => {
     await UserService.logout();
