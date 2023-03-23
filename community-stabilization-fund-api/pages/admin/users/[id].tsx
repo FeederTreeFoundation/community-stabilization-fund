@@ -27,7 +27,11 @@ const AdminPage = () => {
     } else {
       const getUser = async () => {
         const user = await UserService.getById(id as string);
-        setUser(user?.data[0]);
+        if (typeof user === 'undefined') {
+          router.push('/admin/login');
+        } else {
+          setUser(user?.data[0]);
+        }
       };
       getUser();
     }
