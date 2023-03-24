@@ -26,7 +26,7 @@ const AdminPage = () => {
 
   const handleDelete = async () => {
     await UserService.logout();
-    await UserService.delete(user.id);
+    await UserService.delete(`${user.id}`);
   };
 
   const handleChange = (e: ChangeEvent) => {
