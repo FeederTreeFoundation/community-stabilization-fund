@@ -14,6 +14,7 @@ const UserService = {
   getAll,
   getById,
   update,
+  delete: _delete
 };
 
 async function login(apiUser: string, token: string) {
@@ -56,9 +57,9 @@ function update(id: string, params: any) {
   return axiosInstance.put(`${baseUrl}/${id}`, params);
 }
 
-// // prefixed with underscored because delete is a reserved word in javascript
-// function _delete(id: string) {
-//     return axios.delete(`${baseUrl}/${id}`);
-// }
+// prefixed with underscored because delete is a reserved word in javascript
+function _delete(id: string) {
+  return axiosInstance.delete(`/api/users/${id}`);
+}
 
 export default UserService;
