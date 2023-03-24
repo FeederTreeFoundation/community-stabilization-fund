@@ -37,17 +37,20 @@ API Interface for Community Stabilization Fund
 4. Run `npm install`
 5. Run `npm run seed`
 
+### Additional Tools
+- [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
+
 ### Troubleshooting
 
-If you have issues with your environment variables.
+If you have issues with your environment variables, you can try changing them inside the .bashrc, or .zshrc file in your root folder or using the Command Line Interface to explicitly set them with the `export` call:
 
-You can try changing them inside the .bashrc, or .zshrc file in your home folder ~/.
-
-Example:
+_CLI_
+```sh
 export USERNAME='root'
 export PASSWORD='password'
+```
 
-If you come across an error that says Client does not support authentication protocol
+If you come across an error that says Client does not support authentication protocol:
 
 https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
 
@@ -56,12 +59,11 @@ https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-a
 | Env   | Domain                                                        |
 | ----- | ------------------------------------------------------------- |
 | Local | https://localhost:3000                                        |
-| QA    | https://feedertreelabs.github.io/community-stabilization-fund |
 | Prod  | https://community-stabilization-fund.vercel.app               |
 
 ## Project Architecture
 
-Link: https://docs.google.com/document/d/13B5FnmChy6CaXD8icjhWdJsZ0y81uuwRnhoQ9Ca_iTA/edit?usp=sharing
+https://docs.google.com/document/d/13B5FnmChy6CaXD8icjhWdJsZ0y81uuwRnhoQ9Ca_iTA/edit?usp=sharing
 
 ## Contributing
 
