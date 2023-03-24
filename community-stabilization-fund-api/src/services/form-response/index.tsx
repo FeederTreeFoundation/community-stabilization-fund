@@ -14,6 +14,8 @@ const FormResponseService = {
 
 async function getAllFormResponses() {
   const res = await axiosInstance.get<FormResponse[]>(`${baseUrl}`);
+
+  if(!res?.data?.length || res.data.length === 0) return;
   return res;
 };
 

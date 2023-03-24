@@ -9,8 +9,8 @@ const FormResponsesPage: NextPage = () => {
   const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
   useEffect(() => {
     const getResponses = async () => {
-      const res = await FormResponseService.getAllFormResponses();
-      setFormResponses(res.data);
+        const res = await FormResponseService.getAllFormResponses();
+        setFormResponses(res?.data ?? []);
     };
     getResponses();
   }, []);

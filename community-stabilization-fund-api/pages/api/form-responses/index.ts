@@ -55,10 +55,14 @@ const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
   const sql = queries.makeGetAllSql('form_response');
 
   try {
-    const form_responses: FormResponse[] = await executeQuery({ sql });
-
-    return res.json([...(form_responses ?? [])]);
+    const form_responses = await executeQuery({ sql });
+    // TODO: Catch only receives an error if we make the api throw it. 
+    // Move try/catch to frontend and throw in the backend.
+    if(form_responses.error) throw form_responses.error;
+    return res.json([...form_responses]);
   } catch (error) {
+    console.log({error});
+    
     return res.json({ error });
   }
 };
