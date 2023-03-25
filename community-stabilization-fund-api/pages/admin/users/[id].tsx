@@ -1,16 +1,25 @@
 import axios from 'axios';
-import { Button, TextInput } from 'carbon-components-react';
+import { Form, Button, TextInput } from 'carbon-components-react';
+import { useState, useEffect } from 'react';
 
-import { useState, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 
 import UserService from '../../../src/services/user';
 
 import type { User } from '../../../src/db';
-import type { ChangeEvent, FormEvent } from 'react';
 
 import styles from './users.module.css';
 
+type FormData = {
+  username: string;
+};
+
 const AdminPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
   const id = localStorage.getItem('api_user');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [user, setUser] = useState<User>({
@@ -18,7 +27,6 @@ const AdminPage = () => {
     name: '',
   });
 
-  const inputRef = useRef('');
   useEffect(() => {
     const getUser = async () => {
       const user = await UserService.getById(id as string);
@@ -33,23 +41,16 @@ const AdminPage = () => {
     axios.delete(`/api/users/${user.id}`).then((res) => console.log(res));
   };
 
-  const handleChange = (e: ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    inputRef.current = value;
-  };
-
   const handleRevokeAdmin = () => {
     UserService.logout();
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const updatedUser = { ...user, name: inputRef.current };
+  const onSubmit = (data: FormData) => {
+    const updatedUser = { ...user, name: data.username };
     UserService.update(`${user.id}`, updatedUser).then((res) => {
       setUser(updatedUser);
     });
   };
-
   // TODO: Open a modal to edit User when isEditing is true
   const handleEdit = () => setIsEditing(!isEditing);
 
@@ -69,21 +70,23 @@ const AdminPage = () => {
           Logout Admin
         </Button>
       </div>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         {isEditing && (
           <>
             <TextInput
               id='name'
               labelText='Username'
               placeholder='Placeholder text'
-              onChange={handleChange}
+              {...register('username', { required: true })}
+              invalid={!!errors.username}
             />
+
             <Button kind='primary' size='md' type='submit'>
               Update
             </Button>
           </>
         )}
-      </form>
+      </Form>
     </div>
   );
 };
