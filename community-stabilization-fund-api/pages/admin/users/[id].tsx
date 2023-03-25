@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Form, Button, TextInput } from 'carbon-components-react';
+import { Button, TextInput, Modal } from 'carbon-components-react';
 import { useState, useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
@@ -50,6 +50,7 @@ const AdminPage = () => {
     UserService.update(`${user.id}`, updatedUser).then((res) => {
       setUser(updatedUser);
     });
+    setIsEditing(false);
   };
   // TODO: Open a modal to edit User when isEditing is true
   const handleEdit = () => setIsEditing(!isEditing);
@@ -70,23 +71,23 @@ const AdminPage = () => {
           Logout Admin
         </Button>
       </div>
-      <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        {isEditing && (
-          <>
-            <TextInput
-              id='name'
-              labelText='Username'
-              placeholder='Placeholder text'
-              {...register('username', { required: true })}
-              invalid={!!errors.username}
-            />
-
-            <Button kind='primary' size='md' type='submit'>
-              Update
-            </Button>
-          </>
-        )}
-      </Form>
+      <Modal
+        open={isEditing}
+        modalHeading='Edit username'
+        modalLabel='Admin functions'
+        primaryButtonText='Update'
+        secondaryButtonText='Cancel'
+        onRequestSubmit={handleSubmit(onSubmit)}
+        onRequestClose={() => setIsEditing(false)}
+      >
+        <TextInput
+          id='name'
+          labelText='Username'
+          placeholder='Placeholder text'
+          {...register('username', { required: true })}
+          invalid={!!errors.username}
+        />
+      </Modal>
     </div>
   );
 };
