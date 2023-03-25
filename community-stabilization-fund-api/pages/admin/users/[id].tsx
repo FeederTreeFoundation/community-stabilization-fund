@@ -52,7 +52,6 @@ const AdminPage = () => {
     });
     setIsEditing(false);
   };
-  // TODO: Open a modal to edit User when isEditing is true
   const handleEdit = () => setIsEditing(!isEditing);
 
   return (
