@@ -20,10 +20,7 @@ const AdminPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-<<<<<<< HEAD
-=======
 
->>>>>>> Removed duplicates from the merge
   const id = localStorage.getItem('api_user');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [user, setUser] = useState<User>({
@@ -56,6 +53,7 @@ const AdminPage = () => {
     });
     setIsEditing(false);
   };
+
   const handleEdit = () => setIsEditing(!isEditing);
 
   return (
