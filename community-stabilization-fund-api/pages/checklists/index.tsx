@@ -20,10 +20,10 @@ const ChecklistsPage: NextPage = () => {
     };
     getResponses();
   }, []);
+
   return (
     <>
-      {formResponses &&
-        formResponses.map((formResponse) => (
+      {formResponses?.map((formResponse) => (
           <>
             <ItemChecklistByRecipient formResponse={formResponse} />
             <ItemChecklistByBag />

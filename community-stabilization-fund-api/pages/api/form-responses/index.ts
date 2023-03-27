@@ -42,7 +42,7 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       getAllFormResponses(res, url);
       break;
     case 'POST':
-      createFormResponse(body as FormResponse, res);
+      createFormResponse(body, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
@@ -63,9 +63,9 @@ const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
   }
 };
 
-const createFormResponse = async (body: FormResponse, res: NextApiResponse) => {
-  const col_names = Object.keys(body);
-  const col_values = Object.values(body);
+const createFormResponse = async (body: string, res: NextApiResponse) => {
+  const col_names = Object.keys(JSON.parse(body));
+  const col_values = Object.values(JSON.parse(body));
   const quoted_values = col_values.map((value) =>
     typeof value === 'string' ? `"${value}"` : value
   );
@@ -74,6 +74,7 @@ const createFormResponse = async (body: FormResponse, res: NextApiResponse) => {
 
   try {
     const result = await executeQuery({ sql });
+
     return res
       .status(201)
       .send('Successfully created form response with id: ' + result.insertId);
