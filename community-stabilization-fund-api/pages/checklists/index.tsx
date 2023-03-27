@@ -24,11 +24,11 @@ const ChecklistsPage: NextPage = () => {
   return (
     <>
       {formResponses?.map((formResponse) => (
-          <>
-            <ItemChecklistByRecipient formResponse={formResponse} />
-            <ItemChecklistByBag />
-          </>
-        ))}
+        <>
+          <ItemChecklistByRecipient formResponse={formResponse} />
+          <ItemChecklistByBag />
+        </>
+      ))}
     </>
   );
 };
