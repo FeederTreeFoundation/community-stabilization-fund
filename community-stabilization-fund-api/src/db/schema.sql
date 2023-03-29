@@ -13,6 +13,13 @@ CREATE TABLE api_key (
   name VARCHAR(20),
   api_user_id INT, FOREIGN KEY (api_user_id) REFERENCES api_user(id) ON DELETE CASCADE
 );
+
+CREATE TABLE feminine_health_response (
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    people_number INT NOT NULL,
+    hygiene_items JSON,
+    needs_plan_b BOOL
+);
  
 CREATE TABLE form_response (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -39,7 +46,8 @@ CREATE TABLE form_response (
   is_pick_up TINYINT NULL,
   is_volunteering TINYINT NULL,
   is_subscribing TINYINT NULL,
-  is_interested_in_membership TINYINT NULL
+  is_interested_in_membership TINYINT NULL,
+  FOREIGN KEY (feminine_health_care_id) REFERENCES feminine_health_response(id) ON DELETE CASCADE
 );
 
 INSERT INTO api_user

@@ -33,4 +33,11 @@ export interface FormResponse {
 export interface User {
   id: number;
   name: string;
-}
+};
+
+export interface FeminineHealthResponse {
+  id: number;
+  people_number: number;
+  hygiene_items: number[];
+  plan_b?: boolean;
+};
