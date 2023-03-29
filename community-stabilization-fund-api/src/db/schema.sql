@@ -18,7 +18,7 @@ CREATE TABLE form_response (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(20) NOT NULL,
   last_name VARCHAR(20) NOT NULL,
-  email VARCHAR(60) NOT NULL,
+  email VARCHAR(60) NULL,
   phone_number VARCHAR(15) NOT NULL,
   phone_type VARCHAR(7) NULL,
   address_id INT NULL UNIQUE,
