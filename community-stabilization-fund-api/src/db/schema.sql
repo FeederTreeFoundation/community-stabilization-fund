@@ -21,7 +21,7 @@ CREATE TABLE form_response (
   email VARCHAR(60) NOT NULL,
   phone_number VARCHAR(15) NOT NULL,
   phone_type VARCHAR(7) NULL,
-  address_id INT NOT NULL UNIQUE,
+  address_id INT NULL UNIQUE,
   address_city VARCHAR(36) NULL,
   address_country VARCHAR(60) NULL,
   address_line1 VARCHAR(120) NULL,
