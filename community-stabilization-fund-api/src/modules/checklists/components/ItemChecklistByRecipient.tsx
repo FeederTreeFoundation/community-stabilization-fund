@@ -13,8 +13,6 @@ import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
-const recipientInfoMock = mapFormResponseToRecipientInfo(formResponseMock);
-const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
 
 export interface ItemChecklistByRecipientProps {
   bagItemsMap?: BagItemsMap;
@@ -23,19 +21,10 @@ export interface ItemChecklistByRecipientProps {
 }
 
 const ItemChecklistByRecipient = ({
-  bagItemsMap = bagItemsMock,
-  formResponse,
+  formResponse = formResponseMock,
 }: ItemChecklistByRecipientProps) => {
-  // Have to fix type error
-  const [recipientInfo, setRecipientInfo] =
-    useState<ItemChecklistByRecipientProps['recipientInfo']>(recipientInfoMock);
-
-  useEffect(() => {
-    if (formResponse) {
-      const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
-      setRecipientInfo(recipientInfo);
-    }
-  }, [formResponse]);
+  const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
+  const bagItemsMap = mapFormResponseToBagItems(formResponse);
 
   const conditionalPunctuation = (text: string) =>
     text === 'COVID concern' ? '?' : ':';
