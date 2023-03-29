@@ -47,27 +47,22 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
     "people_number": formResponse["people_number"],
     "hygiene_items": formResponse["hygiene_items"],
     "needs_plan_b": formResponse["needs_plan_b"]
-  }
+  };
 
   const fem_sql = queries.makeCreateSql('feminine_health_response', fem_responses);
 
-
   try{
     const result = await executeQuery({fem_sql});
-    console.log({result})
-
     formResponse["feminine_health_care_id"] = result.insertId;
-
     const sql = queries.makeCreateSql('form_response', formResponse);
-
 
     try {
       const result = await executeQuery({ sql });
       console.log({ result });
 
       return res
-          .status(201)
-          .send('Successfully created form response with id: ' + result.insertId);
+        .status(201)
+        .send('Successfully created form response with id: ' + result.insertId);
     } catch (error) {
       return res.json({ error });
     }
