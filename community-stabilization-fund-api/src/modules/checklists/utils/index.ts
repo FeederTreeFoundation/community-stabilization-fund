@@ -1,3 +1,5 @@
+import { getAddress } from '../../form-responses';
+
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
@@ -12,10 +14,12 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
     household_members,
   } = formResponse;
 
+  const address = getAddress(formResponse);
+
   return [
     `${first_name} ${last_name}`,
     phone_number,
-    address_id ?? '',
+    address,
     `${is_pick_up ? "Pick Up" : "Drop Off"}`,
     `${has_flu_symptoms ? "Yes" : "No"}`,
     household_members
@@ -23,7 +27,7 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
 };
 
 export const mapFormResponseToBagItems = ({
-  household_members,
+  household_members = 0,
   feminine_health_care_id,
 }: FormResponse) =>
   ({

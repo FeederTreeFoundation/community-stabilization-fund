@@ -26,7 +26,7 @@ const ChecklistsPage: NextPage = () => {
       {formResponses?.map((formResponse) => (
         <>
           <ItemChecklistByRecipient formResponse={formResponse} />
-          <ItemChecklistByBag />
+          <ItemChecklistByBag formResponse={formResponse} />
         </>
       ))}
     </>

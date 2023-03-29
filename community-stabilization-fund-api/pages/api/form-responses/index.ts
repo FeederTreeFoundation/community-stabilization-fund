@@ -1,4 +1,6 @@
-import { executeQuery, FormResponse, queries } from '../../../src/db';
+import { executeQuery, queries } from '../../../src/db';
+
+import type { FormResponse} from '../../../src/db';
 
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 

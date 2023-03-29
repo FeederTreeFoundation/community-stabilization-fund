@@ -6,20 +6,21 @@ import { mapFormResponseToBagItems } from '../utils';
 
 import { BagLabels } from './BagLabels';
 
-import type { BagItemsMap } from '../types';
+import type { FormResponse } from '../../../db';
 
 import styles from '../styles/checklists.module.css';
 
-const bagItemsMock = mapFormResponseToBagItems(formResponseMock);
+
 // TODO: Convert this to a 4x2.5 set of labels printed horizontally
 export interface ItemChecklistByBagProps {
-  bagItemsMap?: BagItemsMap;
+  formResponse?: FormResponse;
 }
 
 const ItemChecklistByBag = ({
-  bagItemsMap = bagItemsMock,
+  formResponse = formResponseMock,
 }: ItemChecklistByBagProps) => {
   let labelCount = 0;
+  const bagItemsMap = mapFormResponseToBagItems(formResponse);
   const bagItemsLabels = Object.keys(bagItemsMap);
 
   return (
