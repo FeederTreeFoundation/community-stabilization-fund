@@ -7,7 +7,7 @@ import { BasicTable } from '../../../components';
 
 import { FORM_RESPONSE_QUESTIONS } from '../constants';
 
-import { mapBooleanToResponse } from '../utils';
+import { getAddress, mapBooleanToResponse } from '../utils';
 
 import type { FormResponse } from '../../../db';
 
@@ -35,7 +35,8 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
   const createRows = (formResponses: FormResponse[]) =>
     formResponses.map((resp) => {
       const feminine_health_care = !!resp.feminine_health_care_id;
-      const r = { ...resp, feminine_health_care };
+      const address = getAddress(resp);
+      const r = { ...resp, feminine_health_care, address };
 
       FORM_RESPONSE_QUESTIONS.forEach((q) => mapBooleanToResponse(r, q));
       return r;
