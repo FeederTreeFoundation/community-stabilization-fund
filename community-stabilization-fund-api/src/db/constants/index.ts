@@ -10,8 +10,8 @@ export const queries = {
     `
     UPDATE ${table}
       SET ${Object.entries(data)
-    .map(([key, value]) => `${key} = '${value}'`)
-    .join(',')}
+        .map(([key, value]) => `${key} = '${value}'`)
+        .join(',')}
       WHERE ${condition};
   `,
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
@@ -20,4 +20,5 @@ export const queries = {
     JOIN api_key ON api_user.id = api_key.api_user_id
     WHERE api_user.name = '${apiUser}' AND api_key.name = '${token}'
   `,
+  truncateTableSql: (table: string) => `TRUNCATE TABLE ${table}`,
 };
