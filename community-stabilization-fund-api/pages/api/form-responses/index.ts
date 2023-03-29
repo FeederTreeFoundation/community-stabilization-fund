@@ -1,33 +1,8 @@
-import { HttpStatusCode } from 'axios';
-import { ApiError } from 'next/dist/server/api-utils';
-
-import { executeQuery, queries } from '../../../src/db';
+import { executeQuery, FormResponse, queries } from '../../../src/db';
 
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 const responses: FormResponse[] = [];
-
-type FormResponse = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
-  phone_type: string;
-  address_id: number;
-  is_black: boolean;
-  is_local: boolean;
-  household_members: number;
-  has_flu_symptoms?: boolean;
-  packages: string[];
-  feminine_health_care_id: number;
-  item_requests: string;
-  additional_information: string;
-  is_pick_up: boolean;
-  is_volunteering: boolean;
-  is_subscribing: boolean;
-  is_joining: boolean;
-};
 
 type FeminineHealthCare = {
   isNeeded: boolean;
@@ -70,10 +45,10 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
     typeof value === 'string' ? `"${value}"` : value
   );
   const sql = queries.makeCreateSql('form_response', col_names, quoted_values);
-  console.log({ sql });
-
+  
   try {
     const result = await executeQuery({ sql });
+    console.log({ result });
 
     return res
       .status(201)
