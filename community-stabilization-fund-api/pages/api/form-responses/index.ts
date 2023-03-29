@@ -43,9 +43,10 @@ const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
 const createFormResponse = async (body: string, res: NextApiResponse) => {
   const col_names = Object.keys(JSON.parse(body));
   const col_values = Object.values(JSON.parse(body));
-  const quoted_values = col_values.map((value) =>
-    typeof value === 'string' ? `"${value}"` : value
-  );
+  const quoted_values = col_values.map((value) =>{
+    if(!value) return 'NULL';
+    return typeof value === 'string' ? `"${value}"` : value
+  });
   const sql = queries.makeCreateSql('form_response', col_names, quoted_values);
   
   try {
