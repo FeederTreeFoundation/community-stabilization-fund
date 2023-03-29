@@ -11,10 +11,10 @@ export const queries = {
     const unquoted_values = Object.keys(body);
     const values = unquoted_values.map((value) =>{
       if(typeof (value) === "undefined") return 'NULL';
-      return typeof value === 'string' ? `"${value}"` : value
+      return typeof value === 'string' ? `"${value}"` : value;
     });
 
-    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`
+    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`;
 
   },
   makeUpdateSql: (table: string, data: Data, condition: string) =>
