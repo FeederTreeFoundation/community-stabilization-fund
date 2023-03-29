@@ -21,8 +21,8 @@ export const queries = {
     `
     UPDATE ${table}
       SET ${Object.entries(data)
-        .map(([key, value]) => `${key} = '${value}'`)
-        .join(',')}
+    .map(([key, value]) => `${key} = '${value}'`)
+    .join(',')}
       WHERE ${condition};
   `,
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
