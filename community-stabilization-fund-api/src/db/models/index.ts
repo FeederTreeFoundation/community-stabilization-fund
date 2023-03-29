@@ -18,12 +18,16 @@ export interface FormResponse {
   is_volunteering?: boolean;
   is_subscribing?: boolean;
   is_joining?: boolean;
-  address_city?: string,
-  address_country?: string,
-  address_line1?: string,
-  address_line2?: string,
-  address_state?: string,
-  address_zip: string,
+  is_interested_in_membership?: boolean;
+  address_city?: string;
+  address_country?: string;
+  address_line1?: string;
+  address_line2?: string;
+  address_state?: string;
+  address_zip?: string;
+  submitted_on?: string;
+  live_in_pittsburgh_atlanta?: boolean;
+  live_in_southside_atlanta?: boolean;
 };
 
 export interface User {
