@@ -16,7 +16,7 @@ CREATE TABLE api_key (
 
 CREATE TABLE feminine_health_response (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    people_number INT NOT NULL,
+    feminine_members INT NOT NULL,
     hygiene_items JSON,
     needs_plan_b BOOL
 );
@@ -59,6 +59,11 @@ INSERT INTO api_key
 (name, api_user_id)
 VALUES
 ("bar", 1);
+
+INSERT INTO feminine_health_response
+(id, feminine_members, hygiene_items, needs_plan_b)
+VALUES
+(1, 1, '["Thin Pads"]', TRUE);
 
 INSERT INTO form_response
 (id,first_name, last_name, email, phone_number, phone_type, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)

@@ -11,10 +11,10 @@ export const queries = {
     const unquoted_values = Object.keys(body);
     const values = unquoted_values.map((value) =>{
       if(typeof (value) === "undefined") return 'NULL';
-      return typeof value === 'string' ? `"${value}"` : value
+      return typeof value === 'string' ? `"${value}"` : value;
     });
 
-    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`
+    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`;
 
   },
   makeUpdateSql: (table: string, data: Data, condition: string) =>
@@ -31,4 +31,5 @@ export const queries = {
     JOIN api_key ON api_user.id = api_key.api_user_id
     WHERE api_user.name = '${apiUser}' AND api_key.name = '${token}'
   `,
+  truncateTableSql: (table: string) => `TRUNCATE TABLE ${table}`,
 };
