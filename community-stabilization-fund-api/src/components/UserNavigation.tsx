@@ -17,9 +17,10 @@ const UserNavigation = () => {
   const userId = localStorage.getItem('api_user');
   const userPath = userId ? `/admin/users/${userId}` : '/admin/login';
   const [settingsState, setSettingsState] = useState<boolean>(false);
-
-  const resetFormResponse = async () => {
-    const resp = await FormResponseService.resetFormResponse();
+  const deleteAllFormResponsesText = "Delete's all form responses";
+  const deleteAllBtnText = 'Reset';
+  const deleteAllFormResponses = async () => {
+    const resp = await FormResponseService.deleteAllFormResponses();
     if (resp.status === 201) {
       setSettingsState(false);
     }
@@ -66,9 +67,9 @@ const UserNavigation = () => {
         size={'xs'}
         onRequestClose={() => setSettingsState(false)}
       >
-        <p>Delete&apos;s all form responses </p>
-        <Button kind={'danger'} onClick={resetFormResponse}>
-          Reset
+        <p className='mb-2'>{deleteAllFormResponsesText}</p>
+        <Button kind={'danger'} onClick={deleteAllFormResponses}>
+          {deleteAllBtnText}
         </Button>
       </Modal>
     </>

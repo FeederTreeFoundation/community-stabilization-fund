@@ -21,6 +21,9 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
     case 'POST':
       createFormResponse(body, res);
       break;
+    case 'DELETE':
+      deleteAllFormResponses(res);
+      break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
@@ -72,6 +75,16 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   }
   
 
+};
+
+const deleteAllFormResponses = async (res: NextApiResponse) => {
+  const sql = queries.truncateTableSql('form_response');
+  try {
+    const result = await executeQuery({ sql });
+    return res.status(201).send('Successfully reset table form_response');
+  } catch (error) {
+    return res.json({ error });
+  }
 };
 
 export default formResponseHandler;
