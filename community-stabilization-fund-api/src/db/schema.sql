@@ -16,7 +16,7 @@ CREATE TABLE api_key (
 
 CREATE TABLE feminine_health_response (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    people_number INT NOT NULL,
+    feminine_members INT NOT NULL,
     hygiene_items JSON,
     needs_plan_b BOOL
 );
@@ -61,7 +61,7 @@ VALUES
 ("bar", 1);
 
 INSERT INTO feminine_health_response
-(id, people_number, hygiene_items, needs_plan_b)
+(id, feminine_members, hygiene_items, needs_plan_b)
 VALUES
 (1, 1, '["Thin Pads"]', TRUE);
 
