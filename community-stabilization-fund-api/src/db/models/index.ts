@@ -37,7 +37,7 @@ export interface User {
 
 export interface FeminineHealthResponse {
   id: number;
-  people_number: number;
+  feminine_members: number;
   hygiene_items: number[];
   plan_b?: boolean;
 };

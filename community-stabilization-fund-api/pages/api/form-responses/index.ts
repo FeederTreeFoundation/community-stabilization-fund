@@ -44,7 +44,7 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   const formResponse = JSON.parse(body);
 
   const fem_responses = {
-    "people_number": formResponse["people_number"],
+    "feminine_members": formResponse["feminine_members"],
     "hygiene_items": formResponse["hygiene_items"],
     "needs_plan_b": formResponse["needs_plan_b"]
   };
