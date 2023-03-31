@@ -25,13 +25,13 @@ const Layout = ({children}: LayoutProps) =>{
           <HeaderNavigation aria-label="Community Stabilization Fund">
             <HeaderItem route={ROUTES["form-responses"]} selectedPage={selectedPage} changeSelectedPage={setSelectedPage} />
             <HeaderItem route={ROUTES["checklists"]} selectedPage={selectedPage} changeSelectedPage={setSelectedPage} />
-            <HeaderMenuItem href="#">Link 3</HeaderMenuItem>
+            {/* <HeaderMenuItem href="#">Link 3</HeaderMenuItem>
             <HeaderMenu aria-label="Link 4" menuLinkName="Link 4">
               <HeaderMenuItem href="#">Sub-link 1</HeaderMenuItem>
               <HeaderMenuItem href="#">Sub-link 2</HeaderMenuItem>
               <HeaderMenuItem href="#">Sub-link 3</HeaderMenuItem>
             </HeaderMenu>
-          </HeaderNavigation>
+          </HeaderNavigation> */}
           <UserNavigation />
         </Header>
       </Theme>
