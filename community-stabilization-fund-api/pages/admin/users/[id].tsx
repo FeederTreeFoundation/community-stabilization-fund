@@ -37,11 +37,6 @@ const AdminPage = () => {
     getUser();
   }, [id]);
 
-  const handleDelete = async () => {
-    await UserService.logout();
-    axios.delete(`/api/users/${user.id}`).then((res) => console.log(res));
-  };
-
   const handleRevokeAdmin = () => {
     UserService.logout();
   };
@@ -64,9 +59,6 @@ const AdminPage = () => {
       <div className={styles.buttons}>
         <Button kind='primary' size='md' onClick={handleEdit}>
           {isEditing ? 'Cancel' : 'Edit'}
-        </Button>
-        <Button kind='danger' size='md' onClick={handleDelete}>
-          Delete User
         </Button>
         <Button kind='ghost' size='md' onClick={handleRevokeAdmin}>
           Logout Admin
