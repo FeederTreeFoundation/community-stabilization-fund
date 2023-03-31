@@ -15,8 +15,6 @@ import type { BagItemsMap } from '../types';
 import styles from '../styles/checklists.module.css';
 
 export interface ItemChecklistByRecipientProps {
-  bagItemsMap?: BagItemsMap;
-  recipientInfo?: (string | number)[];
   formResponse?: FormResponse;
 }
 
@@ -29,10 +27,14 @@ const ItemChecklistByRecipient = ({
   const conditionalPunctuation = (text: string) =>
     text === 'COVID concern' ? '?' : ':';
 
-  const getRecipientInfo = (text: string, id: number) => {
-    if (recipientInfo)
-      return `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
-  };
+  const getRecipientInfo = (text: string, id: number) => (
+      <>
+        <strong>
+          {text}{conditionalPunctuation(text)}
+        </strong>
+        {' '}{recipientInfo[id]}
+      </>
+    );
 
   const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.map((field, id) => (
     <p key={field + id} className={styles.user_info__p}>
