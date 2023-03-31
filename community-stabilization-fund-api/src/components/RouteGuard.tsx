@@ -11,7 +11,7 @@ function RouteGuard({ children }: RouteGuardProps) {
   const [authorized, setAuthorized] = useState(false);
   const { user, error, isLoading } = useUser();
 
-  const handleAuthCheck = useCallback(authCheck, [router]);
+  const handleAuthCheck = useCallback(authCheck, [router, user, isLoading]);
 
   useEffect(() => {
     // on initial load - run auth check
