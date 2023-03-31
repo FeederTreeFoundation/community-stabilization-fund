@@ -19,6 +19,7 @@ const UserNavigation = () => {
   const [settingsState, setSettingsState] = useState<boolean>(false);
   const deleteAllFormResponsesText = "Delete's all form responses";
   const deleteAllBtnText = 'Reset';
+
   const deleteAllFormResponses = async () => {
     const resp = await FormResponseService.deleteAllFormResponses();
     if (resp.status === 201) {

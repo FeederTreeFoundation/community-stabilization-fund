@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { useUser } from '@auth0/nextjs-auth0';
 import { Button, TextInput, Modal } from 'carbon-components-react';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-
 import { useForm } from 'react-hook-form';
 
 import UserService from '../../../src/services/user';
@@ -9,6 +9,7 @@ import UserService from '../../../src/services/user';
 import type { User } from '../../../src/db';
 
 import styles from './users.module.css';
+
 
 type FormData = {
   username: string;
@@ -20,53 +21,64 @@ const AdminPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  
+  const router = useRouter();
+  const { user, error, isLoading} = useUser();
 
-  const id = localStorage.getItem('api_user');
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [user, setUser] = useState<User>({
-    id: 0,
-    name: '',
-  });
+  const [apiUser, setApiUser] = useState<User>();
+  
+  const id = router.query.id;
+  const apiUserId = localStorage.getItem('api_user');
 
   useEffect(() => {
-    const getUser = async () => {
-      const user = await UserService.getById(id as string);
+    async function getApiUser (id?: string) {
       if (!id || typeof id !== 'string') return;
-      if (user?.data) setUser(user?.data[0]);
+      const apiUser = await UserService.getById(id);
+      
+      if (apiUser?.data) setApiUser(apiUser?.data[0]);
     };
-    getUser();
-  }, [id]);
+  
+    function checkUserData() {
+      if(apiUserId === id) getApiUser(apiUserId);
+    }
+
+    checkUserData();
+  }, [apiUserId, id]);
 
   const handleRevokeAdmin = () => {
     UserService.logout();
   };
 
   const onSubmit = (data: FormData) => {
-    const updatedUser = { ...user, name: data.username };
-    UserService.update(`${user.id}`, updatedUser).then((res) => {
-      setUser(updatedUser);
+    const updatedApiUser = { ...apiUser, name: data.username } as User;
+    UserService.update(`${apiUser?.id}`, updatedApiUser).then((res) => {
+      
+      setApiUser(updatedApiUser);
     });
     setIsEditing(false);
   };
 
   const handleEdit = () => setIsEditing(!isEditing);
 
+  if(isLoading) return;
+
   return (
     <div className={`${styles.container} ${styles.mt_6}`}>
       <div className={styles.header}>
         <h1>Hi, {`${user?.name}`}</h1>
       </div>
-      <div className={styles.buttons}>
+      { apiUser && (<div className={styles.buttons}>
         <Button kind='primary' size='md' onClick={handleEdit}>
-          {isEditing ? 'Cancel' : 'Edit'}
+          {isEditing ? 'Cancel' : 'Edit Api Key'}
         </Button>
         <Button kind='ghost' size='md' onClick={handleRevokeAdmin}>
           Logout Admin
         </Button>
-      </div>
+      </div> )}
       <Modal
         open={isEditing}
-        modalHeading='Edit username'
+        modalHeading='Edit api key'
         modalLabel='Admin functions'
         primaryButtonText='Update'
         secondaryButtonText='Cancel'
@@ -75,8 +87,9 @@ const AdminPage = () => {
       >
         <TextInput
           id='name'
-          labelText='Username'
-          placeholder='Placeholder text'
+          labelText='Api User'
+          defaultValue={apiUser?.name}
+          placeholder='Enter the name of the api user'
           {...register('username', { required: true })}
           invalid={!!errors.username}
         />
