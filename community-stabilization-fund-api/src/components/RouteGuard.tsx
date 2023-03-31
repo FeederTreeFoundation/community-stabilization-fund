@@ -35,7 +35,8 @@ function RouteGuard({ children }: RouteGuardProps) {
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = localStorage.getItem('api_user');
-    const publicPaths = ['/admin/login', '/'];
+    const publicPaths = ['/'];
+    const privatePaths = ['/form-responses', '/checklists']
     const path = url.split('?')[0];
 
     // TODO: Use Roles Based Authentication instead
@@ -44,7 +45,7 @@ function RouteGuard({ children }: RouteGuardProps) {
       router.push({
         pathname: '/api/auth/login'
       });
-    } else if (typeof apiUserId !== 'string' && !publicPaths.includes(path)) {
+    } else if (typeof apiUserId !== 'string' && privatePaths.includes(path)) {   
       setAuthorized(false);
       router.push({
         pathname: '/admin/login',
