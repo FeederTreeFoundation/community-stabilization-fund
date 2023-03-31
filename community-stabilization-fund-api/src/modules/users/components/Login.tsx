@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 
 interface LoginProps {
     handleLogin: (apiKey: string) => void;
-};
+}
 
 const Login = ({handleLogin}: LoginProps) => {
   const [warn, setWarn] = useState(false);

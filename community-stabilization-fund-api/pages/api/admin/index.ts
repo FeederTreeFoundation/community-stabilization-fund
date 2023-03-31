@@ -13,4 +13,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   // const adminUsers = users.filter(user => user.role === 'admin');
 
   res.status(200).json({ data: users });
-};
+}
