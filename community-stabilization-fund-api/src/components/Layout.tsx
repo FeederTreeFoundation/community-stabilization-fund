@@ -30,8 +30,8 @@ const Layout = ({children}: LayoutProps) =>{
               <HeaderMenuItem href="#">Sub-link 1</HeaderMenuItem>
               <HeaderMenuItem href="#">Sub-link 2</HeaderMenuItem>
               <HeaderMenuItem href="#">Sub-link 3</HeaderMenuItem>
-            </HeaderMenu>
-          </HeaderNavigation> */}
+            </HeaderMenu> */}
+          </HeaderNavigation>
           <UserNavigation />
         </Header>
       </Theme>
