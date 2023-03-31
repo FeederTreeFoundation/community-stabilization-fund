@@ -37,7 +37,7 @@ const AdminPage = () => {
       const apiUser = await UserService.getById(id);
       
       if (apiUser?.data) setApiUser(apiUser?.data[0]);
-    };
+    }
   
     function checkUserData() {
       if(apiUserId === id) getApiUser(apiUserId);

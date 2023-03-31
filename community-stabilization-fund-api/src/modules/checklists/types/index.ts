@@ -3,4 +3,4 @@ export interface BagItemsMap {
       name: string;
       quantity: number;
     }[]
-  };
+  }

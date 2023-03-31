@@ -16,6 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </RouteGuard>
     </UserProvider>
   );
-};
+}
 
 export default MyApp;
