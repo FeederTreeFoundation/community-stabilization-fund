@@ -9,13 +9,12 @@ import '../styles/globals.css';
 import '../styles/styles.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
-
   return (
-    <RouteGuard>
-      <UserProvider>
+    <UserProvider>
+      <RouteGuard>
         <Layout><Component {...pageProps} /></Layout>
-      </UserProvider>
-    </RouteGuard>
+      </RouteGuard>
+    </UserProvider>
   );
 };
 
