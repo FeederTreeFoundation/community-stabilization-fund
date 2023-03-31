@@ -12,13 +12,12 @@ import { useState } from 'react';
 import FormResponseService from '../services/form-response';
 
 const UserNavigation = () => {
-  const { user, error, isLoading } = useUser();
-
-  const userId = localStorage.getItem('api_user');
-  const userPath = userId ? `/admin/users/${userId}` : '/admin/login';
   const [settingsState, setSettingsState] = useState<boolean>(false);
-  const deleteAllFormResponsesText = "Delete's all form responses";
-  const deleteAllBtnText = 'Reset';
+  const { user, error, isLoading } = useUser();
+  
+  const apiUserId = localStorage.getItem('api_user');
+  const userPath = apiUserId ? `/admin/users/${apiUserId}` : '/admin/login';
+  const deleteAllFormResponsesText = "WARNING: This will delete all existing form data!";
 
   const deleteAllFormResponses = async () => {
     const resp = await FormResponseService.deleteAllFormResponses();
@@ -32,9 +31,11 @@ const UserNavigation = () => {
   if (error || !user) {
     return (
       <HeaderGlobalBar>
-        <HeaderGlobalAction aria-label='Login' onClick={() => {}}>
-          <Link href='/api/auth/login'>Login</Link>
-        </HeaderGlobalAction>
+        <Link href='/api/auth/login'>
+          <HeaderGlobalAction aria-label='Login' onClick={() => {}}>
+            Login
+          </HeaderGlobalAction>
+        </Link>
       </HeaderGlobalBar>
     );
   }
@@ -43,34 +44,36 @@ const UserNavigation = () => {
   return (
     <>
       <HeaderGlobalBar>
-        <HeaderGlobalAction
+        { apiUserId && <HeaderGlobalAction
           aria-label='Settings'
           onClick={() => {
             setSettingsState(!settingsState);
           }}
         >
           <Settings />
-        </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label='My Profile' onClick={() => {}}>
-          <Link href={userPath}>{user.org_id ? <UserAdmin /> : <User />}</Link>
-        </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label='Log Out' onClick={() => {}}>
-          <Link href='/api/auth/logout'>
+        </HeaderGlobalAction>}
+        <Link href={userPath}>
+          <HeaderGlobalAction aria-label='My Profile' onClick={() => {}}>
+            {user.org_id ? <UserAdmin /> : <User />}
+          </HeaderGlobalAction>
+        </Link>
+        <Link href='/api/auth/logout'>
+          <HeaderGlobalAction aria-label='Log Out' onClick={() => {}}>
             <Logout />
-          </Link>
-        </HeaderGlobalAction>
+          </HeaderGlobalAction>
+        </Link>
       </HeaderGlobalBar>
       <Modal
         open={settingsState}
         modalHeading='Reset form responses'
         modalLabel='Admin functions'
         passiveModal={true}
-        size={'xs'}
+        size={'sm'}
         onRequestClose={() => setSettingsState(false)}
       >
         <p className='mb-2'>{deleteAllFormResponsesText}</p>
         <Button kind={'danger'} onClick={deleteAllFormResponses}>
-          {deleteAllBtnText}
+          Reset
         </Button>
       </Modal>
     </>
