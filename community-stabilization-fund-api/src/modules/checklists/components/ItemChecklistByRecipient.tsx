@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import { formResponseMock } from '../../../mocks';
 import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
@@ -15,8 +13,6 @@ import type { BagItemsMap } from '../types';
 import styles from '../styles/checklists.module.css';
 
 export interface ItemChecklistByRecipientProps {
-  bagItemsMap?: BagItemsMap;
-  recipientInfo?: (string | number)[];
   formResponse?: FormResponse;
 }
 
@@ -29,10 +25,14 @@ const ItemChecklistByRecipient = ({
   const conditionalPunctuation = (text: string) =>
     text === 'COVID concern' ? '?' : ':';
 
-  const getRecipientInfo = (text: string, id: number) => {
-    if (recipientInfo)
-      return `${text}${conditionalPunctuation(text)} ${recipientInfo[id]}`;
-  };
+  const getRecipientInfo = (text: string, id: number) => (
+    <>
+      <strong>
+        {text}{conditionalPunctuation(text)}
+      </strong>
+      {' '}{recipientInfo[id]}
+    </>
+  );
 
   const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.map((field, id) => (
     <p key={field + id} className={styles.user_info__p}>
@@ -45,7 +45,7 @@ const ItemChecklistByRecipient = ({
     ? bagItemsMap
     : omit('Feminine Hygiene', bagItemsMap);
 
-  const bagItemTables = Object.keys(bagItemsObj).map((key, id) => {
+  const bagItemTables = Object.keys(bagItemsObj).map((key) => {
     const thead = key;
     const bagItems = bagItemsObj[key].map(
       (item) => `${item.name} (x${item.quantity})`
@@ -55,7 +55,6 @@ const ItemChecklistByRecipient = ({
         thead={thead}
         key={key}
         items={bagItems}
-        isFirstIndex={id === 0}
       />
     );
   });

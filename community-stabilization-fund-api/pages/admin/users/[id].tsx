@@ -1,89 +1,101 @@
-import axios from 'axios';
-import { Button, TextInput } from 'carbon-components-react';
-
-import { useState, useEffect, useRef } from 'react';
+import { useUser } from '@auth0/nextjs-auth0';
+import { Button, TextInput, Modal } from 'carbon-components-react';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 import UserService from '../../../src/services/user';
 
 import type { User } from '../../../src/db';
-import type { ChangeEvent, FormEvent } from 'react';
 
 import styles from './users.module.css';
 
+
+type FormData = {
+  username: string;
+};
+
 const AdminPage = () => {
-  const id = localStorage.getItem('api_user');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+  
+  const router = useRouter();
+  const { user, error, isLoading} = useUser();
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [user, setUser] = useState<User>({
-    id: 0,
-    name: '',
-  });
+  const [apiUser, setApiUser] = useState<User>();
+  
+  const id = router.query.id;
+  const apiUserId = localStorage.getItem('api_user');
 
-  const inputRef = useRef('');
   useEffect(() => {
-    const getUser = async () => {
-      const user = await UserService.getById(id as string);
+    async function getApiUser (id?: string) {
       if (!id || typeof id !== 'string') return;
-      if (user?.data) setUser(user?.data[0]);
-    };
-    getUser();
-  }, [id]);
+      const apiUser = await UserService.getById(id);
+      
+      if (apiUser?.data) setApiUser(apiUser?.data[0]);
+    }
+  
+    function checkUserData() {
+      if(apiUserId === id) getApiUser(apiUserId);
+    }
 
-  const handleDelete = async () => {
-    await UserService.logout();
-    axios.delete(`/api/users/${user.id}`).then((res) => console.log(res));
-  };
-
-  const handleChange = (e: ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    inputRef.current = value;
-  };
+    checkUserData();
+  }, [apiUserId, id]);
 
   const handleRevokeAdmin = () => {
     UserService.logout();
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const updatedUser = { ...user, name: inputRef.current };
-    UserService.update(`${user.id}`, updatedUser).then((res) => {
-      setUser(updatedUser);
+  const onSubmit = (data: FormData) => {
+    const updatedApiUser = { ...apiUser, name: data.username } as User;
+    UserService.update(`${apiUser?.id}`, updatedApiUser).then((_) => {
+      
+      setApiUser(updatedApiUser);
     });
+    setIsEditing(false);
   };
 
-  // TODO: Open a modal to edit User when isEditing is true
   const handleEdit = () => setIsEditing(!isEditing);
+
+  if(isLoading) return;
+
+  if(error) return <>Error: {error.message ?? 'Unknown error'}</>;
 
   return (
     <div className={`${styles.container} ${styles.mt_6}`}>
       <div className={styles.header}>
         <h1>Hi, {`${user?.name}`}</h1>
       </div>
-      <div className={styles.buttons}>
+      { apiUser && (<div className={styles.buttons}>
         <Button kind='primary' size='md' onClick={handleEdit}>
-          {isEditing ? 'Cancel' : 'Edit'}
-        </Button>
-        <Button kind='danger' size='md' onClick={handleDelete}>
-          Delete User
+          {isEditing ? 'Cancel' : 'Edit Api Key'}
         </Button>
         <Button kind='ghost' size='md' onClick={handleRevokeAdmin}>
           Logout Admin
         </Button>
-      </div>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        {isEditing && (
-          <>
-            <TextInput
-              id='name'
-              labelText='Username'
-              placeholder='Placeholder text'
-              onChange={handleChange}
-            />
-            <Button kind='primary' size='md' type='submit'>
-              Update
-            </Button>
-          </>
-        )}
-      </form>
+      </div> )}
+      <Modal
+        open={isEditing}
+        modalHeading='Edit api key'
+        modalLabel='Admin functions'
+        primaryButtonText='Update'
+        secondaryButtonText='Cancel'
+        onRequestSubmit={handleSubmit(onSubmit)}
+        onRequestClose={() => setIsEditing(false)}
+      >
+        <TextInput
+          id='name'
+          labelText='Api User'
+          defaultValue={apiUser?.name}
+          placeholder='Enter the name of the api user'
+          {...register('username', { required: true })}
+          invalid={!!errors.username}
+        />
+      </Modal>
     </div>
   );
 };

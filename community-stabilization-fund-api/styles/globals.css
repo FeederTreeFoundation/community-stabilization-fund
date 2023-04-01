@@ -15,8 +15,15 @@ a {
   box-sizing: border-box;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 @media print {
-  header, footer, nav, aside {
-     display: none !important;
+  header,
+  footer,
+  nav,
+  aside {
+    display: none !important;
   }
 }

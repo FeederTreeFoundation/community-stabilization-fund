@@ -1,3 +1,5 @@
+-- Uncomment when creating your own database:
+
 DROP DATABASE IF EXISTS csf_db;
 
 CREATE DATABASE csf_db;
@@ -12,6 +14,13 @@ CREATE TABLE api_key (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   name VARCHAR(20),
   api_user_id INT, FOREIGN KEY (api_user_id) REFERENCES api_user(id) ON DELETE CASCADE
+);
+
+CREATE TABLE feminine_health_response (
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    feminine_members INT NOT NULL,
+    hygiene_items JSON,
+    needs_plan_b BOOL
 );
  
 CREATE TABLE form_response (
@@ -39,7 +48,8 @@ CREATE TABLE form_response (
   is_pick_up TINYINT NULL,
   is_volunteering TINYINT NULL,
   is_subscribing TINYINT NULL,
-  is_interested_in_membership TINYINT NULL
+  is_interested_in_membership TINYINT NULL,
+  FOREIGN KEY (feminine_health_care_id) REFERENCES feminine_health_response(id) ON DELETE CASCADE
 );
 
 INSERT INTO api_user
@@ -51,6 +61,11 @@ INSERT INTO api_key
 (name, api_user_id)
 VALUES
 ("bar", 1);
+
+INSERT INTO feminine_health_response
+(id, feminine_members, hygiene_items, needs_plan_b)
+VALUES
+(1, 1, '["Thin Pads"]', TRUE);
 
 INSERT INTO form_response
 (id,first_name, last_name, email, phone_number, phone_type, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)

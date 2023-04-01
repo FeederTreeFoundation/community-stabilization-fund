@@ -28,9 +28,16 @@ export interface FormResponse {
   submitted_on?: string;
   live_in_pittsburgh_atlanta?: boolean;
   live_in_southside_atlanta?: boolean;
-};
+}
 
 export interface User {
   id: number;
   name: string;
+}
+
+export interface FeminineHealthResponse {
+  id: number;
+  feminine_members: number;
+  hygiene_items: number[];
+  plan_b?: boolean;
 }

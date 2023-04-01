@@ -9,7 +9,7 @@ interface HeaderItemProps {
     changeSelectedPage?: (selectedPage: string) => void;
     selectedPage?: string;
     prefix?: string | null;
-  };
+  }
 
 const HeaderItem = ({ route, selectedPage, changeSelectedPage, prefix}: HeaderItemProps) => (
   <Link href={route.PATH} passHref>

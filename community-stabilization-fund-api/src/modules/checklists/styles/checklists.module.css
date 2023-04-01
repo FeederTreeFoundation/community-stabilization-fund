@@ -45,6 +45,7 @@
 }
 
 .user_info {
+  max-width: 500px;
   font-size: 35px;
   line-height: 0.5;
 }

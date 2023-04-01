@@ -1,3 +1,4 @@
+import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -8,14 +9,13 @@ interface RouteGuardProps {
 function RouteGuard({ children }: RouteGuardProps) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+  const { user, isLoading } = useUser();
 
-  const handleAuthCheck = useCallback(authCheck, [router]);
+  const handleAuthCheck = useCallback(authCheck, [router, user, isLoading]);
 
   useEffect(() => {
     // on initial load - run auth check
-    const apiUserId = localStorage.getItem('api_user') ?? undefined;
-    
-    handleAuthCheck(router.asPath, { apiUserId });
+    handleAuthCheck(router.asPath, {});
 
     // on route change start - hide page content by setting authorized to false
     const hideContent = () => setAuthorized(false);
@@ -35,11 +35,17 @@ function RouteGuard({ children }: RouteGuardProps) {
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = localStorage.getItem('api_user');
-    const publicPaths = ['/admin/login', '/'];
+    const publicPaths = ['/'];
+    const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
 
-    // TODO: check api user against auth0 user
-    if (typeof apiUserId !== 'string' && !publicPaths.includes(path)) {
+    // TODO: Use Roles Based Authentication instead
+    if(!user && !isLoading && !publicPaths.includes(path)) {
+      setAuthorized(false);
+      router.push({
+        pathname: '/api/auth/login'
+      });
+    } else if (typeof apiUserId !== 'string' && privatePaths.includes(path)) {   
       setAuthorized(false);
       router.push({
         pathname: '/admin/login',
