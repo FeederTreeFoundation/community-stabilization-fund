@@ -1,7 +1,4 @@
-import {NULL} from "sass";
-
 type Data = Record<string, string>;
-// import type { User } from '../models';
 
 export const queries = {
   makeGetAllSql: (table: string) => `SELECT * FROM ${table}`,

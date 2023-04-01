@@ -21,7 +21,6 @@ const ItemChecklistByBag = ({
 }: ItemChecklistByBagProps) => {
   let labelCount = 0;
   const bagItemsMap = mapFormResponseToBagItems(formResponse);
-  const bagItemsLabels = Object.keys(bagItemsMap);
 
   return (
     <div id='item-checklist' className={styles.item_checklist_wrapper}>

@@ -1,6 +1,6 @@
 import { Button, TextInput } from 'carbon-components-react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import UserService from '../../../src/services/user';
 

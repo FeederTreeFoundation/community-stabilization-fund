@@ -9,7 +9,7 @@ interface RouteGuardProps {
 function RouteGuard({ children }: RouteGuardProps) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
-  const { user, error, isLoading } = useUser();
+  const { user, isLoading } = useUser();
 
   const handleAuthCheck = useCallback(authCheck, [router, user, isLoading]);
 
@@ -36,7 +36,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = localStorage.getItem('api_user');
     const publicPaths = ['/'];
-    const privatePaths = ['/form-responses', '/checklists']
+    const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
 
     // TODO: Use Roles Based Authentication instead

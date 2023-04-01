@@ -41,7 +41,7 @@ const getUserById = async (id: string, res: NextApiResponse) => {
     return res.json({ ...user });
   }
   catch (error) { 
-
+    return res.json({error});
   }
 };
 
