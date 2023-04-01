@@ -1,8 +1,8 @@
 import {
   Header,
   HeaderNavigation,
-  HeaderMenu,
-  HeaderMenuItem,
+  // HeaderMenu,
+  // HeaderMenuItem,
   Theme
 } from "@carbon/react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { ROUTES } from "../services/constants";
 import { HeaderItem } from "./HeaderItem";
 import { UserNavigation } from "./UserNavigation";
 
-interface LayoutProps { children: JSX.Element };
+interface LayoutProps { children: JSX.Element }
 
 const Layout = ({children}: LayoutProps) =>{
   const [selectedPage, setSelectedPage] = useState('');

@@ -52,7 +52,7 @@ const AdminPage = () => {
 
   const onSubmit = (data: FormData) => {
     const updatedApiUser = { ...apiUser, name: data.username } as User;
-    UserService.update(`${apiUser?.id}`, updatedApiUser).then((res) => {
+    UserService.update(`${apiUser?.id}`, updatedApiUser).then((_) => {
       
       setApiUser(updatedApiUser);
     });
@@ -62,6 +62,8 @@ const AdminPage = () => {
   const handleEdit = () => setIsEditing(!isEditing);
 
   if(isLoading) return;
+
+  if(error) return <>Error: {error.message ?? 'Unknown error'}</>;
 
   return (
     <div className={`${styles.container} ${styles.mt_6}`}>

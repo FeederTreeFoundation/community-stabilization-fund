@@ -4,13 +4,11 @@ import styles from '../styles/checklists.module.css';
 
 export interface ItemChecklistTableColumnProps {
   items: string[];
-  isFirstIndex?: boolean;
   thead: string;
 }
 
 const ItemChecklistTableColumn = ({
   items,
-  isFirstIndex = true,
   thead,
 }: ItemChecklistTableColumnProps) => (
   <div className={styles.table_info}>

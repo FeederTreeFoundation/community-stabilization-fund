@@ -1,5 +1,5 @@
 import { useUser } from '@auth0/nextjs-auth0';
-import { UserAdmin, Logout, Login, User, Settings } from '@carbon/icons-react';
+import { UserAdmin, Logout, User, Settings } from '@carbon/icons-react';
 import {
   HeaderGlobalAction,
   HeaderGlobalBar,

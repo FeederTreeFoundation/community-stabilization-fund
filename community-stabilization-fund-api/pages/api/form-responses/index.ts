@@ -2,15 +2,8 @@ import { executeQuery, queries } from '../../../src/db';
 
 import type { FormResponse} from '../../../src/db';
 
-import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const responses: FormResponse[] = [];
-
-type FeminineHealthCare = {
-  isNeeded: boolean;
-  householdMembers: number;
-  items: string[];
-};
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body, url } = req;
 
@@ -31,7 +24,7 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-const getAllFormResponses = async (res: NextApiResponse, url?: string) => {
+const getAllFormResponses = async (res: NextApiResponse) => {
   const sql = queries.makeGetAllSql('form_response');
 
   try {
@@ -80,7 +73,7 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
 const deleteAllFormResponses = async (res: NextApiResponse) => {
   const sql = queries.truncateTableSql('form_response');
   try {
-    const result = await executeQuery({ sql });
+    await executeQuery({ sql });
     return res.status(201).send('Successfully reset table form_response');
   } catch (error) {
     return res.json({ error });
