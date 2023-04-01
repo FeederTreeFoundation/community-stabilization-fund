@@ -20,6 +20,13 @@
     "react/jsx-props-no-spreading": 0,
     "react/prop-types": 0,
     "no-unused-expressions": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error", { 
+        "argsIgnorePattern": "^_", 
+        "ignoreRestSiblings": true 
+      }
+    ],
     "comma-dangle": 0,
     "rest-spread-spacing": ["error", "never"],
     "semi": ["warn", "always", { "omitLastInOneLineBlock": true }],
@@ -60,5 +67,13 @@
         "alphabetize": { "order": "asc" }
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
 }

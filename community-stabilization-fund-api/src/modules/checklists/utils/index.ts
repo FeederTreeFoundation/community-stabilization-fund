@@ -8,7 +8,6 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
     first_name,
     last_name,
     phone_number,
-    address_id,
     is_pick_up,
     has_flu_symptoms,
     household_members,

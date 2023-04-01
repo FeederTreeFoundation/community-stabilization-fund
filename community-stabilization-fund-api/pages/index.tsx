@@ -1,12 +1,11 @@
 import Head from 'next/head';
-import Image from 'next/image';
 
 import type { NextPage } from 'next';
 
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-  const title = `Welcome to Community Stabilization Fund\'s API!`;
+  const title = "Welcome to Community Stabilization Fund's API!";
   return (
     <div>
       <Head>

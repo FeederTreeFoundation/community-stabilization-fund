@@ -1,4 +1,4 @@
 export function omit(key: string, obj: any) {
-  const { [key]: omitted, ...rest } = obj;
+  const { [key]: _omitted, ...rest } = obj;
   return rest;
 }
