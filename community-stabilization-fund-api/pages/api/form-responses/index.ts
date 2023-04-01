@@ -5,11 +5,11 @@ import type { FormResponse} from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, body, url } = req;
+  const { method, body } = req;
 
   switch (method) {
     case 'GET':
-      getAllFormResponses(res, url);
+      getAllFormResponses(res);
       break;
     case 'POST':
       createFormResponse(body, res);
