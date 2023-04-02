@@ -3,16 +3,17 @@ type Data = Record<string, string>;
 export const queries = {
   makeGetAllSql: (table: string) => `SELECT * FROM ${table}`,
   makeGetByIdSql: (table: string) => `SELECT * FROM ${table} WHERE id = ?`,
-  makeCreateSql: (table: string, body: any) =>{
+  makeCreateSql: (table: string, body: any) => {
     const names = Object.keys(body);
     const unquoted_values = Object.keys(body);
-    const values = unquoted_values.map((value) =>{
-      if(typeof (value) === "undefined") return 'NULL';
+    const values = unquoted_values.map((value) => {
+      if (typeof value === 'undefined') return 'NULL';
       return typeof value === 'string' ? `"${value}"` : value;
     });
 
-    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`;
-
+    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(
+      ','
+    )});`;
   },
   makeUpdateSql: (table: string, data: Data, condition: string) =>
     `
@@ -23,6 +24,8 @@ export const queries = {
       WHERE ${condition};
   `,
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
+  makeBulkDeleteSql: (table: string, ids: string[]) =>
+    `DELETE FROM ${table} WHERE id in (${ids.join(',')});`,
   makeAuthenticateSql: (apiUser: string, token: string) => `
     SELECT api_user.id FROM api_user
     JOIN api_key ON api_user.id = api_key.api_user_id
