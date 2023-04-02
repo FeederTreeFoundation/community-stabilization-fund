@@ -1,6 +1,6 @@
 import { executeQuery, queries } from '../../../src/db';
 
-import type { FormResponse} from '../../../src/db';
+import type { FormResponse } from '../../../src/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -15,7 +15,12 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       createFormResponse(body, res);
       break;
     case 'DELETE':
-      deleteAllFormResponses(res);
+      if (body.id) {
+        const { id } = body;
+        deleteOneFormResponse(id, res);
+      } else {
+        deleteAllFormResponses(res);
+      }
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
@@ -40,16 +45,19 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   const formResponse = JSON.parse(body);
 
   const fem_responses = {
-    "feminine_members": formResponse["feminine_members"],
-    "hygiene_items": formResponse["hygiene_items"],
-    "needs_plan_b": formResponse["needs_plan_b"]
+    feminine_members: formResponse['feminine_members'],
+    hygiene_items: formResponse['hygiene_items'],
+    needs_plan_b: formResponse['needs_plan_b'],
   };
 
-  const fem_sql = queries.makeCreateSql('feminine_health_response', fem_responses);
+  const fem_sql = queries.makeCreateSql(
+    'feminine_health_response',
+    fem_responses
+  );
 
-  try{
-    const result = await executeQuery({fem_sql});
-    formResponse["feminine_health_care_id"] = result.insertId;
+  try {
+    const result = await executeQuery({ fem_sql });
+    formResponse['feminine_health_care_id'] = result.insertId;
     const sql = queries.makeCreateSql('form_response', formResponse);
 
     try {
@@ -62,12 +70,25 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
     } catch (error) {
       return res.json({ error });
     }
-
   } catch (error) {
-    return res.json({error});
+    return res.json({ error });
   }
-  
+};
 
+const deleteOneFormResponse = async (ids: string[], res: NextApiResponse) => {
+  const sql = queries.makeBulkDeleteSql('form_response', ids);
+  try {
+    const results = await executeQuery({ sql });
+    if (!results) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Not Found',
+      });
+    }
+    return res.send('Successfully deleted form response with id: ' + ids);
+  } catch (error) {
+    return res.json({ error });
+  }
 };
 
 const deleteAllFormResponses = async (res: NextApiResponse) => {
