@@ -38,7 +38,6 @@ const BagLabels = ({ bagItemsMap, labelCount, packages }: BagLabelsProps) => {
   labelCount = 0;
   const generalHygienceTHead = 'General Hygiene Bag';
   const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap);
-
   const generalHygieneLabels = packages?.includes('General Hygiene') && (
     <div>
       <ItemChecklistTableColumn
