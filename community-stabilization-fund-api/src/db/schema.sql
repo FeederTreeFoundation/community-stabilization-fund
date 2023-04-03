@@ -65,7 +65,7 @@ VALUES
 INSERT INTO feminine_health_care
 (id, feminine_members, hygiene_items, needs_plan_b)
 VALUES
-(1, 1, '["Thin Pads"]', TRUE);
+(1, 1, 'Thin Pads, Tampons (Super)', TRUE);
 
 INSERT INTO form_response
 (id,first_name, last_name, email, phone_number, phone_type, packages_to_receive, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
