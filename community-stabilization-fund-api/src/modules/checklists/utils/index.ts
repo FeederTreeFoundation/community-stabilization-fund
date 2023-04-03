@@ -81,7 +81,6 @@ export const createInitialBagItemsMap = ({household_members = 0, feminine_health
     { name: 'Regular Tampons', quantity: feminine_health_care_id ? 15 : 0 },
     { name: 'Super Tampons', quantity: feminine_health_care_id ? 15 : 0 },
     { name: 'Thin Pads', quantity: feminine_health_care_id ? 15 : 0 },
-    { name: 'Regular Pads', quantity: feminine_health_care_id ? 15 : 0 },
     { name: 'Regular Pads', quantity: feminine_health_care_id ? 15 : 0 }
   ],
 } as BagItemsMap);
