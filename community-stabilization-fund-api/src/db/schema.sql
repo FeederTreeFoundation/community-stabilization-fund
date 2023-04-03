@@ -19,7 +19,7 @@ CREATE TABLE api_key (
 CREATE TABLE feminine_health_response (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     feminine_members INT NOT NULL,
-    hygiene_items JSON,
+    hygiene_items  VARCHAR(120) NULL,
     needs_plan_b BOOL
 );
  

@@ -5,7 +5,7 @@ export const queries = {
   makeGetByIdSql: (table: string) => `SELECT * FROM ${table} WHERE id = ?`,
   makeCreateSql: (table: string, body: any) =>{
     const names = Object.keys(body);
-    const unquoted_values = Object.keys(body);
+    const unquoted_values = Object.values(body);
     const values = unquoted_values.map((value) =>{
       if(typeof (value) === "undefined") return 'NULL';
       return typeof value === 'string' ? `"${value}"` : value;
