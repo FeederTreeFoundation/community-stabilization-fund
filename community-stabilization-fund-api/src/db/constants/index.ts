@@ -1,3 +1,5 @@
+import { isEmpty } from "../../utils";
+
 type Data = Record<string, string>;
 
 export const queries = {
@@ -7,7 +9,7 @@ export const queries = {
     const names = Object.keys(body);
     const unquoted_values = Object.values(body);
     const values = unquoted_values.map((value) =>{
-      if(typeof (value) === "undefined") return 'NULL';
+      if(isEmpty(value)) return 'NULL';
       return typeof value === 'string' ? `"${value}"` : value;
     });
 

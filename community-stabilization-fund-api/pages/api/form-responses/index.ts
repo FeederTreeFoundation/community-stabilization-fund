@@ -38,19 +38,25 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 
 const createFormResponse = async (body: string, res: NextApiResponse) => {
   const formResponse = JSON.parse(body);
-
+  const hygiene_items = formResponse["hygiene_items"].join(',')
+  
   const fem_responses = {
     "feminine_members": formResponse["feminine_members"],
-    "hygiene_items": formResponse["hygiene_items"],
+    "hygiene_items": hygiene_items,
     "needs_plan_b": formResponse["needs_plan_b"]
   };
 
   const fem_sql = queries.makeCreateSql('feminine_health_response', fem_responses);
 
   try{
-    const result = await executeQuery({fem_sql});
-    formResponse["feminine_health_care_id"] = result.insertId;
-    const sql = queries.makeCreateSql('form_response', formResponse);
+    const result = await executeQuery({sql: fem_sql});
+    const {feminine_members, hygiene_items, needs_plan_b, ...rest } = formResponse;
+    const packages_to_receive = rest["packages_to_receive"].join(', ')
+
+    rest["packages_to_receive"] = packages_to_receive;
+    rest["feminine_health_care_id"] = result.insertId;
+
+    const sql = queries.makeCreateSql('form_response', rest);
 
     try {
       const result = await executeQuery({ sql });
