@@ -2,7 +2,7 @@ import React from 'react';
 
 import { formResponseMock } from '../../../mocks';
 
-import { createInitialBagItemsMap, mapFormResponseToBagItems } from '../utils';
+import { mapFormResponseToBagItems } from '../utils';
 
 import { BagLabels } from './BagLabels';
 
@@ -20,7 +20,7 @@ const ItemChecklistByBag = ({
   formResponse = formResponseMock,
 }: ItemChecklistByBagProps) => {
   let labelCount = 0;
-  const bagItemsMap = createInitialBagItemsMap(formResponse);
+  const bagItemsMap = mapFormResponseToBagItems(formResponse);
   const packages_selected = typeof formResponse.packages_to_receive === 'string' 
     ? formResponse.packages_to_receive.split(',')
     : formResponse.packages_to_receive;
