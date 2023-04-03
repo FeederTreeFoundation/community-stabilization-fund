@@ -16,7 +16,7 @@ CREATE TABLE api_key (
   api_user_id INT, FOREIGN KEY (api_user_id) REFERENCES api_user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE feminine_health_response (
+CREATE TABLE feminine_health_care (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     feminine_members INT NOT NULL,
     hygiene_items  VARCHAR(120) NULL,
@@ -49,7 +49,7 @@ CREATE TABLE form_response (
   is_volunteering TINYINT NULL,
   is_subscribing TINYINT NULL,
   is_interested_in_membership TINYINT NULL,
-  FOREIGN KEY (feminine_health_care_id) REFERENCES feminine_health_response(id) ON DELETE CASCADE
+  FOREIGN KEY (feminine_health_care_id) REFERENCES feminine_health_care(id) ON DELETE CASCADE
 );
 
 INSERT INTO api_user
@@ -62,7 +62,7 @@ INSERT INTO api_key
 VALUES
 ("bar", 1);
 
-INSERT INTO feminine_health_response
+INSERT INTO feminine_health_care
 (id, feminine_members, hygiene_items, needs_plan_b)
 VALUES
 (1, 1, '["Thin Pads"]', TRUE);
