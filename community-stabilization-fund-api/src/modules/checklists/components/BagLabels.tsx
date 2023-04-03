@@ -8,12 +8,13 @@ import styles from '../styles/checklists.module.css';
 interface BagLabelsProps {
   bagItemsMap: BagItemsMap;
   labelCount: number;
+  packages?: string[]
 }
 
-const BagLabels = ({ bagItemsMap, labelCount }: BagLabelsProps) => {
+const BagLabels = ({ bagItemsMap, labelCount, packages }: BagLabelsProps) => {
   const groceryTHead = 'Groceries Bag';
   const groceryItems = createBagItems('Groceries', bagItemsMap);
-  const groceryItemLabels = (
+  const groceryItemLabels = packages?.includes('Food') && (
     <>
       <ItemChecklistTableColumn
         thead={groceryTHead + ` ${++labelCount}`}
@@ -37,7 +38,8 @@ const BagLabels = ({ bagItemsMap, labelCount }: BagLabelsProps) => {
   labelCount = 0;
   const generalHygienceTHead = 'General Hygiene Bag';
   const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap);
-  const generalHygieneLabels = (
+
+  const generalHygieneLabels = packages?.includes('General Hygiene') && (
     <div>
       <ItemChecklistTableColumn
         thead={generalHygienceTHead + ` ${++labelCount}`}
@@ -52,7 +54,7 @@ const BagLabels = ({ bagItemsMap, labelCount }: BagLabelsProps) => {
     'Cleaning/Health Supplies',
     bagItemsMap
   );
-  const cleaningHealthSupplyLabels = (
+  const cleaningHealthSupplyLabels = packages?.includes('Cleaning/Health Supplies') && (
     <>
       <ItemChecklistTableColumn
         thead={cleaningHealthSupplyTHead + ` ${++labelCount}`}
@@ -68,7 +70,7 @@ const BagLabels = ({ bagItemsMap, labelCount }: BagLabelsProps) => {
   labelCount = 0;
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
   const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap);
-  const femineHygieneLabels = (
+  const femineHygieneLabels = packages?.includes('Feminine Health Care') && (
     <>
       <ItemChecklistTableColumn
         thead={feminineHygieneTHead + ` ${++labelCount}`}

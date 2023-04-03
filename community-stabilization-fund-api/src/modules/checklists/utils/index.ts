@@ -2,6 +2,7 @@ import { getAddress } from '../../form-responses';
 
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
+import { isEmpty } from '../../../utils';
 
 export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
   const {
@@ -26,10 +27,25 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
 };
 
 export const mapFormResponseToBagItems = ({
-  household_members = 0,
   feminine_health_care_id,
-}: FormResponse) =>
-  ({
+  household_members = 0,
+  feminine_members = 0,
+  hygiene_items = '',
+  needs_plan_b = false,
+}: FormResponse) => {
+  let bagItemsMap = createInitialBagItemsMap({household_members, feminine_health_care_id} as FormResponse);
+
+  if(!!needs_plan_b) {
+    bagItemsMap['Feminine Hygiene'] = [
+      ...bagItemsMap['Feminine Hygiene'], 
+      { name: 'Plan B', quantity: 1 }
+    ]
+  }
+
+  return bagItemsMap;
+};
+
+export const createInitialBagItemsMap = ({household_members = 0, feminine_health_care_id}: FormResponse) =>   ({
     Groceries: [
       { name: 'Chicken', quantity: household_members <= 3 ? 1 : 2 },
       { name: 'Eggs', quantity: household_members <= 3 ? 1 : 2 },
@@ -69,6 +85,7 @@ export const mapFormResponseToBagItems = ({
       { name: 'Super Tampons', quantity: feminine_health_care_id ? 15 : 0 },
       { name: 'Thin Pads', quantity: feminine_health_care_id ? 15 : 0 },
       { name: 'Regular Pads', quantity: feminine_health_care_id ? 15 : 0 },
+      { name: 'Regular Pads', quantity: feminine_health_care_id ? 15 : 0 }
     ],
   } as BagItemsMap);
 
