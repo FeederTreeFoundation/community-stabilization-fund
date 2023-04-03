@@ -68,9 +68,9 @@ VALUES
 (1, 1, '["Thin Pads"]', TRUE);
 
 INSERT INTO form_response
-(id,first_name, last_name, email, phone_number, phone_type, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
+(id,first_name, last_name, email, phone_number, phone_type, packages_to_receive, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
 VALUES
-(1, "Malcolm", "Moses", "mm@gmail.com", "123-4567", "CELL", 1, 1, 1, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
+(1, "Malcolm", "Moses", "mm@gmail.com", "123-4567", "CELL", "Food, Cleaning/Health Supplies, Feminine Health Care, General Hygiene", 1, 1, 1, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
 
 SELECT * FROM api_user;
 SELECT * FROM api_key;
