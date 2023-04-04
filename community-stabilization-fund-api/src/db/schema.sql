@@ -1,4 +1,4 @@
-Uncomment when creating your own database:
+-- Uncomment when creating your own database:
 
 DROP DATABASE IF EXISTS csf_db;
 
