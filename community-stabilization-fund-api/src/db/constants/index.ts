@@ -5,10 +5,10 @@ type Data = Record<string, string>;
 export const queries = {
   makeGetAllSql: (table: string) => `SELECT * FROM ${table}`,
   makeGetByIdSql: (table: string) => `SELECT * FROM ${table} WHERE id = ?`,
-  makeCreateSql: (table: string, body: any) =>{
+  makeCreateSql: (table: string, body: any) => {
     const names = Object.keys(body);
     const unquoted_values = Object.values(body);
-    const values = unquoted_values.map((value) =>{
+    const values = unquoted_values.map((value) => {
       if(isEmpty(value)) return 'NULL';
       return typeof value === 'string' ? `"${value}"` : value;
     });
