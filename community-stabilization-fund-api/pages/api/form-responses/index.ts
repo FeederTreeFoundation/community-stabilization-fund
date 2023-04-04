@@ -46,7 +46,7 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
     "needs_plan_b": formResponse["needs_plan_b"]
   };
 
-  const fem_sql = queries.makeCreateSql('feminine_health_response', fem_responses);
+  const fem_sql = queries.makeCreateSql('feminine_health_care', fem_responses);
 
   try{
     const result = await executeQuery({sql: fem_sql});
