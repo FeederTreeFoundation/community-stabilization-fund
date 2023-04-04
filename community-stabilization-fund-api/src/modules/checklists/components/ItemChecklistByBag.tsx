@@ -21,10 +21,13 @@ const ItemChecklistByBag = ({
 }: ItemChecklistByBagProps) => {
   let labelCount = 0;
   const bagItemsMap = mapFormResponseToBagItems(formResponse);
+  const packages_selected = typeof formResponse.packages_to_receive === 'string' 
+    ? formResponse.packages_to_receive.split(',')
+    : formResponse.packages_to_receive;
 
   return (
     <div id='item-checklist' className={styles.item_checklist_wrapper}>
-      <BagLabels bagItemsMap={bagItemsMap} labelCount={labelCount} />
+      <BagLabels bagItemsMap={bagItemsMap} labelCount={labelCount} packages={packages_selected} />
     </div>
   );
 };

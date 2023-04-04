@@ -10,7 +10,7 @@ export interface FormResponse {
   is_local?: boolean;
   household_members?: number;
   has_flu_symptoms?: boolean;
-  packages_to_receive?: string[];
+  packages_to_receive?: string | string[];
   feminine_health_care_id?: number;
   item_requests?: string;
   additional_information?: string;
@@ -28,6 +28,9 @@ export interface FormResponse {
   submitted_on?: string;
   live_in_pittsburgh_atlanta?: boolean;
   live_in_southside_atlanta?: boolean;
+  feminine_members?: number;
+  hygiene_items?: string | string[];
+  needs_plan_b?: boolean;
 }
 
 export interface User {

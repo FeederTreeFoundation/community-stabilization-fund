@@ -25,8 +25,8 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getAllFormResponses = async (res: NextApiResponse) => {
-  const sql = queries.makeGetAllSql('form_response');
-
+  const sql = queries.makeJoinByForeignKeySQL('form_response', 'feminine_health_care');
+  
   try {
     const form_responses: FormResponse[] = await executeQuery({ sql });
 
@@ -38,7 +38,7 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 
 const createFormResponse = async (body: string, res: NextApiResponse) => {
   const formResponse = JSON.parse(body);
-  const hygiene_items = formResponse["hygiene_items"].join(',')
+  const hygiene_items = formResponse["hygiene_items"].join(',');
   
   const fem_responses = {
     "feminine_members": formResponse["feminine_members"],
@@ -51,7 +51,7 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   try{
     const result = await executeQuery({sql: fem_sql});
     const {feminine_members, hygiene_items, needs_plan_b, ...rest } = formResponse;
-    const packages_to_receive = rest["packages_to_receive"].join(', ')
+    const packages_to_receive = rest["packages_to_receive"].join(',');
 
     rest["packages_to_receive"] = packages_to_receive;
     rest["feminine_health_care_id"] = result.insertId;
@@ -72,8 +72,6 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   } catch (error) {
     return res.json({error});
   }
-  
-
 };
 
 const deleteAllFormResponses = async (res: NextApiResponse) => {

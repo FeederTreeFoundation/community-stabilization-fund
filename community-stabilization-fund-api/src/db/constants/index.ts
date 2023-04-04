@@ -16,8 +16,7 @@ export const queries = {
     return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`;
 
   },
-  makeUpdateSql: (table: string, data: Data, condition: string) =>
-    `
+  makeUpdateSql: (table: string, data: Data, condition: string) => `
     UPDATE ${table}
       SET ${Object.entries(data)
     .map(([key, value]) => `${key} = '${value}'`)
@@ -30,5 +29,7 @@ export const queries = {
     JOIN api_key ON api_user.id = api_key.api_user_id
     WHERE api_user.name = '${apiUser}' AND api_key.name = '${token}'
   `,
+  makeJoinByForeignKeySQL: (table: string, foreign_key: string) => 
+    `SELECT * FROM ${table} AS b INNER JOIN ${foreign_key} AS a ON (b.${foreign_key}_id=a.id)`,
   truncateTableSql: (table: string) => `TRUNCATE TABLE ${table}`,
 };
