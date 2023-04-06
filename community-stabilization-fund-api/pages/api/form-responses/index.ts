@@ -25,7 +25,12 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getAllFormResponses = async (res: NextApiResponse) => {
-  const sql = queries.makeJoinByForeignKeySQL('form_response', 'feminine_health_care');
+  const sql = 
+    `SELECT * FROM form_response AS fr
+    LEFT JOIN feminine_health_care AS fh ON fr.feminine_health_care_id = fh.id 
+    UNION SELECT * FROM form_response AS fr
+    RIGHT JOIN feminine_health_care AS fh ON fr.feminine_health_care_id = fh.id
+    WHERE fr.id IS NULL;`
   
   try {
     const form_responses: FormResponse[] = await executeQuery({ sql });
