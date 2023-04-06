@@ -26,4 +26,8 @@ a {
   aside {
     display: none !important;
   }
+
+  @page {
+    size: letter;
+  }
 }

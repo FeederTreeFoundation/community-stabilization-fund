@@ -12,6 +12,8 @@
 .bag_labels {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 985px;
 }
 
 .item_checklist_wrapper {
