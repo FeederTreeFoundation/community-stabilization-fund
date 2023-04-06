@@ -50,7 +50,7 @@ export const createInitialBagItemsMap = ({household_members = 0, feminine_health
     { name: 'Bread', quantity: household_members <= 3 ? 1 : 2 },
     { name: 'Canned Green Beans', quantity: household_members <= 3 ? 2 : 4 },
     {
-      name: 'Canned Green Beans(baked/black)',
+      name: 'Canned Beans (baked/black)',
       quantity: household_members <= 3 ? 2 : 4,
     },
     { name: 'Assorted Fruit 1', quantity: household_members <= 3 ? 4 : 8 },
