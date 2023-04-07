@@ -26,11 +26,14 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
 const getAllFormResponses = async (res: NextApiResponse) => {
   const sql = 
-    `SELECT * FROM form_response AS fr
-    LEFT JOIN feminine_health_care AS fh ON fr.feminine_health_care_id = fh.id 
-    UNION SELECT * FROM form_response AS fr
-    RIGHT JOIN feminine_health_care AS fh ON fr.feminine_health_care_id = fh.id
-    WHERE fr.id IS NULL;`
+    `SELECT fr.*, 
+      fh.id as fh_id, 
+      fh.feminine_members,
+      fh.hygiene_items,
+      fh.needs_plan_b
+    FROM form_response AS fr
+    LEFT JOIN feminine_health_care AS fh 
+    ON fr.feminine_health_care_id = fh.id`;
   
   try {
     const form_responses: FormResponse[] = await executeQuery({ sql });
