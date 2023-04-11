@@ -1,3 +1,5 @@
+import { isEmpty } from "../../utils";
+
 type Data = Record<string, string>;
 
 export const queries = {
@@ -5,18 +7,16 @@ export const queries = {
   makeGetByIdSql: (table: string) => `SELECT * FROM ${table} WHERE id = ?`,
   makeCreateSql: (table: string, body: any) => {
     const names = Object.keys(body);
-    const unquoted_values = Object.keys(body);
+    const unquoted_values = Object.values(body);
     const values = unquoted_values.map((value) => {
-      if (typeof value === 'undefined') return 'NULL';
+      if(isEmpty(value)) return 'NULL';
       return typeof value === 'string' ? `"${value}"` : value;
     });
 
-    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(
-      ','
-    )});`;
+    return `INSERT INTO ${table} (${names.join(',')}) VALUES (${values.join(',')});`;
+
   },
-  makeUpdateSql: (table: string, data: Data, condition: string) =>
-    `
+  makeUpdateSql: (table: string, data: Data, condition: string) => `
     UPDATE ${table}
       SET ${Object.entries(data)
     .map(([key, value]) => `${key} = '${value}'`)
@@ -31,5 +31,7 @@ export const queries = {
     JOIN api_key ON api_user.id = api_key.api_user_id
     WHERE api_user.name = '${apiUser}' AND api_key.name = '${token}'
   `,
+  makeJoinByForeignKeySQL: (table: string, foreign_key: string) => 
+    `SELECT * FROM ${table} AS b INNER JOIN ${foreign_key} AS a ON (b.${foreign_key}_id=a.id)`,
   truncateTableSql: (table: string) => `TRUNCATE TABLE ${table}`,
 };

@@ -41,7 +41,7 @@ const ItemChecklistByRecipient = ({
   ));
 
   // Only display Feminine Hygiene items if the recipient has them, otherwise guard against the field being passed
-  const bagItemsObj: BagItemsMap = formResponseMock.feminine_health_care_id
+  const bagItemsObj: BagItemsMap = formResponse.feminine_health_care_id
     ? bagItemsMap
     : omit('Feminine Hygiene', bagItemsMap);
 
