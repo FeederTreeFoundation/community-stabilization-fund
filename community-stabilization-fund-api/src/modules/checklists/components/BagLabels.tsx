@@ -1,50 +1,64 @@
+import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
 import { createBagItems } from '../utils';
-import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
+
+import BagList from './BagList';
 
 import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
 
 interface BagLabelsProps {
+  recipientInfo: (string | number | undefined)[];
   bagItemsMap: BagItemsMap;
   labelCount: number;
-  packages?: string[]
 }
 
-const BagLabels = ({ bagItemsMap, labelCount, packages }: BagLabelsProps) => {
+const BagLabels = ({
+  recipientInfo,
+  bagItemsMap,
+  labelCount,
+}: BagLabelsProps) => {
   const groceryTHead = 'Groceries Bag';
   const groceryItems = createBagItems('Groceries', bagItemsMap);
-  const groceryItemLabels = packages?.includes('Food') && (
+  console.log({ recipientInfo });
+  const getRecipientInfo = (text: string, id: number) => (
     <>
-      <ItemChecklistTableColumn
-        thead={groceryTHead + ` ${++labelCount}`}
-        items={groceryItems.slice(0, 1)}
-      />
-      <ItemChecklistTableColumn
-        thead={groceryTHead + ` ${++labelCount}`}
-        items={groceryItems.slice(1, 4)}
-      />
-      <ItemChecklistTableColumn
-        thead={groceryTHead + ` ${++labelCount}`}
-        items={groceryItems.slice(4, 6)}
-      />
-      <ItemChecklistTableColumn
-        thead={groceryTHead + ` ${++labelCount}`}
-        items={groceryItems.slice(6)}
-      />
+      <strong>{text}</strong> {recipientInfo[id]}
     </>
   );
 
+  const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.slice(0, 3).map(
+    (field, id) => (
+      <p key={field + id} className={styles.user_bag_label_info__p}>
+        {getRecipientInfo(field, id)}
+      </p>
+    )
+  );
+  const grocerySlicePos = [
+    [0, 1],
+    [1, 4],
+    [4, 6],
+    [6, groceryItems.length],
+  ];
+
+  const groceryItemLabels = BagList(
+    grocerySlicePos,
+    recipientInfoList,
+    groceryTHead,
+    groceryItems,
+    labelCount
+  );
+
   labelCount = 0;
-  const generalHygienceTHead = 'General Hygiene Bag';
+  const generalHygieneTHead = 'General Hygiene Bag';
   const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap);
-  const generalHygieneLabels = packages?.includes('General Hygiene') && (
-    <div>
-      <ItemChecklistTableColumn
-        thead={generalHygienceTHead + ` ${++labelCount}`}
-        items={generalHygieneItems}
-      />
-    </div>
+  const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
+  const generalHygieneLabels = BagList(
+    generalHygieneSlicePos,
+    recipientInfoList,
+    generalHygieneTHead,
+    generalHygieneItems,
+    labelCount
   );
 
   labelCount = 0;
@@ -53,29 +67,28 @@ const BagLabels = ({ bagItemsMap, labelCount, packages }: BagLabelsProps) => {
     'Cleaning/Health Supplies',
     bagItemsMap
   );
-  const cleaningHealthSupplyLabels = packages?.includes('Cleaning/Health Supplies') && (
-    <>
-      <ItemChecklistTableColumn
-        thead={cleaningHealthSupplyTHead + ` ${++labelCount}`}
-        items={cleaningHealthSupplyItems.slice(0, 4)}
-      />
-      <ItemChecklistTableColumn
-        thead={cleaningHealthSupplyTHead + ` ${++labelCount}`}
-        items={cleaningHealthSupplyItems.slice(4)}
-      />
-    </>
+  const cleaningHealthSlicePos = [
+    [0, 4],
+    [4, cleaningHealthSupplyItems.length],
+  ];
+  const cleaningHealthSupplyLabels = BagList(
+    cleaningHealthSlicePos,
+    recipientInfoList,
+    cleaningHealthSupplyTHead,
+    cleaningHealthSupplyItems,
+    labelCount
   );
 
   labelCount = 0;
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
   const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap);
-  const femineHygieneLabels = packages?.includes('Feminine Health Care') && (
-    <>
-      <ItemChecklistTableColumn
-        thead={feminineHygieneTHead + ` ${++labelCount}`}
-        items={feminineHygieneItems}
-      />
-    </>
+  const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
+  const femineHygieneLabels = BagList(
+    feminineHygieneSlicePos,
+    recipientInfoList,
+    feminineHygieneTHead,
+    feminineHygieneItems,
+    labelCount
   );
 
   return (
