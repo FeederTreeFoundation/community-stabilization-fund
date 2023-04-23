@@ -12,8 +12,6 @@
 .bag_labels {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 985px;
 }
 
 .item_checklist_wrapper {
@@ -40,10 +38,15 @@
 
 .item_checklist_row .table_info {
   height: 300px;
+  width: 340px;
 }
 
 .user_info__p {
   font-size: 30px;
+}
+
+.user_bag_label_info__p {
+  font-size: 14px;
 }
 
 .user_info {
@@ -53,8 +56,6 @@
 }
 
 .table_info {
-  height: 217px;
-  width: 340px;
   margin: 0.5rem;
 }
 
@@ -93,4 +94,13 @@
 
 .table_info {
   font-size: 25px;
+}
+
+.bag_label {
+  height: 217px;
+  width: 340px;
+}
+
+.bag_label li {
+  font-size: 14px;
 }
