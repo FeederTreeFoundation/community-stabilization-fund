@@ -8,8 +8,10 @@ import type { BagItemsMap } from '../types';
 import styles from '../styles/checklists.module.css';
 
 interface BagLabelsProps {
+  //TODO: Why would this have instances of undefined?
   recipientInfo: (string | number | undefined)[];
   bagItemsMap: BagItemsMap;
+  packages?: string[]
   labelCount: number;
 }
 
@@ -17,6 +19,7 @@ const BagLabels = ({
   recipientInfo,
   bagItemsMap,
   labelCount,
+  packages
 }: BagLabelsProps) => {
   const groceryTHead = 'Groceries Bag';
   const groceryItems = createBagItems('Groceries', bagItemsMap);
@@ -41,7 +44,7 @@ const BagLabels = ({
     [6, groceryItems.length],
   ];
 
-  const groceryItemLabels = BagList(
+  const groceryItemLabels = packages?.includes('Food') && BagList(
     grocerySlicePos,
     recipientInfoList,
     groceryTHead,
@@ -53,7 +56,7 @@ const BagLabels = ({
   const generalHygieneTHead = 'General Hygiene Bag';
   const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap);
   const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
-  const generalHygieneLabels = BagList(
+  const generalHygieneLabels = packages?.includes('General Hygiene') && BagList(
     generalHygieneSlicePos,
     recipientInfoList,
     generalHygieneTHead,
@@ -71,7 +74,7 @@ const BagLabels = ({
     [0, 4],
     [4, cleaningHealthSupplyItems.length],
   ];
-  const cleaningHealthSupplyLabels = BagList(
+  const cleaningHealthSupplyLabels = packages?.includes('Cleaning/Health Supplies') && BagList(
     cleaningHealthSlicePos,
     recipientInfoList,
     cleaningHealthSupplyTHead,
@@ -83,7 +86,7 @@ const BagLabels = ({
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
   const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap);
   const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
-  const femineHygieneLabels = BagList(
+  const femineHygieneLabels = packages?.includes('Feminine Health Care') && BagList(
     feminineHygieneSlicePos,
     recipientInfoList,
     feminineHygieneTHead,
