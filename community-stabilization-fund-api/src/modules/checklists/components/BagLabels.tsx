@@ -26,7 +26,7 @@ const BagLabels = ({
 
   const getRecipientInfo = (text: string, id: number) => (
     <>
-      <strong>{text}</strong> {recipientInfo[id]}
+      <strong>{text}:</strong> {recipientInfo[id]}
     </>
   );
 
