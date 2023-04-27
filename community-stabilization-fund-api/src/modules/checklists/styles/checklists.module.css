@@ -1,5 +1,6 @@
 @media print {
   @page {
+    size: letter;
     /* you can also specify margins here: */
     /* margin: 25mm; */
     /* margin-right: 45mm;  for compatibility with both A4 and Letter */
@@ -9,6 +10,7 @@
 .bolded {
   font-weight: bold;
 }
+
 .bag_labels {
   display: flex;
   flex-direction: column;
@@ -23,12 +25,12 @@
   padding: 5%;
   justify-content: space-between;
   align-content: space-between;
+  break-after: always;
 }
 
 .bag_labels_wrapper {
   display: flex;
   flex-direction: row;
-  page-break-after: always;
 }
 
 .item_checklist_row {
