@@ -24,10 +24,10 @@ async function createFormResponse() {
   return res;
 }
 
-async function deleteOneFormResponse(id: string[]) {
+async function deleteOneFormResponse(ids: string[]) {
   const res = await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
-      id: id,
+      ids: ids,
     },
   });
   return res;
