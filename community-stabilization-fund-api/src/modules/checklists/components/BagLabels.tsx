@@ -20,7 +20,7 @@ const BagLabels = ({
 }: BagLabelsProps) => {
   const groceryTHead = 'Groceries Bag';
   const groceryItems = createBagItems('Groceries', bagItemsMap);
-  console.log({ recipientInfo });
+
   const getRecipientInfo = (text: string, id: number) => (
     <>
       <strong>{text}</strong> {recipientInfo[id]}
