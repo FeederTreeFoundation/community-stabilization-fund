@@ -12,8 +12,6 @@
 .bag_labels {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 985px;
 }
 
 .item_checklist_wrapper {
@@ -40,10 +38,20 @@
 
 .item_checklist_row .table_info {
   height: 300px;
+  width: 340px;
 }
 
-.user_info__p {
-  font-size: 30px;
+.user_bag_label_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.user_bag_label_info__p {
+  font-size: 14px;
 }
 
 .user_info {
@@ -52,10 +60,16 @@
   line-height: 0.5;
 }
 
+.user_info__p {
+  font-size: 30px;
+}
+
 .table_info {
-  height: 217px;
-  width: 340px;
   margin: 0.5rem;
+}
+
+.bag_label .table_info {
+  margin: 0 0.5rem;
 }
 
 .table_info__ul {
@@ -88,9 +102,18 @@
   justify-content: center;
   border-bottom: solid 1px;
   padding: 0.2em 0.5em;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .table_info {
   font-size: 25px;
+}
+
+.bag_label {
+  height: 217px;
+  width: 340px;
+}
+
+.bag_label li {
+  font-size: 14px;
 }

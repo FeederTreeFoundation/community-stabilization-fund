@@ -2,14 +2,16 @@ import React from 'react';
 
 import { formResponseMock } from '../../../mocks';
 
-import { mapFormResponseToBagItems } from '../utils';
+import {
+  mapFormResponseToBagItems,
+  mapFormResponseToRecipientInfo,
+} from '../utils';
 
 import { BagLabels } from './BagLabels';
 
 import type { FormResponse } from '../../../db';
 
 import styles from '../styles/checklists.module.css';
-
 
 // TODO: Convert this to a 4x2.5 set of labels printed horizontally
 export interface ItemChecklistByBagProps {
@@ -21,13 +23,20 @@ const ItemChecklistByBag = ({
 }: ItemChecklistByBagProps) => {
   let labelCount = 0;
   const bagItemsMap = mapFormResponseToBagItems(formResponse);
+  const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
+
   const packages_selected = typeof formResponse.packages_to_receive === 'string' 
     ? formResponse.packages_to_receive.split(',')
     : formResponse.packages_to_receive;
 
   return (
     <div id='item-checklist' className={styles.item_checklist_wrapper}>
-      <BagLabels bagItemsMap={bagItemsMap} labelCount={labelCount} packages={packages_selected} />
+      <BagLabels
+        recipientInfo={recipientInfo}
+        bagItemsMap={bagItemsMap}
+        packages={packages_selected}
+        labelCount={labelCount}
+      />
     </div>
   );
 };
