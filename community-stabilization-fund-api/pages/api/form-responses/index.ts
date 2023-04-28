@@ -73,7 +73,6 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
 
     try {
       const result = await executeQuery({ sql });
-      console.log({ result });
 
       return res
         .status(201)
