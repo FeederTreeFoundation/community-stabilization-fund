@@ -17,7 +17,7 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
     case 'DELETE':
       if (body.ids) {
         const { ids } = body;
-        deleteOneFormResponse(ids, res);
+        deleteFormResponse(ids, res);
       } else {
         deleteAllFormResponses(res);
       }
@@ -86,7 +86,7 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   }
 };
 
-const deleteOneFormResponse = async (ids: string[], res: NextApiResponse) => {
+const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
   const sql = queries.makeBulkDeleteSql('form_response', ids);
   try {
     const results = await executeQuery({ sql });
