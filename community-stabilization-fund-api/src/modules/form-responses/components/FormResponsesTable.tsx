@@ -24,11 +24,13 @@ import styles from '../styles/form-responses.module.css';
 interface FormResponsesTableProps {
   formResponses?: FormResponse[];
   handleDelete?: Function;
+  handleFilter?: Function;
 }
 
 const FormResponsesTable: FC<FormResponsesTableProps> = ({
   formResponses,
   handleDelete,
+  handleFilter,
 }) => {
   const createHeaders = (formResponseQuestions: string[]) =>
     formResponseQuestions.map((header: string) => ({
@@ -53,7 +55,12 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   return (
     <div className={styles.form_responses_table}>
-      <BasicTable handleDelete={handleDelete!} rows={rows} headers={headers} />
+      <BasicTable
+        handleDelete={handleDelete!}
+        handleFilter={handleFilter!}
+        rows={rows}
+        headers={headers}
+      />
     </div>
   );
 };

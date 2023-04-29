@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { TrashCan } from '@carbon/icons-react';
+import { Filter, TrashCan } from '@carbon/icons-react';
 import {
   DataTable as CarbonDataTable,
   TableHead,
@@ -15,9 +15,9 @@ import {
   TableToolbarContent,
   TableToolbarMenu,
   TableToolbarSearch,
-  TableToolbarAction,
   TableSelectRow,
   TableSelectAll,
+  Checkbox,
 } from 'carbon-components-react';
 
 import React from 'react';
@@ -26,6 +26,8 @@ import type {
   DataTableCustomRenderProps,
   DataTableProps,
 } from 'carbon-components-react';
+
+import type { ChangeEvent } from 'react';
 
 // TEMPORARY FIX FOR CARBON DATA TABLE TYPES
 class DataTable extends React.Component<
@@ -42,7 +44,8 @@ const BasicTable = ({
   rows,
   headers,
   handleDelete,
-}: DataTableProps & { handleDelete: Function }) => (
+  handleFilter,
+}: DataTableProps & { handleDelete: Function; handleFilter: Function }) => (
   <DataTable rows={rows} headers={headers}>
     {({
       rows,
@@ -81,16 +84,28 @@ const BasicTable = ({
               />
               <TableToolbarMenu
                 tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
+                renderIcon={Filter}
               >
-                <TableToolbarAction onClick={() => alert('Alert 1')}>
-                  Action 1
-                </TableToolbarAction>
-                <TableToolbarAction onClick={() => alert('Alert 2')}>
-                  Action 2
-                </TableToolbarAction>
-                <TableToolbarAction onClick={() => alert('Alert 3')}>
-                  Action 3
-                </TableToolbarAction>
+                <div style={{ width: '100%' }}>
+                  <div style={{ padding: '0.5rem' }}>
+                    <Checkbox
+                      labelText={`Is Black?`}
+                      id='checkbox-label-1'
+                      value='is_black'
+                      onChange={(e: ChangeEvent) =>
+                        handleFilter((e.target as HTMLInputElement).value)
+                      }
+                    />
+                    <Checkbox
+                      labelText={`Is Local?`}
+                      id='checkbox-label-2'
+                      value='is_local'
+                      onChange={(e: ChangeEvent) =>
+                        handleFilter((e.target as HTMLInputElement).value)
+                      }
+                    />
+                  </div>
+                </div>
               </TableToolbarMenu>
             </TableToolbarContent>
           </TableToolbar>
