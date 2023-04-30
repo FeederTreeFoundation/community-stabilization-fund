@@ -43,8 +43,8 @@ const BasicTable = ({
   handleDelete,
   toolbarActions,
 }: DataTableProps & {
-  handleDelete: Function;
-  toolbarActions: JSX.Element;
+  handleDelete?: Function;
+  toolbarActions?: JSX.Element;
 }) => (
   <DataTable rows={rows} headers={headers}>
     {({
