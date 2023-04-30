@@ -63,10 +63,6 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   return (
     <div className={styles.form_responses_table}>
-      {/* 
-        Todo: switch exclamation to a function to 
-        make handleDelete optional if passed 
-      */}
       <BasicTable handleDelete={handleDelete} rows={rows} headers={headers} />
     </div>
   );
