@@ -5,6 +5,7 @@ import formResponses from '../../../../pages/form-responses';
 import { BasicTable } from '../../../components';
 // import { formResponseMock } from '../../../mocks';
 
+import FormResponseService from '../../../services/form-response';
 import { FORM_RESPONSE_QUESTIONS } from '../constants';
 
 import { getAddress, mapBooleanToResponse } from '../utils';
@@ -23,9 +24,22 @@ import styles from '../styles/form-responses.module.css';
 
 interface FormResponsesTableProps {
   formResponses?: FormResponse[];
+  handleDelete?: Function;
+  setFormResponses: Function;
 }
 
-const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
+const FormResponsesTable: FC<FormResponsesTableProps> = ({
+  formResponses,
+  setFormResponses,
+}) => {
+  const handleDelete = (rows: FormResponse[]) => {
+    const ids = rows.map((row) => row.id);
+    FormResponseService.deleteFormResponse(ids);
+    setFormResponses(
+      formResponses?.filter((formResponse) => !ids.includes(formResponse.id))
+    );
+  };
+
   const createHeaders = (formResponseQuestions: string[]) =>
     formResponseQuestions.map((header: string) => ({
       key: header.toLowerCase().replaceAll(' ', '_'),
@@ -39,9 +53,9 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
       const r = { ...resp, feminine_health_care, address };
 
       FORM_RESPONSE_QUESTIONS.forEach((q) => mapBooleanToResponse(r, q));
+
       return r;
     });
-
   const rows = createRows(formResponses ?? []) as DataTableRow<string>[];
   const headers = createHeaders(
     FORM_RESPONSE_QUESTIONS
@@ -49,7 +63,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({ formResponses }) => {
 
   return (
     <div className={styles.form_responses_table}>
-      <BasicTable rows={rows} headers={headers} />
+      <BasicTable handleDelete={handleDelete} rows={rows} headers={headers} />
     </div>
   );
 };

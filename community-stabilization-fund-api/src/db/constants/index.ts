@@ -24,6 +24,8 @@ export const queries = {
       WHERE ${condition};
   `,
   makeDeleteSql: (table: string) => `DELETE FROM ${table} WHERE id = ?`,
+  makeBulkDeleteSql: (table: string, ids: string[]) =>
+    `DELETE FROM ${table} WHERE id in (${ids.join(',')});`,
   makeAuthenticateSql: (apiUser: string, token: string) => `
     SELECT api_user.id FROM api_user
     JOIN api_key ON api_user.id = api_key.api_user_id

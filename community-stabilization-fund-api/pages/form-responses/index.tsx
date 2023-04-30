@@ -14,7 +14,13 @@ const FormResponsesPage: NextPage = () => {
     };
     getResponses();
   }, []);
-  return <FormResponsesTable formResponses={formResponses} />;
+
+  return (
+    <FormResponsesTable
+      formResponses={formResponses}
+      setFormResponses={setFormResponses}
+    />
+  );
 };
 
 export default FormResponsesPage;
