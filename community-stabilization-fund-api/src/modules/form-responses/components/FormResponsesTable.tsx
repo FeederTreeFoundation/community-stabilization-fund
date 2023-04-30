@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import formResponses from '../../../../pages/form-responses';
 
@@ -23,16 +23,17 @@ import styles from '../styles/form-responses.module.css';
 interface FormResponsesTableProps {
   formResponses?: FormResponse[];
   handleDelete?: Function;
-  setFormResponses: Function;
 }
 
 const FormResponsesTable: FC<FormResponsesTableProps> = ({
   formResponses = [],
-  setFormResponses,
 }) => {
-  const [filteredFormResponses, setFilteredFormResponses] =
-    useState<FormResponse[]>(formResponses);
+  const [filteredFormResponses, setFilteredFormResponses] = useState<
+    FormResponse[]
+  >([]);
   const [filterState, setFilterState] = useState<string[]>([]);
+
+  const formResponsesRef = useRef(formResponses);
 
   const handleFilter = (value: string) => {
     if (filterState.includes(value)) {
@@ -47,8 +48,15 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   const handleDelete = (rows: FormResponse[]) => {
     const ids = rows.map((row) => row.id);
     FormResponseService.deleteFormResponse(ids);
-    setFormResponses(
-      formResponses?.filter((formResponse) => !ids.includes(formResponse.id))
+    const newFormResponses = formResponsesRef.current?.filter(
+      (f: FormResponse) => !ids.includes(f.id)
+    );
+    formResponsesRef.current = newFormResponses;
+    const newFormRespIds = newFormResponses.map((f) => f.id);
+    setFilteredFormResponses((prevFormResponses) =>
+      prevFormResponses.filter((f: FormResponse) =>
+        newFormRespIds.includes(f.id)
+      )
     );
   };
 
@@ -68,6 +76,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
       return r;
     });
+
   const rows = createRows(
     filteredFormResponses ?? []
   ) as DataTableRow<string>[];
@@ -77,23 +86,31 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   useEffect(() => {
     if (filterState.length === 0) {
-      setFilteredFormResponses(formResponses);
-    }
-    if (filterState.includes('is_black') && filterState.includes('is_local')) {
-      const filtered = formResponses.filter(
+      setFilteredFormResponses(formResponsesRef.current);
+    } else if (
+      filterState.includes('is_black') &&
+      filterState.includes('is_local')
+    ) {
+      const filtered = formResponsesRef.current.filter(
         (resp) => resp.is_black && resp.is_local
       );
       setFilteredFormResponses(filtered);
     } else if (filterState.includes('is_black')) {
-      const filtered = formResponses.filter((resp) => resp.is_black);
+      const filtered = formResponsesRef.current.filter((resp) => resp.is_black);
       setFilteredFormResponses(filtered);
     } else if (filterState.includes('is_local')) {
-      const filtered = formResponses.filter((resp) => resp.is_local);
+      const filtered = formResponsesRef.current.filter((resp) => resp.is_local);
       setFilteredFormResponses(filtered);
     } else {
-      setFilteredFormResponses(formResponses);
+      setFilteredFormResponses(formResponsesRef.current);
     }
-  }, [filterState, formResponses]);
+  }, [filterState]);
+
+  useEffect(() => {
+    formResponsesRef.current = formResponses;
+    setFilteredFormResponses(formResponses);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formResponses?.length]);
 
   const toolbarActions = (
     <FilterToolbarActions
