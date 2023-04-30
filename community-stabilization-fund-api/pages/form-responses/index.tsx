@@ -14,17 +14,11 @@ const FormResponsesPage: NextPage = () => {
     };
     getResponses();
   }, []);
-  const handleDelete = (rows: FormResponse[]) => {
-    const ids = rows.map((row) => row.id);
-    FormResponseService.deleteFormResponse(ids);
-    setFormResponses(
-      formResponses.filter((formResponse) => !ids.includes(formResponse.id))
-    );
-  };
+
   return (
     <FormResponsesTable
-      handleDelete={handleDelete}
       formResponses={formResponses}
+      setFormResponses={setFormResponses}
     />
   );
 };
