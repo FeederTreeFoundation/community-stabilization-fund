@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { TrashCan } from '@carbon/icons-react';
+import { Filter, TrashCan } from '@carbon/icons-react';
 import {
   DataTable as CarbonDataTable,
   TableHead,
@@ -15,7 +15,6 @@ import {
   TableToolbarContent,
   TableToolbarMenu,
   TableToolbarSearch,
-  TableToolbarAction,
   TableSelectRow,
   TableSelectAll,
 } from 'carbon-components-react';
@@ -42,7 +41,11 @@ const BasicTable = ({
   rows,
   headers,
   handleDelete,
-}: DataTableProps & { handleDelete: Function }) => (
+  toolbarActions,
+}: DataTableProps & {
+  handleDelete: Function;
+  toolbarActions: JSX.Element;
+}) => (
   <DataTable rows={rows} headers={headers}>
     {({
       rows,
@@ -82,19 +85,14 @@ const BasicTable = ({
                 tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
                 onChange={onInputChange}
               />
-              <TableToolbarMenu
-                tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
-              >
-                <TableToolbarAction onClick={() => alert('Alert 1')}>
-                  Action 1
-                </TableToolbarAction>
-                <TableToolbarAction onClick={() => alert('Alert 2')}>
-                  Action 2
-                </TableToolbarAction>
-                <TableToolbarAction onClick={() => alert('Alert 3')}>
-                  Action 3
-                </TableToolbarAction>
-              </TableToolbarMenu>
+              {toolbarActions && (
+                <TableToolbarMenu
+                  tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
+                  renderIcon={Filter}
+                >
+                  {toolbarActions}
+                </TableToolbarMenu>
+              )}
             </TableToolbarContent>
           </TableToolbar>
           <Table {...getTableProps()}>
