@@ -16,7 +16,7 @@ const FormResponsesPage: NextPage = () => {
   }, []);
   const handleDelete = (rows: FormResponse[]) => {
     const ids = rows.map((row) => row.id);
-    FormResponseService.deleteOneFormResponse(ids);
+    FormResponseService.deleteFormResponse(ids);
     setFormResponses(
       formResponses.filter((formResponse) => !ids.includes(formResponse.id))
     );

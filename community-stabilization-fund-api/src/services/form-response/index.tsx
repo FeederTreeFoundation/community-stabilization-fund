@@ -11,7 +11,7 @@ const FormResponseService = {
   getAllFormResponses,
   createFormResponse,
   deleteAllFormResponses,
-  deleteOneFormResponse,
+  deleteFormResponse,
 };
 
 async function getAllFormResponses() {
@@ -24,7 +24,7 @@ async function createFormResponse() {
   return res;
 }
 
-async function deleteOneFormResponse(ids: string[]) {
+async function deleteFormResponse(ids: string[]) {
   const res = await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
       ids: ids,
