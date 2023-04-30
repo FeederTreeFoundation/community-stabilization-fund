@@ -62,15 +62,18 @@ const BasicTable = ({
         <TableContainer {...getTableContainerProps()}>
           <TableToolbar {...getToolbarProps()}>
             <TableBatchActions {...batchActionProps}>
-              <TableBatchAction
-                tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
-                renderIcon={TrashCan}
-                onClick={() => {
-                  handleDelete(selectedRows);
-                }}
-              >
-                Delete
-              </TableBatchAction>
+              {handleDelete && (
+                <TableBatchAction
+                  tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
+                  renderIcon={TrashCan}
+                  kind='danger'
+                  onClick={() => {
+                    handleDelete(selectedRows);
+                  }}
+                >
+                  Delete
+                </TableBatchAction>
+              )}
             </TableBatchActions>
             <TableToolbarContent
               aria-hidden={batchActionProps.shouldShowBatchActions}
