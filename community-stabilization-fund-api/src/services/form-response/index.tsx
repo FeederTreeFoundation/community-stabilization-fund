@@ -15,6 +15,7 @@ const FormResponseService = {
 };
 
 async function getAllFormResponses() {
+  return await axiosInstance.get<FormResponse[]>(`${baseUrl}`);
 }
 
 async function createFormResponse() {
