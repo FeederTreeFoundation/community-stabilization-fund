@@ -32,11 +32,12 @@ model feminine_health_care {
 
 model address {
     id Int @id @default(autoincrement())
+    country String @db.VarChar(36)
     city String @db.VarChar(36)
     state String @db.VarChar(5)
     zipcode Int
-    line1 String @db.VarChar(250)
-    line2 String? @db.VarChar(250)
+    line1 String @db.VarChar(150)
+    line2 String? @db.VarChar(150)
     form_response form_response[]
 }
 

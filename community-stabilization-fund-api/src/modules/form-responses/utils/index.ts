@@ -9,10 +9,11 @@ export const mapBooleanToResponse = (response: any, question: string) => {
   }
 };
 
-export const getAddress = (response: FormResponse) => {
-  const { address_line1, address_line2, address_city, address_state, address_country, address_zip } = response;
-  if( !address_line1 && !address_city && !address_state && !address_country && !address_zip ) return '';
-  const address = `${address_line1},\n ${address_line2 ? address_line2 + ',' : ''}\n ${address_city}, ${address_state}, ${address_country} ${address_zip}`;
+export const getAddress = ({address}: FormResponse) => {
+  if(!address) return '';
+  const { line1 = '', line2, city, state, country, zipcode } = address;
+  if( !line1 && !city && !state && !country && !zipcode ) return '';
+  const addressString = `${line1},\n ${line2 ? line2 + ',' : ''}\n ${city}, ${state}, ${country} ${zipcode}`;
 
-  return address;
+  return addressString;
 };

@@ -12,6 +12,7 @@ export interface FeminineHealthResponse {
 
 export interface Address {
   id: number;
+  country: string;
   city: string;
   state: string;
   zipcode: number;
