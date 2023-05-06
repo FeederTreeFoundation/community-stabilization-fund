@@ -51,12 +51,12 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 const getAllFormResponses = async (res: NextApiResponse) => {
 
   try{
-    const form_responses: FormResponse[] = await prisma.form_response.findMany({
+    const form_responses = await prisma.form_response.findMany({
       include: {
         feminine_health_care: true,
         address: true
       }
-    });
+    }) as FormResponse[];
 
     return res.json([...(form_responses ?? [])]);
 
