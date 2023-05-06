@@ -15,27 +15,23 @@ const FormResponseService = {
 };
 
 async function getAllFormResponses() {
-  const res = await axiosInstance.get<FormResponse[]>(`${baseUrl}`);
-  return res;
+  return await axiosInstance.get<FormResponse[]>(`${baseUrl}`);
 }
 
 async function createFormResponse() {
-  const res = await axiosInstance.post<FormResponse>(`${baseUrl}`);
-  return res;
+  return await axiosInstance.post<FormResponse>(`${baseUrl}`);
 }
 
-async function deleteFormResponse(ids: string[]) {
-  const res = await axiosInstance.delete<object>(`${baseUrl}`, {
+async function deleteFormResponse(ids: number[]) {
+  return await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
       ids: ids,
     },
   });
-  return res;
 }
 
 async function deleteAllFormResponses() {
-  const res = await axiosInstance.delete<FormResponse>(`${baseUrl}`);
-  return res;
+  return await axiosInstance.delete<FormResponse>(`${baseUrl}`);
 }
 
 export default FormResponseService;

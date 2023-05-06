@@ -68,9 +68,9 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   const createRows = (formResponses: FormResponse[]) =>
     formResponses.map((resp) => {
-      const feminine_health_care = !!resp.feminine_health_care_id;
+      const feminine_health_care = !!resp.feminine_health_care;
       const address = getAddress(resp);
-      const r = { ...resp, feminine_health_care, address };
+      const r = { ...resp, feminine_health_care, address, id: `${resp.id}` };
 
       FORM_RESPONSE_QUESTIONS.forEach((q) => mapBooleanToResponse(r, q));
 
