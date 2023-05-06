@@ -43,5 +43,7 @@ export interface FormResponse {
   submitted_on?: string|null;
   live_in_pittsburgh_atlanta?: boolean;
   live_in_southside_atlanta?: boolean;
+  elderly_members?: number|null;
+  youth_members?: number|null;
 }
 

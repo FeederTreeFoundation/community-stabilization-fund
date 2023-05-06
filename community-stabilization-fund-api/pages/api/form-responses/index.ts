@@ -1,11 +1,12 @@
+import { PrismaClient } from '@prisma/client';
+
 import { executeQuery, queries } from '../../../src/db';
 
 import type { FormResponse} from '../../../src/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient, Prisma } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
@@ -62,13 +63,13 @@ const getAllFormResponses = async (res: NextApiResponse) => {
   } catch (error) {
     return res.json({error});
   }
-}
+};
 
 const createFormResponse = async (body: string, res: NextApiResponse) => {
   const request = JSON.parse(body);
   const hygieneItems = request['hygiene_items'].join();
 
-  const {feminine_members, needs_plan_b, hygiene_items, address_city, address_state, address_zip, address_country, address_line1, address_line2, ...rest} = request
+  const {feminine_members, needs_plan_b, hygiene_items, address_city, address_state, address_zip, address_country, address_line1, address_line2, ...rest} = request;
 
   const formResponse = {
     ...rest,
@@ -88,19 +89,19 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
         line2: address_line2
       }
     }
-  }
+  };
 
   try {
-    const result = await prisma.form_response.create({data: formResponse})
+    const result = await prisma.form_response.create({data: formResponse});
 
     return res
-        .status(201)
-        .send('Successfully created form response with id: ' + result.id);
+      .status(201)
+      .send('Successfully created form response with id: ' + result.id);
   } catch (error) {
     return res.json({error});
   }
 
-}
+};
 
 // const createFormResponse = async (body: string, res: NextApiResponse) => {
 //   const formResponse = JSON.parse(body);
