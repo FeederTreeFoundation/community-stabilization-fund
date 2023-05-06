@@ -34,6 +34,26 @@ const FilterToolbarActions = ({
       }
       className={`${styles.filter_checkbox}`}
     />
+    <Checkbox
+      labelText={`Lives in south side Atlanta?`}
+      id='checkbox-label-3'
+      value='live_in_southside_atlanta'
+      checked={filterState.includes('live_in_southside_atlanta')}
+      onChange={(e: ChangeEvent) =>
+        handleFilter((e.target as HTMLInputElement).value)
+      }
+      className={`${styles.filter_checkbox}`}
+    />
+    <Checkbox
+      labelText={`Lives in Pittsburgh Atlanta?`}
+      id='checkbox-label-4'
+      value='live_in_pittsburgh_atlanta'
+      checked={filterState.includes('live_in_pittsburgh_atlanta')}
+      onChange={(e: ChangeEvent) =>
+        handleFilter((e.target as HTMLInputElement).value)
+      }
+      className={`${styles.filter_checkbox}`}
+    />
   </div>
 );
 

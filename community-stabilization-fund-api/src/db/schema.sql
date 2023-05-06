@@ -52,6 +52,9 @@ CREATE TABLE form_response (
   FOREIGN KEY (feminine_health_care_id) REFERENCES feminine_health_care(id) ON DELETE CASCADE
 );
 
+ALTER TABLE form_response ADD  live_in_pittsburgh_atlanta TINYINT NULL, 
+ADD live_in_southside_atlanta TINYINT NULL;
+
 INSERT INTO api_user
 (name)
 VALUES
@@ -68,9 +71,19 @@ VALUES
 (1, 1, 'Thin Pads, Tampons (Super)', TRUE);
 
 INSERT INTO form_response
-(id,first_name, last_name, email, phone_number, phone_type, packages_to_receive, address_id, is_black, is_local, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
+(id,first_name, last_name, email, phone_number, phone_type, packages_to_receive, address_id, is_black, is_local, live_in_southside_atlanta, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
 VALUES
-(1, "Malcolm", "Moses", "mm@gmail.com", "123-4567", "CELL", "Food,Cleaning/Health Supplies,Feminine Health Care,General Hygiene", 1, 1, 1, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
+(1, "Malcolm", "Moses", "mm@gmail.com", "123-4567", "CELL", "Food,Cleaning/Health Supplies,Feminine Health Care,General Hygiene", 1, 1, 1, 1, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
+
+INSERT INTO form_response
+(id,first_name, last_name, email, phone_number, phone_type, packages_to_receive, address_id, is_black, is_local, live_in_southside_atlanta, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
+VALUES
+(2, "Jordan", "Myers", "mm@gmail.com", "123-4567", "CELL", "Food,Cleaning/Health Supplies,Feminine Health Care,General Hygiene", 2, 1, 0, 0, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
+
+INSERT INTO form_response
+(id,first_name, last_name, email, phone_number, phone_type, packages_to_receive, address_id, is_black, is_local, live_in_pittsburgh_atlanta, has_flu_symptoms, household_members, feminine_health_care_id, item_requests, additional_information, is_pick_up, is_volunteering, is_subscribing, is_interested_in_membership)
+VALUES
+(3, "Jordan", "Myers", "mm@gmail.com", "123-4567", "CELL", "Food,Cleaning/Health Supplies,Feminine Health Care,General Hygiene", 3, 1, 1, 1, 1, 5, 1, "Nothing else", "Thank you for supporting!", 1, 1, 1, 1);
 
 SELECT * FROM api_user;
 SELECT * FROM api_key;
