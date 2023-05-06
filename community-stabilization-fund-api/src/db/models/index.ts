@@ -40,7 +40,7 @@ export interface FormResponse {
   is_subscribing: boolean;
   is_joining: boolean;
   is_interested_in_membership: boolean;
-  submitted_on?: string|null;
+  submitted_on?: Date|null;
   live_in_pittsburgh_atlanta?: boolean;
   live_in_southside_atlanta?: boolean;
   elderly_members?: number|null;
