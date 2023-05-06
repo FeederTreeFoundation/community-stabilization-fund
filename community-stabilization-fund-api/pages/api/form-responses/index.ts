@@ -77,7 +77,7 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
       create: {
         feminine_members: feminine_members,
         hygiene_items: hygieneItems,
-        plan_b: needs_plan_b
+        needs_plan_b: needs_plan_b
       }
     },
     address: {

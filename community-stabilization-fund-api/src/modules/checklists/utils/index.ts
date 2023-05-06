@@ -26,13 +26,12 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
 };
 
 export const mapFormResponseToBagItems = ({
-  feminine_health_care_id,
+  feminine_health_care,
   household_members = 0,
-  needs_plan_b = false,
 }: FormResponse) => {
-  let bagItemsMap = createInitialBagItemsMap({household_members, feminine_health_care_id} as FormResponse);
+  let bagItemsMap = createInitialBagItemsMap({household_members, feminine_health_care});
 
-  if(needs_plan_b) {
+  if(feminine_health_care?.needs_plan_b) {
     bagItemsMap['Feminine Hygiene'] = [
       ...bagItemsMap['Feminine Hygiene'], 
       { name: 'Plan B', quantity: 1 }
@@ -42,7 +41,7 @@ export const mapFormResponseToBagItems = ({
   return bagItemsMap;
 };
 
-export const createInitialBagItemsMap = ({household_members = 0, feminine_health_care_id}: FormResponse) =>   ({
+export const createInitialBagItemsMap = ({household_members, feminine_health_care }: Partial<FormResponse>) =>   ({
   Groceries: [
     { name: 'Chicken', quantity: household_members <= 3 ? 1 : 2 },
     { name: 'Eggs', quantity: household_members <= 3 ? 1 : 2 },
@@ -77,11 +76,11 @@ export const createInitialBagItemsMap = ({household_members = 0, feminine_health
     { name: 'Packs of Face Mask', quantity: 1 },
   ],
   'Feminine Hygiene': [
-    { name: 'Feminine Wipes', quantity: feminine_health_care_id ? 15 : 0 },
-    { name: 'Regular Tampons', quantity: feminine_health_care_id ? 15 : 0 },
-    { name: 'Super Tampons', quantity: feminine_health_care_id ? 15 : 0 },
-    { name: 'Thin Pads', quantity: feminine_health_care_id ? 15 : 0 },
-    { name: 'Regular Pads', quantity: feminine_health_care_id ? 15 : 0 }
+    { name: 'Feminine Wipes', quantity: feminine_health_care ? 15 : 0 },
+    { name: 'Regular Tampons', quantity: feminine_health_care ? 15 : 0 },
+    { name: 'Super Tampons', quantity: feminine_health_care ? 15 : 0 },
+    { name: 'Thin Pads', quantity: feminine_health_care ? 15 : 0 },
+    { name: 'Regular Pads', quantity: feminine_health_care ? 15 : 0 }
   ],
 } as BagItemsMap);
 

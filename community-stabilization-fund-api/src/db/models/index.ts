@@ -7,7 +7,7 @@ export interface FeminineHealthResponse {
   id: number;
   feminine_members: number;
   hygiene_items: string|null;
-  plan_b?: boolean;
+  needs_plan_b?: boolean;
 }
 
 export interface Address {
@@ -29,7 +29,7 @@ export interface FormResponse {
   address: Address|null;
   is_black: boolean;
   is_local: boolean;
-  household_members?: number|null;
+  household_members: number;
   has_flu_symptoms: boolean;
   packages_to_receive: string | string[];
   feminine_health_care: FeminineHealthResponse|null;
