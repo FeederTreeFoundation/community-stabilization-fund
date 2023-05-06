@@ -14,6 +14,7 @@ const FormResponsesPage: NextPage = () => {
     };
     getResponses();
   }, []);
+
   return <FormResponsesTable formResponses={formResponses} />;
 };
 

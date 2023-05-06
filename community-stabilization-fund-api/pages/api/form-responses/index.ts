@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 import { executeQuery, queries } from '../../../src/db';
 
-import type { FormResponse} from '../../../src/db';
+import type { FormResponse } from '../../../src/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -19,7 +19,12 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       createFormResponse(body, res);
       break;
     case 'DELETE':
-      deleteAllFormResponses(res);
+      if (body.ids) {
+        const { ids } = body;
+        deleteFormResponse(ids, res);
+      } else {
+        deleteAllFormResponses(res);
+      }
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
@@ -27,26 +32,6 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       break;
   }
 };
-
-// const getAllFormResponses = async (res: NextApiResponse) => {
-//   const sql =
-//     `SELECT fr.*,
-//       fh.id as fh_id,
-//       fh.feminine_members,
-//       fh.hygiene_items,
-//       fh.needs_plan_b
-//     FROM form_response AS fr
-//     LEFT JOIN feminine_health_care AS fh
-//     ON fr.feminine_health_care_id = fh.id`;
-//
-//   try {
-//     const form_responses: FormResponse[] = await executeQuery({ sql });
-//
-//     return res.json([...(form_responses ?? [])]);
-//   } catch (error) {
-//     return res.json({ error });
-//   }
-// };
 
 const getAllFormResponses = async (res: NextApiResponse) => {
 
@@ -98,48 +83,10 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
   } catch (error) {
-    return res.json({error});
+    return res.json({ error });
   }
 
 };
-
-// const createFormResponse = async (body: string, res: NextApiResponse) => {
-//   const formResponse = JSON.parse(body);
-//   const hygiene_items = formResponse["hygiene_items"].join(',');
-//
-//   const fem_responses = {
-//     "feminine_members": formResponse["feminine_members"],
-//     "hygiene_items": hygiene_items,
-//     "needs_plan_b": formResponse["needs_plan_b"]
-//   };
-//
-//   const fem_sql = queries.makeCreateSql('feminine_health_care', fem_responses);
-//
-//   try{
-//     const result = await executeQuery({sql: fem_sql});
-//     const {feminine_members, hygiene_items, needs_plan_b, ...rest } = formResponse;
-//     const packages_to_receive = rest["packages_to_receive"].join(',');
-//
-//     rest["packages_to_receive"] = packages_to_receive;
-//     rest["feminine_health_care_id"] = result.insertId;
-//
-//     const sql = queries.makeCreateSql('form_response', rest);
-//
-//     try {
-//       const result = await executeQuery({ sql });
-//       console.log({ result });
-//
-//       return res
-//         .status(201)
-//         .send('Successfully created form response with id: ' + result.insertId);
-//     } catch (error) {
-//       return res.json({ error });
-//     }
-//
-//   } catch (error) {
-//     return res.json({error});
-//   }
-// };
 
 const deleteAllFormResponses = async (res: NextApiResponse) => {
   const sql = queries.truncateTableSql('form_response');

@@ -11,6 +11,7 @@ const FormResponseService = {
   getAllFormResponses,
   createFormResponse,
   deleteAllFormResponses,
+  deleteFormResponse,
 };
 
 async function getAllFormResponses() {
@@ -20,6 +21,15 @@ async function getAllFormResponses() {
 
 async function createFormResponse() {
   const res = await axiosInstance.post<FormResponse>(`${baseUrl}`);
+  return res;
+}
+
+async function deleteFormResponse(ids: string[]) {
+  const res = await axiosInstance.delete<object>(`${baseUrl}`, {
+    data: {
+      ids: ids,
+    },
+  });
   return res;
 }
 
