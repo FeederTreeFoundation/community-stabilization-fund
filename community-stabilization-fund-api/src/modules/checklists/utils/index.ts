@@ -29,7 +29,7 @@ export const mapFormResponseToBagItems = ({
   feminine_health_care,
   household_members = 0,
 }: FormResponse) => {
-  let bagItemsMap = createInitialBagItemsMap({household_members, feminine_health_care});
+  let bagItemsMap = createInitialBagItemsMap({household_members, feminine_health_care} as FormResponse);
 
   if(feminine_health_care?.needs_plan_b) {
     bagItemsMap['Feminine Hygiene'] = [
@@ -41,7 +41,7 @@ export const mapFormResponseToBagItems = ({
   return bagItemsMap;
 };
 
-export const createInitialBagItemsMap = ({household_members, feminine_health_care }: Partial<FormResponse>) =>   ({
+export const createInitialBagItemsMap = ({household_members, feminine_health_care }: FormResponse) =>   ({
   Groceries: [
     { name: 'Chicken', quantity: household_members <= 3 ? 1 : 2 },
     { name: 'Eggs', quantity: household_members <= 3 ? 1 : 2 },
