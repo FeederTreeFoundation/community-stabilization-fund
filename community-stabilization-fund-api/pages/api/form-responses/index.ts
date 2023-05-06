@@ -88,6 +88,22 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
 
 };
 
+const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
+  const sql = queries.makeBulkDeleteSql('form_response', ids);
+  try {
+    const results = await executeQuery({ sql });
+    if (!results) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Not Found',
+      });
+    }
+    return res.send('Successfully deleted form response with id: ' + ids);
+  } catch (error) {
+    return res.json({ error });
+  }
+};
+
 const deleteAllFormResponses = async (res: NextApiResponse) => {
   const sql = queries.truncateTableSql('form_response');
   try {
