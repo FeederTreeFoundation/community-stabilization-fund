@@ -167,7 +167,6 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   useEffect(() => {
     setFilteredFormResponses(filteredRows(filterState));
-    // filterFRRows(filterState);
   }, [filterState]);
 
   useEffect(() => {
