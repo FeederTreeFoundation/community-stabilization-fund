@@ -7,13 +7,13 @@
     "dev": "next dev",
     "build": "next build && npm run seed",
     "start": "next start",
-    "seed": "node src/db/seed_db.js",
+    "seed": "node prisma/seed.js",
     "lint": "next lint --",
     "lint:fix": "next lint -- --fix ./"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^4.13.0",
     "axios": "^1.1.2",
     "carbon-components": "^11.12.0",
     "carbon-components-react": "^8.12.0",
