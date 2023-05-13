@@ -18,8 +18,12 @@ async function getAllFormResponses() {
   return await axiosInstance.get<FormResponse[]>(`${baseUrl}`);
 }
 
-async function createFormResponse() {
-  return await axiosInstance.post<FormResponse>(`${baseUrl}`);
+async function createFormResponse(data: any) {
+  return await axiosInstance.post<FormResponse>(`${baseUrl}`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
 
 async function deleteFormResponse(ids: number[]) {

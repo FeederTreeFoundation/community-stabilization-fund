@@ -1,0 +1,43 @@
+.form {
+  margin-top: 4rem;
+  max-width: 1200px;
+  margin: 4rem auto;
+}
+
+.grid {
+  display: grid;
+  margin-bottom: 1rem;
+}
+
+.grid__2 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+}
+
+.grid__3 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+.grid__4 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+}
+
+.mb_05 {
+  margin-bottom: 0.5rem;
+}
+
+.mt_04 {
+  margin-top: 2rem;
+}
+
+.submitted {
+  margin-top: 4.8rem;
+  max-width: 600px;
+  margin: 4.8rem auto;
+}
+
+.cds--header {
+  display: none !important;
+}
