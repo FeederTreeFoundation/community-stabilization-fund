@@ -60,6 +60,7 @@ model form_response {
   is_pick_up                  Boolean
   is_volunteering             Boolean
   is_subscribing              Boolean
+  is_joining                  Boolean? 
   is_interested_in_membership Boolean
   live_in_pittsburgh_atlanta  Boolean
   live_in_southside_atlanta   Boolean
