@@ -33,8 +33,9 @@ model feminine_health_care {
 model address {
     id Int @id @default(autoincrement())
     city String @db.VarChar(36)
-    state String @db.VarChar(5)
-    zipcode Int
+    state String @db.VarChar(30)
+    country String @db.VarChar(50)
+    zipcode String @db.VarChar(15)
     line1 String @db.VarChar(250)
     line2 String? @db.VarChar(250)
     form_response form_response[]
@@ -59,7 +60,7 @@ model form_response {
   is_pick_up                  Boolean
   is_volunteering             Boolean
   is_subscribing              Boolean
-  is_joining                  Boolean
+  is_joining                  Boolean? 
   is_interested_in_membership Boolean
   live_in_pittsburgh_atlanta  Boolean
   live_in_southside_atlanta   Boolean

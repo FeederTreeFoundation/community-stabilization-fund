@@ -11,12 +11,19 @@ a {
   text-decoration: none;
 }
 
+label {
+  display: block;
+}
 * {
   box-sizing: border-box;
 }
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media print {

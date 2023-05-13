@@ -6,7 +6,9 @@ import type { FormResponse } from '../../../src/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: { db: { url: process.env.DATABASE_URL } },
+});
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
@@ -34,50 +36,61 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getAllFormResponses = async (res: NextApiResponse) => {
-
-  try{
-    const form_responses = await prisma.form_response.findMany({
+  try {
+    const form_responses = (await prisma.form_response.findMany({
       include: {
         feminine_health_care: true,
-        address: true
-      }
-    }) as FormResponse[];
+        address: true,
+      },
+    })) as FormResponse[];
 
     return res.json([...(form_responses ?? [])]);
-
   } catch (error) {
-    return res.json({error});
+    return res.json({ error });
   }
 };
 
-const createFormResponse = async (body: string, res: NextApiResponse) => {
-  const request = JSON.parse(body);
-  const hygieneItems = request['hygiene_items'].join();
-
-  const {feminine_members, needs_plan_b, hygiene_items, address_city, address_state, address_zip, address_country, address_line1, address_line2, ...rest} = request;
+const createFormResponse = async (body: any, res: NextApiResponse) => {
+  const { feminine_health_care, address, ...rest } = body;
 
   const formResponse = {
     ...rest,
+    household_members: Number(rest.household_members),
+    elderly_members: Number(rest.elderly_members),
+    youth_members: Number(rest.youth_members),
+    is_black: Boolean(rest.is_black),
+    live_in_southside_atlanta: Boolean(rest.live_in_southside_atlanta),
+    live_in_pittsburgh_atlanta: Boolean(rest.live_in_pittsburgh_atlanta),
+    is_local:
+      Boolean(rest.live_in_southside_atlanta) ||
+      Boolean(rest.live_in_pittsburgh_atlanta),
+    has_flu_symptoms: Boolean(rest.has_flu_symptoms),
+    is_pick_up: Boolean(rest.is_pick_up),
+    is_volunteering: Boolean(rest.is_volunteering),
+    is_subscribing: Boolean(rest.is_subscribing),
+    is_interested_in_membership: Boolean(rest.is_interested_in_membership),
+    packages_to_receive: rest.packages_to_receive.join(),
     feminine_health_care: {
       create: {
-        feminine_members: feminine_members,
-        hygiene_items: hygieneItems,
-        needs_plan_b: needs_plan_b
-      }
+        feminine_members: Number(feminine_health_care?.feminine_members),
+        hygiene_items: feminine_health_care?.hygiene_items?.join(),
+        needs_plan_b: Boolean(feminine_health_care?.needs_plan_b),
+      },
     },
     address: {
       create: {
-        city: address_city,
-        state: address_state,
-        zipcode: address_zip,
-        line1: address_line1,
-        line2: address_line2
-      }
-    }
+        country: address?.country,
+        city: address?.city,
+        state: address?.state,
+        zipcode: address?.zipcode,
+        line1: address?.line1,
+        line2: address?.line2,
+      },
+    },
   };
 
   try {
-    const result = await prisma.form_response.create({data: formResponse});
+    const result = await prisma.form_response.create({ data: formResponse });
 
     return res
       .status(201)
@@ -85,7 +98,6 @@ const createFormResponse = async (body: string, res: NextApiResponse) => {
   } catch (error) {
     return res.json({ error });
   }
-
 };
 
 const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
