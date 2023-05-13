@@ -36,7 +36,6 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getAllFormResponses = async (res: NextApiResponse) => {
-  console.log('process env', process.env.DATABASE_URL);
   try {
     const form_responses = (await prisma.form_response.findMany({
       include: {
@@ -44,10 +43,9 @@ const getAllFormResponses = async (res: NextApiResponse) => {
         address: true,
       },
     })) as FormResponse[];
-    console.log('form responses', { form_responses });
+
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
-    console.log('error', { error });
     return res.json({ error });
   }
 };
@@ -90,16 +88,14 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       },
     },
   };
-  console.log({ formResponse });
+
   try {
-    console.log({ formResponse });
     const result = await prisma.form_response.create({ data: formResponse });
-    console.log(result);
+
     return res
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
   } catch (error) {
-    console.log(error);
     return res.json({ error });
   }
 };
