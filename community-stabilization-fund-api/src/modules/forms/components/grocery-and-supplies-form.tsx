@@ -331,9 +331,9 @@ const GroceryAndSuppliesForm = () => {
         <div className={`${styles.grid} ${styles.grid__4}`}>
           <div>
             <Select
-              id='pick_up'
+              id='country'
               defaultValue='placeholder-item'
-              labelText='Can you pick up your items?'
+              labelText='Country'
               {...register('address.country', { required: true })}
             >
               <SelectItem
