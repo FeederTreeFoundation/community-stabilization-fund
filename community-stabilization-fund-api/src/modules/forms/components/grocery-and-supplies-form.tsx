@@ -1,3 +1,4 @@
+import { CheckmarkFilled } from '@carbon/icons-react';
 import {
   Button,
   TextInput,
@@ -66,7 +67,7 @@ const GroceryAndSuppliesForm = () => {
           <label htmlFor='' className='mb-2'>
             Name (Required)
           </label>
-          <div className={`${styles.grid} ${styles.grid__3}`}>
+          <div className={`${styles.grid}`}>
             <div>
               <TextInput
                 id='first_name'
@@ -85,7 +86,7 @@ const GroceryAndSuppliesForm = () => {
             </div>
           </div>
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <div>
             <TextInput
               id='email'
@@ -96,7 +97,7 @@ const GroceryAndSuppliesForm = () => {
             />
           </div>
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <Select
             id='is_black'
             defaultValue='placeholder-item'
@@ -113,7 +114,7 @@ const GroceryAndSuppliesForm = () => {
             <SelectItem value={false} text='No' />
           </Select>
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <Select
             id='live_in_southside_atlanta'
             defaultValue='placeholder-item'
@@ -130,7 +131,7 @@ const GroceryAndSuppliesForm = () => {
             <SelectItem value={false} text='No' />
           </Select>
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <Select
             id='live_in_pittsburg_atlanta'
             defaultValue='placeholder-item'
@@ -147,7 +148,7 @@ const GroceryAndSuppliesForm = () => {
             <SelectItem value={false} text='No' />
           </Select>
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <TextInput
             id='household_members'
             invalidText=''
@@ -156,7 +157,7 @@ const GroceryAndSuppliesForm = () => {
             {...register('household_members', { required: true })}
           />
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <Select
             id='has_flu_symptoms'
             defaultValue='placeholder-item'
@@ -173,7 +174,7 @@ const GroceryAndSuppliesForm = () => {
             <SelectItem value={false} text='No' />
           </Select>
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           {' '}
           <TextInput
             id='elderly_members'
@@ -183,7 +184,7 @@ const GroceryAndSuppliesForm = () => {
             {...register('elderly_members', { required: true })}
           />
         </div>
-        <div className={`${styles.grid} ${styles.grid__1}`}>
+        <div className={`${styles.grid}`}>
           <TextInput
             id='youth_members'
             invalidText=''
@@ -502,7 +503,11 @@ const GroceryAndSuppliesForm = () => {
           city limits and have SE or SW in your address. If you do not fit these
           demographics, we may not be able to assist you with this program.
         </p>
-        <p className='mt-4'>Thank you!</p>
+        <p className={styles.thank_you}>
+          {' '}
+          Thank you!
+          <CheckmarkFilled className={styles.checkmark} />
+        </p>
       </div>
     );
   }
