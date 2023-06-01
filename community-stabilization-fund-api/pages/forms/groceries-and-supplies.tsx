@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { GroceryAndSuppliesForm } from '../../src/modules/forms/components/grocery-and-supplies-form';
 
 import type { NextPage } from 'next';
+import BasicNavigation from '../../src/components/BasicNavigation';
 
 const GroceriesAndSupplies: NextPage = () => (
   <div>
@@ -11,6 +12,7 @@ const GroceriesAndSupplies: NextPage = () => (
       <meta name='description' content='Community Stabilization Funds API' />
       <link rel='icon' href='/favicon.ico' />
     </Head>
+    <BasicNavigation />
     <GroceryAndSuppliesForm />
   </div>
 );
