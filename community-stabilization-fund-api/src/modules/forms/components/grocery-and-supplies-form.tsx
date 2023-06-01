@@ -1,3 +1,4 @@
+import { CheckmarkFilled } from '@carbon/icons-react';
 import {
   Button,
   TextInput,
@@ -66,7 +67,7 @@ const GroceryAndSuppliesForm = () => {
           <label htmlFor='' className='mb-2'>
             Name (Required)
           </label>
-          <div className={`${styles.grid} ${styles.grid__3}`}>
+          <div className={`${styles.grid}`}>
             <div>
               <TextInput
                 id='first_name'
@@ -83,117 +84,114 @@ const GroceryAndSuppliesForm = () => {
                 {...register('last_name', { required: true })}
               />
             </div>
-            <div>
-              <TextInput
-                id='email'
-                type='email'
-                invalidText=''
-                labelText='Email'
-                {...register('email', { required: true })}
-              />
-            </div>
           </div>
         </div>
-        <div className={`${styles.grid} ${styles.grid__3}`}>
+        <div className={`${styles.grid}`}>
           <div>
-            <Select
-              id='is_black'
-              defaultValue='placeholder-item'
-              labelText='Are you Black? (required)'
-              {...register('is_black', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
-          <div>
-            <Select
-              id='live_in_southside_atlanta'
-              defaultValue='placeholder-item'
-              labelText='Do you live in SE or SW Atlanta and within city limits? (required)'
-              {...register('live_in_southside_atlanta', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
-          <div>
-            <Select
-              id='live_in_pittsburg_atlanta'
-              defaultValue='placeholder-item'
-              labelText='Do you live Pittsburg Atlanta? (required)'
-              {...register('live_in_pittsburgh_atlanta', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
+            <TextInput
+              id='email'
+              type='email'
+              invalidText=''
+              labelText='Email'
+              {...register('email', { required: true })}
+            />
           </div>
         </div>
-        <div className={`${styles.grid} ${styles.grid__2}`}>
-          <div>
-            <TextInput
-              id='household_members'
-              invalidText=''
-              labelText='How many people live in your household? (required)'
-              type='number'
-              {...register('household_members', { required: true })}
+        <div className={`${styles.grid}`}>
+          <Select
+            id='is_black'
+            defaultValue='placeholder-item'
+            labelText='Are you Black? (required)'
+            {...register('is_black', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
             />
-          </div>
-          <div>
-            <Select
-              id='has_flu_symptoms'
-              defaultValue='placeholder-item'
-              labelText='Does anyone in your home or who you have regular contact with have flu-like symptoms? (required)'
-              {...register('has_flu_symptoms', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
         </div>
-        <div className={`${styles.grid} ${styles.grid__2}`}>
-          <div>
-            <TextInput
-              id='elderly_members'
-              invalidText=''
-              labelText='How many elderly members live in your household? (required)'
-              type='number'
-              {...register('elderly_members', { required: true })}
+        <div className={`${styles.grid}`}>
+          <Select
+            id='live_in_southside_atlanta'
+            defaultValue='placeholder-item'
+            labelText='Do you live in SE or SW Atlanta and within city limits? (required)'
+            {...register('live_in_southside_atlanta', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
             />
-          </div>
-          <div>
-            <TextInput
-              id='youth_members'
-              invalidText=''
-              labelText='How many youth members live in your household? (required)'
-              type='number'
-              {...register('youth_members', { required: true })}
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='live_in_pittsburg_atlanta'
+            defaultValue='placeholder-item'
+            labelText='Do you live Pittsburg Atlanta? (required)'
+            {...register('live_in_pittsburgh_atlanta', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
             />
-          </div>
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='household_members'
+            invalidText=''
+            labelText='How many people live in your household? (required)'
+            type='number'
+            {...register('household_members', { required: true })}
+          />
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='has_flu_symptoms'
+            defaultValue='placeholder-item'
+            labelText='Does anyone in your home or who you have regular contact with have flu-like symptoms? (required)'
+            {...register('has_flu_symptoms', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          {' '}
+          <TextInput
+            id='elderly_members'
+            invalidText=''
+            labelText='How many elderly members live in your household? (required)'
+            type='number'
+            {...register('elderly_members', { required: true })}
+          />
+        </div>
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='youth_members'
+            invalidText=''
+            labelText='How many youth members live in your household? (required)'
+            type='number'
+            {...register('youth_members', { required: true })}
+          />
         </div>
         <div className={`${styles.grid}`}>
           <label htmlFor='' className='mb-2'>
@@ -283,23 +281,21 @@ const GroceryAndSuppliesForm = () => {
           </div>
         </div>
         <div className={styles.grid}>
-          <div>
-            <Select
-              id='needs_plan_b'
-              defaultValue='placeholder-item'
-              labelText='Do you need Plan B?'
-              {...register('feminine_health_care.needs_plan_b')}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
+          <Select
+            id='needs_plan_b'
+            defaultValue='placeholder-item'
+            labelText='Do you need Plan B?'
+            {...register('feminine_health_care.needs_plan_b')}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
         </div>
         <div className={styles.grid}>
           <TextArea
@@ -308,74 +304,70 @@ const GroceryAndSuppliesForm = () => {
             {...register('item_requests')}
           />
         </div>
-        <div className={`${styles.grid} ${styles.grid__2}`}>
-          <div>
-            <TextInput
-              id='line1'
-              invalidText=''
-              labelText='Address Line 1'
-              type='text'
-              {...register('address.line1', { required: true })}
-            />
-          </div>
-          <div>
-            <TextInput
-              id='line2'
-              invalidText=''
-              labelText='Address Line 2'
-              type='text'
-              {...register('address.line2', { required: true })}
-            />
-          </div>
+        <div className={styles.grid}>
+          <TextInput
+            id='line1'
+            invalidText=''
+            labelText='Address Line 1'
+            type='text'
+            {...register('address.line1', { required: true })}
+          />
         </div>
-        <div className={`${styles.grid} ${styles.grid__4}`}>
-          <div>
-            <Select
-              id='country'
-              defaultValue='placeholder-item'
-              labelText='Country'
-              {...register('address.country', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              {COUNTRY_LIST.map((country, id) => (
-                <SelectItem key={id} value={country} text={country}>
-                  {country}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div>
-            <TextInput
-              id='city'
-              invalidText=''
-              labelText='City'
-              type='text'
-              {...register('address.city', { required: true })}
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='line2'
+            invalidText=''
+            labelText='Address Line 2'
+            type='text'
+            {...register('address.line2', { required: true })}
+          />
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='pick_up'
+            defaultValue='placeholder-item'
+            labelText='Can you pick up your items?'
+            {...register('address.country', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
             />
-          </div>
-          <div>
-            <TextInput
-              id='state'
-              invalidText=''
-              labelText='State'
-              type='text'
-              {...register('address.state', { required: true })}
-            />
-          </div>
-          <div>
-            <TextInput
-              id='zip_code'
-              invalidText=''
-              labelText='Zip Code'
-              type='text'
-              {...register('address.zipcode', { required: true })}
-            />
-          </div>
+            {COUNTRY_LIST.map((country, id) => (
+              <SelectItem key={id} value={country} text={country}>
+                {country}
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='city'
+            invalidText=''
+            labelText='City'
+            type='text'
+            {...register('address.city', { required: true })}
+          />
+        </div>
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='state'
+            invalidText=''
+            labelText='State'
+            type='text'
+            {...register('address.state', { required: true })}
+          />
+        </div>
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='zip_code'
+            invalidText=''
+            labelText='Zip Code'
+            type='text'
+            {...register('address.zipcode', { required: true })}
+          />
         </div>
 
         <div className={styles.grid}>
@@ -387,105 +379,117 @@ const GroceryAndSuppliesForm = () => {
             {...register('additional_information')}
           />
         </div>
-        <div className={`${styles.grid} ${styles.grid__4}`}>
-          <div>
-            <Select
-              id='pick_up'
-              defaultValue='placeholder-item'
-              labelText='Can you pick up your items?'
-              {...register('is_pick_up', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
-          <div>
-            <Select
-              id='pphone_type'
-              defaultValue='placeholder-item'
-              labelText='Phone Type:'
-              {...register('phone_type', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value='cell' text='Cell' />
-              <SelectItem value='home' text='Home' />
-              <SelectItem value='work' text='Work' />
-            </Select>
-          </div>
-          <div>
-            <TextInput
-              id='phone'
-              invalidText=''
-              labelText='Phone'
-              type='text'
-              {...register('phone_number', { required: true })}
+        <div className={`${styles.grid}`}>
+          <Select
+            id='pick_up'
+            defaultValue='placeholder-item'
+            labelText='Can you pick up your items?'
+            {...register('is_pick_up', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
             />
-          </div>
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
         </div>
-
-        <div className={`${styles.grid} ${styles.grid__4}`}>
-          <div>
-            <Select
-              id='is_volunteering'
-              defaultValue='placeholder-item'
-              labelText='Help volunteer?'
-              {...register('is_volunteering', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
-          <div>
-            <Select
-              id='is_subscribing'
-              defaultValue='placeholder-item'
-              labelText='Is subscribing?'
-              {...register('is_subscribing', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
-          <div>
-            <Select
-              id=' is_interested_in_membership'
-              defaultValue='placeholder-item'
-              labelText='Is joining?'
-              {...register('is_interested_in_membership', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='placeholder-item'
-                text='Choose an option'
-              />
-              <SelectItem value={true} text='Yes' />
-              <SelectItem value={false} text='No' />
-            </Select>
-          </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='phone_type'
+            defaultValue='placeholder-item'
+            labelText='Phone Type:'
+            {...register('phone_type', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value='cell' text='Cell' />
+            <SelectItem value='home' text='Home' />
+            <SelectItem value='work' text='Work' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <TextInput
+            id='phone'
+            invalidText=''
+            labelText='Phone'
+            type='text'
+            {...register('phone_number', { required: true })}
+          />
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='is_volunteering'
+            defaultValue='placeholder-item'
+            labelText='Help volunteer?'
+            {...register('is_volunteering', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='is_volunteering'
+            defaultValue='placeholder-item'
+            labelText='Help volunteer?'
+            {...register('is_volunteering', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id='is_subscribing'
+            defaultValue='placeholder-item'
+            labelText='Is subscribing?'
+            {...register('is_subscribing', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
+        </div>
+        <div className={`${styles.grid}`}>
+          <Select
+            id=' is_interested_in_membership'
+            defaultValue='placeholder-item'
+            labelText='Is joining?'
+            {...register('is_interested_in_membership', { required: true })}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='placeholder-item'
+              text='Choose an option'
+            />
+            <SelectItem value={true} text='Yes' />
+            <SelectItem value={false} text='No' />
+          </Select>
         </div>
         <Button type='submit'>Submit</Button>
       </Form>
@@ -499,7 +503,11 @@ const GroceryAndSuppliesForm = () => {
           city limits and have SE or SW in your address. If you do not fit these
           demographics, we may not be able to assist you with this program.
         </p>
-        <p className='mt-4'>Thank you!</p>
+        <p className={styles.thank_you}>
+          {' '}
+          Thank you!
+          <CheckmarkFilled className={styles.checkmark} />
+        </p>
       </div>
     );
   }
