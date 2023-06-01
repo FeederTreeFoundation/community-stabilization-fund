@@ -29,23 +29,22 @@ function RouteGuard({ children }: RouteGuardProps) {
       router.events.off('routeChangeStart', hideContent);
       router.events.off('routeChangeComplete', handleAuthCheck);
     };
-
   }, [handleAuthCheck, router.asPath, router.events]);
 
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = localStorage.getItem('api_user');
-    const publicPaths = ['/'];
+    const publicPaths = ['/', '/forms'];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
 
     // TODO: Use Roles Based Authentication instead
-    if(!user && !isLoading && !publicPaths.includes(path)) {
+    if (!user && !isLoading && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({
-        pathname: '/api/auth/login'
+        pathname: '/api/auth/login',
       });
-    } else if (typeof apiUserId !== 'string' && privatePaths.includes(path)) {   
+    } else if (typeof apiUserId !== 'string' && privatePaths.includes(path)) {
       setAuthorized(false);
       router.push({
         pathname: '/admin/login',

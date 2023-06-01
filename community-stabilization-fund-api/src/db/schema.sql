@@ -41,7 +41,7 @@ CREATE TABLE form_response (
   is_local TINYINT NULL,
   packages_to_receive VARCHAR(250) NULL,
   has_flu_symptoms TINYINT NULL,
-  household_members INT NULL,
+  household_members INT NOT NULL,
   feminine_health_care_id INT NULL,
   item_requests VARCHAR(100) NULL,
   additional_information VARCHAR(250) NULL,

@@ -29,7 +29,7 @@ import type {
 // TEMPORARY FIX FOR CARBON DATA TABLE TYPES
 class DataTable extends React.Component<
   DataTableProps & { children?: Function }
-> {
+  > {
   render() {
     return (
       <CarbonDataTable {...this.props}>{this.props.children}</CarbonDataTable>

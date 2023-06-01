@@ -1,8 +1,14 @@
+import { PrismaClient } from '@prisma/client';
+
 import { executeQuery, queries } from '../../../src/db';
 
 import type { FormResponse } from '../../../src/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+const prisma = new PrismaClient({
+  datasources: { db: { url: process.env.DATABASE_URL } },
+});
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
@@ -30,17 +36,13 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getAllFormResponses = async (res: NextApiResponse) => {
-  const sql = `SELECT fr.*, 
-      fh.id as fh_id, 
-      fh.feminine_members,
-      fh.hygiene_items,
-      fh.needs_plan_b
-    FROM form_response AS fr
-    LEFT JOIN feminine_health_care AS fh 
-    ON fr.feminine_health_care_id = fh.id`;
-
   try {
-    const form_responses: FormResponse[] = await executeQuery({ sql });
+    const form_responses = (await prisma.form_response.findMany({
+      include: {
+        feminine_health_care: true,
+        address: true,
+      },
+    })) as FormResponse[];
 
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
@@ -48,38 +50,51 @@ const getAllFormResponses = async (res: NextApiResponse) => {
   }
 };
 
-const createFormResponse = async (body: string, res: NextApiResponse) => {
-  const formResponse = JSON.parse(body);
-  const hygiene_items = formResponse['hygiene_items'].join(',');
+const createFormResponse = async (body: any, res: NextApiResponse) => {
+  const { feminine_health_care, address, ...rest } = body;
 
-  const fem_responses = {
-    feminine_members: formResponse['feminine_members'],
-    hygiene_items: hygiene_items,
-    needs_plan_b: formResponse['needs_plan_b'],
+  const formResponse = {
+    ...rest,
+    household_members: Number(rest.household_members),
+    elderly_members: Number(rest.elderly_members),
+    youth_members: Number(rest.youth_members),
+    is_black: Boolean(rest.is_black),
+    live_in_southside_atlanta: Boolean(rest.live_in_southside_atlanta),
+    live_in_pittsburgh_atlanta: Boolean(rest.live_in_pittsburgh_atlanta),
+    is_local:
+      Boolean(rest.live_in_southside_atlanta) ||
+      Boolean(rest.live_in_pittsburgh_atlanta),
+    has_flu_symptoms: Boolean(rest.has_flu_symptoms),
+    is_pick_up: Boolean(rest.is_pick_up),
+    is_volunteering: Boolean(rest.is_volunteering),
+    is_subscribing: Boolean(rest.is_subscribing),
+    is_interested_in_membership: Boolean(rest.is_interested_in_membership),
+    packages_to_receive: rest.packages_to_receive.join(),
+    feminine_health_care: {
+      create: {
+        feminine_members: Number(feminine_health_care?.feminine_members),
+        hygiene_items: feminine_health_care?.hygiene_items?.join(),
+        needs_plan_b: Boolean(feminine_health_care?.needs_plan_b),
+      },
+    },
+    address: {
+      create: {
+        country: address?.country,
+        city: address?.city,
+        state: address?.state,
+        zipcode: address?.zipcode,
+        line1: address?.line1,
+        line2: address?.line2,
+      },
+    },
   };
 
-  const fem_sql = queries.makeCreateSql('feminine_health_care', fem_responses);
-
   try {
-    const result = await executeQuery({ sql: fem_sql });
-    const { feminine_members, hygiene_items, needs_plan_b, ...rest } =
-      formResponse;
-    const packages_to_receive = rest['packages_to_receive'].join(',');
+    const result = await prisma.form_response.create({ data: formResponse });
 
-    rest['packages_to_receive'] = packages_to_receive;
-    rest['feminine_health_care_id'] = result.insertId;
-
-    const sql = queries.makeCreateSql('form_response', rest);
-
-    try {
-      const result = await executeQuery({ sql });
-
-      return res
-        .status(201)
-        .send('Successfully created form response with id: ' + result.insertId);
-    } catch (error) {
-      return res.json({ error });
-    }
+    return res
+      .status(201)
+      .send('Successfully created form response with id: ' + result.id);
   } catch (error) {
     return res.json({ error });
   }

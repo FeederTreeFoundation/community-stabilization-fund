@@ -1,26 +1,28 @@
 import type { FormResponse } from "../db";
 
 export const formResponseMock: FormResponse =  {
-  id: "1234",
-  submitted_on: "03/04/2022 3:44 pm",
+  is_joining: false,
+  is_local: false,
+  id: 1234,
+  submitted_on: null,
   first_name: "Malcolm",
   last_name: "Moses",
   email: "malc@aol.com",
   phone_number: "555-5555",
   phone_type: "Mobile",
-  address_id: 0,
+  address: null,
   is_black: true,
   live_in_pittsburgh_atlanta: false,
   live_in_southside_atlanta: true,
   has_flu_symptoms: false,
   household_members: 5,
-  feminine_health_care_id: 0,
+  feminine_health_care: null,
   packages_to_receive: ["all"],
   additional_information: "N/A",
   is_pick_up: false,
   is_volunteering: true,
   is_subscribing: true,
-  is_interested_in_membership: false,
+  is_interested_in_membership: false
 };
 
 export const bagItemsMock = {
