@@ -37,6 +37,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     const publicPaths = [
       '/',
       '/forms',
+      '/admin/login',
       '/forms/groceries-and-supplies',
       '/rent-mortgage-utilities-support',
     ];
