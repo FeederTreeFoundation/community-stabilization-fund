@@ -84,27 +84,19 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     FORM_RESPONSE_QUESTIONS
   ) as DataTableHeader<string>[];
 
-  useEffect(() => {
+  const filteredRows = (filterState: string[]): FormResponse[] => {
     if (filterState.length === 0) {
-      setFilteredFormResponses(formResponsesRef.current);
-    } else if (
-      filterState.includes('is_black') &&
-      filterState.includes('is_local')
-    ) {
-      const filtered = formResponsesRef.current.filter(
-        (resp) => resp.is_black && resp.is_local
-      );
-      setFilteredFormResponses(filtered);
-    } else if (filterState.includes('is_black')) {
-      const filtered = formResponsesRef.current.filter((resp) => resp.is_black);
-      setFilteredFormResponses(filtered);
-    } else if (filterState.includes('is_local')) {
-      const filtered = formResponsesRef.current.filter((resp) => resp.is_local);
-      setFilteredFormResponses(filtered);
+      return formResponsesRef.current;
     } else {
-      setFilteredFormResponses(formResponsesRef.current);
+      return formResponsesRef.current.filter((f) =>
+        filterState.every((key) => f[key as keyof FormResponse] == true)
+      );
     }
-  }, [filterState]);
+  };
+
+  useEffect(() => {
+    setFilteredFormResponses(filteredRows(filterState));
+  }, [filterState, filterState.length]);
 
   useEffect(() => {
     formResponsesRef.current = formResponses;
