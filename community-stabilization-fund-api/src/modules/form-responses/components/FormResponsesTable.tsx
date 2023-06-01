@@ -89,19 +89,14 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
       return formResponsesRef.current;
     } else {
       return formResponsesRef.current.filter((f) => {
-        console.log(1, { filterState, f });
-        return filterState.every((key) => {
-          console.log(2, { key }, !!f[key]);
-          return f[key] == true;
-        });
+        filterState.every((key) => f[key as keyof FormResponse] == true);
       });
     }
   };
 
   useEffect(() => {
-    console.log(3, { filteredFormResponses });
     setFilteredFormResponses(filteredRows(filterState));
-  }, [filterState.length]);
+  }, [filterState, filterState.length]);
 
   useEffect(() => {
     formResponsesRef.current = formResponses;
