@@ -36,6 +36,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   const formResponsesRef = useRef(formResponses);
 
   const handleFilter = (value: string) => {
+    console.log(value);
     if (filterState.includes(value)) {
       // remove previous state
       const removedFilterState = filterState.filter((state) => state !== value);
@@ -88,9 +89,9 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     if (filterState.length === 0) {
       return formResponsesRef.current;
     } else {
-      return formResponsesRef.current.filter((f) => {
-        filterState.every((key) => f[key as keyof FormResponse] == true);
-      });
+      return formResponsesRef.current.filter((f) =>
+        filterState.every((key) => f[key as keyof FormResponse] == true)
+      );
     }
   };
 
