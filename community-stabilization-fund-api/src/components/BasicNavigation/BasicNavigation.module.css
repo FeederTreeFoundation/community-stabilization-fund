@@ -1,0 +1,22 @@
+.basic_nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 4.4rem;
+}
+
+.btn_link {
+  padding: 1rem;
+  text-align: center;
+}
+
+/* .basic_nav a {
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  border: 0.1rem solid #fff;
+  padding: 0.3rem;
+}
+
+.basic_nav a:hover {
+  color: #989898;
+} */

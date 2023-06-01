@@ -135,20 +135,20 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  margin-top: 3rem;
 }
 
 .bg_overlay {
   background: rgba(0, 0, 0, 0.5);
   height: 100vh;
-  display: flex;
-  justify-content: center;
+
   color: #fff;
 }
 
 .bg_overlay h1 {
-  margin-top: 12rem;
+  margin-top: 6rem;
+  text-align: center;
   font-weight: 600;
+
   letter-spacing: 0.3rem;
   padding: 2rem;
 }
