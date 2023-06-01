@@ -87,87 +87,21 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   const filteredRows = (filterState: string[]): FormResponse[] => {
     if (filterState.length === 0) {
       return formResponsesRef.current;
-    } else if (
-      filterState.includes('is_black') &&
-      filterState.includes('live_in_southside_atlanta') &&
-      filterState.includes('is_local')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) =>
-          resp.is_black && resp.live_in_southside_atlanta && resp.is_local
-      );
-    } else if (
-      filterState.includes('is_black') &&
-      filterState.includes('live_in_pittsburgh_atlanta') &&
-      filterState.includes('is_local')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) =>
-          resp.is_black && resp.live_in_pittsburgh_atlanta && resp.is_local
-      );
-    } else if (
-      filterState.includes('is_local') &&
-      filterState.includes('live_in_southside_atlanta')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.is_local && resp.live_in_southside_atlanta
-      );
-    } else if (
-      filterState.includes('is_local') &&
-      filterState.includes('live_in_pittsburgh_atlanta')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.is_local && resp.live_in_southside_atlanta
-      );
-    } else if (
-      filterState.includes('is_black') &&
-      filterState.includes('is_local')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.is_black && resp.is_local
-      );
-    } else if (
-      filterState.includes('is_black') &&
-      filterState.includes('live_in_southside_atlanta')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.is_black && resp.live_in_southside_atlanta
-      );
-    } else if (
-      filterState.includes('is_black') &&
-      filterState.includes('live_in_pittsburgh_atlanta')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.is_black && resp.live_in_pittsburgh_atlanta
-      );
-    } else if (
-      filterState.includes('live_in_pittsburgh_atlanta') &&
-      filterState.includes('live_in_southside_atlanta')
-    ) {
-      return formResponsesRef.current.filter(
-        (resp) =>
-          resp.live_in_pittsburgh_atlanta && resp.live_in_southside_atlanta
-      );
-    } else if (filterState.includes('live_in_pittsburgh_atlanta')) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.live_in_pittsburgh_atlanta
-      );
-    } else if (filterState.includes('live_in_southside_atlanta')) {
-      return formResponsesRef.current.filter(
-        (resp) => resp.live_in_southside_atlanta
-      );
-    } else if (filterState.includes('is_black')) {
-      return formResponsesRef.current.filter((resp) => resp.is_black);
-    } else if (filterState.includes('is_local')) {
-      return formResponsesRef.current.filter((resp) => resp.is_local);
     } else {
-      return formResponsesRef.current;
+      return formResponsesRef.current.filter((f) => {
+        console.log(1, { filterState, f });
+        return filterState.every((key) => {
+          console.log(2, { key }, !!f[key]);
+          return f[key] == true;
+        });
+      });
     }
   };
 
   useEffect(() => {
+    console.log(3, { filteredFormResponses });
     setFilteredFormResponses(filteredRows(filterState));
-  }, [filterState]);
+  }, [filterState.length]);
 
   useEffect(() => {
     formResponsesRef.current = formResponses;
