@@ -34,7 +34,12 @@ function RouteGuard({ children }: RouteGuardProps) {
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = localStorage.getItem('api_user');
-    const publicPaths = ['/', '/forms'];
+    const publicPaths = [
+      '/',
+      '/forms',
+      '/forms/groceries-and-supplies',
+      '/rent-mortgage-utilities-support',
+    ];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
 
