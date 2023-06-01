@@ -36,7 +36,6 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   const formResponsesRef = useRef(formResponses);
 
   const handleFilter = (value: string) => {
-    console.log(value);
     if (filterState.includes(value)) {
       // remove previous state
       const removedFilterState = filterState.filter((state) => state !== value);
