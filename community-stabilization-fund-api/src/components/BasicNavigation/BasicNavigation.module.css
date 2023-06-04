@@ -1,9 +1,5 @@
 .basic_nav {
   position: relative;
-  /* 
-  margin: 0 auto;
-  padding-top: 4.4rem; */
-
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -14,6 +10,7 @@
   font-size: 1.5rem;
   letter-spacing: 0.1rem;
 }
+
 .basic_nav h2 {
   width: 100%;
   text-align: center;
@@ -50,14 +47,3 @@
 .drop_down a:last-of-type {
   margin-bottom: 0;
 }
-/* .basic_nav a {
-  color: #fff;
-  font-weight: bold;
-  letter-spacing: 0.1rem;
-  border: 0.1rem solid #fff;
-  padding: 0.3rem;
-}
-
-.basic_nav a:hover {
-  color: #989898;
-} */

@@ -12,7 +12,6 @@ const BasicNavigation = () => {
     <nav className={styles.basic_nav}>
       <h1>Community Stabilization Fund - Keeping Residents In Place</h1>
       <h2>Black Liberation Programs</h2>
-
       <div>
         <Button
           kind='secondary'
@@ -35,7 +34,6 @@ const BasicNavigation = () => {
           <Link href='/swope-dreams'>Swope Dreams</Link>
         </nav>
       </div>
-
       <Link href='/rent-mortgage-utilities-support'>
         <Button kind='secondary' className={styles.btn_link}>
           Rent, Mortgage, Utilities Support
