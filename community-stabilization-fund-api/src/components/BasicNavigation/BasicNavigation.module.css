@@ -1,7 +1,26 @@
 .basic_nav {
-  max-width: 1200px;
+  position: relative;
+  /* 
   margin: 0 auto;
-  padding-top: 4.4rem;
+  padding-top: 4.4rem; */
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.basic_nav h1 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+}
+.basic_nav h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.3rem;
+  text-decoration: underline;
 }
 
 .btn_link {
@@ -10,6 +29,27 @@
   margin-right: 0.2rem;
 }
 
+.drop_down {
+  background: #393939;
+  position: absolute;
+  display: none;
+  top: 13.5rem;
+  padding: 1rem 2rem;
+  flex-direction: column;
+}
+
+.drop_down_open {
+  display: flex;
+}
+
+.drop_down a {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.drop_down a:last-of-type {
+  margin-bottom: 0;
+}
 /* .basic_nav a {
   color: #fff;
   font-weight: bold;
