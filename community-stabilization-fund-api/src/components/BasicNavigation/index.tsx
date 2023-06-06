@@ -1,9 +1,9 @@
-import { Button } from 'carbon-components-react';
-import Link from 'next/link';
+import { Button } from "carbon-components-react";
+import Link from "next/link";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import styles from './BasicNavigation.module.css';
+import styles from "./BasicNavigation.module.css";
 
 const BasicNavigation = () => {
   const [menuState, setMenuState] = useState(false);
@@ -11,7 +11,9 @@ const BasicNavigation = () => {
   return (
     <nav className={styles.basic_nav}>
       <div className={styles.title}>
-        <Link href="/">Community Stabilization Fund - Keeping Residents In Place</Link>
+        <Link href='/'>
+          Community Stabilization Fund - Keeping Residents In Place
+        </Link>
         <h2>Black Liberation Programs</h2>
       </div>
       <div>
