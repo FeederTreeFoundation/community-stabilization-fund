@@ -10,8 +10,10 @@ const BasicNavigation = () => {
   const handleClick = () => setMenuState(!menuState);
   return (
     <nav className={styles.basic_nav}>
-      <h1>Community Stabilization Fund - Keeping Residents In Place</h1>
-      <h2>Black Liberation Programs</h2>
+      <div className={styles.title}>
+        <Link href="/">Community Stabilization Fund - Keeping Residents In Place</Link>
+        <h2>Black Liberation Programs</h2>
+      </div>
       <div>
         <Button
           kind='secondary'
