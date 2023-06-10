@@ -161,6 +161,26 @@
   padding: 2rem;
 }
 
+.footer {
+  display: block;
+  background-color: #616161;
+  color: #feffff;
+  text-transform: uppercase;
+  padding: 1.25rem;
+}
+
+.footer_heading {
+  margin-bottom: 1rem;
+}
+
+.footer a {
+  color: #feffff;
+}
+
+.footer a:hover {
+  color: #ccc;
+}
+
 @media screen and (min-width: 800px) {
   .bg_overlay h1 {
     font-size: 3rem;
