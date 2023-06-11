@@ -1,6 +1,6 @@
-import BasicLayout from '../BasicLayout';
+import BasicLayout from '../../../components/BasicLayout';
 
-import styles from './about-us.module.css';
+import styles from '../styles/about-us.module.css';
 
 interface AboutUsProps {
   org: {
