@@ -31,13 +31,13 @@ const BasicNavigation = () => {
               : `${styles.drop_down}`
           }
         >
-          <Link href='/about-us/pittsburgh-collaborative'>
+          <Link href='/about/pittsburgh-collaborative'>
             Pittsburgh Collaborative
           </Link>
-          <Link href='/about-us/community-movement-builders'>
+          <Link href='/about/community-movement-builders'>
             Community Movement Builders
           </Link>
-          <Link href='/about-us/swope-dreams'>Swope Dreams</Link>
+          <Link href='/about/swope-dreams'>Swope Dreams</Link>
         </nav>
       </div>
       <Link href='/rent-mortgage-utilities-support'>

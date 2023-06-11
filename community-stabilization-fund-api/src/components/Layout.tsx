@@ -23,9 +23,9 @@ const Layout = ({ children }: LayoutProps) => {
   const hiddenPaths = [
     '/',
     '/rent-mortgage-utilities-support',
-    '/about-us/pittsburgh-collaborative',
-    '/about-us/community-movement-builders',
-    '/about-us/swope-dreams',
+    '/about/pittsburgh-collaborative',
+    '/about/community-movement-builders',
+    '/about/swope-dreams',
   ];
   return (
     <div className='container'>
