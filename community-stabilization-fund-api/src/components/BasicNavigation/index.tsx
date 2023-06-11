@@ -31,8 +31,10 @@ const BasicNavigation = () => {
               : `${styles.drop_down}`
           }
         >
-          <Link href='/pittsburgh-collaborative'>Pittsburgh Collaborative</Link>
-          <Link href='/community-movement-builders'>
+          <Link href='/about-us/pittsburgh-collaborative'>
+            Pittsburgh Collaborative
+          </Link>
+          <Link href='/about-us/community-movement-builders'>
             Community Movement Builders
           </Link>
           <Link href='/swope-dreams'>Swope Dreams</Link>
