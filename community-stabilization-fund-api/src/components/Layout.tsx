@@ -4,27 +4,28 @@ import {
   // HeaderMenu,
   // HeaderMenuItem,
   Theme,
-} from "@carbon/react";
-import { useRouter } from "next/router";
-import { useState } from "react";
+} from '@carbon/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
-import { ROUTES } from "../services/constants";
+import { ROUTES } from '../services/constants';
 
-import { HeaderItem } from "./HeaderItem";
-import { UserNavigation } from "./UserNavigation";
+import { HeaderItem } from './HeaderItem';
+import { UserNavigation } from './UserNavigation';
 
 interface LayoutProps {
   children: JSX.Element;
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const [selectedPage, setSelectedPage] = useState("");
+  const [selectedPage, setSelectedPage] = useState('');
   const { pathname } = useRouter();
   const hiddenPaths = [
-    "/",
-    "/rent-mortgage-utilities-support",
-    "/about-us/pittsburgh-collaborative",
-    "/about-us/community-movement-builders",
+    '/',
+    '/rent-mortgage-utilities-support',
+    '/about-us/pittsburgh-collaborative',
+    '/about-us/community-movement-builders',
+    '/about-us/swope-dreams',
   ];
   return (
     <div className='container'>
@@ -34,12 +35,12 @@ const Layout = ({ children }: LayoutProps) => {
             <HeaderItem route={ROUTES.root} prefix='CMB' />
             <HeaderNavigation aria-label='Community Stabilization Fund'>
               <HeaderItem
-                route={ROUTES["form-responses"]}
+                route={ROUTES['form-responses']}
                 selectedPage={selectedPage}
                 changeSelectedPage={setSelectedPage}
               />
               <HeaderItem
-                route={ROUTES["checklists"]}
+                route={ROUTES['checklists']}
                 selectedPage={selectedPage}
                 changeSelectedPage={setSelectedPage}
               />

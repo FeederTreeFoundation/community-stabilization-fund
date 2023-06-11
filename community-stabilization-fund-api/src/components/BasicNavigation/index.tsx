@@ -1,9 +1,9 @@
-import { Button } from "carbon-components-react";
-import Link from "next/link";
+import { Button } from 'carbon-components-react';
+import Link from 'next/link';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import styles from "./BasicNavigation.module.css";
+import styles from './BasicNavigation.module.css';
 
 const BasicNavigation = () => {
   const [menuState, setMenuState] = useState(false);
@@ -37,7 +37,7 @@ const BasicNavigation = () => {
           <Link href='/about-us/community-movement-builders'>
             Community Movement Builders
           </Link>
-          <Link href='/swope-dreams'>Swope Dreams</Link>
+          <Link href='/about-us/swope-dreams'>Swope Dreams</Link>
         </nav>
       </div>
       <Link href='/rent-mortgage-utilities-support'>
