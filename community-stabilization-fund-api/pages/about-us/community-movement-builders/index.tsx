@@ -1,5 +1,5 @@
 import AboutUs from '../../../src/components/AboutUs';
-import { CMB } from '../constants';
+import { CMB } from '../../../src/modules/about-us/constants';
 
 const CommunityMovementBuilders = () => <AboutUs org={CMB} />;
 
