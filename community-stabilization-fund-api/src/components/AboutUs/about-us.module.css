@@ -1,0 +1,16 @@
+.title {
+  font-weight: bold;
+}
+
+.contact {
+  margin-top: 2rem;
+}
+
+.contact h2 {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.contact .link {
+  font-size: 1.4rem;
+}
