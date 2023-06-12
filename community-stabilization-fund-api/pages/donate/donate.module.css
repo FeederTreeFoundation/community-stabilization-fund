@@ -10,3 +10,11 @@
 .donate a {
   font-weight: bold;
 }
+
+.btn_link {
+  padding: 1rem;
+  text-align: center;
+  margin-right: 0.2rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+}

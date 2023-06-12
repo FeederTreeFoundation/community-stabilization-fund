@@ -1,4 +1,5 @@
 import BasicLayout from '../../src/components/BasicLayout';
+import { Button } from 'carbon-components-react';
 
 import styles from './donate.module.css';
 const Donate = () => (
@@ -12,7 +13,9 @@ const Donate = () => (
         donation page and we will earmark those funds for this program.
       </p>
       <a href='https://communitymovementbuilders.org/donate.html'>
-        CLICK HERE TO DONATE FOR PCSF AT COMMUNITY MOVEMENT BUILDERS
+        <Button kind='secondary' className={styles.btn_link}>
+          CLICK HERE TO DONATE FOR PCSF AT COMMUNITY MOVEMENT BUILDERS
+        </Button>
       </a>
     </div>
   </BasicLayout>
