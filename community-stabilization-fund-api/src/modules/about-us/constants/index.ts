@@ -5,6 +5,7 @@ const CMB = {
         cooperative economic platforms and collective community organizing.`,
   email: 'info@communitymovementbuilders.org',
   link: null,
+  img_url: '/img/cmb.jpg',
 };
 
 const PC = {
@@ -17,6 +18,7 @@ const PC = {
         sustainable economic foundation upon which to stand.`,
   email: 'pittsburghcollaborativeinc@gmail.com',
   link: null,
+  img_url: '/img/pc.jpg',
 };
 
 const SWOPE_DREAMS = {
@@ -27,6 +29,7 @@ const SWOPE_DREAMS = {
   change become more equitable across the economic spectrum.`,
   email: null,
   link: 'https://www.swopedreams.com/new-page-1',
+  img_url: '/img/sd.png',
 };
 
 export { CMB, PC, SWOPE_DREAMS };

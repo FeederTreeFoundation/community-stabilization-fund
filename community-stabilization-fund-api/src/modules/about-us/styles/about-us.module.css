@@ -1,9 +1,22 @@
+.header {
+  display: flex;
+}
+
+.header div {
+  margin-left: 1rem;
+}
+
 .title {
   font-weight: bold;
 }
 
 .contact {
   margin-top: 2rem;
+}
+
+.logo {
+  width: 14rem;
+  height: 12rem;
 }
 
 .contact h2 {

@@ -1,4 +1,4 @@
-import AboutUs from '../../../src/modules/about-us/components';
+import { AboutUs } from '../../../src/modules/about-us/components';
 
 import { PC } from '../../../src/modules/about-us/constants';
 
