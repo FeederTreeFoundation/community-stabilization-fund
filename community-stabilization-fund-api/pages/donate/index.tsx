@@ -1,5 +1,6 @@
-import BasicLayout from '../../src/components/BasicLayout';
 import { Button } from 'carbon-components-react';
+
+import BasicLayout from '../../src/components/BasicLayout';
 
 import styles from './donate.module.css';
 const Donate = () => (
