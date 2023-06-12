@@ -42,6 +42,7 @@ function RouteGuard({ children }: RouteGuardProps) {
       '/about/pittsburgh-collaborative',
       '/about/community-movement-builders',
       '/about/swope-dreams',
+      '/donate',
     ];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];

@@ -1,0 +1,12 @@
+.donate {
+  text-align: center;
+}
+
+.donate p {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.donate a {
+  font-weight: bold;
+}

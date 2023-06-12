@@ -26,6 +26,7 @@ const Layout = ({ children }: LayoutProps) => {
     '/about/pittsburgh-collaborative',
     '/about/community-movement-builders',
     '/about/swope-dreams',
+    '/donate',
   ];
   return (
     <div className='container'>
