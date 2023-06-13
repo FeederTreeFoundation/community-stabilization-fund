@@ -20,7 +20,14 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   const [selectedPage, setSelectedPage] = useState('');
   const { pathname } = useRouter();
-  const hiddenPaths = ['/', '/rent-mortgage-utilities-support'];
+  const hiddenPaths = [
+    '/',
+    '/rent-mortgage-utilities-support',
+    '/about/pittsburgh-collaborative',
+    '/about/community-movement-builders',
+    '/about/swope-dreams',
+    '/donate',
+  ];
   return (
     <div className='container'>
       {!hiddenPaths.includes(pathname) && (

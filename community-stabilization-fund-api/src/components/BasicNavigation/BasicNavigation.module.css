@@ -1,7 +1,49 @@
+/* 
+  Basic Navigation
+*/
+
 .basic_nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 4.4rem;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+.basic_nav a {
+  cursor: pointer;
+}
+
+.title {
+  width: 100%;
+  background: #393939;
+  text-align: center;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.title a {
+  color: #fff;
+}
+
+.title h2 {
+  color: #fff;
+}
+
+
+.basic_nav h1 {
+  margin-top: 0rem !important;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+  letter-spacing: 0.1rem;
+}
+
+.basic_nav h2 {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.3rem;
+  text-decoration: underline;
 }
 
 .btn_link {
@@ -10,14 +52,25 @@
   margin-right: 0.2rem;
 }
 
-/* .basic_nav a {
-  color: #fff;
-  font-weight: bold;
-  letter-spacing: 0.1rem;
-  border: 0.1rem solid #fff;
-  padding: 0.3rem;
+.drop_down {
+  background: #393939;
+  position: absolute;
+  display: none;
+  top: 11rem;
+  padding: 1rem 2rem;
+  flex-direction: column;
+  z-index: 100;
 }
 
-.basic_nav a:hover {
-  color: #989898;
-} */
+.drop_down_open {
+  display: flex;
+}
+
+.drop_down a {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.drop_down a:last-of-type {
+  margin-bottom: 0;
+}

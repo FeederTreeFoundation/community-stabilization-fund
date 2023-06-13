@@ -1,0 +1,17 @@
+.container {
+  max-width: 1000px;
+  margin: 2.4rem auto;
+}
+
+.container h1 {
+  margin-bottom: 0.2rem;
+}
+
+.container p {
+  margin-bottom: 0.2rem;
+  line-height: 2rem; 
+}
+
+.container h2 {
+  margin-bottom: 0.4rem;
+}

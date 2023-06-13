@@ -1,18 +1,19 @@
-import { Button } from 'carbon-components-react';
+import { Button } from "carbon-components-react";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import BasicNavigation from '../../src/components/BasicNavigation';
+import BasicNavigation from "../../src/components/BasicNavigation";
 
-import styles from './rent-mortgage-utilities-support.module.css';
+import styles from "./rent-mortgage-utilities-support.module.css";
 
 const RentMortgageUtilitiesSupport = () => {
-  const title = 'Rent Mortgage Utilities Support';
+  const title = "Rent Mortgage Utilities Support";
   return (
-    <div className={styles.rent_mortgage_utilities_support}>
+    <div>
       <BasicNavigation />
-      <h1>{title}</h1>
-      <div className=''>
+      <div className={styles.rent_mortgage_utilities_support}>
+        <h1>{title}</h1>
+
         <a href='https://docs.google.com/forms/d/e/1FAIpQLScN2Dbj9yeorxQQ-drPa9xYerrRmkAfjM3mYz6FleB4MwX-KQ/viewform'>
           <Button>Online Application</Button>
         </a>

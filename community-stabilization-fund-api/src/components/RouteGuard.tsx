@@ -39,6 +39,10 @@ function RouteGuard({ children }: RouteGuardProps) {
       '/forms',
       '/forms/groceries-and-supplies',
       '/rent-mortgage-utilities-support',
+      '/about/pittsburgh-collaborative',
+      '/about/community-movement-builders',
+      '/about/swope-dreams',
+      '/donate',
     ];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
