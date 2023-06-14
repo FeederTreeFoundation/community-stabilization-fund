@@ -160,6 +160,7 @@
   letter-spacing: 0.3rem;
   padding: 2rem;
 }
+*/
 
 .footer {
   display: block;
@@ -181,6 +182,7 @@
   color: #ccc;
 }
 
+/*
 @media screen and (min-width: 800px) {
   .bg_overlay h1 {
     font-size: 3rem;
