@@ -24,7 +24,7 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 };
