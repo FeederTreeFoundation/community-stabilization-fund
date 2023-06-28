@@ -23,7 +23,6 @@ const Home: NextPage = () => {
           <h1>{title}</h1>
         </div>
       </div>
-
       <Footer />
     </div>
   );

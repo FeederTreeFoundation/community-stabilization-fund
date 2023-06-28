@@ -16,8 +16,7 @@ const Footer = () => (
         <Column lg={4} md={4} sm={4}><Link href="https://www.swopedreams.com/">Swope Dreams.</Link></Column>
       </Grid>
     </div>
-  </div>
-        
+  </div> 
 );
 
 export { Footer };
