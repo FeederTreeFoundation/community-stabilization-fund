@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { CheckmarkFilled } from '@carbon/icons-react';
 import {
   Button,
@@ -8,7 +9,7 @@ import {
   Checkbox,
   Form,
 } from 'carbon-components-react';
-import React, { useEffect, useState } from 'react';
+import { isValidPhoneNumber } from "react-phone-number-input";
 import { useForm } from 'react-hook-form';
 
 import FormResponseService from '../../../services/form-response';
@@ -33,10 +34,6 @@ type FormData = {
   feminine_health_care: FeminineHealthResponse | null;
   item_requests?: string | null;
   additional_information?: string | null;
-  country?: string;
-  city?: string;
-  state?: string;
-  zip_code: string;
   plan_b: boolean;
   is_pick_up: boolean;
   is_volunteering: boolean;
@@ -50,16 +47,19 @@ type FormData = {
 };
 
 const GroceryAndSuppliesForm = () => {
-  const { register, handleSubmit } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const { watch, register, handleSubmit } = useForm<FormData>();
+
   useEffect(() => {
     document.querySelector('header')?.classList.add('hidden');
   }, []);
+
   const onSubmit = handleSubmit((data) => {
     FormResponseService.createFormResponse(data).then(() => {
       setIsSubmitted(!isSubmitted);
     });
   });
+  
   if (!isSubmitted) {
     return (
       <Form className={styles.form} onSubmit={onSubmit}>
@@ -310,6 +310,7 @@ const GroceryAndSuppliesForm = () => {
             invalidText=''
             labelText='Address Line 1'
             type='text'
+            value={ watch('address.line1') ? (watch('address.line1')?.slice(0, 30)) : ''}
             {...register('address.line1', { required: true })}
           />
         </div>
@@ -319,20 +320,21 @@ const GroceryAndSuppliesForm = () => {
             invalidText=''
             labelText='Address Line 2'
             type='text'
-            {...register('address.line2', { required: true })}
+            value={ watch('address.line2') ? (watch('address.line2')?.slice(0, 30)) : ''}
+            {...register('address.line2', { required: false })}
           />
         </div>
         <div className={`${styles.grid}`}>
           <Select
             id='pick_up'
-            defaultValue='placeholder-item'
-            labelText='Can you pick up your items?'
+            defaultValue='United States of America'
+            labelText='Country'
             {...register('address.country', { required: true })}
           >
             <SelectItem
               disabled
               hidden
-              value='placeholder-item'
+              value='United States of America'
               text='Choose an option'
             />
             {COUNTRY_LIST.map((country, id) => (
@@ -348,6 +350,7 @@ const GroceryAndSuppliesForm = () => {
             invalidText=''
             labelText='City'
             type='text'
+            value={ watch('address.city') ? (watch('address.city')?.slice(0, 30)) : ''}
             {...register('address.city', { required: true })}
           />
         </div>
@@ -357,6 +360,7 @@ const GroceryAndSuppliesForm = () => {
             invalidText=''
             labelText='State'
             type='text'
+            value={ watch('address.state') ? (watch('address.state')?.slice(0, 30)) : ''}
             {...register('address.state', { required: true })}
           />
         </div>
@@ -366,6 +370,7 @@ const GroceryAndSuppliesForm = () => {
             invalidText=''
             labelText='Zip Code'
             type='text'
+            value={ watch('address.zipcode') ? (watch('address.zipcode')?.slice(0, 30)) : ''}
             {...register('address.zipcode', { required: true })}
           />
         </div>
@@ -417,9 +422,12 @@ const GroceryAndSuppliesForm = () => {
         <div className={`${styles.grid}`}>
           <TextInput
             id='phone'
-            invalidText=''
+            invalidText='Please enter a valid phone number'
             labelText='Phone'
-            type='text'
+            placeholder={'Format: ###-###-####'}
+            type='tel'
+            invalid={isValidPhoneNumber(watch('phone_number') ?? '')}
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             {...register('phone_number', { required: true })}
           />
         </div>
@@ -427,24 +435,8 @@ const GroceryAndSuppliesForm = () => {
           <Select
             id='is_volunteering'
             defaultValue='placeholder-item'
-            labelText='Help volunteer?'
-            {...register('is_volunteering', { required: true })}
-          >
-            <SelectItem
-              disabled
-              hidden
-              value='placeholder-item'
-              text='Choose an option'
-            />
-            <SelectItem value={true} text='Yes' />
-            <SelectItem value={false} text='No' />
-          </Select>
-        </div>
-        <div className={`${styles.grid}`}>
-          <Select
-            id='is_volunteering'
-            defaultValue='placeholder-item'
-            labelText='Help volunteer?'
+            labelText="We package and deliver these items every other week on Saturday at 12:30pm. We're always looking for volunteers to help us reach more people! Would you like to help package and/or deliver these items to other members of the community?"
+            helperText="*If you select Yes, we will reach out to you with more information! You don't need a car. If you need assistance with transportation we can arrange that for you!*"
             {...register('is_volunteering', { required: true })}
           >
             <SelectItem
@@ -461,7 +453,8 @@ const GroceryAndSuppliesForm = () => {
           <Select
             id='is_subscribing'
             defaultValue='placeholder-item'
-            labelText='Is subscribing?'
+            labelText="Would you like to receive regular updates from Community Movement Builders about the organizing and other activities we are doing in the community?"
+            helperText="*If you select Yes, we may call/text/email you with updates! We will never share your information with anyone else.*"
             {...register('is_subscribing', { required: true })}
           >
             <SelectItem
@@ -478,7 +471,8 @@ const GroceryAndSuppliesForm = () => {
           <Select
             id=' is_interested_in_membership'
             defaultValue='placeholder-item'
-            labelText='Is joining?'
+            labelText='Are you interested in joining Community Movement Builders?'
+            helperText="*Community Movement Builders is a member-based collective of black people creating sustainable, self-determining communities through cooperative economic advancement and collective community organizing*"
             {...register('is_interested_in_membership', { required: true })}
           >
             <SelectItem

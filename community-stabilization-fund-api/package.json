@@ -23,6 +23,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",
+    "react-phone-number-input": "^3.2.25",
     "serverless-mysql": "^1.5.4"
   },
   "devDependencies": {
