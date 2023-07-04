@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import {
-  ItemChecklistByRecipient,
-  ItemChecklistByBag,
+  // ItemChecklistByRecipient,
+  ItemChecklistByBagDymo,
 } from '../../src/modules/checklists';
 
 import FormResponseService from '../../src/services/form-response';
@@ -25,8 +25,7 @@ const ChecklistsPage: NextPage = () => {
     <>
       {formResponses?.map((formResponse) => (
         <>
-          <ItemChecklistByRecipient formResponse={formResponse} />
-          <ItemChecklistByBag formResponse={formResponse} />
+          <ItemChecklistByBagDymo formResponse={formResponse} />
         </>
       ))}
     </>
