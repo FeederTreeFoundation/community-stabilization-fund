@@ -2,12 +2,15 @@
   Basic Navigation
 */
 
+.navbar {
+  top: 6rem;
+}
+
 .basic_nav {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
 }
 
 .basic_nav a {
@@ -16,20 +19,28 @@
 
 .title {
   width: 100%;
-  background: #393939;
+  background: #161616;
   text-align: center;
   padding: 1.2rem;
   margin-bottom: 1.2rem;
+  position: fixed;
+  top: 0;
+  z-index: 2;
 }
 
 .title a {
+  display: block;
   color: #fff;
 }
 
-.title h2 {
-  color: #fff;
+.title a:first-of-type {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
 }
 
+.title a:last-of-type {
+  font-size: 2rem;
+}
 
 .basic_nav h1 {
   margin-top: 0rem !important;
@@ -73,4 +84,14 @@
 
 .drop_down a:last-of-type {
   margin-bottom: 0;
+}
+
+.header_nav {
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+.header_nav nav {
+  border: none;
+  padding-left: 0;
 }

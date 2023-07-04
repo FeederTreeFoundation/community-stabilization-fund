@@ -13,7 +13,7 @@ const Donate = () => (
         Community Stabilization Fund’ or ‘PCSF’ in the comments section of the
         donation page and we will earmark those funds for this program.
       </p>
-      <a href='https://communitymovementbuilders.org/donate.html'>
+      <a href='https://communitymovementbuilders.org/donate/'>
         <Button kind='secondary' className={styles.btn_link}>
           CLICK HERE TO DONATE FOR PCSF AT COMMUNITY MOVEMENT BUILDERS
         </Button>

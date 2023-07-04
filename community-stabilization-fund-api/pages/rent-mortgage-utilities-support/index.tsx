@@ -1,13 +1,13 @@
-import { Button } from "carbon-components-react";
+import { Button } from 'carbon-components-react';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import BasicNavigation from "../../src/components/BasicNavigation";
+import BasicNavigation from '../../src/components/BasicNavigation';
 
-import styles from "./rent-mortgage-utilities-support.module.css";
+import styles from './rent-mortgage-utilities-support.module.css';
 
 const RentMortgageUtilitiesSupport = () => {
-  const title = "Rent Mortgage Utilities Support";
+  const title = 'Rent Mortgage Utilities Support';
   return (
     <div>
       <BasicNavigation />
