@@ -1,9 +1,10 @@
 import getConfig from 'next/config';
 import Router from 'next/router';
 
+import type { User } from '../../db';
+
 import { axiosInstance } from '../constants';
 
-import type { User } from '../../db';
 
 const { publicRuntimeConfig } = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/users`;

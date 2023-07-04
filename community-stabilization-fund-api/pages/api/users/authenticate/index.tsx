@@ -1,6 +1,6 @@
-import { executeQuery, queries } from "../../../../src/db";
-
 import type { NextApiRequest, NextApiResponse } from "next";
+
+import { executeQuery, queries } from "../../../../src/db";
 
 const authHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;

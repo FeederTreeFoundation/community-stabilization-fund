@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
 import { CheckmarkFilled } from '@carbon/icons-react';
-import { isValidPhoneNumber } from "react-phone-number-input";
-import { set, useForm } from 'react-hook-form';
 import {
   Button,
   TextInput,
@@ -11,9 +8,14 @@ import {
   Checkbox,
   Form,
 } from 'carbon-components-react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { isValidPhoneNumber } from "react-phone-number-input";
+
+import type { Address, FeminineHealthResponse } from '../../../db/models';
 
 import FormResponseService from '../../../services/form-response';
-import type { Address, FeminineHealthResponse } from '../../../db/models';
+
 import { COUNTRY_LIST } from '../constants';
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
@@ -49,7 +51,7 @@ const GroceriesAndSuppliesForm = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const { watch, register, handleSubmit, formState: { isLoading, errors} } = useForm<FormData>();
 
-  const packagesToReceive = (watch('packages_to_receive') ? watch('packages_to_receive') as string[] : [])
+  const packagesToReceive = watch('packages_to_receive') ? watch('packages_to_receive') as string[] : [];
 
   useEffect(() => {
     document.querySelector('header')?.classList.add('hidden');
@@ -262,8 +264,8 @@ const GroceriesAndSuppliesForm = () => {
         </div>
         <div className={styles.grid}>
           <label>
-            If you selected "Feminine Health Care", which menstrual items would
-            you like?
+            {`If you selected "Feminine Health Care", which menstrual items would
+            you like?`}
           </label>
           <div>
             <Checkbox

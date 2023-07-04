@@ -1,4 +1,5 @@
 import Head from 'next/head';
+
 import type { NextPage } from 'next';
 
 import { BasicNavigation } from '../src/components';

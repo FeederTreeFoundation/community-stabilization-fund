@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 
+import type { FormResponse } from '../../src/db';
+import type { NextPage } from 'next';
+
 import {
   ItemChecklistByRecipient,
   ItemChecklistByBag,
 } from '../../src/modules/checklists';
 
 import FormResponseService from '../../src/services/form-response';
-
-import type { FormResponse } from '../../src/db';
-
-import type { NextPage } from 'next';
 
 const ChecklistsPage: NextPage = () => {
   const [formResponses, setFormResponses] = useState<FormResponse[]>([]);

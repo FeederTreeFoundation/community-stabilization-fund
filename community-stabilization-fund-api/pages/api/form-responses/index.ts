@@ -1,10 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 
-import { executeQuery, queries } from '../../../src/db';
-
 import type { FormResponse } from '../../../src/db';
-
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { executeQuery, queries } from '../../../src/db';
 
 const prisma = new PrismaClient({
   datasources: { db: { url: process.env.DATABASE_URL } },
