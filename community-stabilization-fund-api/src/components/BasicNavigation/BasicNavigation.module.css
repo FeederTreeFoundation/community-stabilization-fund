@@ -2,8 +2,9 @@
   Basic Navigation
 */
 
-.navbar {
+#navbar {
   top: 6rem;
+  z-index: 1;
 }
 
 .basic_nav {
@@ -25,7 +26,7 @@
   margin-bottom: 1.2rem;
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 1;
 }
 
 .title a {
@@ -70,7 +71,7 @@
   top: 11rem;
   padding: 1rem 2rem;
   flex-direction: column;
-  z-index: 100;
+  z-index: 1;
 }
 
 .drop_down_open {

@@ -6,12 +6,12 @@ import { BasicNavigation } from '../src/components';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-  const title = "Welcome to Community Stabilization Fund's API!";
+  const title = "Welcome to Community Stabilization Fund!";
   return (
     <div>
       <Head>
         <title>Community Stabalization Fund API | Home</title>
-        <meta name='description' content='Community Stabilization Funds API' />
+        <meta name='description' content='Community Stabilization Fund' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 

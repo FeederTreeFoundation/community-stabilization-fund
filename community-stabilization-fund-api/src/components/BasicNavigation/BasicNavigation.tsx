@@ -21,7 +21,8 @@ const BasicNavigation = () => (
     <Theme theme='g100'>
       <Header
         aria-label='CMB Community Stabilization Fund'
-        className={`${styles.navbar} ${styles.header_nav}`}
+        className={styles.header_nav}
+        id={styles.navbar}
       >
         <HeaderNavigation aria-label='CMB Community Stabilization Fund'>
           <HeaderMenu aria-label='About Us' menuLinkName='About Us'>
