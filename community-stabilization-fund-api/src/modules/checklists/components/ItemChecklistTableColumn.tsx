@@ -7,12 +7,24 @@ export interface ItemChecklistTableColumnProps {
   thead: string;
 }
 
+const DymoOpOneChecklistTableColumn = ({
+  items,
+}: ItemChecklistTableColumnProps) => (
+  <div className={styles.dymo_op_one_table_info}>
+    <UnorderedList className={styles.dymo_op_one_table_info__ul} nested>
+      {items.map((item, id) => (
+        <div key={item + id}>• {item}</div>
+      ))}
+    </UnorderedList>
+  </div>
+);
+
 const ItemChecklistTableColumn = ({
   items,
   thead,
 }: ItemChecklistTableColumnProps) => (
   <div className={styles.table_info}>
-    <div className={styles.table_info__thead}>{thead}</div>
+    <div>{thead}</div>
     <UnorderedList className={styles.table_info__ul} nested>
       {items.map((item, id) => (
         <ListItem key={item + id}>{item}</ListItem>
@@ -21,4 +33,4 @@ const ItemChecklistTableColumn = ({
   </div>
 );
 
-export { ItemChecklistTableColumn };
+export { ItemChecklistTableColumn, DymoOpOneChecklistTableColumn };
