@@ -13,15 +13,13 @@ interface BagLabelProps {
   recipientInfoList: JSX.Element[];
 }
 
-const DymoBagLabelOpOne = ({
+const DymoBagOpOneLabel = ({
   thead,
   items,
   recipientInfoList,
 }: BagLabelProps) => (
   <div className={styles.dymo_op_one_bag_label}>
-    <div className={styles.dymo_op_one_user_bag_label_info}>
-      {recipientInfoList}
-    </div>
+    <div className={styles.dymo_op_one_bag_label_info}>{recipientInfoList}</div>
     <DymoOpOneChecklistTableColumn thead={thead} items={items ?? []} />
     <div className={styles.dymo_img_wrapper}>
       <Image
@@ -42,4 +40,4 @@ const BagLabel = ({ thead, items, recipientInfoList }: BagLabelProps) => (
   </div>
 );
 
-export { BagLabel, DymoBagLabelOpOne };
+export { BagLabel, DymoBagOpOneLabel };
