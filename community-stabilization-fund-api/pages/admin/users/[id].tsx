@@ -4,12 +4,11 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import UserService from '../../../src/services/user';
-
 import type { User } from '../../../src/db';
 
-import styles from './users.module.css';
+import UserService from '../../../src/services/user';
 
+import styles from './users.module.css';
 
 type FormData = {
   username: string;

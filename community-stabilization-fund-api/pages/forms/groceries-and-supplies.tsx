@@ -1,9 +1,9 @@
 import Head from 'next/head';
 
-import BasicNavigation from '../../src/components/BasicNavigation';
-import { GroceryAndSuppliesForm } from '../../src/modules/forms/components/grocery-and-supplies-form';
-
 import type { NextPage } from 'next';
+
+import { BasicNavigation } from '../../src/components';
+import { GroceriesAndSuppliesForm } from '../../src/modules/forms/';
 
 const GroceriesAndSupplies: NextPage = () => (
   <div>
@@ -13,7 +13,7 @@ const GroceriesAndSupplies: NextPage = () => (
       <link rel='icon' href='/favicon.ico' />
     </Head>
     <BasicNavigation />
-    <GroceryAndSuppliesForm />
+    <GroceriesAndSuppliesForm />
   </div>
 );
 

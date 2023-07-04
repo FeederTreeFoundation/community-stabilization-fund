@@ -1,5 +1,7 @@
 import React from 'react';
 
+import type { FormResponse } from '../../../db';
+
 import { formResponseMock } from '../../../mocks';
 
 import {
@@ -9,7 +11,6 @@ import {
 
 import { BagLabels } from './BagLabels';
 
-import type { FormResponse } from '../../../db';
 
 import styles from '../styles/checklists.module.css';
 

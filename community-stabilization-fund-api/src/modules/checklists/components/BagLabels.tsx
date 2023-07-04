@@ -1,9 +1,9 @@
+import type { BagItemsMap } from '../types';
+
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
 import { createBagItems } from '../utils';
 
 import BagList from './BagList';
-
-import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
 

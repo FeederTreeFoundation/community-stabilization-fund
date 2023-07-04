@@ -52,8 +52,8 @@
         "groups": [
           "builtin",
           "external",
-          ["parent", "sibling", "index"],
           "type",
+          ["parent", "sibling", "index"],
           "object"   
         ],
         "pathGroups": [

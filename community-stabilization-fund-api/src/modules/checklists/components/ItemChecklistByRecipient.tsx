@@ -1,3 +1,6 @@
+import type { FormResponse } from '../../../db';
+import type { BagItemsMap } from '../types';
+
 import { formResponseMock } from '../../../mocks';
 import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
@@ -7,8 +10,6 @@ import {
 } from '../utils';
 import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
 
-import type { FormResponse } from '../../../db';
-import type { BagItemsMap } from '../types';
 
 import styles from '../styles/checklists.module.css';
 

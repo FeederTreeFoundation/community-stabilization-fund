@@ -1,7 +1,8 @@
-import { getAddress } from '../../form-responses';
 
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
+
+import { getAddress } from '../../form-responses';
 
 export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
   const {
