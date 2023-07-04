@@ -1,8 +1,7 @@
-import { Button } from 'carbon-components-react';
-
 import Link from 'next/link';
 
-import BasicNavigation from '../../src/components/BasicNavigation';
+import { Button } from 'carbon-components-react';
+import { BasicNavigation } from '../../src/components';
 
 import styles from './rent-mortgage-utilities-support.module.css';
 

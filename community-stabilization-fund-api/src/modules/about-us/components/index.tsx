@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import BasicLayout from '../../../components/BasicLayout';
+import { BasicLayout } from '../../../components';
 
 import styles from '../styles/about-us.module.css';
 

@@ -1,8 +1,9 @@
 import { Button } from 'carbon-components-react';
 
-import BasicLayout from '../../src/components/BasicLayout';
+import { BasicLayout } from '../../src/components';
 
 import styles from './donate.module.css';
+
 const Donate = () => (
   <BasicLayout>
     <div className={styles.donate}>
