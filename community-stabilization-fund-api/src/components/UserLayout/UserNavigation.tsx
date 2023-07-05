@@ -9,7 +9,7 @@ import {
 } from 'carbon-components-react';
 import { useState } from 'react';
 
-import FormResponseService from '../services/form-response';
+import FormResponseService from '../../services/form-response';
 
 const UserNavigation = () => {
   const [settingsState, setSettingsState] = useState<boolean>(false);

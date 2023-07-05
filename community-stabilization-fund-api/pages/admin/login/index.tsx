@@ -1,6 +1,6 @@
 import { Button, TextInput } from 'carbon-components-react';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import type { NextPage } from 'next';
 
@@ -9,6 +9,7 @@ import UserService from '../../../src/services/user';
 const AdminLoginPage: NextPage = () => {
   const [apiKey, setApiKey] = useState('');
   const [warn, setWarn] = useState(false);
+  const [error, setError] = useState<Error>();
 
   const router = useRouter();
 
@@ -29,24 +30,28 @@ const AdminLoginPage: NextPage = () => {
     if (warn || apiKey.length === 0) return;
     const [apiUser, token] = apiKey.split(':');
 
-    UserService.login(apiUser, token).then((res) => {
-      const userId = res?.data.id;
-      const returnUrl = (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
+    UserService.login(apiUser, token)
+      .then((res) => {
+        const userId = res?.data.id;
+        const returnUrl = (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
 
-      localStorage.setItem('api_user', `${userId}`);
-      router.push(returnUrl);
-    });
+        localStorage.setItem('api_user', `${userId}`);
+        router.push(returnUrl);
+      })
+      .catch((err) => {
+        setError(err)
+      });
   };
 
   return (
-    <div>
-      <h1>Enter Your Api Key: </h1>
+    <div className='mt-8'>
       <TextInput
         warn={warn}
         id='api_key_input'
         warnText='Please include a colon (:)'
-        invalidText='This shit is wrong'
-        labelText='Api Key'
+        invalidText={error?.message}
+        invalid={!!error}
+        labelText='Enter Your Api Key:'
         placeholder='Insert your colon separated api key (i.e. foo:bar)'
         onChange={handleChange}
       />
