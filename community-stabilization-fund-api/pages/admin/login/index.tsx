@@ -33,6 +33,7 @@ const AdminLoginPage: NextPage = () => {
     UserService.login(apiUser, token)
       .then((res) => {
         const userId = res?.data.id;
+        if (!userId || Number.isNaN(userId)) throw new Error('User not found');
         const returnUrl = (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
 
         localStorage.setItem('api_user', `${userId}`);
