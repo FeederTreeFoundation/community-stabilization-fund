@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { isValidPhoneNumber } from "react-phone-number-input";
 
-import type { Address, FeminineHealthResponse } from '../../../db/models';
+import type { FormResponse } from '../../../db/models';
 
 import FormResponseService from '../../../services/form-response';
 
@@ -20,32 +20,7 @@ import { COUNTRY_LIST } from '../constants';
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
 
-type FormData = {
-  first_name: string;
-  last_name: string;
-  email?: string | null;
-  phone_number: string;
-  phone_type?: string | null;
-  address: Address | null;
-  is_black: boolean;
-  is_local: boolean;
-  household_members: number;
-  has_flu_symptoms: boolean;
-  packages_to_receive: string | string[];
-  feminine_health_care: FeminineHealthResponse | null;
-  item_requests?: string | null;
-  additional_information?: string | null;
-  plan_b: boolean;
-  is_pick_up: boolean;
-  is_volunteering: boolean;
-  is_subscribing: boolean;
-  is_interested_in_membership: boolean;
-  submitted_on?: Date | null;
-  live_in_pittsburgh_atlanta?: boolean;
-  live_in_southside_atlanta?: boolean;
-  elderly_members?: number | null;
-  youth_members?: number | null;
-};
+type FormData = FormResponse;
 
 const GroceriesAndSuppliesForm = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
