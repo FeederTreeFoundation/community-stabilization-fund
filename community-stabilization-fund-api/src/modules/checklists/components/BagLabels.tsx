@@ -1,6 +1,9 @@
+import { useContext } from 'react';
+
 import type { BagItemsMap } from '../types';
 
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
+import { ChecklistsRulesContext } from '../contexts';
 import { createBagItems } from '../utils';
 
 import BagList from './BagList';
@@ -21,8 +24,11 @@ const BagLabels = ({
   labelCount,
   packages
 }: BagLabelsProps) => {
+  const { rules } = useContext(ChecklistsRulesContext);
+
+  const householdMembers = recipientInfo[5];
   const groceryTHead = 'Groceries Bag';
-  const groceryItems = createBagItems('Groceries', bagItemsMap);
+  const groceryItems = createBagItems('Groceries', bagItemsMap, rules, householdMembers);
 
   const getRecipientInfo = (text: string, id: number) => (
     <>
@@ -54,7 +60,7 @@ const BagLabels = ({
 
   labelCount = 0;
   const generalHygieneTHead = 'General Hygiene Bag';
-  const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap);
+  const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap, rules, householdMembers);
   const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
   const generalHygieneLabels = packages?.includes('General Hygiene') && BagList(
     generalHygieneSlicePos,
@@ -68,7 +74,9 @@ const BagLabels = ({
   const cleaningHealthSupplyTHead = 'Cleaning/Health Supplies Bag';
   const cleaningHealthSupplyItems = createBagItems(
     'Cleaning/Health Supplies',
-    bagItemsMap
+    bagItemsMap,
+    rules,
+    householdMembers
   );
   const cleaningHealthSlicePos = [
     [0, 4],
@@ -84,7 +92,7 @@ const BagLabels = ({
 
   labelCount = 0;
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
-  const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap);
+  const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap, rules, householdMembers);
   const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
   const femineHygieneLabels = packages?.includes('Feminine Health Care') && BagList(
     feminineHygieneSlicePos,

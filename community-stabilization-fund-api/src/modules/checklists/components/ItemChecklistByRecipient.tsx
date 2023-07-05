@@ -1,15 +1,18 @@
+import { useContext } from 'react';
+
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
 import { formResponseMock } from '../../../mocks';
-import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
+import { ChecklistsRulesContext } from '../contexts';
+import { omit } from '../../../utils';
 import {
+  createBagItems,
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
 import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
-
 
 import styles from '../styles/checklists.module.css';
 
@@ -20,6 +23,8 @@ export interface ItemChecklistByRecipientProps {
 const ItemChecklistByRecipient = ({
   formResponse = formResponseMock,
 }: ItemChecklistByRecipientProps) => {
+  const { rules } = useContext(ChecklistsRulesContext);
+
   const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
   const bagItemsMap = mapFormResponseToBagItems(formResponse);
 
@@ -47,18 +52,17 @@ const ItemChecklistByRecipient = ({
     : omit('Feminine Hygiene', bagItemsMap);
 
   const bagItemTables = Object.keys(bagItemsObj).map((key) => {
-    const thead = key;
-    const bagItems = bagItemsObj[key].map(
-      (item) => `${item.name} (x${item.quantity})`
-    );
+    const bagItems = createBagItems(key, bagItemsObj, rules, formResponse.household_members);
+
     return (
       <ItemChecklistTableColumn
-        thead={thead}
+        thead={key}
         key={key}
         items={bagItems}
       />
     );
   });
+
   return (
     <div id='item-checklist-table' className={styles.item_checklist_wrapper}>
       <>

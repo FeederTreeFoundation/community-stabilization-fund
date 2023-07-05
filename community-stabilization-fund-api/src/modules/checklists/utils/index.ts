@@ -1,6 +1,7 @@
 
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
+import type { ChecklistRule } from '../contexts';
 
 import { getAddress } from '../../form-responses';
 
@@ -85,4 +86,21 @@ export const createInitialBagItemsMap = ({household_members, feminine_health_car
   ],
 } as BagItemsMap);
 
-export const createBagItems = (label: string, bagItemsMap: BagItemsMap) => bagItemsMap[label].map((item) => `${item.name} (x${item.quantity})`);
+export const createBagItems = (
+  label: string, 
+  bagItemsMap: BagItemsMap, 
+  rules: ChecklistRule[], 
+  householdMembers?: string | number,
+  feminine_members?: string | number,
+) => bagItemsMap[label].map(
+  (item) => {
+    const found = rules.find(
+      rule => (
+        rule.packageGroup === `${label}`
+          && rule.packageItem === `${item.name}`
+          && rule.householdMembers === `${feminine_members ? feminine_members : householdMembers}`
+      )
+    );
+
+    return found ? `${item.name} (x${found.itemQuantity})` : `${item.name} (x${item.quantity})`;
+  });
