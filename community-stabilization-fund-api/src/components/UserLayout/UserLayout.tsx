@@ -10,8 +10,7 @@ import { useState } from 'react';
 
 import { ROUTES } from '../../services/constants';
 
-import { HeaderItem } from './HeaderItem';
-import { UserNavigation } from './UserNavigation';
+import { UserNavigation, HeaderItem } from './components/';
 import { ChecklistRule, ChecklistsRulesContext } from '../../modules/checklists';
 interface LayoutProps {
   children: JSX.Element;
