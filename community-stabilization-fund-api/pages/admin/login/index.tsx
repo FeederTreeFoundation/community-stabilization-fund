@@ -35,7 +35,9 @@ const AdminLoginPage: NextPage = () => {
         const userId = res?.data.id;
         if (!userId || Number.isNaN(userId)) throw new Error('User not found');
 
-        const returnUrl = (router.query.returnUrl as string) ?? `/admin/users/${userId}`;
+        const returnPaths = ['/admin/login', '/form-responses', '/checklists'];
+        const queryReturnUrl = router.query.returnUrl as string;
+        const returnUrl = returnPaths.includes(queryReturnUrl) ? queryReturnUrl : `/admin/users/${userId}`;
         localStorage.setItem('api_user', `${userId}`);
         router.push(returnUrl);
       })
