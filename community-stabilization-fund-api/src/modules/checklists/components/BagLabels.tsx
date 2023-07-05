@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 
+import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
@@ -26,9 +27,9 @@ const BagLabels = ({
 }: BagLabelsProps) => {
   const { rules } = useContext(ChecklistsRulesContext);
 
-  const householdMembers = recipientInfo[5];
+  const household_members = recipientInfo[5];
   const groceryTHead = 'Groceries Bag';
-  const groceryItems = createBagItems('Groceries', bagItemsMap, rules, householdMembers);
+  const groceryItems = createBagItems('Groceries', bagItemsMap, rules, { household_members } as FormResponse);
 
   const getRecipientInfo = (text: string, id: number) => (
     <>
@@ -60,7 +61,7 @@ const BagLabels = ({
 
   labelCount = 0;
   const generalHygieneTHead = 'General Hygiene Bag';
-  const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap, rules, householdMembers);
+  const generalHygieneItems = createBagItems('General Hygiene', bagItemsMap, rules, { household_members } as FormResponse);
   const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
   const generalHygieneLabels = packages?.includes('General Hygiene') && BagList(
     generalHygieneSlicePos,
@@ -76,7 +77,7 @@ const BagLabels = ({
     'Cleaning/Health Supplies',
     bagItemsMap,
     rules,
-    householdMembers
+    { household_members } as FormResponse
   );
   const cleaningHealthSlicePos = [
     [0, 4],
@@ -91,8 +92,9 @@ const BagLabels = ({
   );
 
   labelCount = 0;
+  const feminine_health_care = { feminine_members: recipientInfo[6] };
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
-  const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap, rules, householdMembers);
+  const feminineHygieneItems = createBagItems('Feminine Hygiene', bagItemsMap, rules, { feminine_health_care } as FormResponse);
   const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
   const femineHygieneLabels = packages?.includes('Feminine Health Care') && BagList(
     feminineHygieneSlicePos,

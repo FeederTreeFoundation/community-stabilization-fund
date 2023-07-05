@@ -52,13 +52,13 @@ const ItemChecklistByRecipient = ({
     : omit('Feminine Hygiene', bagItemsMap);
 
   const bagItemTables = Object.keys(bagItemsObj).map((key) => {
-    const bagItems = createBagItems(key, bagItemsObj, rules, formResponse.household_members);
+    const bagItems = createBagItems(key, bagItemsObj, rules, formResponse);
 
     return (
       <ItemChecklistTableColumn
         thead={key}
         key={key}
-        items={bagItems}
+        items={bagItems as string[]}
       />
     );
   });

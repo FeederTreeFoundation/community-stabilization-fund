@@ -5,6 +5,10 @@ export interface ChecklistRule {
   itemQuantity?: string;
   packageItem?: string;
   packageGroup?: string;
+  delayedBy?: {
+    days?: number;
+    weeks?: number;
+  };
 }
 
 interface ChecklistsRulesContextProps {
