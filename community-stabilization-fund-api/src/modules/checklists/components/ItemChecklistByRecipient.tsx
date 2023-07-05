@@ -4,9 +4,9 @@ import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
 import { formResponseMock } from '../../../mocks';
+import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
 import { ChecklistsRulesContext } from '../contexts';
-import { omit } from '../../../utils';
 import {
   createBagItems,
   mapFormResponseToBagItems,

@@ -9,13 +9,14 @@ import {
 } from 'carbon-components-react';
 import { useContext, useState } from 'react';
 
-import FormResponseService from '../../../services/form-response';
+import type { ChecklistRule } from '../../../modules';
+import type { BagItemsMap } from '../../../modules/checklists/types';
+
 import { formResponseMock } from '../../../mocks';
-import { ChecklistsRulesContext, ChecklistRule } from '../../../modules';
+import { ChecklistsRulesContext } from '../../../modules';
 import { createInitialBagItemsMap } from '../../../modules/checklists/utils';
+import FormResponseService from '../../../services/form-response';
 import { ConfigurationModal } from './ConfigurationModal';
-import { BagItemsMap } from '../../../modules/checklists/types';
-import { set } from 'react-hook-form';
 
 const UserNavigation = () => {
   const [openSettings, setOpenSettings] = useState<boolean>(false);

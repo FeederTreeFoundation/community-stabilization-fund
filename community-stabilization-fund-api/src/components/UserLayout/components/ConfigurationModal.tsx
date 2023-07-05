@@ -1,8 +1,12 @@
 import { Modal } from "carbon-components-react";
-import { BasicSelect } from "../../BasicSelect";
-import { useForm } from "react-hook-form";
-import { ChecklistRule } from "../../../modules";
+
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+
+import type { ChecklistRule } from "../../../modules";
+
+import { BasicSelect } from "../../BasicSelect";
+
 
 interface ConfigurationModalProps {
   packageGroups: string[];
@@ -10,7 +14,7 @@ interface ConfigurationModalProps {
   openConfiguration: boolean;
   onRequestClose: () => void;
   onRequestSubmit: (data?: ChecklistRule) => void;
-  onPackageChange: (data?: ChecklistRule["packageGroup"]) => void;
+  onPackageChange?: (data?: ChecklistRule["packageGroup"]) => void;
 }
 
 const ConfigurationModal = ({ 
@@ -28,10 +32,12 @@ const ConfigurationModal = ({
     formState: { errors },
   } = useForm<ChecklistRule>();
 
+  const packageGroup = watch('packageGroup');
+
   useEffect(() => {
-    const packageGroup = watch('packageGroup');
+    if(typeof onPackageChange !== 'function') return;
     if(packageGroup) onPackageChange(packageGroup);
-  }, [watch('packageGroup')]);
+  }, [packageGroup, onPackageChange]);
 
   return (
     <Modal
@@ -56,9 +62,9 @@ const ConfigurationModal = ({
           invalid={!!errors.packageGroup}
         />
         there should be 
-        <BasicSelect 
+        <BasicSelect
           id='quantity-dropdown'
-          items={["1","2","3","4","5"]}
+          items={["1","2","3","4","5", "6", "7", "8", "9", "10"]}
           noLabel
           defaultText='Choose an item quantity'
           {...register('itemQuantity', { required: true })}
@@ -85,7 +91,7 @@ const ConfigurationModal = ({
         household members.
       </p>
     </Modal>
-  )
-}
+  );
+};
 
 export { ConfigurationModal };

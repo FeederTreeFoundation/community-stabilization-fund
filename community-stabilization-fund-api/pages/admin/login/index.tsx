@@ -1,6 +1,6 @@
 import { Button, TextInput } from 'carbon-components-react';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import type { NextPage } from 'next';
 
@@ -39,7 +39,7 @@ const AdminLoginPage: NextPage = () => {
         router.push(returnUrl);
       })
       .catch((err) => {
-        setError(err)
+        setError(err);
       });
   };
 

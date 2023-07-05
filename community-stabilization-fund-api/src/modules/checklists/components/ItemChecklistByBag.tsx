@@ -3,14 +3,12 @@ import React from 'react';
 import type { FormResponse } from '../../../db';
 
 import { formResponseMock } from '../../../mocks';
-
 import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
 
 import { BagLabels } from './BagLabels';
-
 
 import styles from '../styles/checklists.module.css';
 

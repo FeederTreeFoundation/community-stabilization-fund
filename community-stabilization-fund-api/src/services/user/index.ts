@@ -18,18 +18,13 @@ const UserService = {
 };
 
 async function login(apiUser: string, token: string) {
-  try {
-    const res = await axiosInstance.post<{ id: number }>(
-      `${publicRuntimeConfig?.apiUrl}/users/authenticate`,
-      { apiUser, token }
-    );
+  const res = await axiosInstance.post<{ id: number }>(
+    `${publicRuntimeConfig?.apiUrl}/users/authenticate`,
+    { apiUser, token }
+  );
 
-    axiosInstance.defaults.headers.common['authorization'] = token;
-    return res;
-  } catch (error) {
-    // WIP: Get error message and return it to Input
-    console.log('login', {error});
-  }
+  if(res.data?.id) axiosInstance.defaults.headers.common['authorization'] = token;
+  return res;
 }
 
 async function logout() {

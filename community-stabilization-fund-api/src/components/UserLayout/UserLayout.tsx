@@ -8,10 +8,12 @@ import {
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import type { ChecklistRule} from '../../modules/checklists';
+
+import { ChecklistsRulesContext } from '../../modules/checklists';
 import { ROUTES } from '../../services/constants';
 
 import { UserNavigation, HeaderItem } from './components/';
-import { ChecklistRule, ChecklistsRulesContext } from '../../modules/checklists';
 interface LayoutProps {
   children: JSX.Element;
 }

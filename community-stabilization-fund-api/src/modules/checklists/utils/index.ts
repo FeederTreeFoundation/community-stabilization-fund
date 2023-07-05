@@ -1,7 +1,7 @@
 
 import type { FormResponse } from '../../../db';
-import type { BagItemsMap } from '../types';
 import type { ChecklistRule } from '../contexts';
+import type { BagItemsMap } from '../types';
 
 import { getAddress } from '../../form-responses';
 

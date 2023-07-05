@@ -7,7 +7,6 @@ import { executeQuery, queries } from '../../../src/db';
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query, body } = req;
   const userId = query.id as string;
-  console.log({ userId, method, query, body});
   
   switch (method) {
     case 'GET':
