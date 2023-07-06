@@ -10,7 +10,9 @@
     "start": "next start",
     "seed": "node src/db/seed_db.js",
     "lint": "next lint --",
-    "lint:fix": "next lint -- --fix ./"
+    "lint:fix": "next lint -- --fix ./",
+    "test": "jest --watch",
+    "test:ci": "jest --ci"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
@@ -19,8 +21,8 @@
     "carbon-components": "^11.12.0",
     "carbon-components-react": "^8.12.0",
     "carbon-icons": "^7.0.7",
-    "dayjs": "^1.11.9",
-    "next": "12.2.5",
+    "get-tsconfig": "^4.6.2",
+    "next": "^13.4.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",
@@ -28,19 +30,26 @@
     "serverless-mysql": "^1.5.4"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "14.4.3",
     "@types/carbon__icons-react": "^11.7.0",
     "@types/carbon-components": "^10.27.1",
     "@types/carbon-components-react": "^7.55.2",
     "@types/node": "18.7.3",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
+    "@types/testing-library__jest-dom": "5.14.5",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.5",
     "eslint-plugin-react-hooks": "^4.6.0",
     "fs": "^0.0.1-security",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "prisma": "^4.12.0",
     "react-scripts": "^5.0.1",
     "sass": "^1.54.8",
+    "ts-jest": "^29.1.1",
     "typescript": "^4.7.4"
   }
 }

@@ -5,6 +5,7 @@
     "plugin:react-hooks/recommended"
   ],
   "plugins": [
+    "testing-library",
     "@typescript-eslint",
     "react",
     "react-hooks"
@@ -69,6 +70,14 @@
     ]
   },
   "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    },
     {
       "files": ["*.ts", "*.tsx"],
       "rules": {

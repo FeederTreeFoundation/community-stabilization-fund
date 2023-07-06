@@ -1,3 +1,4 @@
+import { FC } from "react";
 import Head from 'next/head';
 
 import type { NextPage } from 'next';
@@ -6,7 +7,7 @@ import { BasicNavigation } from '../src/components';
 
 import styles from '../styles/Home.module.css';
 
-const Home: NextPage = () => {
+const Home: FC = () => {
   const title = "Welcome to Community Stabilization Fund!";
   return (
     <div>
