@@ -97,9 +97,9 @@ const ConfigurationModal = ({
       </p>
       <p className="mt-4">
         <Checkbox 
-            labelText={'Delay package item ' + (isDelayed ? ' by ' : '') }
-            id='is-delayed-checkbox'
-            onChange={() => setIsDelayed(!isDelayed)}
+          labelText={'Delay package item ' + (isDelayed ? ' by ' : '') }
+          id='is-delayed-checkbox'
+          onChange={() => setIsDelayed(!isDelayed)}
         />
         { isDelayed && (
           <>
