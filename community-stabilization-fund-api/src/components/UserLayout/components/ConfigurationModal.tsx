@@ -7,7 +7,6 @@ import type { ChecklistRule } from "../../../modules";
 
 import { BasicSelect } from "../../BasicSelect";
 
-
 interface ConfigurationModalProps {
   packageGroups: string[];
   packageItems: string[];

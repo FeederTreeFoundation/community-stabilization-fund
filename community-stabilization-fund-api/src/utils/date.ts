@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 dayjs().format();
 
-export const addDays = (dt: Date, days: number) => {
+export const addDays = (dt: Date | string, days: number) => {
   const date = dayjs(dt).add(days, 'day').format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A');
   return date;
 };
 
-export const addWeeks = (dt: Date, weeks: number) => {
+export const addWeeks = (dt: Date | string, weeks: number) => {
   const date = dayjs(dt).add(weeks, 'week').format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A');
   return date;
 };

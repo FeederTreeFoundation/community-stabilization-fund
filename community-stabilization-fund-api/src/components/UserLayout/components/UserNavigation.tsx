@@ -102,7 +102,7 @@ const UserNavigation = () => {
         <Button kind={'primary'} onClick={() => setOpenConfiguration(true)}>
           Configure Checklists
         </Button>
-        <p className='mb-2'>{deleteAllFormResponsesText}</p>
+        <p className='mt-4 mb-2'>{deleteAllFormResponsesText}</p>
         <Button kind={'danger'} onClick={deleteAllFormResponses}>
           Reset
         </Button>

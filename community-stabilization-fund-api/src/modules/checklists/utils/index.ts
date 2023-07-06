@@ -108,7 +108,7 @@ export const createBagItems = (
         )
       );
 
-      if(found && validateItemByDate(found.delayedBy, submitted_on)) return '';
+      if(found && !validateItemByDate(found.delayedBy, submitted_on)) return '';
 
       return found ? `${item.name} (x${found.itemQuantity})` : `${item.name} (x${item.quantity})`;
     })
@@ -119,14 +119,15 @@ export const validateItemByDate = (delayedBy: ChecklistRule["delayedBy"], submit
   let delayUntil = null;
 
   if(delayedBy) {
-    if(!submitted_on) return;
+    if(!submitted_on) return true;
     if(delayedBy.days) {
-      delayUntil = addDays(submitted_on, delayedBy.days);
+      delayUntil = addDays(delayUntil ?? submitted_on, parseInt(`${delayedBy.days}`));
     }
     if(delayedBy.weeks) {
-      delayUntil = addWeeks(submitted_on, delayedBy.weeks);
+      delayUntil = addWeeks(delayUntil ?? submitted_on, parseInt(`${delayedBy.weeks}`));
     }
   }
 
-  return delayUntil && compareDates('before', new Date, delayUntil);
+  if(delayUntil) return compareDates('before', new Date, delayUntil);
+  return true;
 };
