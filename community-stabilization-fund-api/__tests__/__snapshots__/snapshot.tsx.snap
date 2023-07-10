@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home renders homepage unchanged 1`] = `
+exports[`renders homepage unchanged 1`] = `
 <div>
   <div>
     <div>
@@ -105,42 +105,54 @@ exports[`Home renders homepage unchanged 1`] = `
                       </li>
                     </ul>
                   </li>
-                  <li>
-                    <a
-                      class="cds--header__menu-item"
-                      tabindex="0"
-                    >
-                      <span
-                        class="cds--text-truncate--end"
+                  <a
+                    href="/rent-mortgage-utilities-support"
+                  >
+                    <li>
+                      <a
+                        class="cds--header__menu-item"
+                        tabindex="0"
                       >
-                        Rent, Mortgage, Utilities Support
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="cds--header__menu-item"
-                      tabindex="0"
-                    >
-                      <span
-                        class="cds--text-truncate--end"
+                        <span
+                          class="cds--text-truncate--end"
+                        >
+                          Rent, Mortgage, Utilities Support
+                        </span>
+                      </a>
+                    </li>
+                  </a>
+                  <a
+                    href="/donate"
+                  >
+                    <li>
+                      <a
+                        class="cds--header__menu-item"
+                        tabindex="0"
                       >
-                        Donate
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      class="cds--header__menu-item"
-                      tabindex="0"
-                    >
-                      <span
-                        class="cds--text-truncate--end"
+                        <span
+                          class="cds--text-truncate--end"
+                        >
+                          Donate
+                        </span>
+                      </a>
+                    </li>
+                  </a>
+                  <a
+                    href="/forms/groceries-and-supplies"
+                  >
+                    <li>
+                      <a
+                        class="cds--header__menu-item"
+                        tabindex="0"
                       >
-                        Free Groceries And Supplies
-                      </span>
-                    </a>
-                  </li>
+                        <span
+                          class="cds--text-truncate--end"
+                        >
+                          Free Groceries And Supplies
+                        </span>
+                      </a>
+                    </li>
+                  </a>
                 </ul>
               </nav>
             </header>
