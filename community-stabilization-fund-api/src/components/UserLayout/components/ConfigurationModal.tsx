@@ -1,11 +1,11 @@
-import { Checkbox, Modal } from "carbon-components-react";
+import { Checkbox, Modal } from 'carbon-components-react';
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import type { ChecklistRule } from "../../../modules";
+import type { ChecklistRule } from '../../../modules';
 
-import { BasicSelect } from "../../BasicSelect";
+import { BasicSelect } from '../../BasicSelect';
 
 interface ConfigurationModalProps {
   packageGroups: string[];
@@ -13,14 +13,14 @@ interface ConfigurationModalProps {
   openConfiguration: boolean;
   onRequestClose: () => void;
   onRequestSubmit: (data?: ChecklistRule) => void;
-  onPackageChange?: (data?: ChecklistRule["packageGroup"]) => void;
+  onPackageChange?: (data?: ChecklistRule['packageGroup']) => void;
 }
 
-const ConfigurationModal = ({ 
-  packageGroups, 
-  packageItems, 
-  openConfiguration, 
-  onRequestClose, 
+const ConfigurationModal = ({
+  packageGroups,
+  packageItems,
+  openConfiguration,
+  onRequestClose,
   onRequestSubmit,
   onPackageChange,
 }: ConfigurationModalProps) => {
@@ -35,8 +35,8 @@ const ConfigurationModal = ({
   const packageGroup = watch('packageGroup');
 
   useEffect(() => {
-    if(typeof onPackageChange !== 'function') return;
-    if(packageGroup) onPackageChange(packageGroup);
+    if (typeof onPackageChange !== 'function') return;
+    if (packageGroup) onPackageChange(packageGroup);
   }, [packageGroup, onPackageChange]);
 
   return (
@@ -51,9 +51,9 @@ const ConfigurationModal = ({
       onRequestSubmit={handleSubmit(onRequestSubmit)}
     >
       <h5>Configure Package Rules</h5>
-      <p className="mt-2">
+      <p className='mt-2'>
         In the package group
-        <BasicSelect 
+        <BasicSelect
           id='package-dropdown'
           items={packageGroups}
           noLabel
@@ -62,10 +62,10 @@ const ConfigurationModal = ({
           invalid={!!errors.packageGroup}
           invalidText={errors.packageGroup?.message}
         />
-        there should be 
+        there should be
         <BasicSelect
           id='quantity-dropdown'
-          items={["1","2","3","4","5", "6", "7", "8", "9", "10"]}
+          items={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
           noLabel
           defaultText='Choose an item quantity'
           {...register('itemQuantity', { required: true })}
@@ -73,9 +73,9 @@ const ConfigurationModal = ({
           invalidText={errors.itemQuantity?.message}
         />
         per
-        <BasicSelect 
+        <BasicSelect
           id='item-dropdown'
-          items={packageItems} 
+          items={packageItems}
           noLabel
           defaultText='Choose an item'
           {...register('packageItem', { required: true })}
@@ -85,7 +85,7 @@ const ConfigurationModal = ({
         for
         <BasicSelect
           id='household-members-dropdown'
-          items={["0", "1","2","3","4","5","6","7","8","9","10"]}
+          items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
           noLabel
           defaultText='Choose # of household members'
           {...register('householdMembers', { required: true })}
@@ -94,28 +94,28 @@ const ConfigurationModal = ({
         />
         household members.
       </p>
-      <p className="mt-4">
-        <Checkbox 
-          labelText={'Delay package item ' + (isDelayed ? ' by ' : '') }
+      <p className='mt-4'>
+        <Checkbox
+          labelText={'Delay package item ' + (isDelayed ? ' by ' : '')}
           id='is-delayed-checkbox'
           onChange={() => setIsDelayed(!isDelayed)}
         />
-        { isDelayed && (
+        {isDelayed && (
           <>
             <BasicSelect
               id='delay-dropdown'
-              items={["0","1","2","3","4","5","6","7","8","9","10"]}
+              items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
               noLabel
               defaultText='Choose # of days'
               defaultValue={0}
               {...register('delayedBy.days')}
               invalid={!!errors.delayedBy?.days}
               invalidText={errors.delayedBy?.days?.message}
-            /> 
-             days and
-            <BasicSelect 
+            />
+            days and
+            <BasicSelect
               id='delay-dropdown'
-              items={["1","2","3","4","5","6","7","8","9","10"]}
+              items={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
               noLabel
               defaultValue={0}
               defaultText='Choose # of weeks'
@@ -126,6 +126,18 @@ const ConfigurationModal = ({
             weeks.
           </>
         )}
+      </p>
+      <p className='mt-4'>
+        <BasicSelect
+          id='delay-dropdown'
+          items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
+          noLabel
+          defaultValue={0}
+          defaultText='Select type of bag labels'
+          {...register('bagLabelType')}
+          invalid={!!errors.bagLabelType}
+          invalidText={errors.bagLabelType?.message}
+        />
       </p>
     </Modal>
   );
