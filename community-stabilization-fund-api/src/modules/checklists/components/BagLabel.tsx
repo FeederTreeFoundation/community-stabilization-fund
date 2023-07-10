@@ -1,8 +1,10 @@
+import Image from 'next/image';
+
 import {
   DymoOpOneChecklistTableColumn,
   ItemChecklistTableColumn,
 } from './ItemChecklistTableColumn';
-import Image from 'next/image';
+
 import styles from '../styles/checklists.module.css';
 
 interface BagLabelProps {
