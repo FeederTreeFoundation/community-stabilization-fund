@@ -1,5 +1,9 @@
 import dayjs from 'dayjs';
-dayjs().format();
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const addDays = (dt: Date | string, days: number) => {
   const date = dayjs(dt).add(days, 'day').format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A');

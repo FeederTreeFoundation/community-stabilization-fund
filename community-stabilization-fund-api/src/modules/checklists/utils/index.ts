@@ -120,7 +120,7 @@ export const createBagItems = (
 };
 
 export const validateItemByDate = (delayedBy: ChecklistRule["delayedBy"], submitted_on: FormResponse["submitted_on"]) => {
-  let delayUntil = null;
+  let delayUntil: (string | null) = null;
 
   if(delayedBy) {
     if(!submitted_on) return true;

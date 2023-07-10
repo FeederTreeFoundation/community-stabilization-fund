@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <div>
+    <div>
+      <div>
+        <div>
+          <div>
+            <a
+              href="/"
+            >
+              Community Stabilization Fund - Keeping Residents In Place
+            </a>
+            <a
+              href="/"
+            >
+              Black Liberation Programs
+            </a>
+          </div>
+          <div
+            class="cds--g100 cds--layer-one"
+          >
+            <header
+              aria-label="CMB Community Stabilization Fund"
+              class="cds--header"
+            >
+              <nav
+                aria-label="CMB Community Stabilization Fund"
+                class="cds--header__nav"
+              >
+                <ul
+                  class="cds--header__menu-bar"
+                >
+                  <li
+                    class="cds--header__submenu"
+                  >
+                    <a
+                      aria-expanded="false"
+                      aria-haspopup="menu"
+                      aria-label="About Us"
+                      class="cds--header__menu-item cds--header__menu-title"
+                      href="#"
+                      tabindex="0"
+                    >
+                      About Us
+                      <svg
+                        aria-hidden="true"
+                        class="cds--header__menu-arrow"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                      </svg>
+                    </a>
+                    <ul
+                      aria-label="About Us"
+                      class="cds--header__menu"
+                    >
+                      <li>
+                        <a
+                          class="cds--header__menu-item"
+                          href="/about/pittsburgh-collaborative"
+                          tabindex="0"
+                        >
+                          <span
+                            class="cds--text-truncate--end"
+                          >
+                            Pittsburgh Collaborative
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="cds--header__menu-item"
+                          href="/about/community-movement-builders"
+                          tabindex="0"
+                        >
+                          <span
+                            class="cds--text-truncate--end"
+                          >
+                            Community Movement Builders
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="cds--header__menu-item"
+                          href="/about/swope-dreams"
+                          tabindex="0"
+                        >
+                          <span
+                            class="cds--text-truncate--end"
+                          >
+                            Swope Dreams
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <a
+                    href="/rent-mortgage-utilities-support"
+                  >
+                    <li>
+                      <a
+                        class="cds--header__menu-item"
+                        tabindex="0"
+                      >
+                        <span
+                          class="cds--text-truncate--end"
+                        >
+                          Rent, Mortgage, Utilities Support
+                        </span>
+                      </a>
+                    </li>
+                  </a>
+                  <a
+                    href="/donate"
+                  >
+                    <li>
+                      <a
+                        class="cds--header__menu-item"
+                        tabindex="0"
+                      >
+                        <span
+                          class="cds--text-truncate--end"
+                        >
+                          Donate
+                        </span>
+                      </a>
+                    </li>
+                  </a>
+                  <a
+                    href="/forms/groceries-and-supplies"
+                  >
+                    <li>
+                      <a
+                        class="cds--header__menu-item"
+                        tabindex="0"
+                      >
+                        <span
+                          class="cds--text-truncate--end"
+                        >
+                          Free Groceries And Supplies
+                        </span>
+                      </a>
+                    </li>
+                  </a>
+                </ul>
+              </nav>
+            </header>
+          </div>
+        </div>
+        <h1>
+          Welcome to Community Stabilization Fund!
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+`;
