@@ -25,7 +25,7 @@ const DymoOpOneChecklistTableColumn = ({
   items,
 }: ItemChecklistTableColumnProps) => (
   <div className={styles.dymo_op_one_table_info}>
-    <UnorderedList className={styles.dymo_op_one_table_info__ul} nested>
+    <UnorderedList className={styles.dymo_op_one_table_info__ul}>
       {items.map((item, id) => (
         <div key={item + id}>• {item}</div>
       ))}
