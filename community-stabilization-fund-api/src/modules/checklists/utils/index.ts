@@ -89,6 +89,8 @@ export const createInitialBagItemsMap = ({household_members, feminine_health_car
   ],
 } as BagItemsMap);
 
+export const createDefaultBagItems = (label: string, bagItemsMap: BagItemsMap) => bagItemsMap[label].map((item) => `${item.name} (x${item.quantity})`);
+
 export const createBagItems = (
   label: string, 
   bagItemsMap: BagItemsMap, 
@@ -98,13 +100,15 @@ export const createBagItems = (
   const { household_members, feminine_health_care, submitted_on } = formResponse;
   const feminine_members = feminine_health_care ? feminine_health_care.feminine_members : null;
 
+  if(isEmpty(rules)) return createDefaultBagItems(label, bagItemsMap);
+
   return bagItemsMap[label].map(
     (item) => {
       const found = rules.find(
         rule => (
           rule.packageGroup === `${label}`
-              && rule.packageItem === `${item.name}`
-              && rule.householdMembers === `${feminine_members ? feminine_members : household_members}`
+            && rule.packageItem === `${item.name}`
+            && rule.householdMembers === `${feminine_members ? feminine_members : household_members}`
         )
       );
 
