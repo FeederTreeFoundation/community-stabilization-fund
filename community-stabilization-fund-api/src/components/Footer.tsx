@@ -3,7 +3,7 @@ import { Link, Grid, Column } from 'carbon-components-react';
 import styles from '../../styles/Home.module.css';
 
 const Footer = () => (
-  <div className={styles.footer}>
+  <footer className={styles.footer}>
     <div className={styles.footer_heading}>
       <Grid>
         <Column lg={4} md={4} sm={4}><h4>Bought To you by:</h4></Column>
@@ -16,7 +16,7 @@ const Footer = () => (
         <Column lg={4} md={4} sm={4}><Link href="https://www.swopedreams.com/">Swope Dreams.</Link></Column>
       </Grid>
     </div>
-  </div> 
+  </footer> 
 );
 
 export { Footer };
