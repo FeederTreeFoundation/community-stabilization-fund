@@ -2,8 +2,9 @@ import Head from 'next/head';
 
 import type { NextPage } from 'next';
 
-import { BasicNavigation } from '../../src/components';
-import { GroceriesAndSuppliesForm } from '../../src/modules/forms/';
+import { BasicNavigation } from '../../src/components/BasicNavigation';
+import { Footer } from '../../src/components/Footer';
+import { GroceriesAndSuppliesForm } from '../../src/modules/forms/components/GroceriesAndSuppliesForm';
 
 const GroceriesAndSupplies: NextPage = () => (
   <div>
@@ -14,6 +15,7 @@ const GroceriesAndSupplies: NextPage = () => (
     </Head>
     <BasicNavigation />
     <GroceriesAndSuppliesForm />
+    <Footer />
   </div>
 );
 

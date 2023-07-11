@@ -1,9 +1,11 @@
 import { Button } from 'carbon-components-react';
 import Link from 'next/link';
 
-import { BasicNavigation } from '../../src/components';
+import { BasicNavigation } from "../../src/components/BasicNavigation";
 
-import styles from './rent-mortgage-utilities-support.module.css';
+import { Footer } from "../../src/components/Footer";
+
+import styles from "./rent-mortgage-utilities-support.module.css";
 
 const RentMortgageUtilitiesSupport = () => {
   const title = 'Rent Mortgage Utilities Support';
@@ -20,6 +22,7 @@ const RentMortgageUtilitiesSupport = () => {
           <Button kind='secondary'>Print Application</Button>
         </Link>
       </div>
+      <Footer />
     </div>
   );
 };
