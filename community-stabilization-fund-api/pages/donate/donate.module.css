@@ -1,20 +1,19 @@
-.donate {
-  text-align: center;
-}
-
 .donate p {
+  text-align: center;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.donate a {
+.btn_link {
+  display: block;
+  padding: 1rem;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.5rem;
   font-weight: bold;
 }
 
-.btn_link {
-  padding: 1rem;
+.btn_copy {
   text-align: center;
-  margin-right: 0.2rem;
-  line-height: 1.5rem;
-  font-weight: bold;
+  padding: 1.125rem;
 }

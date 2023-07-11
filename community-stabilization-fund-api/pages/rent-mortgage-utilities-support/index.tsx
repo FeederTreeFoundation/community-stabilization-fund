@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import BasicNavigation from "../../src/components/BasicNavigation";
 
+import { Footer } from "../../src/components/Footer";
+
 import styles from "./rent-mortgage-utilities-support.module.css";
 
 const RentMortgageUtilitiesSupport = () => {
@@ -21,6 +23,7 @@ const RentMortgageUtilitiesSupport = () => {
           <Button kind='secondary'>Print Application</Button>
         </Link>
       </div>
+      <Footer />
     </div>
   );
 };
