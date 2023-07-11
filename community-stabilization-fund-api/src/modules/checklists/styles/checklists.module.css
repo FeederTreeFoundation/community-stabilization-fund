@@ -6,14 +6,12 @@
     /* margin-right: 45mm;  for compatibility with both A4 and Letter */
   }
   .dymo_op_one_bag_label {
+    display: block;
     padding-top: 10rem;
     break-after: always;
   }
   .dymo_bag_label__img {
-    margin: 0 auto;
-    display: block;
-    max-width: 100%;
-    height: auto;
+    page-break-inside: avoid;
   }
 }
 
