@@ -1,7 +1,7 @@
 import { Button } from 'carbon-components-react';
 import Link from 'next/link';
 
-import BasicNavigation from "../../src/components/BasicNavigation";
+import { BasicNavigation } from "../../src/components/BasicNavigation";
 
 import { Footer } from "../../src/components/Footer";
 
