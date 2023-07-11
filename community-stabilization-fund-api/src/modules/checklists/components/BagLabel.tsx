@@ -31,6 +31,7 @@ const DymoBagOpOneLabel = ({
     <div className={styles.dymo_img_wrapper}>
       <Image
         src='/img/cmb_bag_label_logo.png'
+        className={styles.dymo_bag_label__img}
         alt='CMB Logo'
         width={250}
         height={250}
