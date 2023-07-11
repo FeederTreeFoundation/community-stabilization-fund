@@ -2,7 +2,9 @@ import Head from 'next/head';
 
 import type { NextPage } from 'next';
 
-import { BasicNavigation } from '../src/components';
+import { BasicNavigation } from '../src/components/BasicNavigation';
+import { Footer } from '../src/components/Footer';
+
 
 import styles from '../styles/Home.module.css';
 
@@ -22,6 +24,7 @@ const Home: NextPage = () => {
           <h1>{title}</h1>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
