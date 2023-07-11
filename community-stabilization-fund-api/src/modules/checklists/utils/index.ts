@@ -1,7 +1,10 @@
-import { getAddress } from '../../form-responses';
 
 import type { FormResponse } from '../../../db';
+import type { ChecklistRule } from '../contexts';
 import type { BagItemsMap } from '../types';
+
+import { addDays, addWeeks, compareDates, isEmpty } from '../../../utils';
+import { getAddress } from '../../form-responses';
 
 export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
   const {
@@ -11,6 +14,7 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
     is_pick_up,
     has_flu_symptoms,
     household_members,
+    feminine_health_care,
   } = formResponse;
 
   const address = getAddress(formResponse);
@@ -21,7 +25,8 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
     address,
     `${is_pick_up ? "Pick Up" : "Drop Off"}`,
     `${has_flu_symptoms ? "Yes" : "No"}`,
-    household_members
+    household_members,
+    feminine_health_care?.feminine_members
   ];
 };
 
@@ -84,4 +89,49 @@ export const createInitialBagItemsMap = ({household_members, feminine_health_car
   ],
 } as BagItemsMap);
 
-export const createBagItems = (label: string, bagItemsMap: BagItemsMap) => bagItemsMap[label].map((item) => `${item.name} (x${item.quantity})`);
+export const createDefaultBagItems = (label: string, bagItemsMap: BagItemsMap) => bagItemsMap[label].map((item) => `${item.name} (x${item.quantity})`);
+
+export const createBagItems = (
+  label: string, 
+  bagItemsMap: BagItemsMap, 
+  rules: ChecklistRule[],
+  formResponse: FormResponse
+) => {
+  const { household_members, feminine_health_care, submitted_on } = formResponse;
+  const feminine_members = feminine_health_care ? feminine_health_care.feminine_members : null;
+
+  if(isEmpty(rules)) return createDefaultBagItems(label, bagItemsMap);
+
+  return bagItemsMap[label].map(
+    (item) => {
+      const found = rules.find(
+        rule => (
+          rule.packageGroup === `${label}`
+            && rule.packageItem === `${item.name}`
+            && rule.householdMembers === `${feminine_members ? feminine_members : household_members}`
+        )
+      );
+
+      if(found && !validateItemByDate(found.delayedBy, submitted_on)) return '';
+
+      return found ? `${item.name} (x${found.itemQuantity})` : `${item.name} (x${item.quantity})`;
+    })
+    .filter(x => !isEmpty(x));
+};
+
+export const validateItemByDate = (delayedBy: ChecklistRule["delayedBy"], submitted_on: FormResponse["submitted_on"]) => {
+  let delayUntil = null;
+
+  if(delayedBy) {
+    if(!submitted_on) return true;
+    if(delayedBy.days) {
+      delayUntil = addDays(delayUntil ?? submitted_on, parseInt(`${delayedBy.days}`));
+    }
+    if(delayedBy.weeks) {
+      delayUntil = addWeeks(delayUntil ?? submitted_on, parseInt(`${delayedBy.weeks}`));
+    }
+  }
+
+  if(delayUntil) return compareDates('before', new Date, delayUntil);
+  return true;
+};

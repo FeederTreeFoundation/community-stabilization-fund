@@ -4,6 +4,7 @@ import BasicLayout from '../../src/components/BasicLayout';
 import { Footer } from "../../src/components/Footer";
 
 import styles from './donate.module.css';
+
 const Donate = () => (
   <div className={styles.donate}>
     <BasicLayout>

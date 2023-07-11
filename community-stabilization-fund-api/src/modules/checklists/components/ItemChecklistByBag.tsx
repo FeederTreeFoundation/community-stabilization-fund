@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { formResponseMock } from '../../../mocks';
+import type { FormResponse } from '../../../db';
 
+import { formResponseMock } from '../../../mocks';
 import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
 
 import { BagLabels } from './BagLabels';
-
-import type { FormResponse } from '../../../db';
 
 import styles from '../styles/checklists.module.css';
 

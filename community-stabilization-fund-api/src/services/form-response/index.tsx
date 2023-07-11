@@ -1,8 +1,9 @@
 import getConfig from 'next/config';
 
+import type { FormResponse } from '../../db';
+
 import { axiosInstance } from '../constants';
 
-import type { FormResponse } from '../../db';
 
 const { publicRuntimeConfig } = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/form-responses`;

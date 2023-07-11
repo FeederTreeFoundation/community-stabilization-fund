@@ -1,6 +1,5 @@
-import { Button } from "carbon-components-react";
-
-import Link from "next/link";
+import { Button } from 'carbon-components-react';
+import Link from 'next/link';
 
 import BasicNavigation from "../../src/components/BasicNavigation";
 
@@ -9,7 +8,7 @@ import { Footer } from "../../src/components/Footer";
 import styles from "./rent-mortgage-utilities-support.module.css";
 
 const RentMortgageUtilitiesSupport = () => {
-  const title = "Rent Mortgage Utilities Support";
+  const title = 'Rent Mortgage Utilities Support';
   return (
     <div>
       <BasicNavigation />

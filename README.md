@@ -25,17 +25,24 @@ API Interface for Community Stabilization Fund
 3. Run `npm install --legacy-peer-deps`
 4. Run `npm run dev`
 
+## Deployments
+
+Deployments will fail if you have linting issues, typing errors or other bugs caught in the code.
+
+To resolve linting issues:
+- Run `npm run lint:fix`
+
+To debug all other errors:
+- Run `npm run build`
+
 ## MySQL
 
 ### Setting Up Database
 
 **_ in another shell/terminal _**
 
-1. (Optional) Update or add env variables for `db/config.js`
-2. Run `cd community-stabilization-fund-api`
-3. run `npm config set legacy-peer-deps true`
-4. Run `npm install`
-5. Run `npm run seed`
+1. Ask team member for env variables to populate `.env.local` file
+2. Start up your mysql server
 
 ### Additional Tools
 - [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)

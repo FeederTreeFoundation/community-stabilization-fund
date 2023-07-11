@@ -1,7 +1,8 @@
-import { executeQuery, queries } from '../../../src/db';
 
 import type { User } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { executeQuery, queries } from '../../../src/db';
 
 type UserDTO = {
   data: User[];
