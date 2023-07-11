@@ -2,7 +2,6 @@ import React from 'react';
 
 import type { FormResponse } from '../../../db';
 
-import { BagLabels } from './BagLabels';
 import { formResponseMock } from '../../../mocks';
 import {
   mapFormResponseToBagItems,

@@ -10,9 +10,9 @@ import { useState } from 'react';
 
 import type { ChecklistRule} from '../../modules/checklists';
 
-import { UserNavigation, HeaderItem } from './components/';
 import { ChecklistsRulesContext } from '../../modules/checklists';
 import { ROUTES } from '../../services/constants';
+import { UserNavigation, HeaderItem } from './components/';
 
 interface LayoutProps {
   children: JSX.Element;

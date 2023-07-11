@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
-import BagList from './BagList';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
 import { ChecklistsRulesContext } from '../contexts';
 import { createBagItems } from '../utils';
