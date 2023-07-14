@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
+
+import type { ReactNode } from "react";
+
+import { BasicHead } from "../BasicHead";
 import { BasicLayout } from "../BasicLayout";
 import { UserLayout } from "../UserLayout";
-import { BasicHead } from "../BasicHead";
 
 interface LayoutProps {
   children: ReactNode;
@@ -27,8 +29,8 @@ const Layout = ({children}: LayoutProps) => {
         <BasicLayout>
           {children}
         </BasicLayout>
-        </>
-    )
+      </>
+    );
   }
 
   return (
@@ -38,7 +40,7 @@ const Layout = ({children}: LayoutProps) => {
         {children}
       </UserLayout>
     </>
-  )
+  );
 
 };
 

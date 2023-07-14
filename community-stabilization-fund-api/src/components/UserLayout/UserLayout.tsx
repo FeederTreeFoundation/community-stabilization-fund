@@ -5,13 +5,14 @@ import {
   // HeaderMenuItem,
   Theme,
 } from '@carbon/react';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
 import type { ChecklistRule} from '../../modules/checklists';
+import type { ReactNode} from 'react';
 
+import { UserNavigation, HeaderItem } from './components/';
 import { ChecklistsRulesContext } from '../../modules/checklists';
 import { ROUTES } from '../../services/constants';
-import { UserNavigation, HeaderItem } from './components/';
 
 interface UserLayoutProps {
   children: ReactNode;
