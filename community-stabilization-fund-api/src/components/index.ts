@@ -4,3 +4,6 @@ export * from './BasicSelect';
 export * from './BasicNavigation';
 export * from './BasicLayout';
 export * from './UserLayout';
+export * from './Layout';
+export * from './BasicHead';
+export * from './BasicFooter';

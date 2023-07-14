@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { BasicNavigation } from "../BasicNavigation";
+import { Footer } from "../BasicFooter/Footer";
 
 import styles from "./BasicLayout.module.css";
 
@@ -11,7 +12,10 @@ interface BasicLayoutProps {
 const BasicLayout = ({ children }: BasicLayoutProps) => (
   <div>
     <BasicNavigation />
-    <main className={styles.container}>{children}</main>
+      <div className={styles.container}>
+        {children}
+      </div>
+    <Footer />
   </div>
 );
 

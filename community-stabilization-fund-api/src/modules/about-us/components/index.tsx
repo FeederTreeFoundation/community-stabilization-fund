@@ -15,7 +15,7 @@ interface AboutUsProps {
 }
 
 const AboutUs = ({ org }: AboutUsProps) => (
-  <BasicLayout>
+  <main className={styles.container}>
     <div className={styles.header}>
       {org.img_url && (
         <Image
@@ -46,7 +46,7 @@ const AboutUs = ({ org }: AboutUsProps) => (
         </a>
       )}
     </div>
-  </BasicLayout>
+  </main>
 );
 
 export { AboutUs };

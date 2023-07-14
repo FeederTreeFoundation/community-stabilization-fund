@@ -28,10 +28,6 @@ const GroceriesAndSuppliesForm = () => {
 
   const packagesToReceive = watch('packages_to_receive') ? watch('packages_to_receive') as string[] : [];
 
-  useEffect(() => {
-    document.querySelector('header')?.classList.add('hidden');
-  }, []);
-
   const onSubmit = handleSubmit((data) => {
     FormResponseService.createFormResponse(data).then(() => {
       setIsSubmitted(!isSubmitted);

@@ -1,0 +1,23 @@
+.footer {
+  display: block;
+  background-color: #161616;
+  color: #feffff;
+  text-transform: uppercase;
+  padding: 1.25rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer_heading {
+  margin-bottom: 1rem;
+}
+
+.footer a {
+  color: #feffff;
+}
+
+.footer a:hover {
+  color: #ccc;
+}
