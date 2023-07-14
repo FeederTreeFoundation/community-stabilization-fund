@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import { GroceriesAndSuppliesForm } from '../../src/modules/forms/components/GroceriesAndSuppliesForm';
+import { GroceriesAndSuppliesForm } from '../../src/modules/forms';
 
 const GroceriesAndSupplies: NextPage = () => (
   <div>
