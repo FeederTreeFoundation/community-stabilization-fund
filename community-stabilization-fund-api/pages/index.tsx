@@ -1,18 +1,10 @@
 import type { NextPage } from 'next';
 
-import styles from '../styles/Home.module.css';
+import { Home } from "../src/modules/home";
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   const title = "Welcome to Community Stabilization Fund!";
-  return (
-    <div>
-      <div className={`${styles.bg} mt-8`}>
-        <div className={styles.bg_overlay}>
-          <h1>{title}</h1>
-        </div>
-      </div>
-    </div>
-  );
+  return <Home title={title} />; 
 };
 
-export default Home;
+export default HomePage;
