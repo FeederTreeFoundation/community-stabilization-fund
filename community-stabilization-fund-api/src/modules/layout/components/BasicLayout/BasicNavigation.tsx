@@ -8,7 +8,7 @@ import {
 
 import Link from 'next/link';
 
-import styles from './BasicNavigation.module.css';
+import styles from '../../styles/BasicNavigation.module.css';
 
 const BasicNavigation = () => (
   <div>

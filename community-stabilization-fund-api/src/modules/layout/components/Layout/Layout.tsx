@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import type { ReactNode } from "react";
 
-import { BasicHead } from "../BasicHead";
+import { BasicHead } from "../BasicHead/BasicHead";
 import { BasicLayout } from "../BasicLayout";
 import { UserLayout } from "../UserLayout";
 

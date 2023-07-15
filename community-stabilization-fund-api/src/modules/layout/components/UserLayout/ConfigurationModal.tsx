@@ -3,9 +3,9 @@ import { Checkbox, Modal } from 'carbon-components-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { ChecklistRule } from '../../../modules';
+import type { ChecklistRule } from '../../..';
 
-import { BasicSelect } from '../../BasicSelect';
+import { BasicSelect } from '../../../../components/BasicSelect';
 
 interface ConfigurationModalProps {
   packageGroups: string[];

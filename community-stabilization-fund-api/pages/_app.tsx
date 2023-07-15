@@ -3,7 +3,8 @@ import React from 'react';
 
 import type { AppProps } from 'next/app';
 
-import { Layout, RouteGuard } from '../src/components';
+import { RouteGuard } from '../src/components';
+import { Layout } from '../src/modules/layout';
 
 import '../styles/globals.css';
 import '../styles/styles.scss';
