@@ -8,7 +8,7 @@ import {
   Checkbox,
   Form,
 } from 'carbon-components-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -27,10 +27,6 @@ const GroceriesAndSuppliesForm = () => {
   const { watch, register, handleSubmit, formState: { isLoading, errors} } = useForm<FormData>();
 
   const packagesToReceive = watch('packages_to_receive') ? watch('packages_to_receive') as string[] : [];
-
-  useEffect(() => {
-    document.querySelector('header')?.classList.add('hidden');
-  }, []);
 
   const onSubmit = handleSubmit((data) => {
     FormResponseService.createFormResponse(data).then(() => {

@@ -1,7 +1,5 @@
 import Image from 'next/image';
 
-import { BasicLayout } from '../../../components';
-
 import styles from '../styles/about-us.module.css';
 
 interface AboutUsProps {
@@ -15,7 +13,7 @@ interface AboutUsProps {
 }
 
 const AboutUs = ({ org }: AboutUsProps) => (
-  <BasicLayout>
+  <main className={styles.container}>
     <div className={styles.header}>
       {org.img_url && (
         <Image
@@ -46,7 +44,7 @@ const AboutUs = ({ org }: AboutUsProps) => (
         </a>
       )}
     </div>
-  </BasicLayout>
+  </main>
 );
 
 export { AboutUs };
