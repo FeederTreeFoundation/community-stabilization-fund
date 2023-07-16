@@ -12,11 +12,11 @@ import { useContext, useState } from 'react';
 import type { ChecklistRule } from '../../..';
 import type { BagItemsMap } from '../../../checklists/types';
 
-import { ConfigurationModal } from './ConfigurationModal';
-import { formResponseMock } from '../../../../mocks';
 import { ChecklistsRulesContext } from '../../..';
-import { createInitialBagItemsMap } from '../../../checklists/utils';
+import { formResponseMock } from '../../../../mocks';
 import FormResponseService from '../../../../services/form-response';
+import { createInitialBagItemsMap } from '../../../checklists/utils';
+import { ConfigurationModal } from './ConfigurationModal';
 
 const UserNavigation = () => {
   const [openSettings, setOpenSettings] = useState<boolean>(false);
