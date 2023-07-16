@@ -1,6 +1,6 @@
 import { Link, Grid, Column } from 'carbon-components-react';
 
-import styles from './Footer.module.css';
+import styles from '../../styles/Footer.module.css';
 
 const Footer = () => (
   <footer className={styles.footer}>

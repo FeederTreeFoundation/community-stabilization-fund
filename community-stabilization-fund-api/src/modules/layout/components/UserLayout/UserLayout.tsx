@@ -7,12 +7,13 @@ import {
 } from '@carbon/react';
 import { useState } from 'react';
 
-import type { ChecklistRule} from '../../modules/checklists';
+import type { ChecklistRule} from '../../../checklists';
 import type { ReactNode} from 'react';
 
-import { UserNavigation, HeaderItem } from './components/';
-import { ChecklistsRulesContext } from '../../modules/checklists';
-import { ROUTES } from '../../services/constants';
+import { HeaderItem } from './HeaderItem';
+import { UserNavigation } from './UserNavigation';
+import { ROUTES } from '../../../../services/constants';
+import { ChecklistsRulesContext } from '../../../checklists';
 
 interface UserLayoutProps {
   children: ReactNode;
