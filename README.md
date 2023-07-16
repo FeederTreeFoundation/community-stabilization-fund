@@ -41,8 +41,12 @@ To debug all other errors:
 
 **_ in another shell/terminal _**
 
-1. Ask team member for env variables to populate `.env.local` file
+1. Ask team member for env variables to populate `.env*` file
 2. Start up your mysql server
+3. Run `npm run seed` to create your database
+4. Run `npm run migrations:create` to migrate tables
+
+***READ MORE:*** [Prisma](https://www.prisma.io/docs/guides/migrate/developing-with-prisma-migrate/team-development)
 
 ### Additional Tools
 - [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
