@@ -5,12 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npx prisma generate",
-    "migrations:deploy": "npx prisma migrate deploy",
+    "build": "npx prisma generate && next build",
+    "migrations:create": "npx prisma migrate dev",
+    "migrations:prototype": "npx prisma db push",
+    "migrations:resolve": "npx prisma migrate resolve",
+    "migrations:patch": "npx prisma migrate deploy",
     "start": "next start",
     "seed": "node src/db/seed_db.js",
     "lint": "next lint --",
     "lint:fix": "next lint -- --fix ./"
+  },
+  "prisma": {
+    "seed": "npm run seed"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
