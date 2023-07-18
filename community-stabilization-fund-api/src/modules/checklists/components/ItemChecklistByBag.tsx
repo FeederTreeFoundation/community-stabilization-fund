@@ -2,12 +2,12 @@ import React from 'react';
 
 import type { FormResponse } from '../../../db';
 
-import { BagLabels, DymoBagLabelsOpOne } from './BagLabels';
 import { formResponseMock } from '../../../mocks';
 import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
+import { BagLabels, DymoBagLabelsOpOne } from './BagLabels';
 
 import styles from '../styles/checklists.module.css';
 

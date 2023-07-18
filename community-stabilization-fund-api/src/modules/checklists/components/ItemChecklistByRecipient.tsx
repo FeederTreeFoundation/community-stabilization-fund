@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import type { FormResponse } from '../../../db';
 import type { BagItemsMap } from '../types';
 
-import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
 import { formResponseMock } from '../../../mocks';
 import { omit } from '../../../utils';
 import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
@@ -13,6 +12,7 @@ import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../utils';
+import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
 
 import styles from '../styles/checklists.module.css';
 
