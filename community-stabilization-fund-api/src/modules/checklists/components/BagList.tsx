@@ -31,5 +31,4 @@ const DymoBagOpOneList = (
       items={items.slice(pos[0], pos[1])}
     />
   ));
-
 export { BagList, DymoBagOpOneList };

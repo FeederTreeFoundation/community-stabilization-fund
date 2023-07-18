@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 import {
-  ItemChecklistTableColumn,
   DymoOpOneChecklistTableColumn,
+  ItemChecklistTableColumn,
 } from './ItemChecklistTableColumn';
 
 import styles from '../styles/checklists.module.css';
@@ -12,6 +12,13 @@ interface BagLabelProps {
   items: string[];
   recipientInfoList: JSX.Element[];
 }
+
+const BagLabel = ({ thead, items, recipientInfoList }: BagLabelProps) => (
+  <div className={styles.bag_label}>
+    <div className={styles.user_bag_label_info}>{recipientInfoList}</div>
+    <ItemChecklistTableColumn thead={thead} items={items ?? []} />
+  </div>
+);
 
 const DymoBagOpOneLabel = ({
   thead,
@@ -24,19 +31,13 @@ const DymoBagOpOneLabel = ({
     <div className={styles.dymo_img_wrapper}>
       <Image
         src='/img/cmb_bag_label_logo.png'
+        className={styles.dymo_bag_label__img}
         alt='CMB Logo'
         width={250}
         height={250}
         objectFit='contain'
       />
     </div>
-  </div>
-);
-
-const BagLabel = ({ thead, items, recipientInfoList }: BagLabelProps) => (
-  <div className={styles.bag_label}>
-    <div className={styles.user_bag_label_info}>{recipientInfoList}</div>
-    <ItemChecklistTableColumn thead={thead} items={items ?? []} />
   </div>
 );
 

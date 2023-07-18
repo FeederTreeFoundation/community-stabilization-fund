@@ -1,0 +1,65 @@
+.form {
+  margin-top: 4rem;
+  max-width: 1200px;
+  margin: 12rem auto;
+}
+
+.form label {
+  font-size: 20px;
+  color: #000;
+  margin: 0.5rem 0;
+}
+
+.grid {
+  display: grid;
+  margin-bottom: 1rem;
+}
+
+.grid span {
+  font-size: 14px;
+}
+
+.checkbox_item label {
+  margin: 0;
+}
+
+.name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.name label {
+  font-size: 14px;
+}
+
+.name div {
+  width: 100%;
+}
+
+.name div:first-of-type {
+  margin-right: 1rem;
+}
+
+.submitted {
+  max-width: 600px;
+  position: relative;
+  top: 12rem;
+  margin: 0 auto;
+}
+
+.submitted p {
+  line-height: 2rem;
+}
+
+.checkmark {
+  margin-left: 0.2rem;
+}
+
+.thank_you {
+  margin-top: 1rem;
+}
+
+.cds--header {
+  display: none !important;
+}

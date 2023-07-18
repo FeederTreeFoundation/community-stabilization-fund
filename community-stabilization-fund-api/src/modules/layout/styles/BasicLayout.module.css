@@ -1,0 +1,10 @@
+.basic_layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  min-height: 67vh;
+  /* padding: 0;
+  margin: 0; */
+}

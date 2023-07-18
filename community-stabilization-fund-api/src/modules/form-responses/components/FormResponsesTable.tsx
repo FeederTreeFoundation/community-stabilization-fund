@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import type { FormResponse } from '../../../db';
+import type {
+  DataTableHeader,
+  DataTableRow,
+} from 'carbon-components-react/lib/components/DataTable';
+import type { FC } from 'react';
+
+import { FilterToolbarActions } from './FilterToolbarActions';
 import formResponses from '../../../../pages/form-responses';
 
 import { BasicTable } from '../../../components';
@@ -7,16 +15,9 @@ import FormResponseService from '../../../services/form-response';
 import { FORM_RESPONSE_QUESTIONS } from '../constants';
 
 import { getAddress, mapBooleanToResponse } from '../utils';
-import { FilterToolbarActions } from './FilterToolbarActions';
 
-import type { FormResponse } from '../../../db';
 
-import type {
-  DataTableHeader,
-  DataTableRow,
-} from 'carbon-components-react/lib/components/DataTable';
 
-import type { FC } from 'react';
 
 import styles from '../styles/form-responses.module.css';
 

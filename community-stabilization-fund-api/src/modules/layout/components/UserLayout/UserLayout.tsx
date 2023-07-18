@@ -5,32 +5,27 @@ import {
   // HeaderMenuItem,
   Theme,
 } from '@carbon/react';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { ROUTES } from '../services/constants';
+import type { ChecklistRule} from '../../../checklists';
+import type { ReactNode} from 'react';
 
 import { HeaderItem } from './HeaderItem';
 import { UserNavigation } from './UserNavigation';
+import { ROUTES } from '../../../../services/constants';
+import { ChecklistsRulesContext } from '../../../checklists';
 
-interface LayoutProps {
-  children: JSX.Element;
+interface UserLayoutProps {
+  children: ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const UserLayout = ({ children }: UserLayoutProps) => {
   const [selectedPage, setSelectedPage] = useState('');
-  const { pathname } = useRouter();
-  const hiddenPaths = [
-    '/',
-    '/rent-mortgage-utilities-support',
-    '/about/pittsburgh-collaborative',
-    '/about/community-movement-builders',
-    '/about/swope-dreams',
-    '/donate',
-  ];
+  const [checklistRules, setChecklistRules] = useState<ChecklistRule[]>([]);
+
   return (
     <div className='container'>
-      {!hiddenPaths.includes(pathname) && (
+      <ChecklistsRulesContext.Provider value={{rules: checklistRules, updateRules: setChecklistRules}} >
         <Theme theme='g100'>
           <Header aria-label='CMB Community Stabilization Fund'>
             <HeaderItem route={ROUTES.root} prefix='CMB' />
@@ -55,10 +50,10 @@ const Layout = ({ children }: LayoutProps) => {
             <UserNavigation />
           </Header>
         </Theme>
-      )}
-      {children}
+        {children}
+      </ChecklistsRulesContext.Provider>
     </div>
   );
 };
 
-export { Layout };
+export { UserLayout };

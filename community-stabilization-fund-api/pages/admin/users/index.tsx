@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import UserService from '../../../src/services/user';
 
 import type { User } from '../../../src/db';
 import type { NextPage } from 'next';
+
+import UserService from '../../../src/services/user';
 
 const UserPage: NextPage = () => {
   const [users, setUsers] = useState<User[] | null>(null);

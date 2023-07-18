@@ -15,7 +15,7 @@ export interface Address {
   country: string;
   city: string;
   state: string;
-  zipcode: number;
+  zipcode: string;
   line1: string;
   line2: string|null;
 }
