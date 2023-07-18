@@ -23,10 +23,10 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponse) => {
     ` ${household_members}`,
     phone_number,
     address,
-    `${is_pick_up ? 'Pick Up' : 'Drop Off'}`,
-    `${has_flu_symptoms ? 'Yes' : 'No'}`,
+    `${is_pick_up ? "Pick Up" : "Drop Off"}`,
+    `${has_flu_symptoms ? "Yes" : "No"}`,
     household_members,
-    feminine_health_care?.feminine_members,
+    feminine_health_care?.feminine_members
   ];
 };
 

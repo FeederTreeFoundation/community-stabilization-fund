@@ -16,7 +16,6 @@ import { ChecklistsRulesContext } from '../../..';
 import { formResponseMock } from '../../../../mocks';
 import FormResponseService from '../../../../services/form-response';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
-import { ConfigurationModal } from './ConfigurationModal';
 
 const UserNavigation = () => {
   const [openSettings, setOpenSettings] = useState<boolean>(false);

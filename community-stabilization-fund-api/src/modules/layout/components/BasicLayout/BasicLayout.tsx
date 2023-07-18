@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { Footer } from "../BasicFooter";
 import { BasicNavigation } from "./BasicNavigation";
+import { Footer } from "../BasicFooter";
 
 import styles from "../../styles/BasicLayout.module.css";
 
