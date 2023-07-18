@@ -8,11 +8,6 @@ import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
 import { ChecklistsRulesContext } from '../contexts';
 import { createBagItems } from '../utils';
 
-import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
-import { ChecklistsRulesContext } from '../contexts';
-import { createBagItems } from '../utils';
-import { BagList, DymoBagOpOneList } from './BagList';
-
 import styles from '../styles/checklists.module.css';
 
 interface BagLabelsProps {

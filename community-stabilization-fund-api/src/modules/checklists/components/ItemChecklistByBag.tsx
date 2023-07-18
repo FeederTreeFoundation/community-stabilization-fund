@@ -1,6 +1,7 @@
 import React from 'react';
 
 import type { FormResponse } from '../../../db';
+
 import { BagLabels, DymoBagLabelsOpOne } from './BagLabels';
 import { formResponseMock } from '../../../mocks';
 import {

@@ -12,6 +12,7 @@ import { useContext, useState } from 'react';
 import type { ChecklistRule } from '../../..';
 import type { BagItemsMap } from '../../../checklists/types';
 
+import { ConfigurationModal } from './ConfigurationModal';
 import { ChecklistsRulesContext } from '../../..';
 import { formResponseMock } from '../../../../mocks';
 import FormResponseService from '../../../../services/form-response';
