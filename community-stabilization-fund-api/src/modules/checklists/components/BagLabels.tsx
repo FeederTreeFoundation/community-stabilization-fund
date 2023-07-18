@@ -8,7 +8,6 @@ import { RECIPIENT_INFORMATION_FIELDS } from '../constants';
 import { ChecklistsRulesContext } from '../contexts';
 import { createBagItems } from '../utils';
 
-
 import styles from '../styles/checklists.module.css';
 
 interface BagLabelsProps {
