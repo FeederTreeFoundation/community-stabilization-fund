@@ -161,6 +161,8 @@
 
 .dymo_recipient_info {
   margin-bottom: 0.4rem;
+  word-wrap: break-word;
+  max-width: 400px;
 }
 
 .dymo_op_one_table_info {
@@ -190,6 +192,7 @@
   flex-direction: column;
   align-items: center;
   margin: 0;
+  margin-left: 0 !important;
 }
 
 .dymo_op_one_table_info__ul div {
