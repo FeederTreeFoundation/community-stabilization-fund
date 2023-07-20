@@ -231,7 +231,11 @@ const DymoBagLabelsOpOne = ({
       household_members,
     } as FormResponse
   );
-  const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
+  const feminineHygieneSlicePos = [
+    [0, 3],
+    [3, feminineHygieneItems.length],
+    // [4, feminineHygieneItems.length],
+  ];
   const femineHygieneLabels =
     packages?.includes('Feminine Health Care') &&
     DymoBagOpOneList(

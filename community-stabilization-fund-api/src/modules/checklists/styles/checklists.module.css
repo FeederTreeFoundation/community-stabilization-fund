@@ -2,24 +2,80 @@
   @page {
     size: letter;
     /* you can also specify margins here: */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     /* margin: 25mm; */
     /* margin-right: 45mm;  for compatibility with both A4 and Letter */
   }
+  /* @page {
+    size: 58.7mm 101.6mm;
+    margin: 0 !important;
+    padding: 0 !important;
+  } */
+  .item_checklist_dymo_wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: flex-start !important;
+    /* display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+    height: 100%;
+    padding: 0 !important;
+    width: 1200px !important;
+    justify-content: space-between;
+    align-content: space-between; */
+  }
+
   .dymo_op_one_bag_label {
     display: block;
-    padding-top: 10rem;
-    width: 2.3125in;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    padding: 0 important;
+    /* width: 2.3125in; */
     /* margin-left: 12.5rem;
     margin-right: 12.5rem; */
-    height: 4in;
+    /* height: 4in; */
+    width: 100%;
+    height: 100%;
     break-after: always;
+    page-break-inside: avoid;
   }
+
   .dymo_op_one_bag_label_info {
     margin: 0 !important;
     width: 100% !important;
   }
-  .dymo_bag_label__img {
+
+  .dymo_recipient_info {
+    font-size: 2rem !important;
+  }
+
+  .dymo_op_one_table_info__ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0 important;
+    margin-left: 0 !important;
+  }
+
+  .dymo_op_one_table_info__ul div {
+    font-size: 2rem !important;
+  }
+
+  .dymo_recipient_info {
+    margin-bottom: 0.4rem;
+    word-wrap: break-word;
+  }
+
+  .dymo_img_wrapper .dymo_bag_label__img {
+    height: 800px !important;
+    width: 800px !important;
     page-break-inside: avoid;
+    page-break-after: avoid;
   }
 }
 
@@ -161,6 +217,8 @@
 
 .dymo_recipient_info {
   margin-bottom: 0.4rem;
+  word-wrap: break-word;
+  max-width: 400px;
 }
 
 .dymo_op_one_table_info {
@@ -190,6 +248,7 @@
   flex-direction: column;
   align-items: center;
   margin: 0;
+  margin-left: 0 !important;
 }
 
 .dymo_op_one_table_info__ul div {
