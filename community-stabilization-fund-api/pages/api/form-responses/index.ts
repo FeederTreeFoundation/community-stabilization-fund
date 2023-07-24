@@ -45,7 +45,7 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
-    return res.json({ error });
+    throw error;
   }
 };
 
@@ -101,7 +101,7 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
   } catch (error) {
-    return res.json({ error });
+    throw error;
   }
 };
 
@@ -117,7 +117,7 @@ const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
     }
     return res.send('Successfully deleted form response with id: ' + ids);
   } catch (error) {
-    return res.json({ error });
+    throw error;
   }
 };
 
@@ -127,7 +127,7 @@ const deleteAllFormResponses = async (res: NextApiResponse) => {
     await executeQuery({ sql });
     return res.status(201).send('Successfully reset table form_response');
   } catch (error) {
-    return res.json({ error });
+    throw error;
   }
 };
 

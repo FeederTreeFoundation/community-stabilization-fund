@@ -8,13 +8,21 @@ import FormResponseService from '../../src/services/form-response';
 
 const FormResponsesPage: NextPage = () => {
   const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
+  const [error, setError] = useState<Error>();
+
   useEffect(() => {
     const getResponses = async () => {
-      const res = await FormResponseService.getAllFormResponses();
-      setFormResponses(res.data);
+      try {
+        const res = await FormResponseService.getAllFormResponses();
+        setFormResponses(res.data);
+      } catch (e) {
+        setError(e as Error)
+      }
     };
     getResponses();
   }, []);
+
+  if(error) return <html>{error.message}</html>
 
   return <FormResponsesTable formResponses={formResponses} />;
 };
