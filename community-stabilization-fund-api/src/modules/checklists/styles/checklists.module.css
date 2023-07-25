@@ -6,6 +6,10 @@
     padding: 0;
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     /* margin: 25mm; */
     /* margin-right: 45mm;  for compatibility with both A4 and Letter */
   }
