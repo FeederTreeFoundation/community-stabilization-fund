@@ -1,4 +1,4 @@
-import { BagLabel, DymoBagOpOneLabel } from './BagLabel';
+import {BagLabel} from './BagLabel';
 
 const BagList = (
   slicePositions: number[][],
@@ -16,19 +16,4 @@ const BagList = (
     />
   ));
 
-const DymoBagOpOneList = (
-  slicePositions: number[][],
-  recipientInfoList: JSX.Element[],
-  thead: string,
-  items: string[],
-  labelCount: number
-) =>
-  slicePositions.map((pos, id) => (
-    <DymoBagOpOneLabel
-      key={id}
-      recipientInfoList={recipientInfoList}
-      thead={thead + ` ${++labelCount}`}
-      items={items.slice(pos[0], pos[1])}
-    />
-  ));
-export { BagList, DymoBagOpOneList };
+export {BagList};

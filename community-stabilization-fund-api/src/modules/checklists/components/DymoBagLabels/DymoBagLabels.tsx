@@ -1,13 +1,13 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 
-import type { FormResponse } from '../../../../db';
-import type { BagItemsMap } from '../../types';
+import type {FormResponse} from '../../../../db';
+import type {BagItemsMap} from '../../types';
 
 import DymoBagList from './DymoBagList';
-import { RECIPIENT_INFORMATION_FIELDS } from '../../constants';
-import { ChecklistsRulesContext } from '../../contexts';
-import { createBagItems } from '../../utils';
-import { DymoBagOpOneList } from '../BagList';
+
+import {RECIPIENT_INFORMATION_FIELDS} from '../../constants';
+import {ChecklistsRulesContext} from '../../contexts';
+import {createBagItems} from '../../utils';
 
 import styles from './../../styles/DymoBag.module.css';
 
@@ -25,7 +25,7 @@ const DymoBagLabels = ({
   labelCount,
   packages,
 }: BagLabelsProps) => {
-  const { rules } = useContext(ChecklistsRulesContext);
+  const {rules} = useContext(ChecklistsRulesContext);
   const household_members = recipientInfo[5];
 
   const groceryTHead = 'Groceries Bag';
@@ -55,7 +55,7 @@ const DymoBagLabels = ({
 
   const groceryItemLabels =
     packages?.includes('Food') &&
-    DymoBagOpOneList(
+    DymoBagList(
       grocerySlicePos,
       recipientInfoList,
       groceryTHead,
@@ -75,7 +75,7 @@ const DymoBagLabels = ({
   const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
   const generalHygieneLabels =
     packages?.includes('General Hygiene') &&
-    DymoBagOpOneList(
+    DymoBagList(
       generalHygieneSlicePos,
       recipientInfoList,
       generalHygieneTHead,
@@ -98,7 +98,7 @@ const DymoBagLabels = ({
   ];
   const cleaningHealthSupplyLabels =
     packages?.includes('Cleaning/Health Supplies') &&
-    DymoBagOpOneList(
+    DymoBagList(
       cleaningHealthSlicePos,
       recipientInfoList,
       cleaningHealthSupplyTHead,
@@ -130,12 +130,12 @@ const DymoBagLabels = ({
       labelCount
     );
   return (
-    <div>
+    <>
       <div>{groceryItemLabels}</div>
       <div>{generalHygieneLabels}</div>
       <div>{cleaningHealthSupplyLabels}</div>
       <div>{femineHygieneLabels}</div>
-    </div>
+    </>
   );
 };
 

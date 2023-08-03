@@ -10,7 +10,7 @@ interface BagLabelProps {
   recipientInfoList: JSX.Element[];
 }
 
-const DymoBagLabel = ({ thead, items, recipientInfoList }: BagLabelProps) => (
+const DymoBagLabel = ({thead, items, recipientInfoList}: BagLabelProps) => (
   <div className={styles.dymo_op_one_bag_label}>
     <div className={styles.dymo_op_one_bag_label_info}>{recipientInfoList}</div>
     <DymoChecklistTableColumn thead={thead} items={items ?? []} />
