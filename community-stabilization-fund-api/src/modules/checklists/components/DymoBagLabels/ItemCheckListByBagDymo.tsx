@@ -1,22 +1,18 @@
 import React from 'react';
 
-import type {FormResponse} from '../../../db';
+import type { ItemChecklistByBagProps } from '../ItemChecklistByBag';
 
-import {BagLabels} from './BagLabels';
-import {formResponseMock} from '../../../mocks';
+import DymoBagLabels from './DymoBagLabels';
+
+import { formResponseMock } from '../../../../mocks';
 import {
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
-} from '../utils';
+} from '../../utils';
 
-import styles from '../styles/checklists.module.css';
+import styles from './../../styles/DymoBag.module.css';
 
-// TODO: Convert this to a 4x2.5 set of labels printed horizontally
-export interface ItemChecklistByBagProps {
-  formResponse?: FormResponse;
-}
-
-const ItemChecklistByBag = ({
+const ItemChecklistByBagDymo = ({
   formResponse = formResponseMock,
 }: ItemChecklistByBagProps) => {
   let labelCount = 0;
@@ -27,10 +23,9 @@ const ItemChecklistByBag = ({
     typeof formResponse.packages_to_receive === 'string'
       ? formResponse.packages_to_receive.split(',')
       : formResponse.packages_to_receive;
-
   return (
-    <div id='item-checklist' className={styles.item_checklist_wrapper}>
-      <BagLabels
+    <div id='item-checklist' className={styles.item_checklist_dymo_wrapper}>
+      <DymoBagLabels
         recipientInfo={recipientInfo}
         bagItemsMap={bagItemsMap}
         packages={packages_selected}
@@ -40,4 +35,4 @@ const ItemChecklistByBag = ({
   );
 };
 
-export {ItemChecklistByBag};
+export default ItemChecklistByBagDymo;

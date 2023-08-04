@@ -7,9 +7,8 @@ import {
   ItemChecklistByRecipient,
   ItemChecklistByBag,
   ChecklistsRulesContext,
-  ItemChecklistByBagDymo,
 } from '../../src/modules/checklists';
-
+import ItemChecklistByBagDymo from '../../src/modules/checklists/components/DymoBagLabels/ItemCheckListByBagDymo';
 import FormResponseService from '../../src/services/form-response';
 
 const ChecklistsPage: NextPage = () => {
