@@ -26,7 +26,6 @@
     width: 100%;
     height: 100%;
     page-break-after: always;
-    page-break-inside: avoid;
   }
 
   .dymo_op_one_bag_label_info {
@@ -58,9 +57,10 @@
   }
 
   .dymo_img_wrapper .dymo_bag_label__img {
+    display: block;
     height: 800px !important;
     width: 800px !important;
-    page-break-inside: avoid;
+    break-inside: avoid;
     page-break-after: avoid;
   }
 }
