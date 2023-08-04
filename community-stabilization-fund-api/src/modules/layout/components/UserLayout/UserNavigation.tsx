@@ -6,6 +6,7 @@ import {
   Link,
   Modal,
   Button,
+  Toggle,
 } from 'carbon-components-react';
 import { useContext, useState } from 'react';
 
@@ -17,13 +18,17 @@ import { ChecklistsRulesContext } from '../../..';
 import { formResponseMock } from '../../../../mocks';
 import FormResponseService from '../../../../services/form-response';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
+import { ChecklistConfigSection } from './ChecklistConfigSection';
 
 const UserNavigation = () => {
+  const [showChecklistConfig, setShowChecklistConfig] = useState<boolean>(false);
+  const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({})
+  // const [openLabelsModal, setOpenLabelsModal] = useState<boolean>(false);
   const [openSettings, setOpenSettings] = useState<boolean>(false);
   const [openConfiguration, setOpenConfiguration] = useState<boolean>(false);
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
 
-  const { updateRules } = useContext(ChecklistsRulesContext);
+  const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
   const { user, error, isLoading } = useUser();
 
   const bagItemsMap = createInitialBagItemsMap(formResponseMock);
@@ -53,6 +58,9 @@ const UserNavigation = () => {
   const onClose = () => setOpenConfiguration(false);
 
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
+
+  const handleOpen = (key: string) => setOpenModalMapping({[key]: true});
+  const handleClose = (key: string) => setOpenModalMapping({[key]: false});
 
   if (isLoading) return <></>;
 
@@ -99,9 +107,8 @@ const UserNavigation = () => {
         size={'sm'}
         onRequestClose={() => setOpenSettings(false)}
       >
-        <Button kind={'primary'} onClick={() => setOpenConfiguration(true)}>
-          Configure Checklists
-        </Button>
+        <Toggle id="toggle-5" aria-label="toggle button" labelText="Configure Checklists" hideLabel onClick={toggleChecklistConfig}/>
+        { showChecklistConfig && <ChecklistConfigSection handleOpen={handleOpen} /> }
         <p className='mt-4 mb-2'>{deleteAllFormResponsesText}</p>
         <Button kind={'danger'} onClick={deleteAllFormResponses}>
           Reset
@@ -110,13 +117,19 @@ const UserNavigation = () => {
       <ConfigurationModal 
         packageGroups={packageGroups} 
         packageItems={packageItems} 
-        openConfiguration={openConfiguration} 
-        onRequestClose={onClose} 
+        openConfiguration={!!openModalMapping['packageItemsModal']} 
+        onRequestClose={() => handleClose('packageItemsModal')} 
         onRequestSubmit={updateChecklistRules}
         onPackageChange={onPackageChange}
       />
     </>
   );
+
+  function toggleChecklistConfig(e: any) {
+    setShowChecklistConfig(!showChecklistConfig)
+
+    return e;
+  }
 };
 
 export { UserNavigation };
