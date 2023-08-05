@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
-import DymoChecklistTableColumn from './DymoChecklistTableColumn';
+import { BAG_LABEL_TYPES } from '../../constants';
+import { ItemChecklistTableColumn } from '../ItemChecklist';
 
 import styles from './../../styles/DymoBag.module.css';
 
@@ -13,9 +14,12 @@ interface BagLabelProps {
 const DymoBagLabel = ({thead, items, recipientInfoList}: BagLabelProps) => (
   <div className={styles.dymo_op_one_bag_label}>
     <div className={styles.dymo_op_one_bag_label_info}>{recipientInfoList}</div>
-    <DymoChecklistTableColumn thead={thead} items={items ?? []} />
+    <ItemChecklistTableColumn 
+      thead={thead} 
+      items={items ?? []} 
+      bagLabelType={BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE}
+    />
     <div className={styles.dymo_img_wrapper}>
-      {/* Set priority to true, so loads for the print view */}
       <Image
         src='/img/cmb_bag_label_logo.png'
         className={styles.dymo_bag_label__img}
@@ -23,10 +27,11 @@ const DymoBagLabel = ({thead, items, recipientInfoList}: BagLabelProps) => (
         width={250}
         height={250}
         objectFit='contain'
+        // Set priority to true, so loads for the print preview
         priority={true}
       />
     </div>
   </div>
 );
 
-export default DymoBagLabel;
+export {DymoBagLabel};

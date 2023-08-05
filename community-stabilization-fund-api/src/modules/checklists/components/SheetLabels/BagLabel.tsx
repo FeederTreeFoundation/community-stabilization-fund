@@ -1,6 +1,6 @@
-import {ItemChecklistTableColumn} from './ItemChecklistTableColumn';
+import {ItemChecklistTableColumn} from '../ItemChecklist/ItemChecklistTableColumn';
 
-import styles from '../styles/checklists.module.css';
+import styles from '../../styles/checklists.module.css';
 
 interface BagLabelProps {
   thead: string;
