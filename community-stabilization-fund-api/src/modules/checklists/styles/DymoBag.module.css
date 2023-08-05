@@ -28,34 +28,6 @@
     page-break-after: always;
   }
 
-  .dymo_op_one_bag_label_info {
-    margin: 0 !important;
-    width: 100% !important;
-  }
-
-  .dymo_recipient_info {
-    font-size: 2rem !important;
-    text-transform: uppercase;
-  }
-
-  .dymo_op_one_table_info__ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 0 important;
-    margin-left: 0 !important;
-  }
-
-  .dymo_op_one_table_info__ul div {
-    font-size: 2rem !important;
-  }
-
-  .dymo_recipient_info {
-    margin-bottom: 0.4rem;
-    word-wrap: break-word;
-  }
-
   .dymo_img_wrapper .dymo_bag_label__img {
     display: block;
     height: 800px !important;
@@ -90,14 +62,11 @@
 }
 
 .dymo_recipient_info {
+  font-size: 1.5rem;
+  text-transform: uppercase;
   margin-bottom: 0.4rem;
   word-wrap: break-word;
   max-width: 400px;
-}
-
-.dymo_op_one_table_info {
-  max-width: 450px;
-  border: 1px solid #333;
 }
 
 .dymo_table_info__thead {
@@ -115,23 +84,4 @@
   position: relative;
   display: flex;
   justify-content: center;
-}
-
-.dymo_op_one_table_info__ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  margin-left: 0 !important;
-}
-
-.dymo_op_one_table_info__ul div {
-  padding: 1rem;
-  border-bottom: 0.1rem solid #333;
-  width: 100%;
-  text-align: center;
-}
-
-.dymo_op_one_table_info__ul div:last-of-type {
-  border-bottom: none;
 }

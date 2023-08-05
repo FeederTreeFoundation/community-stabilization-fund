@@ -79,51 +79,6 @@
   font-size: 30px;
 }
 
-.table_info {
-  margin: 0.5rem;
-}
-
-.bag_label .table_info {
-  margin: 0 0.5rem;
-}
-
-.table_info__ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  margin: auto;
-  padding: auto;
-  height: 80%;
-}
-
-.table_info__ul li {
-  font-size: 16px;
-}
-
-.table_info,
-.table_info__td {
-  max-width: 450px;
-  border: 1px solid #333;
-  border-collapse: collapse;
-}
-
-.table_info__td {
-  height: 250px;
-}
-
-.table_info__thead {
-  display: flex;
-  justify-content: center;
-  border-bottom: solid 1px;
-  padding: 0.2em 0.5em;
-  font-size: 16px;
-}
-
-.table_info {
-  font-size: 25px;
-}
-
 .bag_label {
   height: 217px;
   width: 340px;
