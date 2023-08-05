@@ -1,4 +1,75 @@
 @media print {
+  @page {
+    margin: 0;
+  }
+  .item_checklist_dymo_wrapper {
+    /* Turned of flex box to not break firefox print */
+    display: block !important;
+    flex-direction: none !important;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .dymo_op_one_bag_label {
+    page-break-before: avoid;
+    page-break-after: always;
+    width: 100%;
+    /* page-break-before: always;
+    page-break-after: always; */
+    /* display: block;
+    position: relative; */
+
+    /* page-break-after: always;
+    height: 101.66mm;
+    display: block; */
+  }
+
+  .dymo_op_one_bag_label_info {
+    break-inside: avoid;
+  }
+
+  .dymo_op_one_bag_label_info p {
+    text-transform: uppercase;
+    font-size: 2rem !important;
+  }
+
+  .dymo_img_wrapper .dymo_bag_label__img {
+    display: block;
+    height: 800px !important;
+    width: 800px !important;
+    break-inside: avoid;
+    page-break-after: always;
+  }
+  /* .dymo_op_one_bag_label_info {
+    display: block;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+    break-inside: avoid;
+  }
+  .dymo_op_one_bag_label {
+    page-break-after: always;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .dymo_img_wrapper .dymo_bag_label__img {
+    display: block;
+    height: 800px !important;
+    width: 800px !important;
+    break-inside: avoid;
+    page-break-after: always;
+  } */
+  /* .dymo_bag_label__img {
+    display: block;
+    height: 800px !important;
+    width: 800px !important;
+    break-inside: avoid;
+    page-break-after: always;
+  } */
+}
+
+/* @media print {
   @page :left {
     margin: 0;
   }
@@ -35,12 +106,52 @@
     break-inside: avoid;
     page-break-after: avoid;
   }
-}
+} */
 
 /* 
   Dymo Bag List Styling
 */
+.item_checklist_dymo_wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  height: 100%;
+  padding: 5%;
 
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.dymo_img_wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.dymo_bag_label__img {
+  margin: 0 auto;
+  display: block;
+}
+
+.dymo_op_one_bag_label_info {
+  padding-top: 2.4rem;
+  display: block;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+}
+/* .dymo_op_one_bag_label_info {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+} */
+/* 
 .item_checklist_dymo_wrapper {
   display: flex;
   flex-direction: column;
@@ -73,15 +184,6 @@
   font-size: 2rem;
 }
 
-.dymo_bag_label__img {
-  margin: 0 auto;
-  display: block;
-}
 
-.dymo_img_wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
+
+*/

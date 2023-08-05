@@ -1,9 +1,12 @@
-.dymo_op_one_table_info {
-  max-width: 450px;
-  border: 1px solid #333;
+@media print {
+  .dymo_op_one_table_info__ul div {
+    font-weight: bold;
+    font-size: 2rem !important;
+  }
 }
 
 .dymo_op_one_table_info__ul {
+  margin-top: 2rem !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,27 +15,17 @@
   margin-left: 0 !important;
 }
 
-.dymo_op_one_table_info__ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  margin-left: 0 !important;
-}
-
 .dymo_op_one_table_info__ul div {
+  font-size: 1.4rem;
   padding: 1rem;
-  border-bottom: 0.1rem solid #333;
+  border: 0.1rem solid #333;
+  box-sizing: border-box;
   width: 100%;
   text-align: center;
 }
 
 .dymo_op_one_table_info__ul p {
   font-size: 2rem;
-}
-
-.dymo_op_one_table_info__ul div:last-of-type {
-  border-bottom: none;
 }
 
 .table_info {
