@@ -9,9 +9,17 @@
     width: 90%;
     margin: 0 auto;
   }
+
+  .item_checklist_dymo_wrapper
+    div:last-of-type
+    .dymo_op_one_bag_label:last-of-type {
+    page-break-after: avoid;
+  }
+
   .dymo_op_one_bag_label {
     page-break-before: avoid;
     page-break-after: always;
+    height: 100%;
     width: 100%;
   }
 
@@ -26,16 +34,22 @@
 
   .dymo_img_wrapper .dymo_bag_label__img {
     display: block;
-    height: 800px !important;
-    width: 800px !important;
+    height: 700px !important;
+    width: 700px !important;
     break-inside: avoid;
-    page-break-after: always;
+    page-break-after: avoid;
   }
 }
 
 /* 
   Dymo Bag List Styling
 */
+
+.dymo_op_one_bag_label_info p {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  max-width: 30rem;
+}
 .item_checklist_dymo_wrapper {
   display: flex;
   flex-direction: column;
@@ -62,7 +76,7 @@
 }
 
 .dymo_op_one_bag_label_info {
-  padding-top: 2.4rem;
+  padding-top: 2rem;
   display: block;
   flex-direction: column;
   width: 80%;
