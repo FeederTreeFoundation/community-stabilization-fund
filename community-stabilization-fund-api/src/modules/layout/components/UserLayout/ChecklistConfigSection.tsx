@@ -1,22 +1,19 @@
 import { Button, Column } from "carbon-components-react";
-import { useForm } from "react-hook-form";
-import { BasicSelect } from "../../../../components";
-import { ChecklistRule } from "../../../checklists";
 
+import { BAG_LABEL_TYPES } from "../../../checklists";
+import { BasicSelect } from "../../../../components";
+import { ChangeEvent } from "react";
 
 interface ChecklistConfigSectionProps {
   handleOpen: (key: string) => void;
+  handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const ChecklistConfigSection = ({
-  handleOpen
+  handleOpen,
+  handleChange
 }: ChecklistConfigSectionProps) => {
-  const {
-    // watch,
-    register,
-    // handleSubmit,
-    formState: { errors },
-  } = useForm<ChecklistRule>();
+  const items = [BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE, BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE]
 
   return (
     <Column className="mt-4">
@@ -25,12 +22,12 @@ const ChecklistConfigSection = ({
       </Button>
       <p className='mt-4'>
         <BasicSelect
-          id='delay-dropdown'
-          items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
+          id='bag-label-type'
+          items={items}
           noLabel
-          defaultValue={'Sheet Labels 4 x 2.5'}
+          defaultValue={BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE}
           defaultText='Select type of bag labels'
-          onChange={console.log}
+          onChange={handleChange}
         />
       </p>
     </Column>

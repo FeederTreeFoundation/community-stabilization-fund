@@ -7,8 +7,9 @@ import {
   Modal,
   Button,
   Toggle,
+  SkeletonIcon,
 } from 'carbon-components-react';
-import { useContext, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 
 import type { ChecklistRule } from '../../..';
 import type { BagItemsMap } from '../../../checklists/types';
@@ -23,9 +24,7 @@ import { ChecklistConfigSection } from './ChecklistConfigSection';
 const UserNavigation = () => {
   const [showChecklistConfig, setShowChecklistConfig] = useState<boolean>(false);
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({})
-  // const [openLabelsModal, setOpenLabelsModal] = useState<boolean>(false);
   const [openSettings, setOpenSettings] = useState<boolean>(false);
-  const [openConfiguration, setOpenConfiguration] = useState<boolean>(false);
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
 
   const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
@@ -46,23 +45,10 @@ const UserNavigation = () => {
     }
   };
 
-  const updateChecklistRules = (data?: ChecklistRule) => {
-    if (typeof updateRules !== 'function') return;
-
-    updateRules((prevRules: ChecklistRule[]) => (
-      [data, ...prevRules.filter(r => JSON.stringify(r) !== JSON.stringify(data))]
-    ));
-    onClose();
-  };
-
-  const onClose = () => setOpenConfiguration(false);
-
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
-  const handleOpen = (key: string) => setOpenModalMapping({[key]: true});
-  const handleClose = (key: string) => setOpenModalMapping({[key]: false});
-
-  if (isLoading) return <></>;
+  if (isLoading) {
+    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>)};
 
   if (error || !user) {
     return (
@@ -108,7 +94,9 @@ const UserNavigation = () => {
         onRequestClose={() => setOpenSettings(false)}
       >
         <Toggle id="toggle-5" aria-label="toggle button" labelText="Configure Checklists" hideLabel onClick={toggleChecklistConfig}/>
-        { showChecklistConfig && <ChecklistConfigSection handleOpen={handleOpen} /> }
+        { showChecklistConfig && (
+          <ChecklistConfigSection handleOpen={handleOpen} handleChange={handleChange} />
+        )}
         <p className='mt-4 mb-2'>{deleteAllFormResponsesText}</p>
         <Button kind={'danger'} onClick={deleteAllFormResponses}>
           Reset
@@ -119,7 +107,7 @@ const UserNavigation = () => {
         packageItems={packageItems} 
         openConfiguration={!!openModalMapping['packageItemsModal']} 
         onRequestClose={() => handleClose('packageItemsModal')} 
-        onRequestSubmit={updateChecklistRules}
+        onRequestSubmit={submitChecklistRules}
         onPackageChange={onPackageChange}
       />
     </>
@@ -130,6 +118,30 @@ const UserNavigation = () => {
 
     return e;
   }
+
+  function handleOpen(key: string) {
+    setOpenModalMapping({[key]: true});
+  }
+
+  function handleClose(key: string) {
+    setOpenModalMapping({[key]: false});
+  }
+
+  function handleChange(e: ChangeEvent<HTMLSelectElement>) {
+    if(typeof updateBagLabelType !== 'function') return;
+    
+    updateBagLabelType(e.target.value);
+  }
+
+  function submitChecklistRules(data?: ChecklistRule) {
+    if (typeof updateRules !== 'function') return;
+
+    updateRules((prevRules: ChecklistRule[]) => (
+      [data, ...prevRules.filter(r => JSON.stringify(r) !== JSON.stringify(data))]
+    ));
+    handleClose('packageItemsModal');
+  };
+
 };
 
 export { UserNavigation };
