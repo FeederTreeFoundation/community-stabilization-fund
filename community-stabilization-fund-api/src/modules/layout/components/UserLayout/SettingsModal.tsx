@@ -2,7 +2,7 @@ import {
   Modal,
   Toggle,
   // Button 
-} from "carbon-components-react";
+} from '@carbon/react';
 
 import { useState } from "react";
 
