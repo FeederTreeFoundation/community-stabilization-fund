@@ -1,15 +1,10 @@
-import {useContext} from 'react';
-
-import type {FormResponse} from '../../../../db';
 import type {BagItemsMap} from '../../types';
 
-import DymoBagList from './DymoBagList';
-
 import {RECIPIENT_INFORMATION_FIELDS} from '../../constants';
-import {ChecklistsRulesContext} from '../../contexts';
-import {createBagItems} from '../../utils';
 
-import styles from './../../styles/DymoBag.module.css';
+import {BagList} from '../BagList';
+
+import styles from '../../styles/checklists.module.css';
 
 interface BagLabelsProps {
   //TODO: Why would this have instances of undefined?
@@ -17,21 +12,17 @@ interface BagLabelsProps {
   bagItemsMap: BagItemsMap;
   packages?: string[];
   labelCount: number;
+  getBagItems: (label: string) => string[];
 }
 
-const DymoBagLabels = ({
+const BagLabels = ({
   recipientInfo,
-  bagItemsMap,
   labelCount,
   packages,
+  getBagItems,
 }: BagLabelsProps) => {
-  const {rules} = useContext(ChecklistsRulesContext);
-  const household_members = recipientInfo[5];
-
   const groceryTHead = 'Groceries Bag';
-  const groceryItems = createBagItems('Groceries', bagItemsMap, rules, {
-    household_members,
-  } as FormResponse);
+  const groceryItems = getBagItems('Groceries');
 
   const getRecipientInfo = (text: string, id: number) => (
     <>
@@ -39,9 +30,9 @@ const DymoBagLabels = ({
     </>
   );
 
-  const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.slice(0, 4).map(
+  const recipientInfoList = RECIPIENT_INFORMATION_FIELDS.slice(0, 3).map(
     (field, id) => (
-      <p className={styles.dymo_recipient_info} key={field + id}>
+      <p key={field + id} className={styles.user_bag_label_info__p}>
         {getRecipientInfo(field, id)}
       </p>
     )
@@ -55,7 +46,7 @@ const DymoBagLabels = ({
 
   const groceryItemLabels =
     packages?.includes('Food') &&
-    DymoBagList(
+    BagList(
       grocerySlicePos,
       recipientInfoList,
       groceryTHead,
@@ -63,19 +54,13 @@ const DymoBagLabels = ({
       labelCount
     );
 
+  labelCount = 0;
   const generalHygieneTHead = 'General Hygiene Bag';
-  const generalHygieneItems = createBagItems(
-    'General Hygiene',
-    bagItemsMap,
-    rules,
-    {
-      household_members,
-    } as FormResponse
-  );
+  const generalHygieneItems = getBagItems('General Hygiene');
   const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
   const generalHygieneLabels =
     packages?.includes('General Hygiene') &&
-    DymoBagList(
+    BagList(
       generalHygieneSlicePos,
       recipientInfoList,
       generalHygieneTHead,
@@ -83,22 +68,16 @@ const DymoBagLabels = ({
       labelCount
     );
 
+  labelCount = 0;
   const cleaningHealthSupplyTHead = 'Cleaning/Health Supplies Bag';
-  const cleaningHealthSupplyItems = createBagItems(
-    'Cleaning/Health Supplies',
-    bagItemsMap,
-    rules,
-    {
-      household_members,
-    } as FormResponse
-  );
+  const cleaningHealthSupplyItems = getBagItems('Cleaning/Health Supplies');
   const cleaningHealthSlicePos = [
     [0, 4],
     [4, cleaningHealthSupplyItems.length],
   ];
   const cleaningHealthSupplyLabels =
     packages?.includes('Cleaning/Health Supplies') &&
-    DymoBagList(
+    BagList(
       cleaningHealthSlicePos,
       recipientInfoList,
       cleaningHealthSupplyTHead,
@@ -106,37 +85,32 @@ const DymoBagLabels = ({
       labelCount
     );
 
+  labelCount = 0;
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
-  const feminineHygieneItems = createBagItems(
-    'Feminine Hygiene',
-    bagItemsMap,
-    rules,
-    {
-      household_members,
-    } as FormResponse
-  );
-  const feminineHygieneSlicePos = [
-    [0, 3],
-    [3, feminineHygieneItems.length],
-    // [4, feminineHygieneItems.length],
-  ];
+  const feminineHygieneItems = getBagItems('Feminine Hygiene');
+  const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
   const femineHygieneLabels =
     packages?.includes('Feminine Health Care') &&
-    DymoBagList(
+    BagList(
       feminineHygieneSlicePos,
       recipientInfoList,
       feminineHygieneTHead,
       feminineHygieneItems,
       labelCount
     );
+
   return (
-    <>
-      <div>{groceryItemLabels}</div>
-      <div>{generalHygieneLabels}</div>
-      <div>{cleaningHealthSupplyLabels}</div>
-      <div>{femineHygieneLabels}</div>
-    </>
+    <div className={styles.item_checklist_wrapper}>
+      <div className={styles.bag_labels_wrapper}>
+        <div className={styles.bag_labels}>{groceryItemLabels}</div>
+        <div className={styles.bag_labels}>
+          {generalHygieneLabels}
+          {cleaningHealthSupplyLabels}
+          {femineHygieneLabels}
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default DymoBagLabels;
+export {BagLabels};

@@ -45,7 +45,8 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
-    return res.json({ error });
+    console.error({error});
+    throw error;
   }
 };
 
@@ -75,13 +76,13 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       rest.is_interested_in_membership === 'true'
     ),
     packages_to_receive: rest.packages_to_receive.join(),
-    feminine_health_care: {
+    feminine_health_care: rest.packages_to_receive.includes('Feminine Health Care') ? {
       create: {
         feminine_members: Number(feminine_health_care?.feminine_members),
         hygiene_items: feminine_health_care?.hygiene_items?.join(),
         needs_plan_b: Boolean(feminine_health_care?.needs_plan_b === 'true'),
       },
-    },
+    } : undefined,
     address: {
       create: {
         country: address?.country,
@@ -101,7 +102,8 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
   } catch (error) {
-    return res.json({ error });
+    console.error({error});
+    throw error;
   }
 };
 
@@ -117,7 +119,8 @@ const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
     }
     return res.send('Successfully deleted form response with id: ' + ids);
   } catch (error) {
-    return res.json({ error });
+    console.error({error});
+    throw error;
   }
 };
 
@@ -127,7 +130,8 @@ const deleteAllFormResponses = async (res: NextApiResponse) => {
     await executeQuery({ sql });
     return res.status(201).send('Successfully reset table form_response');
   } catch (error) {
-    return res.json({ error });
+    console.error({error});
+    throw error;
   }
 };
 

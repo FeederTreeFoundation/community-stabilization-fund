@@ -22,10 +22,18 @@ interface UserLayoutProps {
 const UserLayout = ({ children }: UserLayoutProps) => {
   const [selectedPage, setSelectedPage] = useState('');
   const [checklistRules, setChecklistRules] = useState<ChecklistRule[]>([]);
+  const [currentBagLabelType, setCurrentBagLabelType] = useState<string>('');
+
+  const ctxValue = { 
+    rules: checklistRules, 
+    bagLabelType: currentBagLabelType,
+    updateRules: setChecklistRules, 
+    updateBagLabelType: setCurrentBagLabelType,
+  };
 
   return (
     <div className='container'>
-      <ChecklistsRulesContext.Provider value={{rules: checklistRules, updateRules: setChecklistRules}} >
+      <ChecklistsRulesContext.Provider value={ctxValue}>
         <Theme theme='g100'>
           <Header aria-label='CMB Community Stabilization Fund'>
             <HeaderItem route={ROUTES.root} prefix='CMB' />

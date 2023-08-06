@@ -122,7 +122,7 @@ export const createBagItems = (
           rule.packageGroup === `${label}` &&
           rule.packageItem === `${item.name}` &&
           rule.householdMembers ===
-            `${feminine_members ? feminine_members : household_members}`
+            `${label === 'Feminine Hygiene' ? feminine_members : household_members}`
       );
 
       if (found && !validateItemByDate(found.delayedBy, submitted_on))
