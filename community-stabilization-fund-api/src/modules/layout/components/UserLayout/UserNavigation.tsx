@@ -116,7 +116,7 @@ const UserNavigation = () => {
     </>
   );
 
-  function toggleChecklistConfig(e: any) {
+  function toggleChecklistConfig(e: MouseEvent<HTMLElement>) {
     setShowChecklistConfig(!showChecklistConfig);
 
     return e;
