@@ -1,8 +1,9 @@
 import { Button, Column } from "carbon-components-react";
 
-import { BAG_LABEL_TYPES } from "../../../checklists";
+import type { ChangeEvent } from "react";
+
 import { BasicSelect } from "../../../../components";
-import { ChangeEvent } from "react";
+import { BAG_LABEL_TYPES } from "../../../checklists";
 
 interface ChecklistConfigSectionProps {
   handleOpen: (key: string) => void;
@@ -13,7 +14,7 @@ const ChecklistConfigSection = ({
   handleOpen,
   handleChange
 }: ChecklistConfigSectionProps) => {
-  const items = [BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE, BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE]
+  const items = [BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE, BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE];
 
   return (
     <Column className="mt-4">
@@ -31,8 +32,8 @@ const ChecklistConfigSection = ({
         />
       </p>
     </Column>
-  )
+  );
 
 };
 
-export { ChecklistConfigSection }
+export { ChecklistConfigSection };

@@ -3,10 +3,11 @@ import {useContext} from 'react';
 import type {FormResponse} from '../../../../db';
 import type {BagItemsMap} from '../../types';
 
-import {BagList} from '../BagList/BagList';
 import {RECIPIENT_INFORMATION_FIELDS} from '../../constants';
 import {ChecklistsRulesContext} from '../../contexts';
 import {createBagItems} from '../../utils';
+
+import {BagList} from '../BagList';
 
 import styles from '../../styles/checklists.module.css';
 
@@ -124,16 +125,16 @@ const BagLabels = ({
     );
 
   return (
-  <div className={styles.item_checklist_wrapper}>
-    <div className={styles.bag_labels_wrapper}>
-      <div className={styles.bag_labels}>{groceryItemLabels}</div>
-      <div className={styles.bag_labels}>
-        {generalHygieneLabels}
-        {cleaningHealthSupplyLabels}
-        {femineHygieneLabels}
+    <div className={styles.item_checklist_wrapper}>
+      <div className={styles.bag_labels_wrapper}>
+        <div className={styles.bag_labels}>{groceryItemLabels}</div>
+        <div className={styles.bag_labels}>
+          {generalHygieneLabels}
+          {cleaningHealthSupplyLabels}
+          {femineHygieneLabels}
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 

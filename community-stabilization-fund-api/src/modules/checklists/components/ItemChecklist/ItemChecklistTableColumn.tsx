@@ -26,7 +26,7 @@ const ItemChecklistTableColumn = ({
           ))}
         </UnorderedList>
       </div>
-    )
+    );
   }
 
   return (
@@ -38,7 +38,7 @@ const ItemChecklistTableColumn = ({
         ))}
       </UnorderedList>
     </div>
-  )
+  );
 };
 
 export {ItemChecklistTableColumn};

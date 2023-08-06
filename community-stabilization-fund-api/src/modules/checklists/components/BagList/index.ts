@@ -1,1 +1,1 @@
-  export * from './BagList';
+export * from './BagList';

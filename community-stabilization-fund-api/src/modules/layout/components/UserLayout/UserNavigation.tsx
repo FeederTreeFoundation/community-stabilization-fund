@@ -9,21 +9,24 @@ import {
   Toggle,
   SkeletonIcon,
 } from 'carbon-components-react';
-import { ChangeEvent, useContext, useState } from 'react';
 
-import type { ChecklistRule } from '../../..';
+import { useContext, useState } from 'react';
+
 import type { BagItemsMap } from '../../../checklists/types';
+import type { ChangeEvent} from 'react';
 
+
+import { ChecklistConfigSection } from './ChecklistConfigSection';
 import { ConfigurationModal } from './ConfigurationModal';
-import { ChecklistsRulesContext } from '../../..';
+import { ChecklistsRulesContext, type ChecklistRule } from '../../..';
 import { formResponseMock } from '../../../../mocks';
 import FormResponseService from '../../../../services/form-response';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
-import { ChecklistConfigSection } from './ChecklistConfigSection';
+
 
 const UserNavigation = () => {
   const [showChecklistConfig, setShowChecklistConfig] = useState<boolean>(false);
-  const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({})
+  const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [openSettings, setOpenSettings] = useState<boolean>(false);
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
 
@@ -48,7 +51,7 @@ const UserNavigation = () => {
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
   if (isLoading) {
-    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>)};
+    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);}
 
   if (error || !user) {
     return (
@@ -114,7 +117,7 @@ const UserNavigation = () => {
   );
 
   function toggleChecklistConfig(e: any) {
-    setShowChecklistConfig(!showChecklistConfig)
+    setShowChecklistConfig(!showChecklistConfig);
 
     return e;
   }
@@ -140,7 +143,7 @@ const UserNavigation = () => {
       [data, ...prevRules.filter(r => JSON.stringify(r) !== JSON.stringify(data))]
     ));
     handleClose('packageItemsModal');
-  };
+  }
 
 };
 
