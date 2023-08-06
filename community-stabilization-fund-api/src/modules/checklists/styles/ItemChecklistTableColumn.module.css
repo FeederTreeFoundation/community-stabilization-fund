@@ -1,9 +1,12 @@
-.dymo_op_one_table_info {
-  max-width: 450px;
-  border: 1px solid #333;
+@media print {
+  .dymo_op_one_table_info__ul div {
+    font-weight: bold;
+    font-size: 1.8rem !important;
+  }
 }
 
 .dymo_op_one_table_info__ul {
+  margin-top: 2rem !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,27 +15,23 @@
   margin-left: 0 !important;
 }
 
-.dymo_op_one_table_info__ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  margin-left: 0 !important;
-}
-
 .dymo_op_one_table_info__ul div {
-  padding: 1rem;
-  border-bottom: 0.1rem solid #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.8rem;
+  border: 0.1rem solid #333;
+  border-bottom: none;
+  box-sizing: border-box;
   width: 100%;
   text-align: center;
 }
 
-.dymo_op_one_table_info__ul p {
-  font-size: 2rem;
+.dymo_op_one_table_info__ul div:last-of-type {
+  border-bottom: 0.1rem solid #333;
 }
 
-.dymo_op_one_table_info__ul div:last-of-type {
-  border-bottom: none;
+.dymo_op_one_table_info__ul p {
+  font-size: 2rem;
 }
 
 .table_info {
@@ -44,7 +43,7 @@
   display: flex;
   justify-content: center;
   border-bottom: solid 1px;
-  padding: 0.2em 0.5em;
+  padding: 0.5rem;
   font-size: 16px;
 }
 
@@ -54,7 +53,7 @@
   align-items: center;
   justify-content: space-evenly;
   margin: auto;
-  padding: auto;
+  padding: 0.4rem !important;
   height: 80%;
 }
 
@@ -82,6 +81,6 @@
 }
 
 .item_checklist_row .table_info {
-  height: 300px;
-  width: 340px;
+  min-height: 300px;
+  min-width: 340px;
 }

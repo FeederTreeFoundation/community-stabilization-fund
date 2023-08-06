@@ -1,20 +1,19 @@
-import React from 'react';
+import { useContext } from 'react';
 
 import type {FormResponse} from '../../../../db';
 
-import { BAG_LABEL_TYPES } from '../../constants';
 import {formResponseMock} from '../../../../mocks';
+import { BAG_LABEL_TYPES } from '../../constants';
+import { ChecklistsRulesContext } from '../../contexts';
 import {
+  createBagItems,
   mapFormResponseToBagItems,
   mapFormResponseToRecipientInfo,
 } from '../../utils';
 
-import { BagLabels } from '../SheetLabels';
 import { DymoBagLabels } from '../DymoLabels';
+import { BagLabels } from '../SheetLabels';
 
-import styles from '../../styles/checklists.module.css';
-
-// TODO: Convert this to a 4x2.5 set of labels printed horizontally
 export interface ItemChecklistByBagProps {
   formResponse?: FormResponse;
   bagLabelType?: string;
@@ -28,6 +27,8 @@ const ItemChecklistByBag = ({
   const bagItemsMap = mapFormResponseToBagItems(formResponse);
   const recipientInfo = mapFormResponseToRecipientInfo(formResponse);
 
+  const { rules } = useContext(ChecklistsRulesContext);
+
   const packages_selected =
     typeof formResponse.packages_to_receive === 'string'
       ? formResponse.packages_to_receive.split(',')
@@ -35,22 +36,27 @@ const ItemChecklistByBag = ({
 
   if(bagLabelType === BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE) {
     return (
-        <DymoBagLabels
-          recipientInfo={recipientInfo}
-          bagItemsMap={bagItemsMap}
-          packages={packages_selected}
-          labelCount={labelCount}
-        />
-  )};
-
-  return (
-      <BagLabels
+      <DymoBagLabels
         recipientInfo={recipientInfo}
-        bagItemsMap={bagItemsMap}
         packages={packages_selected}
         labelCount={labelCount}
+        getBagItems={getBagItems}
       />
+    );}
+
+  return (
+    <BagLabels
+      recipientInfo={recipientInfo}
+      bagItemsMap={bagItemsMap}
+      packages={packages_selected}
+      labelCount={labelCount}
+      getBagItems={getBagItems}
+    />
   );
+
+  function getBagItems (label: string) {
+    return createBagItems(label, bagItemsMap, rules, formResponse);
+  }
 };
 
 export {ItemChecklistByBag};

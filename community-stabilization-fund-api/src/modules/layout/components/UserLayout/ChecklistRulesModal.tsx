@@ -7,7 +7,7 @@ import type { ChecklistRule } from '../../..';
 
 import { BasicSelect } from '../../../../components/BasicSelect';
 
-interface ConfigurationModalProps {
+interface ChecklistRulesModalProps {
   packageGroups: string[];
   packageItems: string[];
   openConfiguration: boolean;
@@ -16,14 +16,14 @@ interface ConfigurationModalProps {
   onPackageChange?: (data?: ChecklistRule['packageGroup']) => void;
 }
 
-const ConfigurationModal = ({
+const ChecklistRulesModal = ({
   packageGroups,
   packageItems,
   openConfiguration,
   onRequestClose,
   onRequestSubmit,
   onPackageChange,
-}: ConfigurationModalProps) => {
+}: ChecklistRulesModalProps) => {
   const [isDelayed, setIsDelayed] = useState(false);
   const {
     watch,
@@ -42,7 +42,7 @@ const ConfigurationModal = ({
   return (
     <Modal
       open={openConfiguration}
-      modalHeading='Configure Checklists'
+      modalHeading='Configure Package Item Rules'
       modalLabel='Admin functions'
       primaryButtonText='Submit'
       secondaryButtonText='Cancel'
@@ -50,8 +50,18 @@ const ConfigurationModal = ({
       onRequestClose={onRequestClose}
       onRequestSubmit={handleSubmit(onRequestSubmit)}
     >
-      <h5>Configure Package Rules</h5>
       <p className='mt-2'>
+        {/* On label type
+        <BasicSelect
+          id='delay-dropdown'
+          items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
+          noLabel
+          defaultValue={0}
+          defaultText='Select type of bag labels'
+          {...register('bagLabelType')}
+          invalid={!!errors.bagLabelType}
+          invalidText={errors.bagLabelType?.message}
+        /> */}
         In the package group
         <BasicSelect
           id='package-dropdown'
@@ -127,20 +137,8 @@ const ConfigurationModal = ({
           </>
         )}
       </p>
-      <p className='mt-4'>
-        <BasicSelect
-          id='delay-dropdown'
-          items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
-          noLabel
-          defaultValue={0}
-          defaultText='Select type of bag labels'
-          {...register('bagLabelType')}
-          invalid={!!errors.bagLabelType}
-          invalidText={errors.bagLabelType?.message}
-        />
-      </p>
     </Modal>
   );
 };
 
-export { ConfigurationModal };
+export { ChecklistRulesModal };

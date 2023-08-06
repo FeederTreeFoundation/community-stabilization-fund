@@ -16,13 +16,13 @@ const FormResponsesPage: NextPage = () => {
         const res = await FormResponseService.getAllFormResponses();
         setFormResponses(res.data);
       } catch (e) {
-        setError(e as Error)
+        setError(e as Error);
       }
     };
     getResponses();
   }, []);
 
-  if(error) return <html>{error.message}</html>
+  if(error) return <html>{error.message}</html>;
 
   return <FormResponsesTable formResponses={formResponses} />;
 };

@@ -20,10 +20,11 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
+    "@carbon/react": "^1.35.0",
     "@prisma/client": "^4.12.0",
     "axios": "^1.1.2",
     "carbon-components": "^11.12.0",
-    "carbon-components-react": "^8.12.0",
+    "carbon-components-react": "^8.35.0",
     "carbon-icons": "^7.0.7",
     "dayjs": "^1.11.9",
     "next": "12.2.5",

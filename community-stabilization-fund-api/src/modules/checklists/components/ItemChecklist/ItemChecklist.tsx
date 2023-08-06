@@ -1,7 +1,8 @@
-import { FormResponse } from "../../../../db";
-import { BAG_LABEL_TYPES } from "../../constants";
+import type { FormResponse } from "../../../../db";
+
 import { ItemChecklistByBag } from "./ItemChecklistByBag";
 import { ItemChecklistByRecipient } from "./ItemChecklistByRecipient";
+import { BAG_LABEL_TYPES } from "../../constants";
 
 interface ItemChecklistProps {
   formResponses: FormResponse[];

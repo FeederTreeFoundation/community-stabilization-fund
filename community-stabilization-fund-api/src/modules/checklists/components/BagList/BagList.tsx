@@ -1,7 +1,7 @@
 import { BAG_LABEL_TYPES } from '../../constants';
 
-import {BagLabel} from '../SheetLabels/BagLabel';
 import { DymoBagLabel } from '../DymoLabels';
+import {BagLabel} from '../SheetLabels/BagLabel';
 
 
 const BagList = (
@@ -22,7 +22,7 @@ const BagList = (
         thead={thead + ` ${++labelCount}`}
         items={items.slice(pos[0], pos[1])}
       />
-  ))}
+    ));}
 
   return slicePositions.map((pos, id) => (
     <BagLabel
@@ -31,7 +31,7 @@ const BagList = (
       thead={thead + ` ${++labelCount}`}
       items={items.slice(pos[0], pos[1])}
     />
-    ))
+  ));
 };
 
 export {BagList};

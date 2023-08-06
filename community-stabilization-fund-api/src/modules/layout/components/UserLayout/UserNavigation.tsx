@@ -4,27 +4,24 @@ import {
   HeaderGlobalAction,
   HeaderGlobalBar,
   Link,
-  Modal,
-  Button,
-  Toggle,
   SkeletonIcon,
 } from 'carbon-components-react';
-import { ChangeEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
-import type { ChecklistRule } from '../../..';
 import type { BagItemsMap } from '../../../checklists/types';
+import type { ChangeEvent } from 'react';
 
-import { ConfigurationModal } from './ConfigurationModal';
-import { ChecklistsRulesContext } from '../../..';
+import { ChecklistRulesModal } from './ChecklistRulesModal';
+import { SettingsModal } from './SettingsModal';
+import { ChecklistsRulesContext, type ChecklistRule } from '../../..';
 import { formResponseMock } from '../../../../mocks';
-import FormResponseService from '../../../../services/form-response';
+// import FormResponseService from '../../../../services/form-response';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
-import { ChecklistConfigSection } from './ChecklistConfigSection';
+
 
 const UserNavigation = () => {
-  const [showChecklistConfig, setShowChecklistConfig] = useState<boolean>(false);
-  const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({})
-  const [openSettings, setOpenSettings] = useState<boolean>(false);
+  
+  const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
 
   const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
@@ -36,19 +33,18 @@ const UserNavigation = () => {
 
   const apiUserId = localStorage.getItem('api_user');
   const userPath = apiUserId ? `/admin/users/${apiUserId}` : '/admin/login';
-  const deleteAllFormResponsesText = "WARNING: This will delete all existing form data!";
 
-  const deleteAllFormResponses = async () => {
-    const resp = await FormResponseService.deleteAllFormResponses();
-    if (resp.status === 201) {
-      setOpenSettings(false);
-    }
-  };
+  // const deleteAllFormResponses = async () => {
+  //   const resp = await FormResponseService.deleteAllFormResponses();
+  //   if (resp.status === 201) {
+  //     handleClose('settingsModal');
+  //   }
+  // };
 
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
   if (isLoading) {
-    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>)};
+    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);}
 
   if (error || !user) {
     return (
@@ -66,14 +62,11 @@ const UserNavigation = () => {
   return (
     <>
       <HeaderGlobalBar>
-        { apiUserId && <HeaderGlobalAction
-          aria-label='Settings'
-          onClick={() => {
-            setOpenSettings(!openSettings);
-          }}
-        >
-          <Settings />
-        </HeaderGlobalAction>}
+        { apiUserId && (
+          <HeaderGlobalAction aria-label='Settings' onClick={() => handleOpen('settingsModal')} >
+            <Settings />
+          </HeaderGlobalAction>
+        )}
         <Link href={userPath}>
           <HeaderGlobalAction aria-label='My Profile' onClick={() => {}}>
             {user.org_id ? <UserAdmin /> : <User />}
@@ -85,39 +78,22 @@ const UserNavigation = () => {
           </HeaderGlobalAction>
         </Link>
       </HeaderGlobalBar>
-      <Modal
-        open={openSettings}
-        modalHeading='Settings'
-        modalLabel='Admin functions'
-        passiveModal={true}
-        size={'sm'}
-        onRequestClose={() => setOpenSettings(false)}
-      >
-        <Toggle id="toggle-5" aria-label="toggle button" labelText="Configure Checklists" hideLabel onClick={toggleChecklistConfig}/>
-        { showChecklistConfig && (
-          <ChecklistConfigSection handleOpen={handleOpen} handleChange={handleChange} />
-        )}
-        <p className='mt-4 mb-2'>{deleteAllFormResponsesText}</p>
-        <Button kind={'danger'} onClick={deleteAllFormResponses}>
-          Reset
-        </Button>
-      </Modal>
-      <ConfigurationModal 
+      <SettingsModal 
+        openSettingsModal={!!openModalMapping['settingsModal']} 
+        handleOpen={handleOpen} 
+        handleClose={handleClose} 
+        handleChange={handleChange} 
+      />
+      <ChecklistRulesModal 
         packageGroups={packageGroups} 
         packageItems={packageItems} 
-        openConfiguration={!!openModalMapping['packageItemsModal']} 
-        onRequestClose={() => handleClose('packageItemsModal')} 
+        openConfiguration={!!openModalMapping['checklistRulesModal']} 
+        onRequestClose={() => handleClose('checklistRulesModal')} 
         onRequestSubmit={submitChecklistRules}
         onPackageChange={onPackageChange}
       />
     </>
   );
-
-  function toggleChecklistConfig(e: any) {
-    setShowChecklistConfig(!showChecklistConfig)
-
-    return e;
-  }
 
   function handleOpen(key: string) {
     setOpenModalMapping({[key]: true});
@@ -139,8 +115,8 @@ const UserNavigation = () => {
     updateRules((prevRules: ChecklistRule[]) => (
       [data, ...prevRules.filter(r => JSON.stringify(r) !== JSON.stringify(data))]
     ));
-    handleClose('packageItemsModal');
-  };
+    handleClose('checklistRulesModal');
+  }
 
 };
 
