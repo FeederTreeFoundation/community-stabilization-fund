@@ -13,7 +13,8 @@
     "start": "next start",
     "seed": "node src/db/seed_db.js",
     "lint": "next lint --",
-    "lint:fix": "next lint -- --fix ./"
+    "lint:fix": "next lint -- --fix ./",
+    "postinstall": "patch-package"
   },
   "prisma": {
     "seed": "npm run seed"
@@ -27,6 +28,7 @@
     "carbon-icons": "^7.0.7",
     "dayjs": "^1.11.9",
     "next": "12.2.5",
+    "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",

@@ -1,6 +1,6 @@
 import {
-  Modal, 
-  Toggle, 
+  Modal,
+  Toggle,
   // Button 
 } from "carbon-components-react";
 
