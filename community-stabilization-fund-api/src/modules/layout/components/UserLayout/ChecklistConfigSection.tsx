@@ -19,13 +19,13 @@ const ChecklistConfigSection = ({
   return (
     <Column className="mt-4">
       <Button kind={'primary'} size="lg" onClick={() => handleOpen('checklistRulesModal')}>
-        Configure Package Items
+        Configure Package Item Rules
       </Button>
       <p className='mt-4'>
         <BasicSelect
           id='bag-label-type'
           items={items}
-          noLabel
+          labelText='Select Current Bag Labels'
           defaultValue={BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE}
           defaultText='Select type of bag labels'
           onChange={handleChange}

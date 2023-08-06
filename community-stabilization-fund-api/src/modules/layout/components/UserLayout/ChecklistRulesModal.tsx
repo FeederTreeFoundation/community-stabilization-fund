@@ -42,7 +42,7 @@ const ChecklistRulesModal = ({
   return (
     <Modal
       open={openConfiguration}
-      modalHeading='Configure Checklists Rules'
+      modalHeading='Configure Package Item Rules'
       modalLabel='Admin functions'
       primaryButtonText='Submit'
       secondaryButtonText='Cancel'
@@ -51,6 +51,17 @@ const ChecklistRulesModal = ({
       onRequestSubmit={handleSubmit(onRequestSubmit)}
     >
       <p className='mt-2'>
+        {/* On label type
+        <BasicSelect
+          id='delay-dropdown'
+          items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
+          noLabel
+          defaultValue={0}
+          defaultText='Select type of bag labels'
+          {...register('bagLabelType')}
+          invalid={!!errors.bagLabelType}
+          invalidText={errors.bagLabelType?.message}
+        /> */}
         In the package group
         <BasicSelect
           id='package-dropdown'
@@ -125,18 +136,6 @@ const ChecklistRulesModal = ({
             weeks.
           </>
         )}
-      </p>
-      <p className='mt-4'>
-        <BasicSelect
-          id='delay-dropdown'
-          items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
-          noLabel
-          defaultValue={0}
-          defaultText='Select type of bag labels'
-          {...register('bagLabelType')}
-          invalid={!!errors.bagLabelType}
-          invalidText={errors.bagLabelType?.message}
-        />
       </p>
     </Modal>
   );

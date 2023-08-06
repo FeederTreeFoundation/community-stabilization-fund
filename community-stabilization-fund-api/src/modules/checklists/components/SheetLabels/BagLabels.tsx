@@ -1,11 +1,6 @@
-import {useContext} from 'react';
-
-import type {FormResponse} from '../../../../db';
 import type {BagItemsMap} from '../../types';
 
 import {RECIPIENT_INFORMATION_FIELDS} from '../../constants';
-import {ChecklistsRulesContext} from '../../contexts';
-import {createBagItems} from '../../utils';
 
 import {BagList} from '../BagList';
 
@@ -17,21 +12,17 @@ interface BagLabelsProps {
   bagItemsMap: BagItemsMap;
   packages?: string[];
   labelCount: number;
+  getBagItems: (label: string) => string[];
 }
 
 const BagLabels = ({
   recipientInfo,
-  bagItemsMap,
   labelCount,
   packages,
+  getBagItems,
 }: BagLabelsProps) => {
-  const {rules} = useContext(ChecklistsRulesContext);
-
-  const household_members = recipientInfo[5];
   const groceryTHead = 'Groceries Bag';
-  const groceryItems = createBagItems('Groceries', bagItemsMap, rules, {
-    household_members,
-  } as FormResponse);
+  const groceryItems = getBagItems('Groceries');
 
   const getRecipientInfo = (text: string, id: number) => (
     <>
@@ -65,12 +56,7 @@ const BagLabels = ({
 
   labelCount = 0;
   const generalHygieneTHead = 'General Hygiene Bag';
-  const generalHygieneItems = createBagItems(
-    'General Hygiene',
-    bagItemsMap,
-    rules,
-    {household_members} as FormResponse
-  );
+  const generalHygieneItems = getBagItems('General Hygiene');
   const generalHygieneSlicePos = [[0, generalHygieneItems.length]];
   const generalHygieneLabels =
     packages?.includes('General Hygiene') &&
@@ -84,12 +70,7 @@ const BagLabels = ({
 
   labelCount = 0;
   const cleaningHealthSupplyTHead = 'Cleaning/Health Supplies Bag';
-  const cleaningHealthSupplyItems = createBagItems(
-    'Cleaning/Health Supplies',
-    bagItemsMap,
-    rules,
-    {household_members} as FormResponse
-  );
+  const cleaningHealthSupplyItems = getBagItems('Cleaning/Health Supplies');
   const cleaningHealthSlicePos = [
     [0, 4],
     [4, cleaningHealthSupplyItems.length],
@@ -105,14 +86,8 @@ const BagLabels = ({
     );
 
   labelCount = 0;
-  const feminine_health_care = {feminine_members: recipientInfo[6]};
   const feminineHygieneTHead = 'Feminine Hygiene Bag';
-  const feminineHygieneItems = createBagItems(
-    'Feminine Hygiene',
-    bagItemsMap,
-    rules,
-    {feminine_health_care} as FormResponse
-  );
+  const feminineHygieneItems = getBagItems('Feminine Hygiene');
   const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
   const femineHygieneLabels =
     packages?.includes('Feminine Health Care') &&
