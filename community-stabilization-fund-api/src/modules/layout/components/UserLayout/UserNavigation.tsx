@@ -13,11 +13,11 @@ import {
 import { useContext, useState } from 'react';
 
 import type { BagItemsMap } from '../../../checklists/types';
-import type { ChangeEvent} from 'react';
+import type { ChangeEvent } from 'react';
 
 
 import { ChecklistConfigSection } from './ChecklistConfigSection';
-import { ConfigurationModal } from './ConfigurationModal';
+import { ChecklistRulesModal } from './ChecklistRulesModal';
 import { ChecklistsRulesContext, type ChecklistRule } from '../../..';
 import { formResponseMock } from '../../../../mocks';
 import FormResponseService from '../../../../services/form-response';
@@ -96,7 +96,13 @@ const UserNavigation = () => {
         size={'sm'}
         onRequestClose={() => setOpenSettings(false)}
       >
-        <Toggle id="toggle-5" aria-label="toggle button" labelText="Configure Checklists" hideLabel onClick={toggleChecklistConfig}/>
+        <Toggle 
+          id="toggle-5"
+          aria-label="toggle button"
+          labelText="Configure Checklists"
+          hideLabel 
+          onToggle={toggleChecklistConfig}
+        />
         { showChecklistConfig && (
           <ChecklistConfigSection handleOpen={handleOpen} handleChange={handleChange} />
         )}
@@ -105,21 +111,19 @@ const UserNavigation = () => {
           Reset
         </Button>
       </Modal>
-      <ConfigurationModal 
+      <ChecklistRulesModal 
         packageGroups={packageGroups} 
         packageItems={packageItems} 
-        openConfiguration={!!openModalMapping['packageItemsModal']} 
-        onRequestClose={() => handleClose('packageItemsModal')} 
+        openConfiguration={!!openModalMapping['checklistRulesModal']} 
+        onRequestClose={() => handleClose('checklistRulesModal')} 
         onRequestSubmit={submitChecklistRules}
         onPackageChange={onPackageChange}
       />
     </>
   );
 
-  function toggleChecklistConfig(e: MouseEvent<HTMLElement>) {
-    setShowChecklistConfig(!showChecklistConfig);
-
-    return e;
+  function toggleChecklistConfig(checked: boolean, _id: string, _e: ChangeEvent<HTMLInputElement>) {
+    setShowChecklistConfig(checked);
   }
 
   function handleOpen(key: string) {
@@ -142,7 +146,7 @@ const UserNavigation = () => {
     updateRules((prevRules: ChecklistRule[]) => (
       [data, ...prevRules.filter(r => JSON.stringify(r) !== JSON.stringify(data))]
     ));
-    handleClose('packageItemsModal');
+    handleClose('checklistRulesModal');
   }
 
 };

@@ -18,7 +18,7 @@ const ChecklistConfigSection = ({
 
   return (
     <Column className="mt-4">
-      <Button kind={'primary'} size="lg" onClick={() => handleOpen('packageItemsModal')}>
+      <Button kind={'primary'} size="lg" onClick={() => handleOpen('checklistRulesModal')}>
         Configure Package Items
       </Button>
       <p className='mt-4'>

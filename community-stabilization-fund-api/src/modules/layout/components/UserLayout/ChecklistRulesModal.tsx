@@ -7,7 +7,7 @@ import type { ChecklistRule } from '../../..';
 
 import { BasicSelect } from '../../../../components/BasicSelect';
 
-interface ConfigurationModalProps {
+interface ChecklistRulesModalProps {
   packageGroups: string[];
   packageItems: string[];
   openConfiguration: boolean;
@@ -16,14 +16,14 @@ interface ConfigurationModalProps {
   onPackageChange?: (data?: ChecklistRule['packageGroup']) => void;
 }
 
-const ConfigurationModal = ({
+const ChecklistRulesModal = ({
   packageGroups,
   packageItems,
   openConfiguration,
   onRequestClose,
   onRequestSubmit,
   onPackageChange,
-}: ConfigurationModalProps) => {
+}: ChecklistRulesModalProps) => {
   const [isDelayed, setIsDelayed] = useState(false);
   const {
     watch,
@@ -42,7 +42,7 @@ const ConfigurationModal = ({
   return (
     <Modal
       open={openConfiguration}
-      modalHeading='Configure Checklists'
+      modalHeading='Configure Checklists Rules'
       modalLabel='Admin functions'
       primaryButtonText='Submit'
       secondaryButtonText='Cancel'
@@ -50,7 +50,6 @@ const ConfigurationModal = ({
       onRequestClose={onRequestClose}
       onRequestSubmit={handleSubmit(onRequestSubmit)}
     >
-      <h5>Configure Package Rules</h5>
       <p className='mt-2'>
         In the package group
         <BasicSelect
@@ -143,4 +142,4 @@ const ConfigurationModal = ({
   );
 };
 
-export { ConfigurationModal };
+export { ChecklistRulesModal };
