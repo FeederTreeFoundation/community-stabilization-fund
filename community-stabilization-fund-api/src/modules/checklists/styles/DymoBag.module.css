@@ -3,7 +3,7 @@
     margin: 0;
   }
   .item_checklist_dymo_wrapper {
-    /* Turned of flex box to not break firefox print */
+    /* Turned off flex box to not break firefox print */
     display: block !important;
     flex-direction: none !important;
     width: 90%;
