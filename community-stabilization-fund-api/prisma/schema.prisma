@@ -64,6 +64,8 @@ model form_response {
   is_interested_in_membership Boolean
   live_in_pittsburgh_atlanta  Boolean
   live_in_southside_atlanta   Boolean
+  archived                    Boolean               @default(false)
+  archived_on                 DateTime?
   submitted_on                DateTime    @default(dbgenerated("NOW()")) @db.DateTime
   elderly_members             Int?
   youth_members               Int?
@@ -72,4 +74,32 @@ model form_response {
 
   @@index([feminine_health_care_id], map: "feminine_health_care_id")
   @@index([address_id], map: "address_id")
+}
+
+model package_group {
+  id         Int            @id @default(autoincrement())
+  title      String
+  items checklist_rule[]
+}
+
+model package_item {
+  id    Int                 @id @default(autoincrement())
+  name  String
+  packages checklist_rule[]
+}
+
+model checklist_rule {
+  quantity            String
+  household_members   String
+  bag_label_type      String
+  delayed_until       DateTime?
+  days_delayed_by     Int?
+  weeks_delayed_by    Int?
+  package_item        package_item     @relation(fields: [package_item_id], references: [id])
+  package_item_id     Int // relation scalar field (used in the `@relation` attribute above)
+  package_group       package_group @relation(fields: [package_group_id], references: [id])
+  package_group_id    Int // relation scalar field (used in the `@relation` attribute above)
+  submitted_on        DateTime    @default(dbgenerated("NOW()")) @db.DateTime
+
+  @@id([package_item_id, package_group_id])
 }
