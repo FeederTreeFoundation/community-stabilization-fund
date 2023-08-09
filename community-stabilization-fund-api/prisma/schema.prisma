@@ -78,7 +78,7 @@ model form_response {
 
 model package_group {
   id         Int            @id @default(autoincrement())
-  title      String
+  name      String
   items checklist_rule[]
 }
 
@@ -89,6 +89,7 @@ model package_item {
 }
 
 model checklist_rule {
+  id                  Int             @id @default(autoincrement())
   quantity            String
   household_members   String
   bag_label_type      String
@@ -101,5 +102,6 @@ model checklist_rule {
   package_group_id    Int // relation scalar field (used in the `@relation` attribute above)
   submitted_on        DateTime    @default(dbgenerated("NOW()")) @db.DateTime
 
-  @@id([package_item_id, package_group_id])
+  @@index([package_group_id], map: "package_group_id")
+  @@index([package_item_id], map: "package_item_id")
 }
