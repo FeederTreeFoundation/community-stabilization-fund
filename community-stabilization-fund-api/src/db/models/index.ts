@@ -48,3 +48,26 @@ export interface FormResponse {
   youth_members?: number|null;
 }
 
+export interface PackageGroup {
+  id: number;
+  name: string;
+}
+
+export interface PackageItem {
+  id: number;
+  name: string;
+}
+
+export interface ChecklistRule {
+  id?: number;
+  quantity: string;
+  household_members: string;
+  bag_label_type: string;
+  delayed_until?: Date | null;
+  days_delayed_by?: number | null;
+  weeks_delayed_by?: number | null;
+  package_item: PackageItem;
+  package_group: PackageGroup;
+  submitted_on?: Date|null;
+}
+
