@@ -48,6 +48,9 @@ To debug all other errors:
 
 ***READ MORE:*** [Prisma](https://www.prisma.io/docs/guides/migrate/developing-with-prisma-migrate/team-development)
 
+### Adding API Resources
+- [docs/adding_api_resources.md](docs/adding_api_resources.md)
+
 ### Additional Tools
 - [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 
