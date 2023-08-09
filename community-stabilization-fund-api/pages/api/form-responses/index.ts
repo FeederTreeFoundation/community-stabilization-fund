@@ -19,6 +19,13 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
     case 'POST':
       createFormResponse(body, res);
       break;
+    case 'PUT':
+      if(body.ids) {
+        const { ids, ...rest } = body;
+        updateBulkFormResponses(ids, rest, res);
+      } else {
+        res.status(400).end('Missing ids in request body');
+      }
     case 'DELETE':
       if (body.ids) {
         const { ids } = body;
@@ -101,6 +108,24 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
     return res
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
+  } catch (error) {
+    console.error({error});
+    throw error;
+  }
+};
+
+const updateBulkFormResponses = async (ids: string[], body: any, res: NextApiResponse) => {
+  const { feminine_health_care, address, ...rest } = body;
+
+  try {
+    const result = await prisma.form_response.updateMany({
+      where: { id: { in: ids.map(id => parseInt(id)) } },
+      data: {
+        ...rest,
+      }
+    });
+
+    return res.json(result);
   } catch (error) {
     console.error({error});
     throw error;
