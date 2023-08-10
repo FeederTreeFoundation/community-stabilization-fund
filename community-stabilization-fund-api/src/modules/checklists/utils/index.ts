@@ -106,8 +106,7 @@ export const createBagItems = (
   rules: ChecklistRuleDTO[],
   formResponse: FormResponseDTO
 ) => {
-  const { household_members, feminine_health_care, submitted_on } =
-    formResponse;
+  const { household_members, feminine_health_care } = formResponse;
   const feminine_members = feminine_health_care
     ? feminine_health_care.feminine_members
     : null;

@@ -8,19 +8,20 @@ import {
 } from 'carbon-components-react';
 import { useContext, useState } from 'react';
 
+import type { ChecklistRuleDTO } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
 import { ChecklistRulesModal } from './ChecklistRulesModal';
 import { SettingsModal } from './SettingsModal';
-import { ChecklistsRulesContext, type ChecklistRule } from '../../..';
+import { ChecklistsRulesContext } from '../../..';
 import { formResponseMock } from '../../../../mocks';
 // import FormResponseService from '../../../../services/form-response';
+import ChecklistRuleService from '../../../../services/checklist-rule';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
 
 
 const UserNavigation = () => {
-  
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
 
@@ -109,13 +110,19 @@ const UserNavigation = () => {
     updateBagLabelType(e.target.value);
   }
 
-  function submitChecklistRules(data?: ChecklistRule) {
+  function submitChecklistRules(data?: any) {
     if (typeof updateRules !== 'function') return;
 
-    updateRules((prevRules: ChecklistRule[]) => (
-      [data, ...prevRules.filter(r => JSON.stringify(r) !== JSON.stringify(data))]
-    ));
-    handleClose('checklistRulesModal');
+    ChecklistRuleService.createChecklistRule(data)
+      .then((resp) => {
+        console.log('resp', resp);
+        updateRules((prevRules: ChecklistRuleDTO[]) => (
+          [data, ...prevRules]
+        ));
+
+      })
+      .finally(() => handleClose('checklistRulesModal'))
+      .catch((err) => console.error('err', err));
   }
 
 };
