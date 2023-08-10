@@ -3,7 +3,7 @@ import { Checkbox, Modal } from 'carbon-components-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { ChecklistRule } from '../../..';
+import type { ChecklistRuleDTO } from '../../../../db';
 
 import { BasicSelect } from '../../../../components/BasicSelect';
 
@@ -12,8 +12,8 @@ interface ChecklistRulesModalProps {
   packageItems: string[];
   openConfiguration: boolean;
   onRequestClose: () => void;
-  onRequestSubmit: (data?: ChecklistRule) => void;
-  onPackageChange?: (data?: ChecklistRule['packageGroup']) => void;
+  onRequestSubmit: (data?: ChecklistRuleDTO) => void;
+  onPackageChange?: (data?: string) => void;
 }
 
 const ChecklistRulesModal = ({
@@ -30,9 +30,9 @@ const ChecklistRulesModal = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ChecklistRule>();
+  } = useForm<ChecklistRuleDTO>();
 
-  const packageGroup = watch('packageGroup');
+  const packageGroup = watch('package_group.name');
 
   useEffect(() => {
     if (typeof onPackageChange !== 'function') return;
@@ -51,26 +51,26 @@ const ChecklistRulesModal = ({
       onRequestSubmit={handleSubmit(onRequestSubmit)}
     >
       <p className='mt-2'>
-        {/* On label type
+        On label type
         <BasicSelect
           id='delay-dropdown'
           items={['Sheet Labels 4 x 2.5', 'Dymo Bag Label 2-5/16" x 4"']}
           noLabel
           defaultValue={0}
           defaultText='Select type of bag labels'
-          {...register('bagLabelType')}
-          invalid={!!errors.bagLabelType}
-          invalidText={errors.bagLabelType?.message}
-        /> */}
+          {...register('bag_label_type', { required: true })}
+          invalid={!!errors.bag_label_type}
+          invalidText={errors.bag_label_type?.message}
+        />
         In the package group
         <BasicSelect
           id='package-dropdown'
           items={packageGroups}
           noLabel
           defaultText='Choose a package'
-          {...register('packageGroup', { required: true })}
-          invalid={!!errors.packageGroup}
-          invalidText={errors.packageGroup?.message}
+          {...register('package_group.name', { required: true })}
+          invalid={!!errors.package_group?.name}
+          invalidText={errors.package_group?.name?.message}
         />
         there should be
         <BasicSelect
@@ -78,9 +78,9 @@ const ChecklistRulesModal = ({
           items={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
           noLabel
           defaultText='Choose an item quantity'
-          {...register('itemQuantity', { required: true })}
-          invalid={!!errors.itemQuantity}
-          invalidText={errors.itemQuantity?.message}
+          {...register('quantity', { required: true })}
+          invalid={!!errors.quantity}
+          invalidText={errors.quantity?.message}
         />
         per
         <BasicSelect
@@ -88,9 +88,9 @@ const ChecklistRulesModal = ({
           items={packageItems}
           noLabel
           defaultText='Choose an item'
-          {...register('packageItem', { required: true })}
-          invalid={!!errors.packageItem}
-          invalidText={errors.packageItem?.message}
+          {...register('package_item.name', { required: true })}
+          invalid={!!errors.package_item?.name}
+          invalidText={errors.package_item?.name?.message}
         />
         for
         <BasicSelect
@@ -98,9 +98,9 @@ const ChecklistRulesModal = ({
           items={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
           noLabel
           defaultText='Choose # of household members'
-          {...register('householdMembers', { required: true })}
-          invalid={!!errors.householdMembers}
-          invalidText={errors.householdMembers?.message}
+          {...register('household_members', { required: true })}
+          invalid={!!errors.household_members}
+          invalidText={errors.household_members?.message}
         />
         household members.
       </p>
@@ -118,9 +118,9 @@ const ChecklistRulesModal = ({
               noLabel
               defaultText='Choose # of days'
               defaultValue={0}
-              {...register('delayedBy.days')}
-              invalid={!!errors.delayedBy?.days}
-              invalidText={errors.delayedBy?.days?.message}
+              {...register('days_delayed_by')}
+              invalid={!!errors.days_delayed_by}
+              invalidText={errors.days_delayed_by?.message}
             />
             days and
             <BasicSelect
@@ -129,9 +129,9 @@ const ChecklistRulesModal = ({
               noLabel
               defaultValue={0}
               defaultText='Choose # of weeks'
-              {...register('delayedBy.weeks')}
-              invalid={!!errors.delayedBy?.weeks}
-              invalidText={errors.delayedBy?.weeks?.message}
+              {...register('weeks_delayed_by')}
+              invalid={!!errors.weeks_delayed_by}
+              invalidText={errors.weeks_delayed_by?.message}
             />
             weeks.
           </>

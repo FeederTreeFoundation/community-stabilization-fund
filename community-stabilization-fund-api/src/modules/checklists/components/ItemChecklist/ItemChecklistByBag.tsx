@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import type {FormResponse} from '../../../../db';
+import type {FormResponseDTO} from '../../../../db';
 
 import {formResponseMock} from '../../../../mocks';
 import { BAG_LABEL_TYPES } from '../../constants';
@@ -15,7 +15,7 @@ import { DymoBagLabels } from '../DymoLabels';
 import { BagLabels } from '../SheetLabels';
 
 export interface ItemChecklistByBagProps {
-  formResponse?: FormResponse;
+  formResponse?: FormResponseDTO;
   bagLabelType?: string;
 }
 

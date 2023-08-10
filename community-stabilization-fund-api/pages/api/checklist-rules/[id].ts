@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { ChecklistRule } from '../../../src/db';
+import type { ChecklistRuleDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient({
@@ -36,7 +36,7 @@ const getChecklistRuleById = async (id: string, res: NextApiResponse) => {
         package_group: true,
         package_item: true,
       },
-    }) as ChecklistRule;
+    }) as ChecklistRuleDTO;
 
     return res.json(checklist_rule ?? {});
   } catch (error) {
@@ -74,6 +74,6 @@ const deleteChecklistRuleById = async (id: string, res: NextApiResponse) => {
     console.error({error});
     throw error;
   }
-}
+};
 
 export default checklistRuleHandler;

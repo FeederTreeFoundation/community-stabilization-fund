@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 
-import type { ChecklistRule } from '../../db';
+import type { ChecklistRuleDTO } from '../../db';
 
 import { axiosInstance } from '../constants';
 
@@ -17,11 +17,11 @@ const ChecklistRuleService = {
 };
 
 async function getAllChecklistRules() {
-  return await axiosInstance.get<ChecklistRule[]>(`${baseUrl}`);
+  return await axiosInstance.get<ChecklistRuleDTO[]>(`${baseUrl}`);
 }
 
 async function createChecklistRule(data: any) {
-  return await axiosInstance.post<ChecklistRule>(`${baseUrl}`, data, {
+  return await axiosInstance.post<ChecklistRuleDTO>(`${baseUrl}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -29,7 +29,7 @@ async function createChecklistRule(data: any) {
 }
 
 async function updateChecklistRule(data: any) {
-  return await axiosInstance.put<ChecklistRule>(`${baseUrl}/${data.id}`, data, {
+  return await axiosInstance.put<ChecklistRuleDTO>(`${baseUrl}/${data.id}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -45,7 +45,7 @@ async function deleteChecklistRule(ids: number[]) {
 }
 
 async function deleteAllChecklistRules() {
-  return await axiosInstance.delete<ChecklistRule>(`${baseUrl}`);
+  return await axiosInstance.delete<ChecklistRuleDTO>(`${baseUrl}`);
 }
 
 export default ChecklistRuleService;

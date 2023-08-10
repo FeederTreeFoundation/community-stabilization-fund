@@ -1,19 +1,9 @@
 import { createContext } from 'react';
 
-export interface ChecklistRule {
-  householdMembers?: string;
-  itemQuantity?: string;
-  packageItem?: string;
-  packageGroup?: string;
-  delayedBy?: {
-    days?: number;
-    weeks?: number;
-  };
-  bagLabelType?: string;
-}
+import type { ChecklistRuleDTO } from '../../../db';
 
 interface ChecklistsRulesContextProps {
-  rules: ChecklistRule[];
+  rules: ChecklistRuleDTO[];
   updateRules?: Function;
   bagLabelType?: string;
   updateBagLabelType?: Function;

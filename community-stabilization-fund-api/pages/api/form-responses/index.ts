@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { FormResponse } from '../../../src/db';
+import type { FormResponseDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { executeQuery, queries } from '../../../src/db';
@@ -48,7 +48,7 @@ const getAllFormResponses = async (res: NextApiResponse) => {
         feminine_health_care: true,
         address: true,
       },
-    })) as FormResponse[];
+    })) as FormResponseDTO[];
 
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
