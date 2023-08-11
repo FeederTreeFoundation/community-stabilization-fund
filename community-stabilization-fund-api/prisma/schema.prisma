@@ -17,9 +17,21 @@ model api_key {
 }
 
 model api_user {
-  id      Int       @id @default(autoincrement())
-  name    String?   @db.VarChar(20)
-  api_key api_key[]
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(20)
+  api_key         api_key[]
+  organization_id Int?
+  organization    organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "api_user_ibfk_1")
+
+  @@index([organization_id], map: "organization_id")
+}
+
+model organization {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(50)
+  short_name     String?  @db.VarChar(10)
+  bag_label_type String?  @db.VarChar(40)
+  api_users      api_user[]
 }
 
 model feminine_health_care {

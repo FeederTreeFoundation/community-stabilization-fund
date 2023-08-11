@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { User } from '../../../src/db';
+import type { UserDTO } from '../../../src/db';
 
 import UserService from '../../../src/services/user';
 
@@ -25,21 +25,29 @@ const AdminPage = () => {
   const { user, error, isLoading} = useUser();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [apiUser, setApiUser] = useState<User>();
+  const [apiUser, setApiUser] = useState<UserDTO>();
+  const [apiError, setApiError] = useState<Error | undefined>(error);
   
   const id = router.query.id;
   const apiUserId = localStorage.getItem('api_user');
 
   useEffect(() => {
-    async function getApiUser (id?: string) {
+    async function getApiUser(id?: string) {
       if (!id || typeof id !== 'string') return;
-      const apiUser = await UserService.getById(id);
-      
-      if (apiUser?.data) setApiUser(apiUser?.data[0]);
+
+      try {
+        const results = await UserService.getById(id);
+        
+        if (results?.data) setApiUser(results.data);
+      } catch (e) {
+        setApiError(e as Error);
+      }
     }
   
     function checkUserData() {
-      if(apiUserId === id) getApiUser(apiUserId);
+      if(`${apiUserId}` === `${id}`) {
+        getApiUser(apiUserId ?? '');
+      }
     }
 
     checkUserData();
@@ -50,7 +58,7 @@ const AdminPage = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    const updatedApiUser = { ...apiUser, name: data.username } as User;
+    const updatedApiUser = { ...apiUser, name: data.username } as UserDTO;
     UserService.update(`${apiUser?.id}`, updatedApiUser).then((_) => {
       
       setApiUser(updatedApiUser);
@@ -60,9 +68,11 @@ const AdminPage = () => {
 
   const handleEdit = () => setIsEditing(!isEditing);
 
-  if(isLoading) return;
+  if(isLoading) return <>Loading...</>;
 
-  if(error) return <>Error: {error.message ?? 'Unknown error'}</>;
+  if(apiError || error) return (
+    <div className={`${styles.mt_6}`}>Error: {apiError?.message ?? error?.message ?? 'Unknown error'}</div>
+  );
 
   return (
     <div className={`${styles.container} ${styles.mt_6}`}>

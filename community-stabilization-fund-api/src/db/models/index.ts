@@ -1,6 +1,14 @@
 export interface UserDTO {
   id: number;
   name: string;
+  organization_id?: number|null;
+}
+
+export interface OrganizationDTO {
+  id: number;
+  name: string;
+  short_name: string;
+  users: UserDTO[];
 }
 
 export interface FeminineHealthResponseDTO {
@@ -17,7 +25,7 @@ export interface AddressDTO {
   state: string;
   zipcode: string;
   line1: string;
-  line2: string|null;
+  line2?: string|null;
 }
 
 export interface FormResponseDTO {

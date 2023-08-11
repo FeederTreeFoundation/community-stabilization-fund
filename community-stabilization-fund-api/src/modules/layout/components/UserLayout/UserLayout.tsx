@@ -44,6 +44,10 @@ const UserLayout = ({ children }: UserLayoutProps) => {
     });
   }, []);
 
+  if (error) {
+    alert(error);
+  }
+
   return (
     <div className='container'>
       <ChecklistsRulesContext.Provider value={ctxValue}>

@@ -1,4 +1,4 @@
-import type { User } from "../../../src/db";
+import type { UserDTO } from "../../../src/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { executeQuery } from "../../../src/db";
@@ -11,7 +11,7 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
       getAllUsers(res);
       break;
     case 'POST':
-      createUser(body as User, res);
+      createUser(body as UserDTO, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
@@ -24,14 +24,14 @@ const getAllUsers = async (res: NextApiResponse) => {
   const sql =  'SELECT * FROM users';
 
   try {
-    const users: User[] = await executeQuery({ sql });
+    const users: UserDTO[] = await executeQuery({ sql });
     return res.json([...users]);
   } catch (error) {
     return res.json({error});
   }
 };
 
-const createUser = async (body: User, res: NextApiResponse) => {
+const createUser = async (body: UserDTO, res: NextApiResponse) => {
   const sql = 'INSERT INTO users (name) VALUES (?);';
 
   try {

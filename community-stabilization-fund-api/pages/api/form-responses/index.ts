@@ -26,6 +26,7 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       } else {
         res.status(400).end('Missing ids in request body');
       }
+      break;
     case 'DELETE':
       if (body.ids) {
         const { ids } = body;

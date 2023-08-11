@@ -109,6 +109,7 @@ const deleteChecklistRules = async (ids: string[], res: NextApiResponse) => {
 const deleteAllChecklistRules = async (res: NextApiResponse) => {
   const sql = queries.truncateTableSql('checklist_rule');
   try {
+    await executeQuery({ sql });
     return res.status(201).send('Successfully reset table checklist_rule');
   } catch (error) {
     console.error({error});

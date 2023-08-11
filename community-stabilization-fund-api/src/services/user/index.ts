@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 import Router from 'next/router';
 
-import type { User } from '../../db';
+import type { UserDTO } from '../../db';
 
 import { axiosInstance } from '../constants';
 
@@ -39,11 +39,11 @@ async function logout() {
 // }
 
 async function getAll() {
-  return await axiosInstance.get<User[]>(`${publicRuntimeConfig?.apiUrl}/users`);
+  return await axiosInstance.get<UserDTO[]>(`${publicRuntimeConfig?.apiUrl}/users`);
 }
 
 async function getById(id: string) {
-  return await axiosInstance.get<User[]>(
+  return await axiosInstance.get<UserDTO>(
     `${publicRuntimeConfig?.apiUrl}/users/${id}`
   );
 }
