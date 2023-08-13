@@ -9,18 +9,18 @@ const { publicRuntimeConfig } = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/checklist-rules`;
 
 const ChecklistRuleService = {
-  getAllChecklistRules,
-  createChecklistRule,
-  updateChecklistRule,
-  deleteAllChecklistRules,
-  deleteChecklistRule,
+  getAll,
+  create,
+  update,
+  deleteAll,
+  delete: _delete,
 };
 
-async function getAllChecklistRules() {
+async function getAll() {
   return await axiosInstance.get<ChecklistRuleDTO[]>(`${baseUrl}`);
 }
 
-async function createChecklistRule(data: any) {
+async function create(data: any) {
   return await axiosInstance.post<ChecklistRuleDTO>(`${baseUrl}`, data, {
     headers: {
       'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ async function createChecklistRule(data: any) {
   });
 }
 
-async function updateChecklistRule(data: any) {
+async function update(data: any) {
   return await axiosInstance.put<ChecklistRuleDTO>(`${baseUrl}/${data.id}`, data, {
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ async function updateChecklistRule(data: any) {
   });
 }
 
-async function deleteChecklistRule(ids: number[]) {
+async function _delete(ids: number[]) {
   return await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
       ids: ids,
@@ -44,7 +44,7 @@ async function deleteChecklistRule(ids: number[]) {
   });
 }
 
-async function deleteAllChecklistRules() {
+async function deleteAll() {
   return await axiosInstance.delete<ChecklistRuleDTO>(`${baseUrl}`);
 }
 

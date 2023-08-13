@@ -1,7 +1,13 @@
+import { PrismaClient } from '@prisma/client';
+
 import type { UserDTO } from "../../../src/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { executeQuery } from "../../../src/db";
+
+const prisma = new PrismaClient({
+  datasources: { db: { url: process.env.DATABASE_URL } },
+});
 
 const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
@@ -12,6 +18,14 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case 'POST':
       createUser(body as UserDTO, res);
+      break;
+    case 'DELETE':
+      if (body.ids) {
+        const { ids } = body;
+        bulkDeleteUsers(ids, res);
+      } else {
+        res.status(400).end('Missing ids in request body');
+      }
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
@@ -39,6 +53,21 @@ const createUser = async (body: UserDTO, res: NextApiResponse) => {
     return results && res.status(201).setHeader('Location', `/users/${body.id}`);
   } catch (error) {
     return res.json({error});
+  }
+};
+
+const bulkDeleteUsers = async (ids: string[], res: NextApiResponse) => {
+  try {
+    const results = await prisma.api_user.deleteMany({
+      where: {
+        id: { in: ids.map(id => parseInt(id)) }
+      }
+    });
+
+    return res.json({ results });
+  } catch (error) {
+    console.error({error});
+    throw error;
   }
 };
 

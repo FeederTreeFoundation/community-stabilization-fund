@@ -14,7 +14,9 @@ const UserService = {
   logout,
   getAll,
   getById,
+  create,
   update,
+  delete: _delete,
 };
 
 async function login(apiUser: string, token: string) {
@@ -33,10 +35,9 @@ async function logout() {
   Router.push('/admin/login');
 }
 
-// WIP
-// async function createUser(user: string) {
-//     return axios.post(`${baseUrl}`, user);
-// }
+async function create(body: any) {
+  return await axiosInstance.post<UserDTO>(`${baseUrl}/users`, body);
+}
 
 async function getAll() {
   return await axiosInstance.get<UserDTO[]>(`${publicRuntimeConfig?.apiUrl}/users`);
@@ -48,13 +49,13 @@ async function getById(id: string) {
   );
 }
 
-function update(id: string, params: any) {
-  return axiosInstance.put(`${baseUrl}/${id}`, params);
+function update(id: string, body: any) {
+  return axiosInstance.put<UserDTO>(`${baseUrl}/${id}`, body);
 }
 
 // // prefixed with underscored because delete is a reserved word in javascript
-// function _delete(id: string) {
-//     return axios.delete(`${baseUrl}/${id}`);
-// }
+function _delete(id: string) {
+  return axiosInstance.delete<UserDTO>(`${baseUrl}/${id}`);
+}
 
 export default UserService;

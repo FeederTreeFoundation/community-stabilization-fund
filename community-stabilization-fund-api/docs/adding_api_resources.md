@@ -35,36 +35,37 @@ model checklist_rule {
 2. Update models of the database objects in `./src/db/models/`
 
 ```ts
-export interface PackageGroup {
+export interface PackageGroupDTO {
   id: number;
   name: string;
 }
 
-export interface PackageItem {
+export interface PackageItemDTO {
   id: number;
   name: string;
 }
 
-export interface ChecklistRule {
+export interface ChecklistRuleDTO {
+  id?: number;
   quantity: string;
   household_members: string;
   bag_label_type: string;
-  delayed_until: string;
-  days_delayed_by: string;
-  weeks_delayed_by: string;
-  package_item: PackageItem;
-  package_group: PackageGroup;
+  delayed_until?: Date | null;
+  days_delayed_by?: number | null;
+  weeks_delayed_by?: number | null;
+  package_item: PackageItemDTO;
+  package_group: PackageGroupDTO;
   submitted_on?: Date|null;
 }
 ```
 
 3. Add 'CRUD' resources to the api in `./pages/api/`
 
-index.ts
+../index.ts
 ```ts
 import { PrismaClient } from '@prisma/client';
 
-import type { ChecklistRule } from '../../../src/db';
+import type { ChecklistRuleDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { executeQuery, queries } from '../../../src/db';
@@ -105,7 +106,7 @@ const getAllChecklistRules = async (res: NextApiResponse) => {
         package_group: true,
         package_item: true,
       },
-    })) as ChecklistRule[];
+    })) as ChecklistRuleDTO[];
 
     return res.json([...(checklist_rules ?? [])]);
   } catch (error) {
@@ -117,30 +118,37 @@ const getAllChecklistRules = async (res: NextApiResponse) => {
 const createChecklistRule = async (body: any, res: NextApiResponse) => {
   const { package_group, package_item, ...rest } = body;
 
+  const packageGroup = await prisma.package_group.findFirst({
+    where: { name: { contains: package_group.name }},
+  });
+  
+  const packageItem = await prisma.package_item.findFirst({
+    where: { name: { contains: package_item.name }},
+  });
+
   const checklistRule = {
     ...rest,
-    quantity: Number(rest.quantity),
-    delayed: Boolean(rest.delayed),
-    days_delayed_by: Number(rest.days_delayed_by),
-    weeks_delayed_by: Number(rest.weeks_delayed_by),
-    delayed_until: new Date(rest.delayed_until),
+    quantity: rest.quantity,
+    days_delayed_by: rest.days_delayed_by ? Number(rest.days_delayed_by) : null,
+    weeks_delayed_by: rest.weeks_delayed_by ? Number(rest.weeks_delayed_by) : null,
+    delayed_until: rest.delayed_until ? new Date(rest.delayed_until) : null,
     package_group: {
       connectOrCreate: {
-        where: { name: package_group.name },
+        where: { id: packageGroup?.id ?? 0 },
         create: { name: package_group.name },
       }
     },
     package_item: {
       connectOrCreate: {
-        where: { name: package_item.name },
+        where: { id: packageItem?.id ?? 0 },
         create: { name: package_item.name },
       }
     },
   };
-
+  
   try {
     const result = await prisma.checklist_rule.create({ data: checklistRule });
-
+  
     return res
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
@@ -152,7 +160,7 @@ const createChecklistRule = async (body: any, res: NextApiResponse) => {
 
 const deleteChecklistRules = async (ids: string[], res: NextApiResponse) => {
   try {
-    const result = await prisma.checklist_rule.deleteMany({
+    await prisma.checklist_rule.deleteMany({
       where: { id: { in: ids.map(id => parseInt(id)) } },
     });
 
@@ -177,11 +185,11 @@ const deleteAllChecklistRules = async (res: NextApiResponse) => {
 export default checklistRuleHandler;
 ```
 
-[id].ts
+../[id].ts
 ```ts
 import { PrismaClient } from '@prisma/client';
 
-import type { ChecklistRule } from '../../../src/db';
+import type { ChecklistRuleDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient({
@@ -217,7 +225,7 @@ const getChecklistRuleById = async (id: string, res: NextApiResponse) => {
         package_group: true,
         package_item: true,
       },
-    }) as ChecklistRule;
+    }) as ChecklistRuleDTO;
 
     return res.json(checklist_rule ?? {});
   } catch (error) {
@@ -255,9 +263,9 @@ const deleteChecklistRuleById = async (id: string, res: NextApiResponse) => {
     console.error({error});
     throw error;
   }
-}
+};
 
-export default checklistRuleHandler
+export default checklistRuleHandler;
 ```
 
 4. Update services with the request(s) to the api in `./src/services/`
@@ -265,7 +273,7 @@ export default checklistRuleHandler
 ```ts
 import getConfig from 'next/config';
 
-import type { ChecklistRule } from '../../db';
+import type { ChecklistRuleDTO } from '../../db';
 
 import { axiosInstance } from '../constants';
 
@@ -274,34 +282,34 @@ const { publicRuntimeConfig } = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/checklist-rules`;
 
 const ChecklistRuleService = {
-  getAllChecklistRules,
-  createChecklistRule,
-  updateChecklistRule,
-  deleteAllChecklistRules,
-  deleteChecklistRule,
+  getAll,
+  create,
+  update,
+  deleteAll,
+  delete: _delete,
 };
 
-async function getAllChecklistRules() {
-  return await axiosInstance.get<ChecklistRule[]>(`${baseUrl}`);
+async function getAll() {
+  return await axiosInstance.get<ChecklistRuleDTO[]>(`${baseUrl}`);
 }
 
-async function createChecklistRule(data: any) {
-  return await axiosInstance.post<ChecklistRule>(`${baseUrl}`, data, {
+async function create(data: any) {
+  return await axiosInstance.post<ChecklistRuleDTO>(`${baseUrl}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
   });
 }
 
-async function updateChecklistRule(data: any) {
-  return await axiosInstance.put<ChecklistRule>(`${baseUrl}/${data.id}`, data, {
+async function update(data: any) {
+  return await axiosInstance.put<ChecklistRuleDTO>(`${baseUrl}/${data.id}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
   });
 }
 
-async function deleteChecklistRule(ids: number[]) {
+async function _delete(ids: number[]) {
   return await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
       ids: ids,
@@ -309,8 +317,9 @@ async function deleteChecklistRule(ids: number[]) {
   });
 }
 
-async function deleteAllChecklistRules() {
-  return await axiosInstance.delete<ChecklistRule>(`${baseUrl}`);
+async function deleteAll() {
+  return await axiosInstance.delete<ChecklistRuleDTO>(`${baseUrl}`);
 }
 
-export default ChecklistRuleService;```
+export default ChecklistRuleService;
+```

@@ -4,8 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import type { UserDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { executeQuery, queries } from '../../../src/db';
-
 const prisma = new PrismaClient({
   datasources: { db: { url: process.env.DATABASE_URL } },
 });
@@ -53,10 +51,14 @@ const getUserById = async (id: string, res: NextApiResponse) => {
 };
 
 const updateUserById = async (body: any, res: NextApiResponse) => {
-  const sql = queries.makeUpdateSql('api_user', body, `id=${body.id}`);
-
   try {
-    const result = await executeQuery({sql});
+    const result = await prisma.api_user.update({
+      where: { id: parseInt(body.id) },
+      data: {
+        ...body,
+      },
+    });
+
     if(!result) {
       return res.status(404).json({
         status: 404,
@@ -71,10 +73,11 @@ const updateUserById = async (body: any, res: NextApiResponse) => {
 };
 
 const deleteUserById = async (id: string, res: NextApiResponse) => {
-  const sql = queries.makeDeleteSql('api_user');
-
   try {
-    const results = await executeQuery({ sql, values: [id] });
+    const results = await prisma.api_user.delete({
+      where: { id: parseInt(id) },
+    });
+
     if (!results) {
       return res.status(404).json({
         status: 404,
@@ -84,7 +87,7 @@ const deleteUserById = async (id: string, res: NextApiResponse) => {
   
     return res.send('Successfully deleted user with id: ' + id);
   } catch (error) {
-    return res.json({error});
+    return res.status(400).json({error});
   }
 };
 

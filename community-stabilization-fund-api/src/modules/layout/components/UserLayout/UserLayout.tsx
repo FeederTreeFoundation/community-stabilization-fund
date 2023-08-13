@@ -33,7 +33,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
   };
 
   useEffect(() => {
-    ChecklistRuleService.getAllChecklistRules().then(res => {
+    ChecklistRuleService.getAll().then(res => {
       const { error } = res.data as any;
       if (error) {
         console.error(error);

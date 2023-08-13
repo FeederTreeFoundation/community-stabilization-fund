@@ -113,7 +113,7 @@ const UserNavigation = () => {
   function submitChecklistRules(data?: any) {
     if (typeof updateRules !== 'function') return;
 
-    ChecklistRuleService.createChecklistRule(data)
+    ChecklistRuleService.create(data)
       .then((resp) => {
         console.log('resp', resp);
         updateRules((prevRules: ChecklistRuleDTO[]) => (
