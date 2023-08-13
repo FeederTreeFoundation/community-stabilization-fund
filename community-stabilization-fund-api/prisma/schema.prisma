@@ -17,9 +17,21 @@ model api_key {
 }
 
 model api_user {
-  id      Int       @id @default(autoincrement())
-  name    String?   @db.VarChar(20)
-  api_key api_key[]
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(20)
+  api_key         api_key[]
+  organization_id Int?
+  organization    organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "api_user_ibfk_1")
+
+  @@index([organization_id], map: "organization_id")
+}
+
+model organization {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(50)
+  short_name     String?  @db.VarChar(10)
+  bag_label_type String?  @db.VarChar(40)
+  api_users      api_user[]
 }
 
 model feminine_health_care {
@@ -64,6 +76,8 @@ model form_response {
   is_interested_in_membership Boolean
   live_in_pittsburgh_atlanta  Boolean
   live_in_southside_atlanta   Boolean
+  archived                    Boolean               @default(false)
+  archived_on                 DateTime?
   submitted_on                DateTime    @default(dbgenerated("NOW()")) @db.DateTime
   elderly_members             Int?
   youth_members               Int?
@@ -72,4 +86,34 @@ model form_response {
 
   @@index([feminine_health_care_id], map: "feminine_health_care_id")
   @@index([address_id], map: "address_id")
+}
+
+model package_group {
+  id         Int            @id @default(autoincrement())
+  name      String
+  items checklist_rule[]
+}
+
+model package_item {
+  id    Int                 @id @default(autoincrement())
+  name  String
+  packages checklist_rule[]
+}
+
+model checklist_rule {
+  id                  Int             @id @default(autoincrement())
+  quantity            String
+  household_members   String
+  bag_label_type      String
+  delayed_until       DateTime?
+  days_delayed_by     Int?
+  weeks_delayed_by    Int?
+  package_item        package_item     @relation(fields: [package_item_id], references: [id])
+  package_item_id     Int // relation scalar field (used in the `@relation` attribute above)
+  package_group       package_group @relation(fields: [package_group_id], references: [id])
+  package_group_id    Int // relation scalar field (used in the `@relation` attribute above)
+  submitted_on        DateTime    @default(dbgenerated("NOW()")) @db.DateTime
+
+  @@index([package_group_id], map: "package_group_id")
+  @@index([package_item_id], map: "package_item_id")
 }

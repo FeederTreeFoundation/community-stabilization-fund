@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import type { FormResponse } from '../../../../db';
+import type { FormResponseDTO } from '../../../../db';
 import type { BagItemsMap } from '../../types';
 
 import { ItemChecklistTableColumn } from './ItemChecklistTableColumn';
@@ -17,7 +17,7 @@ import {
 import styles from '../../styles/checklists.module.css';
 
 export interface ItemChecklistByRecipientProps {
-  formResponse?: FormResponse;
+  formResponse?: FormResponseDTO;
 }
 
 const ItemChecklistByRecipient = ({

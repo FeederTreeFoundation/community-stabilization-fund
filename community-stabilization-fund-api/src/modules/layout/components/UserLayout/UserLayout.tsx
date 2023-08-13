@@ -5,13 +5,14 @@ import {
   // HeaderMenuItem,
   Theme,
 } from '@carbon/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import type { ChecklistRule} from '../../../checklists';
+import type { ChecklistRuleDTO } from '../../../../db';
 import type { ReactNode} from 'react';
 
 import { HeaderItem } from './HeaderItem';
 import { UserNavigation } from './UserNavigation';
+import ChecklistRuleService from '../../../../services/checklist-rule';
 import { ROUTES } from '../../../../services/constants';
 import { ChecklistsRulesContext } from '../../../checklists';
 
@@ -21,15 +22,31 @@ interface UserLayoutProps {
 
 const UserLayout = ({ children }: UserLayoutProps) => {
   const [selectedPage, setSelectedPage] = useState('');
-  const [checklistRules, setChecklistRules] = useState<ChecklistRule[]>([]);
+  const [checklistRules, setChecklistRules] = useState<ChecklistRuleDTO[]>([]);
   const [currentBagLabelType, setCurrentBagLabelType] = useState<string>('');
-
+  const [error, setError] = useState<Error>();
   const ctxValue = { 
     rules: checklistRules, 
     bagLabelType: currentBagLabelType,
     updateRules: setChecklistRules, 
     updateBagLabelType: setCurrentBagLabelType,
   };
+
+  useEffect(() => {
+    ChecklistRuleService.getAll().then(res => {
+      const { error } = res.data as any;
+      if (error) {
+        console.error(error);
+        setError(error);
+      } else {
+        setChecklistRules(res.data as ChecklistRuleDTO[]);
+      }
+    });
+  }, []);
+
+  if (error) {
+    alert(error);
+  }
 
   return (
     <div className='container'>

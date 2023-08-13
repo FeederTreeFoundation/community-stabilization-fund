@@ -1,42 +1,41 @@
 import getConfig from 'next/config';
 
-import type { FormResponse } from '../../db';
+import type { FormResponseDTO } from '../../db';
 
 import { axiosInstance } from '../constants';
-
 
 const { publicRuntimeConfig } = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/form-responses`;
 
 const FormResponseService = {
-  getAllFormResponses,
-  createFormResponse,
-  deleteAllFormResponses,
-  deleteFormResponse,
+  getAll,
+  create,
+  deleteAll,
+  delete: _delete,
 };
 
-async function getAllFormResponses() {
-  return await axiosInstance.get<FormResponse[]>(`${baseUrl}`);
+async function getAll() {
+  return await axiosInstance.get<FormResponseDTO[]>(`${baseUrl}`);
 }
 
-async function createFormResponse(data: any) {
-  return await axiosInstance.post<FormResponse>(`${baseUrl}`, data, {
+async function create(data: any) {
+  return await axiosInstance.post<FormResponseDTO>(`${baseUrl}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
   });
 }
 
-async function deleteFormResponse(ids: number[]) {
-  return await axiosInstance.delete<object>(`${baseUrl}`, {
+async function _delete(ids: string[]) {
+  return await axiosInstance.delete<FormResponseDTO>(`${baseUrl}`, {
     data: {
       ids: ids,
     },
   });
 }
 
-async function deleteAllFormResponses() {
-  return await axiosInstance.delete<FormResponse>(`${baseUrl}`);
+async function deleteAll() {
+  return await axiosInstance.delete<FormResponseDTO>(`${baseUrl}`);
 }
 
 export default FormResponseService;

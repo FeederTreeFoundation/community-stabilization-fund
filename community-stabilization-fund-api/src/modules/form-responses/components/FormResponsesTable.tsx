@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import type { FormResponse } from '../../../db';
+import type { FormResponseDTO } from '../../../db';
 import type {
   DataTableHeader,
   DataTableRow,
@@ -22,7 +22,7 @@ import { getAddress, mapBooleanToResponse } from '../utils';
 import styles from '../styles/form-responses.module.css';
 
 interface FormResponsesTableProps {
-  formResponses?: FormResponse[];
+  formResponses?: FormResponseDTO[];
   handleDelete?: Function;
 }
 
@@ -30,7 +30,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   formResponses = [],
 }) => {
   const [filteredFormResponses, setFilteredFormResponses] = useState<
-    FormResponse[]
+    FormResponseDTO[]
   >([]);
   const [filterState, setFilterState] = useState<string[]>([]);
 
@@ -46,16 +46,16 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     }
   };
 
-  const handleDelete = (rows: FormResponse[]) => {
-    const ids = rows.map((row) => row.id);
-    FormResponseService.deleteFormResponse(ids);
+  const handleDelete = (rows: FormResponseDTO[]) => {
+    const ids = rows.map((row) => `${row.id}`);
+    FormResponseService.delete(ids);
     const newFormResponses = formResponsesRef.current?.filter(
-      (f: FormResponse) => !ids.includes(f.id)
+      (f: FormResponseDTO) => !ids.includes(`${f.id}`)
     );
     formResponsesRef.current = newFormResponses;
     const newFormRespIds = newFormResponses.map((f) => f.id);
     setFilteredFormResponses((prevFormResponses) =>
-      prevFormResponses.filter((f: FormResponse) =>
+      prevFormResponses.filter((f: FormResponseDTO) =>
         newFormRespIds.includes(f.id)
       )
     );
@@ -67,7 +67,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
       header,
     }));
 
-  const createRows = (formResponses: FormResponse[]) =>
+  const createRows = (formResponses: FormResponseDTO[]) =>
     formResponses.map((resp) => {
       const feminine_health_care = !!resp.feminine_health_care;
       const address = getAddress(resp);
@@ -85,12 +85,12 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     FORM_RESPONSE_QUESTIONS
   ) as DataTableHeader<string>[];
 
-  const filteredRows = (filterState: string[]): FormResponse[] => {
+  const filteredRows = (filterState: string[]): FormResponseDTO[] => {
     if (filterState.length === 0) {
       return formResponsesRef.current;
     } else {
       return formResponsesRef.current.filter((f) =>
-        filterState.every((key) => f[key as keyof FormResponse] == true)
+        filterState.every((key) => f[key as keyof FormResponseDTO] == true)
       );
     }
   };

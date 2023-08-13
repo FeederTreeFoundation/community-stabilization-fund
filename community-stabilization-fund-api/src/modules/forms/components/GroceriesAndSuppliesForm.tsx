@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { isValidPhoneNumber } from "react-phone-number-input";
 
-import type { FormResponse } from '../../../db/models';
+import type { FormResponseDTO } from '../../../db/models';
 
 import FormResponseService from '../../../services/form-response';
 
@@ -20,7 +20,7 @@ import { COUNTRY_LIST } from '../constants';
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
 
-type FormData = FormResponse;
+type FormData = FormResponseDTO;
 
 const GroceriesAndSuppliesForm = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const GroceriesAndSuppliesForm = () => {
   const packagesToReceive = watch('packages_to_receive') ? watch('packages_to_receive') as string[] : [];
 
   const onSubmit = handleSubmit((data) => {
-    FormResponseService.createFormResponse(data).then(() => {
+    FormResponseService.create(data).then(() => {
       setIsSubmitted(!isSubmitted);
     });
   });

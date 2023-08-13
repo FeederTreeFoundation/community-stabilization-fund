@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { FormResponse } from '../../../src/db';
+import type { FormResponseDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { executeQuery, queries } from '../../../src/db';
@@ -19,6 +19,14 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
     case 'POST':
       createFormResponse(body, res);
       break;
+    case 'PUT':
+      if(body.ids) {
+        const { ids, ...rest } = body;
+        updateBulkFormResponses(ids, rest, res);
+      } else {
+        res.status(400).end('Missing ids in request body');
+      }
+      break;
     case 'DELETE':
       if (body.ids) {
         const { ids } = body;
@@ -28,7 +36,7 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       }
       break;
     default:
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
@@ -41,7 +49,7 @@ const getAllFormResponses = async (res: NextApiResponse) => {
         feminine_health_care: true,
         address: true,
       },
-    })) as FormResponse[];
+    })) as FormResponseDTO[];
 
     return res.json([...(form_responses ?? [])]);
   } catch (error) {
@@ -101,6 +109,24 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
     return res
       .status(201)
       .send('Successfully created form response with id: ' + result.id);
+  } catch (error) {
+    console.error({error});
+    throw error;
+  }
+};
+
+const updateBulkFormResponses = async (ids: string[], body: any, res: NextApiResponse) => {
+  const { feminine_health_care, address, ...rest } = body;
+
+  try {
+    const result = await prisma.form_response.updateMany({
+      where: { id: { in: ids.map(id => parseInt(id)) } },
+      data: {
+        ...rest,
+      }
+    });
+
+    return res.json(result);
   } catch (error) {
     console.error({error});
     throw error;

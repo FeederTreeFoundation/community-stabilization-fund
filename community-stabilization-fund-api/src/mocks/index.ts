@@ -1,6 +1,6 @@
-import type { FormResponse } from "../db";
+import type { FormResponseDTO } from "../db";
 
-export const formResponseMock: FormResponse =  {
+export const formResponseMock: FormResponseDTO =  {
   is_joining: false,
   is_local: false,
   id: 1234,

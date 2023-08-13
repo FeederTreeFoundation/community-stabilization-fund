@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 
-import type { FormResponse } from '../../src/db';
+import type { FormResponseDTO } from '../../src/db';
 import type { NextPage } from 'next';
 
 import {
@@ -10,13 +10,13 @@ import {
 import FormResponseService from '../../src/services/form-response';
 
 const ChecklistsPage: NextPage = () => {
-  const [formResponses, setFormResponses] = useState<FormResponse[]>([]);
+  const [formResponses, setFormResponses] = useState<FormResponseDTO[]>([]);
   const [error, setError] = useState<Error>();
   const { bagLabelType } = useContext(ChecklistsRulesContext);
 
   useEffect(() => {
     const getResponses = async () => {
-      const res = await FormResponseService.getAllFormResponses();
+      const res = await FormResponseService.getAll();
       const { error } = res.data as any;
 
       if (error) {
