@@ -16,7 +16,7 @@ const ChecklistsPage: NextPage = () => {
 
   useEffect(() => {
     const getResponses = async () => {
-      const res = await FormResponseService.getAllFormResponses();
+      const res = await FormResponseService.getAll();
       const { error } = res.data as any;
 
       if (error) {

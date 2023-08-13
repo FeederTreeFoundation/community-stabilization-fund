@@ -1,4 +1,4 @@
-import type { FormResponse } from "../../../db";
+import type { FormResponseDTO } from "../../../db";
 
 export const mapBooleanToResponse = (response: any, question: string) => {
   const key = question.toLowerCase().replaceAll(" ", "_");
@@ -9,7 +9,7 @@ export const mapBooleanToResponse = (response: any, question: string) => {
   }
 };
 
-export const getAddress = ({address}: FormResponse) => {
+export const getAddress = ({address}: FormResponseDTO) => {
   if(!address) return '';
   const { line1 = '', line2, city, state, country, zipcode } = address;
   if( !line1 && !city && !state && !country && !zipcode ) return '';
