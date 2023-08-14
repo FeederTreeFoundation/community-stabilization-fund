@@ -7,8 +7,9 @@ export interface UserDTO {
 export interface OrganizationDTO {
   id: number;
   name: string;
-  short_name: string;
-  users: UserDTO[];
+  short_name?: string;
+  bag_label_type?: string;
+  api_users: UserDTO[];
 }
 
 export interface FeminineHealthResponseDTO {

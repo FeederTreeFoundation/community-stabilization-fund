@@ -239,7 +239,7 @@ const updateChecklistRuleById = async (body: any, res: NextApiResponse) => {
 
   try {
     const result = await prisma.form_response.update({
-      where: { id: id },
+      where: { id: parseInt(id) },
       data: {
         ...rest,
       }
