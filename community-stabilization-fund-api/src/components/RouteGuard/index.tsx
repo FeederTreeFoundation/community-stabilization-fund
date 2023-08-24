@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 
 import { useStorage } from '../../hooks';
-import { isEmpty } from '../../utils';
+import { getRoles, isEmpty } from '../../utils';
 
 interface RouteGuardProps {
   children: any[] | any;
@@ -59,7 +59,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     ];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
-    const roles = user && getRoles();
+    const roles = getRoles(user);
     
     if(isEmpty(roles) && !isLoading) {
       setAuthorized(false);
@@ -79,16 +79,6 @@ function RouteGuard({ children }: RouteGuardProps) {
       });
     } else {
       setAuthorized(true);
-    }
-  }
-
-  function getRoles() {
-    if(isEmpty(user)) return [];
-
-    for (const key in user) {
-      if (key.includes('role') && user[key]) {
-        return user[key] as string[];
-      }
     }
   }
 }
