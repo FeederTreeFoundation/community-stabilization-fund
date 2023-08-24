@@ -1,15 +1,16 @@
 import getConfig from 'next/config';
 
-import type { ChecklistRuleDTO } from '../../db';
+import type { OrganizationDTO } from '../../db';
 
 import { axiosInstance } from '../constants';
 
 
 const { publicRuntimeConfig } = getConfig() || {};
-const baseUrl = `${publicRuntimeConfig?.apiUrl}/checklist-rules`;
+const baseUrl = `${publicRuntimeConfig?.apiUrl}/organizations`;
 
-const ChecklistRuleService = {
+const OrganizationService = {
   getAll,
+  getById,
   create,
   update,
   deleteAll,
@@ -17,11 +18,15 @@ const ChecklistRuleService = {
 };
 
 async function getAll() {
-  return await axiosInstance.get<ChecklistRuleDTO[]>(`${baseUrl}`);
+  return await axiosInstance.get<OrganizationDTO[]>(`${baseUrl}`);
+}
+
+async function getById(id: string) {
+  return await axiosInstance.get<OrganizationDTO>(`${baseUrl}/${id}`);
 }
 
 async function create(data: any) {
-  return await axiosInstance.post<ChecklistRuleDTO>(`${baseUrl}`, data, {
+  return await axiosInstance.post<OrganizationDTO>(`${baseUrl}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -29,7 +34,7 @@ async function create(data: any) {
 }
 
 async function update(data: any) {
-  return await axiosInstance.put<ChecklistRuleDTO>(`${baseUrl}/${data.id}`, data, {
+  return await axiosInstance.put<OrganizationDTO>(`${baseUrl}/${data?.id}`, data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -45,7 +50,7 @@ async function _delete(ids: string[]) {
 }
 
 async function deleteAll() {
-  return await axiosInstance.delete<ChecklistRuleDTO>(`${baseUrl}`);
+  return await axiosInstance.delete<OrganizationDTO>(`${baseUrl}`);
 }
 
-export default ChecklistRuleService;
+export default OrganizationService;

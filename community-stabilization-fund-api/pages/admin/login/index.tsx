@@ -4,12 +4,15 @@ import { useState } from 'react';
 
 import type { NextPage } from 'next';
 
+import { useStorage } from '../../../src/hooks';
 import UserService from '../../../src/services/user';
 
 const AdminLoginPage: NextPage = () => {
   const [apiKey, setApiKey] = useState('');
   const [warn, setWarn] = useState(false);
   const [error, setError] = useState<Error>();
+
+  const { setValue } = useStorage('api_user', '');
 
   const router = useRouter();
 
@@ -37,9 +40,13 @@ const AdminLoginPage: NextPage = () => {
 
         const returnPaths = ['/admin/login', '/form-responses', '/checklists'];
         const queryReturnUrl = router.query.returnUrl as string;
-        const returnUrl = returnPaths.includes(queryReturnUrl) ? queryReturnUrl : `/admin/users/${userId}`;
-        localStorage.setItem('api_user', `${userId}`);
-        router.push(returnUrl);
+        const returnUrl = returnPaths.includes(queryReturnUrl) ? queryReturnUrl : null;
+       
+        setValue(`${userId}`);
+        router.push({
+          pathname: `/admin/users/${userId}`,
+          query: { returnUrl },
+        });
       })
       .catch((err) => {
         setError(err);

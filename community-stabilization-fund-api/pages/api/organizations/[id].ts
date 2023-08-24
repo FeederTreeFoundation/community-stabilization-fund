@@ -1,25 +1,25 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { ChecklistRuleDTO } from '../../../src/db';
+import type { OrganizationDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient({
   datasources: { db: { url: process.env.DATABASE_URL } },
 });
 
-const checklistRuleHandler = (req: NextApiRequest, res: NextApiResponse) => {
+const organizationHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query, body } = req;
-  const checklist_rule_id = query.id as string;
+  const organization_id = query.id as string;
   
   switch (method) {
     case 'GET':
-      getChecklistRuleById(checklist_rule_id, res);
+      getOrganizationById(organization_id, res);
       break;
     case 'PUT':
-      updateChecklistRuleById(body, res);
+      updateOrganizationById(body, res);
       break;
     case 'DELETE':
-      deleteChecklistRuleById(checklist_rule_id, res);
+      deleteOrganizationById(organization_id, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
@@ -28,28 +28,27 @@ const checklistRuleHandler = (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-const getChecklistRuleById = async (id: string, res: NextApiResponse) => {
+const getOrganizationById = async (id: string, res: NextApiResponse) => {
   try {
-    const checklist_rule = await prisma.checklist_rule.findUnique({
+    const organization = await prisma.organization.findUnique({
       where: { id: parseInt(id) },
       include: {
-        package_group: true,
-        package_item: true,
+        api_users: false,
       },
-    }) as ChecklistRuleDTO;
+    }) as OrganizationDTO;
 
-    return res.json(checklist_rule ?? {});
+    return res.json(organization ?? {});
   } catch (error) {
     console.error({error});
     throw error;
   }
 };
 
-const updateChecklistRuleById = async (body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, id, ...rest } = body;
+const updateOrganizationById = async (body: any, res: NextApiResponse) => {
+  const { id, ...rest } = body;
 
   try {
-    const result = await prisma.form_response.update({
+    const result = await prisma.organization.update({
       where: { id: parseInt(id) },
       data: {
         ...rest,
@@ -63,9 +62,9 @@ const updateChecklistRuleById = async (body: any, res: NextApiResponse) => {
   }
 };
 
-const deleteChecklistRuleById = async (id: string, res: NextApiResponse) => {
+const deleteOrganizationById = async (id: string, res: NextApiResponse) => {
   try {
-    const result = await prisma.checklist_rule.delete({
+    const result = await prisma.organization.delete({
       where: { id: parseInt(id) },
     });
 
@@ -76,4 +75,4 @@ const deleteChecklistRuleById = async (id: string, res: NextApiResponse) => {
   }
 };
 
-export default checklistRuleHandler;
+export default organizationHandler;

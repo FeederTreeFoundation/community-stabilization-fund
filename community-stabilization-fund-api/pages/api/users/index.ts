@@ -28,7 +28,7 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
       }
       break;
     default:
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
@@ -46,10 +46,16 @@ const getAllUsers = async (res: NextApiResponse) => {
 };
 
 const createUser = async (body: UserDTO, res: NextApiResponse) => {
-  const sql = 'INSERT INTO users (name) VALUES (?);';
+  const user = {
+    ...body,
+    name: body.name ?? '',
+    organization_id: body.organization_id ?? 0,
+  };
 
   try {
-    const results = await executeQuery({ sql, values: [body.name || ''] });
+    const results = await prisma.api_user.create({
+      data: user,
+    });
     return results && res.status(201).setHeader('Location', `/users/${body.id}`);
   } catch (error) {
     return res.json({error});

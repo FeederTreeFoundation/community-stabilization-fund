@@ -15,24 +15,29 @@ import type { ChangeEvent } from 'react';
 import { ChecklistRulesModal } from './ChecklistRulesModal';
 import { SettingsModal } from './SettingsModal';
 import { ChecklistsRulesContext } from '../../..';
+import { useStorage } from '../../../../hooks';
 import { formResponseMock } from '../../../../mocks';
 // import FormResponseService from '../../../../services/form-response';
 import ChecklistRuleService from '../../../../services/checklist-rule';
+import OrganizationService from '../../../../services/organization';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
-
+import { ApiUserContext } from '../../../users/contexts';
 
 const UserNavigation = () => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
 
-  const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
+  const { updateRules, updateBagLabelType, bagLabelType } = useContext(ChecklistsRulesContext);
+  const { apiUser } = useContext(ApiUserContext);
+
+  const { state } = useStorage('api_user', '');
   const { user, error, isLoading } = useUser();
 
   const bagItemsMap = createInitialBagItemsMap(formResponseMock);
   const packageGroups = Object.keys(bagItemsMap);
   const packageItems = selectedPackage ? bagItemsMap[selectedPackage].map(item => item.name) : [];
 
-  const apiUserId = localStorage.getItem('api_user');
+  const apiUserId = state;
   const userPath = apiUserId ? `/admin/users/${apiUserId}` : '/admin/login';
 
   // const deleteAllFormResponses = async () => {
@@ -108,6 +113,14 @@ const UserNavigation = () => {
     if(typeof updateBagLabelType !== 'function') return;
     
     updateBagLabelType(e.target.value);
+
+    setTimeout(() => {
+      OrganizationService.update({id: apiUser?.organization_id, bag_label_type: bagLabelType})
+        .then((_res) => {
+          alert('Bag label type updated!');
+        })
+        .catch((err) => console.error(err));
+    }, 5000);
   }
 
   function submitChecklistRules(data?: any) {
