@@ -13,8 +13,13 @@ function RouteGuard({ children }: RouteGuardProps) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
 
-  const { user, isLoading } = useUser();
+  const { user, error, isLoading } = useUser();
   const { state } = useStorage('api_user', '');
+
+  if(error) {
+    console.error(error);
+    alert(error);
+  }
 
   const handleAuthCheck = useCallback(authCheck, [router, user, isLoading, state]);
 
@@ -36,6 +41,8 @@ function RouteGuard({ children }: RouteGuardProps) {
     };
   }, [handleAuthCheck, router.asPath, router.events]);
 
+  return authorized && children;
+
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = state === window.sessionStorage.getItem('api_user') 
@@ -43,7 +50,6 @@ function RouteGuard({ children }: RouteGuardProps) {
       : window.sessionStorage.getItem('api_user');
     const publicPaths = [
       '/',
-      '/forms',
       '/forms/groceries-and-supplies',
       '/rent-mortgage-utilities-support',
       '/about/pittsburgh-collaborative',
@@ -53,9 +59,14 @@ function RouteGuard({ children }: RouteGuardProps) {
     ];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
-
-    // TODO: Use Roles Based Authentication instead
-    if (!user && !isLoading && !publicPaths.includes(path)) {
+    const roles = user && getRoles();
+    
+    if(isEmpty(roles) && !isLoading) {
+      setAuthorized(false);
+      router.push({
+        pathname: '/',
+      });
+    } else if (!user && !isLoading && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({
         pathname: '/api/auth/login',
@@ -71,7 +82,15 @@ function RouteGuard({ children }: RouteGuardProps) {
     }
   }
 
-  return authorized && children;
+  function getRoles() {
+    if(isEmpty(user)) return [];
+
+    for (const key in user) {
+      if (key.includes('role') && user[key]) {
+        return user[key] as string[];
+      }
+    }
+  }
 }
 
 export { RouteGuard };
