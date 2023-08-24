@@ -36,7 +36,7 @@ async function update(data: any) {
   });
 }
 
-async function _delete(ids: number[]) {
+async function _delete(ids: string[]) {
   return await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
       ids: ids,

@@ -45,7 +45,7 @@ const getOrganizationById = async (id: string, res: NextApiResponse) => {
 };
 
 const updateOrganizationById = async (body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, id, ...rest } = body;
+  const { id, ...rest } = body;
 
   try {
     const result = await prisma.organization.update({

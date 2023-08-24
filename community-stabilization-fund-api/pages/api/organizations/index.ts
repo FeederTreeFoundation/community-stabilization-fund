@@ -55,11 +55,10 @@ const createOrganization = async (body: any, res: NextApiResponse) => {
   const organization = {
     ...rest,
     api_users: api_users.map((api_user: any) => ({ 
-      connectOrCreate: {
+      connect: {
         where: { id: api_user?.id ?? 0 },
-        create: { name: api_user.name },
       }
-     }))
+    }))
   };
   
   try {
