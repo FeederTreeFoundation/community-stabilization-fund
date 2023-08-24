@@ -6,9 +6,9 @@ import {
   Link,
   SkeletonIcon,
 } from 'carbon-components-react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import type { ChecklistRuleDTO } from '../../../../db';
+import type { ChecklistRuleDTO, UserDTO } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
@@ -20,15 +20,22 @@ import { formResponseMock } from '../../../../mocks';
 // import FormResponseService from '../../../../services/form-response';
 import ChecklistRuleService from '../../../../services/checklist-rule';
 import OrganizationService from '../../../../services/organization';
+import UserService from '../../../../services/user';
+import { isEmpty } from '../../../../utils';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
-import { ApiUserContext } from '../../../users/contexts';
 
-const UserNavigation = () => {
+interface UserNavigationProps {
+  setDefaultBagLabelType?: (bagLabelType: string) => void;
+}
+
+const UserNavigation = ({
+  setDefaultBagLabelType,
+}: UserNavigationProps) => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
+  const [apiUser, setApiUser] = useState<UserDTO>();
 
   const { updateRules, updateBagLabelType, bagLabelType } = useContext(ChecklistsRulesContext);
-  const { apiUser } = useContext(ApiUserContext);
 
   const { state } = useStorage('api_user', '');
   const { user, error, isLoading } = useUser();
@@ -49,6 +56,33 @@ const UserNavigation = () => {
 
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
+  // Fetch API user on page load
+  useEffect(() => {
+    UserService.getById(apiUserId)
+      .then((res) => {
+        if (res.data) {
+          setApiUser(res.data);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Error fetching API user');
+      });
+  }, [apiUserId]);
+
+  // Set default bag label type with API user
+  useEffect(() => {
+    if(isEmpty(apiUser?.organization_id)) return;
+    if(typeof setDefaultBagLabelType !== 'function') return;
+  
+    OrganizationService.getById(`${apiUser?.organization_id}`)
+      .then((res) => {
+        if (res.data) {
+          setDefaultBagLabelType(res.data.bag_label_type ?? '');
+        }
+      });
+  }, [apiUser?.organization_id, setDefaultBagLabelType]);
+
   if (isLoading) {
     return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);}
 
@@ -64,7 +98,6 @@ const UserNavigation = () => {
     );
   }
 
-  // TODO: Correct logic for displaying admin users
   return (
     <>
       <HeaderGlobalBar>

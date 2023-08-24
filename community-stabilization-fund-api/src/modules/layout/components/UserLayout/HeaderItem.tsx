@@ -6,13 +6,20 @@ interface HeaderItemProps {
       PAGE_TITLE: string;
       PATH: string;
     }
-    changeSelectedPage?: (selectedPage: string) => void;
-    selectedPage?: string;
+    hidden?: boolean;
     prefix?: string | null;
+    selectedPage?: string;
+    changeSelectedPage?: (selectedPage: string) => void;
   }
 
-const HeaderItem = ({ route, selectedPage, changeSelectedPage, prefix}: HeaderItemProps) => (
-  <Link href={route.PATH} passHref>
+const HeaderItem = ({ 
+  route, 
+  hidden = false,
+  prefix = null,
+  selectedPage, 
+  changeSelectedPage
+}: HeaderItemProps) => (
+  <Link href={route.PATH} passHref hidden={hidden}>
     {
       prefix 
         ? (

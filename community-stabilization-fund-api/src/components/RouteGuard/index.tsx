@@ -41,8 +41,6 @@ function RouteGuard({ children }: RouteGuardProps) {
     };
   }, [handleAuthCheck, router.asPath, router.events]);
 
-  return authorized && children;
-
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
     const apiUserId = state === window.sessionStorage.getItem('api_user') 
@@ -61,15 +59,15 @@ function RouteGuard({ children }: RouteGuardProps) {
     const path = url.split('?')[0];
     const roles = getRoles(user);
     
-    if(isEmpty(roles) && !isLoading) {
-      setAuthorized(false);
-      router.push({
-        pathname: '/',
-      });
-    } else if (!user && !isLoading && !publicPaths.includes(path)) {
+    if (!user && !isLoading && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({
         pathname: '/api/auth/login',
+      });
+    } else if(isEmpty(roles) && !isLoading && !publicPaths.includes(path)) {
+      setAuthorized(false);
+      router.push({
+        pathname: '/',
       });
     } else if (isEmpty(apiUserId) && privatePaths.includes(path)) {
       setAuthorized(false);
@@ -81,6 +79,8 @@ function RouteGuard({ children }: RouteGuardProps) {
       setAuthorized(true);
     }
   }
+
+  return authorized && children;
 }
 
 export { RouteGuard };

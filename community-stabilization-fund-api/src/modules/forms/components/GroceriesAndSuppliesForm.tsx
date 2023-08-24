@@ -40,9 +40,9 @@ const GroceriesAndSuppliesForm = () => {
       ...data,
       submitted_by: user?.email ?? 'recipient'
     })
-    .then(() => {
-      setIsSubmitted(!isSubmitted);
-    });
+      .then(() => {
+        setIsSubmitted(!isSubmitted);
+      });
   });
   
   if (!isSubmitted) {
