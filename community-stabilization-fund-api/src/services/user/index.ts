@@ -30,8 +30,8 @@ async function login(apiUser: string, token: string) {
 }
 
 async function logout() {
-  // WIP: Remove authorization token instead of local storage
-  localStorage.removeItem('api_user');
+  // WIP: Remove authorization token instead of user id
+  sessionStorage.removeItem('api_user');
   Router.push('/admin/login');
 }
 

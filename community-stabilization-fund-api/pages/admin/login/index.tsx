@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import type { NextPage } from 'next';
 
-import { useLocalStorage } from '../../../src/hooks';
+import { useStorage } from '../../../src/hooks';
 import UserService from '../../../src/services/user';
 
 const AdminLoginPage: NextPage = () => {
@@ -12,7 +12,7 @@ const AdminLoginPage: NextPage = () => {
   const [warn, setWarn] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const { setValue } = useLocalStorage('api_user', '');
+  const { setValue } = useStorage('api_user', '');
 
   const router = useRouter();
 
