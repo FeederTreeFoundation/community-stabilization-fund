@@ -1,3 +1,4 @@
+import { useUser } from '@auth0/nextjs-auth0';
 import { CheckmarkFilled } from '@carbon/icons-react';
 import {
   Button,
@@ -26,10 +27,20 @@ const GroceriesAndSuppliesForm = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const { watch, register, handleSubmit, formState: { isLoading, errors} } = useForm<FormData>();
 
+  const { user, error } = useUser();
+
+  if(error) {
+    console.warn(error);
+  }
+  
   const packagesToReceive = watch('packages_to_receive') ? watch('packages_to_receive') as string[] : [];
 
   const onSubmit = handleSubmit((data) => {
-    FormResponseService.create(data).then(() => {
+    FormResponseService.create({
+      ...data,
+      submitted_by: user?.email ?? 'recipient'
+    })
+    .then(() => {
       setIsSubmitted(!isSubmitted);
     });
   });
