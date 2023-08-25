@@ -10,6 +10,7 @@
     "migrations:prototype": "npx prisma db push",
     "migrations:resolve": "npx prisma migrate resolve",
     "migrations:patch": "npx prisma migrate deploy",
+    "migrations:reset": "npx prisma migrate reset",
     "start": "next start",
     "seed": "node src/db/seed_db.js",
     "lint": "next lint --",
