@@ -4,7 +4,7 @@ const useStorage = (key: string, initialValue: any) => {
   const [state, setState] = useState(() => {
     // Initialize the state
     try {
-      const value = window.sessionStorage.getItem(key);
+      const value = window && window.sessionStorage.getItem(key);
       // Check if the local storage already has any values,
       // otherwise initialize it with the passed initialValue
       return value ? JSON.parse(value) : initialValue;
@@ -14,6 +14,7 @@ const useStorage = (key: string, initialValue: any) => {
   });
 
   const setValue = (value: any) => {
+    if(!window) return;
     try {
       // If the passed value is a callback function,
       //  then call it with the existing state.
