@@ -10,6 +10,7 @@ export interface OrganizationDTO {
   short_name?: string;
   bag_label_type?: string;
   api_users: UserDTO[];
+  questions: QuestionDTO[];
 }
 
 export interface FeminineHealthResponseDTO {
@@ -79,5 +80,20 @@ export interface ChecklistRuleDTO {
   package_item: PackageItemDTO;
   package_group: PackageGroupDTO;
   submitted_on?: Date|null;
+}
+
+export interface AnswerDTO {
+  id: number;
+  text: string;
+  question_id: number;
+}
+
+export interface QuestionDTO {
+  id: number;
+  text: string;
+  type: string;
+  hidden: boolean;
+  answers: AnswerDTO[];
+  organization_id: number;
 }
 
