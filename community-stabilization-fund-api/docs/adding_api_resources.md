@@ -235,10 +235,10 @@ const getChecklistRuleById = async (id: string, res: NextApiResponse) => {
 };
 
 const updateChecklistRuleById = async (body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, id, ...rest } = body;
+  const { id, ...rest } = body;
 
   try {
-    const result = await prisma.form_response.update({
+    const result = await prisma.checklist_rule.update({
       where: { id: parseInt(id) },
       data: {
         ...rest,
