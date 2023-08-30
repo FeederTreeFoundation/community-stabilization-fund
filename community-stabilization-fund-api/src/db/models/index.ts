@@ -78,11 +78,11 @@ export interface ChecklistRuleDTO {
   delayed_until?: Date | null;
   days_delayed_by?: number | null;
   weeks_delayed_by?: number | null;
-  package_item: PackageItemDTO;
-  package_group: PackageGroupDTO;
+  package_item_id: number;
+  package_group_id: number;
+  organization_id: number;
   submitted_on?: Date|null;
   submitted_by?: string|null;
-  organization_id?: number|null;
 }
 
 export interface AnswerDTO {

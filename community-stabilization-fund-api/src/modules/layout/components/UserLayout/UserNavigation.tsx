@@ -79,20 +79,21 @@ const UserNavigation = ({
   useEffect(() => {
     if(isEmpty(apiUser?.organization_id)) return;
     if(typeof setDefaultBagLabelType !== 'function') return;
-    // if(typeof updateRules !== 'function') return;
+    if(typeof updateRules !== 'function') return;
   
     OrganizationService.getById(`${apiUser?.organization_id}`)
       .then((res) => {
         if (res.data) {
           setDefaultBagLabelType(res.data.bag_label_type ?? '');
           setCustomQuestions(res.data.questions ?? []);
-          // updateRules(res.data.checklist_rules ?? []);
+          updateRules(res.data.checklist_rules ?? []);
         }
       });
   }, [apiUser?.organization_id, setDefaultBagLabelType]);
 
   if (isLoading) {
-    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);}
+    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);
+  }
 
   if (error || !user) {
     return (
@@ -160,16 +161,17 @@ const UserNavigation = ({
 
   function handleChange(e: ChangeEvent<HTMLSelectElement>) {
     if(typeof updateBagLabelType !== 'function') return;
-    
-    updateBagLabelType(e.target.value);
+
+    const bagLabelType = e.target.value;
 
     setTimeout(() => {
       OrganizationService.update({id: apiUser?.organization_id, bag_label_type: bagLabelType})
         .then((_res) => {
+          updateBagLabelType(bagLabelType);
           alert('Bag label type updated!');
         })
-        .catch((err) => console.error(err));
-    }, 5000);
+        .catch((err) => console.error('updateBagLabelTypeError: ', err));
+    }, 500);
   }
 
   function submitChecklistRules(data?: any) {
@@ -184,7 +186,7 @@ const UserNavigation = ({
 
       })
       .finally(() => handleClose('checklistRulesModal'))
-      .catch((err) => console.error('err', err));
+      .catch((err) => console.error('submitChecklistRulesError: ', err));
   }
 
   function submitQuestion(data?: any) {
@@ -194,7 +196,7 @@ const UserNavigation = ({
       ));
     })
       .finally(() => handleClose('questionsModal'))
-      .catch((err) => console.error('err', err));
+      .catch((err) => console.error('submitQuestionError: ', err));
   }
 };
 
