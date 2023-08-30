@@ -23,12 +23,12 @@ INSERT INTO organization
 VALUES
 ("Community Movement Builders", "CMB", "");
 
-INSERT INTO api_key
-(name, api_user_id)
-VALUES
-("bar", 1);
-
 INSERT INTO api_user
 (name, organization_id)
 VALUES
 ("foo", 1);
+
+INSERT INTO api_key
+(name, api_user_id)
+VALUES
+("bar", 1);

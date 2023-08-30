@@ -71,7 +71,7 @@ export interface PackageItemDTO {
 }
 
 export interface ChecklistRuleDTO {
-  id?: number;
+  id: number;
   quantity: string;
   household_members: string;
   bag_label_type: string;
