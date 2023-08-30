@@ -17,15 +17,15 @@ const ChecklistConfigSection = ({
   const items = [BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE, BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE];
 
   return (
-    <Column className="mt-4">
-      <Button kind={'primary'} size="lg" onClick={() => handleOpen('checklistRulesModal')}>
+    <Column>
+      <Button kind={'primary'} onClick={() => handleOpen('checklistRulesModal')}>
         Configure Package Item Rules
       </Button>
       <p className='mt-4'>
         <BasicSelect
           id='bag-label-type'
           items={items}
-          labelText='Select Current Bag Labels'
+          labelText='Select Default Bag Labels'
           defaultValue={BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE}
           defaultText='Select type of bag labels'
           onChange={handleChange}

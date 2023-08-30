@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { QuestionDTO } from '../../../src/db';
+import type { AnswerDTO, QuestionDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { executeQuery, queries } from '../../../src/db';
@@ -58,8 +58,15 @@ const createQuestion = async (body: any, res: NextApiResponse) => {
   const { ...rest } = body;
 
   const question = {
-    ...rest,
-    text: `${rest.text}`, 
+    text: `${rest.text}`,
+    type: `${rest.type}`,
+    hidden: Boolean(rest.hidden),
+    required: Boolean(rest.required),
+    organization: {
+      connect: {
+        id: Number(rest.organization_id),
+      }
+    },
   };
   
   try {

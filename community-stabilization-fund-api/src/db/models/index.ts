@@ -9,8 +9,9 @@ export interface OrganizationDTO {
   name: string;
   short_name?: string;
   bag_label_type?: string;
-  api_users: UserDTO[];
-  questions: QuestionDTO[];
+  api_users?: UserDTO[];
+  questions?: QuestionDTO[];
+  checklist_rules?: ChecklistRuleDTO[];
 }
 
 export interface FeminineHealthResponseDTO {
@@ -35,22 +36,22 @@ export interface FormResponseDTO {
   first_name: string;
   last_name: string;
   email?: string|null;
-  phone_number: string;
+  phone_number?: string;
   phone_type?: string|null;
-  address: AddressDTO|null;
-  is_black: boolean;
-  is_local: boolean;
-  household_members: number;
-  has_flu_symptoms: boolean;
-  packages_to_receive: string | string[];
-  feminine_health_care: FeminineHealthResponseDTO|null;
+  address?: AddressDTO|null;
+  is_black?: boolean;
+  is_local?: boolean;
+  household_members?: number;
+  has_flu_symptoms?: boolean;
+  packages_to_receive?: string | string[];
+  feminine_health_care?: FeminineHealthResponseDTO|null;
   item_requests?: string|null;
   additional_information?: string|null;
-  is_pick_up: boolean;
-  is_volunteering: boolean;
-  is_subscribing: boolean;
-  is_joining: boolean;
-  is_interested_in_membership: boolean;
+  is_pick_up?: boolean;
+  is_volunteering?: boolean;
+  is_subscribing?: boolean;
+  is_joining?: boolean;
+  is_interested_in_membership?: boolean;
   submitted_on?: Date|null;
   submitted_by?: string|null;
   live_in_pittsburgh_atlanta?: boolean;
@@ -80,6 +81,8 @@ export interface ChecklistRuleDTO {
   package_item: PackageItemDTO;
   package_group: PackageGroupDTO;
   submitted_on?: Date|null;
+  submitted_by?: string|null;
+  organization_id?: number|null;
 }
 
 export interface AnswerDTO {
@@ -93,7 +96,8 @@ export interface QuestionDTO {
   text: string;
   type: string;
   hidden: boolean;
-  answers: AnswerDTO[];
+  answers?: AnswerDTO[];
+  required: boolean;
   organization_id: number;
 }
 

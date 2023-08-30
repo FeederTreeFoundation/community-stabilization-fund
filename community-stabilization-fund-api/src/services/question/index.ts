@@ -16,8 +16,14 @@ const QuestionService = {
   delete: _delete,
 };
 
-async function getAll() {
-  return await axiosInstance.get<QuestionDTO[]>(`${baseUrl}`);
+async function getAll(options?: any) {
+  const { pagination: p } = options ?? {};
+  const pagination = p ? JSON.parse(p) : null;
+
+  return await axiosInstance.get<QuestionDTO[]>(
+    `${baseUrl}`,
+    { params: { pagination }}
+  );
 }
 
 async function create(data: any) {
