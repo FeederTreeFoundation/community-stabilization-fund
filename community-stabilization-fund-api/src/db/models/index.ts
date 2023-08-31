@@ -96,8 +96,11 @@ export interface QuestionDTO {
   text: string;
   type: string;
   hidden: boolean;
-  answers?: AnswerDTO[];
   required: boolean;
+  role?: string;
+  options?: string;
+  helper_text?: string;
+  answers?: AnswerDTO[];
   organization_id: number;
 }
 

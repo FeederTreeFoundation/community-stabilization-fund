@@ -56,12 +56,15 @@ const getAllQuestions = async (res: NextApiResponse, query: any) => {
 
 const createQuestion = async (body: any, res: NextApiResponse) => {
   const { ...rest } = body;
-
+  
   const question = {
     text: `${rest.text}`,
     type: `${rest.type}`,
     hidden: Boolean(rest.hidden),
     required: Boolean(rest.required),
+    role: rest.role ? `${rest.role}` : null,
+    options: rest.options ? `${rest.options}` : null,
+    helper_text: rest.helper_text ? `${rest.helper_text}` : null,
     organization: {
       connect: {
         id: Number(rest.organization_id),
