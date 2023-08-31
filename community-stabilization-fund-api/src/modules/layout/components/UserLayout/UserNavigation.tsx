@@ -15,16 +15,16 @@ import type { ChangeEvent } from 'react';
 import { ChecklistRulesModal } from './ChecklistRulesModal';
 import { QuestionsModal } from './QuestionsModal';
 import { SettingsModal } from './SettingsModal';
-import { ChecklistsRulesContext } from '../../..';
 import { useStorage } from '../../../../hooks';
 import { formResponseMock } from '../../../../mocks';
-// import FormResponseService from '../../../../services/form-response';
 import ChecklistRuleService from '../../../../services/checklist-rule';
 import OrganizationService from '../../../../services/organization';
 import QuestionService from '../../../../services/question';
 import UserService from '../../../../services/user';
 import { isEmpty } from '../../../../utils';
+import { ChecklistsRulesContext } from '../../../checklists';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
+import { FormQuestionsContext } from '../../../forms';
 
 interface UserNavigationProps {
   setDefaultBagLabelType?: (bagLabelType: string) => void;
@@ -35,10 +35,10 @@ const UserNavigation = ({
 }: UserNavigationProps) => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
-  const [customQuestions, setCustomQuestions] = useState<QuestionDTO[]>([]);
   const [apiUser, setApiUser] = useState<UserDTO>();
 
-  const { updateRules, updateBagLabelType, bagLabelType } = useContext(ChecklistsRulesContext);
+  const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
+  const { questions, updateQuestions } = useContext(FormQuestionsContext);
 
   const { state } = useStorage('api_user', '');
   const { user, error, isLoading } = useUser();
@@ -75,17 +75,18 @@ const UserNavigation = ({
       });
   }, [apiUserId]);
 
-  // Set default bag label type with API user
+  // Set defaults with API user
   useEffect(() => {
     if(isEmpty(apiUser?.organization_id)) return;
     if(typeof setDefaultBagLabelType !== 'function') return;
     if(typeof updateRules !== 'function') return;
+    if(typeof updateQuestions !== 'function') return;
   
     OrganizationService.getById(`${apiUser?.organization_id}`)
       .then((res) => {
         if (res.data) {
           setDefaultBagLabelType(res.data.bag_label_type ?? '');
-          setCustomQuestions(res.data.questions ?? []);
+          updateQuestions(res.data.questions ?? []);
           updateRules(res.data.checklist_rules ?? []);
         }
       });
@@ -128,7 +129,7 @@ const UserNavigation = ({
       </HeaderGlobalBar>
       <SettingsModal 
         open={!!openModalMapping['settingsModal']}
-        needsSetup={isEmpty(customQuestions)}
+        needsSetup={isEmpty(questions)}
         handleOpen={handleOpen} 
         handleClose={handleClose} 
         handleChange={handleChange} 
@@ -143,7 +144,7 @@ const UserNavigation = ({
       />
       <QuestionsModal 
         user={apiUser}
-        questions={customQuestions}
+        questions={questions}
         open={!!openModalMapping['questionsModal']}
         handleClose={handleClose} 
         onSubmit={submitQuestion}
@@ -191,9 +192,11 @@ const UserNavigation = ({
 
   function submitQuestion(data?: any) {
     QuestionService.create(data).then((_resp) => {
-      setCustomQuestions((prevQuestions: QuestionDTO[]) => (
-        [data, ...prevQuestions]
-      ));
+      if(typeof updateQuestions !== 'function') return;
+      // setCustomQuestions((prevQuestions: QuestionDTO[]) => (
+      //   [data, ...prevQuestions]
+      // ));
+      updateQuestions([...questions, data]);
     })
       .finally(() => handleClose('questionsModal'))
       .catch((err) => console.error('submitQuestionError: ', err));

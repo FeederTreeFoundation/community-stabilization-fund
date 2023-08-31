@@ -1,15 +1,22 @@
-import { Modal, Button, ComboBox, Row } from '@carbon/react';
-import { TextInput } from '@carbon/react';
-import { Heading } from '@carbon/react';
-import { Section } from '@carbon/react';
-import { Toggle } from '@carbon/react';
+import { 
+  Modal,
+  Button,
+  ComboBox,
+  Row,
+  TextInput,
+  TextArea,
+  Heading,
+  Section,
+  Toggle
+} from '@carbon/react';
 import { useEffect, useState } from 'react';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import type { QuestionDTO, UserDTO } from '../../../../db';
 
 import { BasicSelect } from '../../../../components';
 import { isEmpty } from '../../../../utils';
+import { QUESTION_FORM } from '../../constants';
 
 import styles from '../../styles/UserLayout.module.css';
 
@@ -42,7 +49,6 @@ const QuestionsModal = ({
   } = useForm<QuestionDTO>({
     defaultValues: selectedQuestion
   });
-
 
   const form = watch();
 
@@ -131,14 +137,42 @@ const QuestionsModal = ({
               invalid={!!errors.text}
               invalidText={errors.text?.message}
             />
+            <TextArea
+              id='question-helper-text'
+              className='mt-2'
+              labelText={QUESTION_FORM.HELPER_TEXT.label}
+              rows={1}
+              {...register('helper_text', { required: false })}
+              invalid={!!errors.helper_text}
+              invalidText={errors.helper_text?.message}
+            />
             <BasicSelect 
               id='question-type'
               className='mt-2'
-              items={["internal", "public"]}
-              labelText='Question Type'
+              items={QUESTION_FORM.TYPE.items}
+              labelText={QUESTION_FORM.TYPE.label}
               {...register('type', { required: true })}
               invalid={!!errors.type}
             />
+            <BasicSelect 
+              id='question-role'
+              className='mt-2'
+              items={QUESTION_FORM.ROLE.items}
+              labelText={QUESTION_FORM.ROLE.label}
+              {...register('role', { required: false })}
+              invalid={!!errors.role}
+            />
+            { ['select', 'radio', 'checkbox'].includes(form.role ?? '') && (
+              <TextInput 
+                id='question-options'
+                className='mt-2'
+                labelText={QUESTION_FORM.OPTIONS.label}
+                helperText={QUESTION_FORM.OPTIONS.helperText}
+                {...register('options', { required: true })}
+                invalid={!!errors.options}
+                invalidText={errors.options?.message}
+              />
+            )}
             <Toggle
               id='question-required'
               className={`${styles.toggle}`}
