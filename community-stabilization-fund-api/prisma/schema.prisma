@@ -34,6 +34,7 @@ model organization {
   api_users api_user[]
   questions question[]
   checklist_rules checklist_rule[]
+  forms form[]
 }
 
 model feminine_health_care {
@@ -62,13 +63,11 @@ model form_response {
   email                       String?               @db.VarChar(60)
   phone_number                String                @db.VarChar(15)
   phone_type                  String?               @db.VarChar(7)
-  address_id                  Int?
   is_black                    Boolean?              @default(false)
   is_local                    Boolean?              @default(false)
   packages_to_receive         String?               @db.VarChar(250) @default("[]")
   has_flu_symptoms            Boolean?              @default(false)
   household_members           Int?                  @default(1)
-  feminine_health_care_id     Int?
   item_requests               String?               @db.VarChar(100)
   additional_information      String?               @db.VarChar(250)
   is_pick_up                  Boolean?              @default(false)
@@ -83,12 +82,17 @@ model form_response {
   submitted_by                String?               @db.VarChar(60)
   elderly_members             Int?                  @default(0)
   youth_members               Int?                  @default(0)
-  custom_fields               String?               @db.VarChar(250) @default("[]")
-  feminine_health_care        feminine_health_care? @relation(fields: [feminine_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
+  address_id                  Int?
   address                     address?              @relation(fields: [address_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_2")
+  feminine_health_care_id     Int?
+  feminine_health_care        feminine_health_care? @relation(fields: [feminine_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
+  form_id                     Int?
+  form                        form?                 @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_3")
+  answers                     answer[]
 
   @@index([feminine_health_care_id], map: "feminine_health_care_id")
   @@index([address_id], map: "address_id")
+  @@index([form_id], map: "form_id")
 }
 
 model package_group {
@@ -130,8 +134,11 @@ model answer {
   text String @db.VarChar(500)
   question_id Int
   question question @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "answer_ibfk_1")
+  form_response_id Int?
+  form_response form_response? @relation(fields: [form_response_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "answer_ibfk_2")
 
   @@index([question_id], map: "question_id")
+  @@index([form_response_id], map: "form_response_id")
 }
 
 model question {
@@ -143,9 +150,25 @@ model question {
   role String? @db.VarChar(20) @default("textinput")
   options String? @db.VarChar(500) @default("")
   helper_text String? @db.VarChar(250) @default("")
-  answers answer[]
+  submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by String? @db.VarChar(60) @default("")
   organization_id Int
-  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "question_ibfk_1")
+  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "question_ibfk_1")
+  form_id Int?
+  form form? @relation(fields: [form_id], references: [id], onDelete: Cascade, map: "question_ibfk_2")
+  answers answer[]
+
+  @@index([organization_id], map: "organization_id")
+  @@index([form_id], map: "form_id")
+}
+
+model form {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  organization_id Int
+  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "form_ibfk_1")
+  questions question[]
+  form_responses form_response[]
 
   @@index([organization_id], map: "organization_id")
 }

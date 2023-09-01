@@ -21,10 +21,10 @@ const CustomQuestionInput = ({ question, register, errors, ...props }: CustomQue
           className='mb-2'
           labelText={`${question.text} ${question.required ? '(required)' : ''}`}
           helperText={question.helper_text ?? ''}
-          invalidText={errors?.custom_fields?.[`question_${question.id}`]?.message}
-          invalid={!!errors?.custom_fields?.[`question_${question.id}`]}
+          invalidText={errors?.custom_fields?.[`question_id_${question.id}`]?.message}
+          invalid={!!errors?.custom_fields?.[`question_id_${question.id}`]}
           hidden={question.hidden}
-          {...register(`custom_fields.question_${question.id}`, { required: question.required })}
+          {...register(`custom_fields.question_id_${question.id}`, { required: question.required })}
           {...props}
         />
       </div>
@@ -36,13 +36,13 @@ const CustomQuestionInput = ({ question, register, errors, ...props }: CustomQue
       <div className={`${styles.grid}`}>
         <BasicSelect
           id={`custom-question-${question.id}`}
-          items={question.options?.split(',') ?? []}
+          items={question.options?.trim().split(',') ?? []}
           labelText={`${question.text} ${question.required ? '(required)' : ''}`}
           helperText={question.helper_text ?? ''}
-          invalidText={errors?.custom_fields?.[`question_${question.id}`]?.message}
-          invalid={!!errors?.custom_fields?.[`question_${question.id}`]}
+          invalidText={errors?.custom_fields?.[`question_id_${question.id}`]?.message}
+          invalid={!!errors?.custom_fields?.[`question_id_${question.id}`]}
           hidden={question.hidden}
-          {...register(`custom_fields.question_${question.id}`, { required: question.required })}
+          {...register(`custom_fields.question_id_${question.id}`, { required: question.required })}
           {...props}
         />
       </div>
@@ -51,16 +51,16 @@ const CustomQuestionInput = ({ question, register, errors, ...props }: CustomQue
 
   return (
     <div className={`${styles.grid}`}>
-        <TextInput
-          id={`custom-question-${question.id}`}
-          labelText={`${question.text} ${question.required ? '(required)' : ''}`}
-          helperText={question.helper_text ?? ''}
-          invalidText={errors?.custom_fields?.[`question_${question.id}`]?.message}
-          invalid={!!errors?.custom_fields?.[`question_${question.id}`]}
-          hidden={question.hidden}
-          {...register(`custom_fields.question_${question.id}`, { required: question.required })}
-          {...props}
-        />
+      <TextInput
+        id={`custom-question-${question.id}`}
+        labelText={`${question.text} ${question.required ? '(required)' : ''}`}
+        helperText={question.helper_text ?? ''}
+        invalidText={errors?.custom_fields?.[`question_id_${question.id}`]?.message}
+        invalid={!!errors?.custom_fields?.[`question_id_${question.id}`]}
+        hidden={question.hidden}
+        {...register(`custom_fields.question_id_${question.id}`, { required: question.required })}
+        {...props}
+      />
     </div>
   )
 };

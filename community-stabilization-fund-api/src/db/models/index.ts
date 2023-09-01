@@ -12,6 +12,7 @@ export interface OrganizationDTO {
   api_users?: UserDTO[];
   questions?: QuestionDTO[];
   checklist_rules?: ChecklistRuleDTO[];
+  forms?: FormDTO[];
 }
 
 export interface FeminineHealthResponseDTO {
@@ -58,6 +59,9 @@ export interface FormResponseDTO {
   live_in_southside_atlanta?: boolean;
   elderly_members?: number|null;
   youth_members?: number|null;
+  custom_question_responses?: string|null;
+  answers?: AnswerDTO[];
+  form_id?: number|null;
 }
 
 export interface PackageGroupDTO {
@@ -89,6 +93,7 @@ export interface AnswerDTO {
   id: number;
   text: string;
   question_id: number;
+  form_response_id?: number;
 }
 
 export interface QuestionDTO {
@@ -102,5 +107,14 @@ export interface QuestionDTO {
   helper_text?: string;
   answers?: AnswerDTO[];
   organization_id: number;
+  form_id?: number;
+  submitted_on?: Date|null;
 }
 
+export interface FormDTO {
+  id: number;
+  name: string;
+  organization_id: number;
+  questions?: QuestionDTO[];
+  form_responses?: FormResponseDTO[];
+}

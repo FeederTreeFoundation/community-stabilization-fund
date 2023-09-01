@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { FormResponseDTO } from '../../../src/db';
+import type { AnswerDTO, FormResponseDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { executeQuery, queries } from '../../../src/db';
@@ -59,7 +59,9 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 };
 
 const createFormResponse = async (body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, ...rest } = body;
+  const { custom_question_responses, feminine_health_care, address, ...rest } = body;
+
+  const customQuestionResponsesToCreate = JSON.parse(custom_question_responses);
 
   const formResponse = {
     ...rest,
@@ -101,6 +103,14 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
         line2: address?.line2,
       },
     },
+    answers: {
+      createMany: [
+        ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
+            text: `${item.text}`,
+            question_id: Number(item.question_id),
+          }))
+      ]
+    }
   };
 
   try {
