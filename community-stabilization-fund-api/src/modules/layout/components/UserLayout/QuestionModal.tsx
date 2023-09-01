@@ -20,21 +20,23 @@ import { QUESTION_FORM } from '../../constants';
 
 import styles from '../../styles/UserLayout.module.css';
 
-export interface QuestionsModalProps {
+export interface QuestionModalProps {
   user?: UserDTO;
   questions: QuestionDTO[];
   open: boolean;
   handleClose: (key: string) => void;
   onSubmit: (data: QuestionDTO) => void;
+  onDelete?: (id: number) => void;
 }
 
-const QuestionsModal = ({
+const QuestionModal = ({
   user,
   questions,
   open,
   handleClose,
   onSubmit,
-}: QuestionsModalProps) => {
+  onDelete,
+}: QuestionModalProps) => {
   const defaultMode = isEmpty(questions) ? 'setup' : 'edit';
   const [mode, setMode] = useState<string>(defaultMode);
   const [selectedQuestion, setSelectedQuestion] = useState<QuestionDTO>();
@@ -54,9 +56,9 @@ const QuestionsModal = ({
   const form = watch();
 
   useEffect(() => {
-    if(defaultMode !== mode) setMode(defaultMode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const initialMode = isEmpty(questions) ? 'setup' : 'add';
+    setMode(initialMode);
+  }, [isEmpty(questions)]);
 
   if(mode === 'setup') {
     return (
@@ -67,14 +69,20 @@ const QuestionsModal = ({
         size={'md'}
         primaryButtonText='Next'
         secondaryButtonText='Cancel'
-        onRequestClose={() => handleClose('questionsModal')}
+        onRequestClose={() => handleClose('questionModal')}
         onRequestSubmit={next}
       >
         <p>
           You can add custom questions that will be displayed to the user when they are filling out the form.
           <ul className='mt-4'>
             <li>
-              - Decide which users can see the question by selecting the 'internal' or 'public' <strong>type</strong>.
+              - Decide who can see the question by selecting the 'internal' or 'public' <strong>type</strong> field.
+            </li>
+            <li>
+              - Add additional information to your question text using the <strong>helper text</strong> field.
+            </li>
+            <li>
+              - Change the input from accepting answers as text by selecting from the <strong>role</strong> field.
             </li>
             <li>
               - Decide whether the question is required by toggling the <strong>required</strong> field.
@@ -99,8 +107,8 @@ const QuestionsModal = ({
       primaryButtonText='Submit'
       secondaryButtonText={mode === 'edit' ? 'Cancel' : 'Back'}
       onRequestSubmit={submitQuestion}
-      onSecondarySubmit={() => mode === 'edit' ? handleClose('questionsModal') : setMode('setup')}
-      onRequestClose={() => handleClose('questionsModal')}
+      onSecondarySubmit={() => mode === 'edit' ? handleClose('questionModal') : setMode('setup')}
+      onRequestClose={() => handleClose('questionModal')}
       primaryButtonDisabled={isEmpty(selectedQuestion)}
       preventCloseOnClickOutside
     >
@@ -129,7 +137,16 @@ const QuestionsModal = ({
       <Row className={styles.question_form_wrapper}>
         { selectedQuestion && (
           <Section level={4}>
-            <Heading className='mb-2' size='sm'>{`${mode.toUpperCase()} QUESTION`}</Heading>
+              <div className='row'>
+                <div className='column' >
+                  <Heading className={`${styles.heading} mb-2`} size='sm'>{`${mode.toUpperCase()} QUESTION`}</Heading>
+                </div>
+                <div className='column mr-4'>
+                  {mode === 'edit' && <Button kind='danger--ghost' size='sm' onClick={deleteQuestion}>
+                    Delete
+                  </Button>}
+                </div>
+              </div>
             <TextInput
               id='question-text'
               className='mt-2'
@@ -211,6 +228,15 @@ const QuestionsModal = ({
     reset(); 
   }
 
+  function deleteQuestion(e: any) {
+    e.preventDefault();
+    if(typeof onDelete !== 'function') return;
+
+    selectedQuestion?.id && onDelete(selectedQuestion?.id);
+    setSelectedQuestion(undefined);
+    reset();
+  }
+
   function submitQuestion(e: any) {
     e.preventDefault();
     if(typeof onSubmit !== 'function') return;
@@ -256,4 +282,4 @@ const QuestionsModal = ({
 
 };
 
-export { QuestionsModal };
+export { QuestionModal };

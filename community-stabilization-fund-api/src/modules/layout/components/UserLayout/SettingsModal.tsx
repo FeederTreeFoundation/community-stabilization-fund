@@ -52,11 +52,11 @@ const SettingsModal = ({
         )}
         {
           needsSetup ? (
-            <Button kind={'primary'} onClick={() => handleOpen('questionsModal')}>
+            <Button kind={'primary'} onClick={() => handleOpen('questionModal')}>
               Set Up Custom Form Questions
             </Button>
           ) : (
-            <Button kind={'primary'} onClick={() => handleOpen('questionsModal')}>
+            <Button kind={'primary'} onClick={() => handleOpen('questionModal')}>
               Update Form Questions
             </Button>
           ) 

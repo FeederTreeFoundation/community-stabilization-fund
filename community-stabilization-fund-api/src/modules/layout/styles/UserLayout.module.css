@@ -30,8 +30,13 @@
   margin: 20px auto;
 }
 
+.heading {
+  align-self: flex-start;
+}
+
 .combo_box {
   min-width: 400px;
+  margin: 0;
 }
 
 .toggle {

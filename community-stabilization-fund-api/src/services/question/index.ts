@@ -42,7 +42,11 @@ async function update(data: any) {
   });
 }
 
-async function _delete(ids: number[]) {
+async function _delete({ids, id}: {ids?: number[], id?: number}) {
+  if (id) {
+    return await axiosInstance.delete<object>(`${baseUrl}/${id}`);
+  }
+
   return await axiosInstance.delete<object>(`${baseUrl}`, {
     data: {
       ids: ids,

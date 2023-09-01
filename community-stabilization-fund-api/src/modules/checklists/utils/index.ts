@@ -117,8 +117,8 @@ export const createBagItems = (
     .map((item) => {
       const found = rules.find(
         (rule) =>
-          rule.package_group.name === `${label}` &&
-          rule.package_item.name === `${item.name}` &&
+          rule.package_group?.name === `${label}` &&
+          rule.package_item?.name === `${item.name}` &&
           rule.household_members ===
             `${label === 'Feminine Hygiene' ? feminine_members : household_members}`
       );

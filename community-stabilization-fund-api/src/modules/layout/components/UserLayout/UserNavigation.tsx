@@ -13,7 +13,7 @@ import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
 import { ChecklistRulesModal } from './ChecklistRulesModal';
-import { QuestionsModal } from './QuestionsModal';
+import { QuestionModal } from './QuestionModal';
 import { SettingsModal } from './SettingsModal';
 import { useStorage } from '../../../../hooks';
 import { formResponseMock } from '../../../../mocks';
@@ -141,15 +141,16 @@ const UserNavigation = ({
         packageItems={packageItems} 
         openConfiguration={!!openModalMapping['checklistRulesModal']} 
         onRequestClose={() => handleClose('checklistRulesModal')} 
-        onRequestSubmit={submitChecklistRules}
+        onRequestSubmit={submitChecklistRule}
         onPackageChange={onPackageChange}
       />
-      <QuestionsModal 
+      <QuestionModal 
         user={apiUser}
         questions={questions}
-        open={!!openModalMapping['questionsModal']}
+        open={!!openModalMapping['questionModal']}
         handleClose={handleClose} 
         onSubmit={submitQuestion}
+        onDelete={handleDeleteQuestion}
       />
     </>
   );
@@ -177,19 +178,18 @@ const UserNavigation = ({
     }, 500);
   }
 
-  function submitChecklistRules(data?: any) {
+  function submitChecklistRule(data?: any) {
     if (typeof updateRules !== 'function') return;
 
     ChecklistRuleService.create(data)
       .then((resp) => {
-        console.log('resp', resp);
         updateRules((prevRules: ChecklistRuleDTO[]) => (
           [data, ...prevRules]
         ));
 
       })
       .finally(() => handleClose('checklistRulesModal'))
-      .catch((err) => console.error('submitChecklistRulesError: ', err));
+      .catch((err) => console.error('submitChecklistRuleError: ', err));
   }
 
   function submitQuestion(data?: any) {
@@ -210,15 +210,24 @@ const UserNavigation = ({
           question
         ]);
       })
-        .finally(() => handleClose('questionsModal'))
+        .finally(() => handleClose('questionModal'))
         .catch((err) => console.error('submitQuestionError: ', err)); 
     }
 
     QuestionService.create(question).then(() => {
       updateQuestions([...questions, question]);
     })
-      .finally(() => handleClose('questionsModal'))
+      .finally(() => handleClose('questionModal'))
       .catch((err) => console.error('submitQuestionError: ', err));
+  }
+
+  function handleDeleteQuestion(id: number) {
+    if(typeof updateQuestions !== 'function') return;
+
+    QuestionService.delete({id}).then(() => {
+      updateQuestions([...questions.filter(q => `${q.id}` !== `${id}`)]);
+    })
+      .catch((err) => console.error('deleteQuestionError: ', err));
   }
 };
 

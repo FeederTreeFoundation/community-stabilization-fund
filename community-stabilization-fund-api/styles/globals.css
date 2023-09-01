@@ -16,8 +16,23 @@ a {
 label {
   display: block;
 }
+
 * {
   box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: center;
 }
 
 .mb-2 {
