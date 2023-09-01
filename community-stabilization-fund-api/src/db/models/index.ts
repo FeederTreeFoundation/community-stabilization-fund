@@ -82,11 +82,15 @@ export interface ChecklistRuleDTO {
   delayed_until?: Date | null;
   days_delayed_by?: number | null;
   weeks_delayed_by?: number | null;
-  package_item_id: number;
-  package_group_id: number;
+  package_group?: PackageGroupDTO;
+  package_item?: PackageItemDTO;
+  package_group_id?: number;
+  package_item_id?: number;
   organization_id: number;
   submitted_on?: Date|null;
   submitted_by?: string|null;
+  last_updated?: Date|null;
+  last_updated_by?: string|null;
 }
 
 export interface AnswerDTO {
@@ -109,6 +113,9 @@ export interface QuestionDTO {
   organization_id: number;
   form_id?: number;
   submitted_on?: Date|null;
+  submitted_by?: string|null;
+  last_updated?: Date|null;
+  last_updated_by?: string|null;
 }
 
 export interface FormDTO {
@@ -117,4 +124,8 @@ export interface FormDTO {
   organization_id: number;
   questions?: QuestionDTO[];
   form_responses?: FormResponseDTO[];
+  submitted_on?: Date|null;
+  submitted_by?: string|null;
+  last_updated?: Date|null;
+  last_updated_by?: string|null;
 }

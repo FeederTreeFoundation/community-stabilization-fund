@@ -31,7 +31,7 @@ const QuestionHandler = (req: NextApiRequest, res: NextApiResponse) => {
 const getQuestionById = async (id: string, res: NextApiResponse) => {
   try {
     const question = await prisma.question.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       include: {
         answers: true,
       },
@@ -45,11 +45,11 @@ const getQuestionById = async (id: string, res: NextApiResponse) => {
 };
 
 const updateQuestionById = async (body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, id, ...rest } = body;
+  const { id, ...rest } = body;
 
   try {
     const result = await prisma.question.update({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       data: {
         ...rest,
       }
@@ -65,7 +65,7 @@ const updateQuestionById = async (body: any, res: NextApiResponse) => {
 const deleteQuestionById = async (id: string, res: NextApiResponse) => {
   try {
     const result = await prisma.question.delete({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     return res.json(result);

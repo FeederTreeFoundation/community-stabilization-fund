@@ -39,6 +39,7 @@ const QuestionsModal = ({
   const [mode, setMode] = useState<string>(defaultMode);
   const [selectedQuestion, setSelectedQuestion] = useState<QuestionDTO>();
   const [questionInput, setQuestionInput] = useState<string>('');
+  const [overflowOpen, setOverflowOpen] = useState<boolean>(true);
 
   const {
     watch,
@@ -54,6 +55,7 @@ const QuestionsModal = ({
 
   useEffect(() => {
     if(defaultMode !== mode) setMode(defaultMode);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if(mode === 'setup') {
@@ -86,7 +88,7 @@ const QuestionsModal = ({
       </Modal>
     );
   }
-
+  
   return (
     <Modal
       open={open}
@@ -102,7 +104,7 @@ const QuestionsModal = ({
       primaryButtonDisabled={isEmpty(selectedQuestion)}
       preventCloseOnClickOutside
     >
-      <Row className={styles.select_question_wrapper}>
+      <Row className={`${styles.select_question_wrapper} ${ overflowOpen ? 'mb-10' : ''}`}>
         <ComboBox 
           id='select-question-combo-box'
           className={styles.combo_box}
@@ -110,9 +112,9 @@ const QuestionsModal = ({
           itemToString={(item: QuestionDTO) => item?.text}
           titleText='Add or Select Form Question'
           placeholder={'Select or type a question'}
-          value={selectedQuestion?.text ?? questionInput}
           onChange={selectQuestion}
           onInputChange={handleQuestionInput}
+          shouldFilterItem={handleFilter}
         />
         { selectedQuestion ? (
           <Button kind='tertiary' size='md' onClick={cancelNewQuestion}>
@@ -199,39 +201,59 @@ const QuestionsModal = ({
     </Modal>
   );
 
+  function addQuestion() {
+    onSubmit({ ...form, organization_id: user?.organization_id } as QuestionDTO);
+    reset();
+  }
+
+  function updateQuestion() {
+    onSubmit({ ...form, id: selectedQuestion?.id } as QuestionDTO);
+    reset(); 
+  }
+
   function submitQuestion(e: any) {
     e.preventDefault();
     if(typeof onSubmit !== 'function') return;
-    onSubmit({ ...form, organization_id: user?.organization_id } as QuestionDTO);
+
+    mode === 'edit' ? updateQuestion() : addQuestion();
+    setSelectedQuestion(undefined);
   }
 
   function selectQuestion({ selectedItem }: { selectedItem: QuestionDTO}) {
+    setOverflowOpen(isEmpty(selectedItem));
     setSelectedQuestion(selectedItem);
     reset(selectedItem);
     setMode('edit');
   }
 
   function selectNewQuestion() {
+    setOverflowOpen(false);
     setSelectedQuestion({ text: questionInput} as QuestionDTO);
     setValue('text', questionInput);
     setMode('add');
   }
 
   function cancelNewQuestion() {
+    setOverflowOpen(true);
     setSelectedQuestion(undefined);
     setQuestionInput('');
     reset();
   }
 
   function handleQuestionInput(input: string) {
-    if(isEmpty(selectedQuestion?.text) && isEmpty(input)) return;
-
     setQuestionInput(input);
   }
 
   function next() {
     setMode('add');
   }
+
+  function handleFilter({ item, inputValue }: { item: QuestionDTO, inputValue: string }) {
+    if(!inputValue) return true;
+  
+    return item.text.toLowerCase().includes(inputValue.toLowerCase());
+  }
+
 };
 
 export { QuestionsModal };

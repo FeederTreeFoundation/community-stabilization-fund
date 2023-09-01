@@ -31,7 +31,7 @@ const organizationHandler = (req: NextApiRequest, res: NextApiResponse) => {
 const getOrganizationById = async (id: string, res: NextApiResponse) => {
   try {
     const organization = await prisma.organization.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       include: {
         api_users: false,
         questions: true,
@@ -51,7 +51,7 @@ const updateOrganizationById = async (body: any, res: NextApiResponse) => {
 
   try {
     const result = await prisma.organization.update({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       data: {
         ...rest,
       }
@@ -67,7 +67,7 @@ const updateOrganizationById = async (body: any, res: NextApiResponse) => {
 const deleteOrganizationById = async (id: string, res: NextApiResponse) => {
   try {
     const result = await prisma.organization.delete({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     return res.json(result);

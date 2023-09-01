@@ -96,19 +96,19 @@ model form_response {
 }
 
 model package_group {
-  id         Int            @id @default(autoincrement())
-  name      String
+  id Int @id @default(autoincrement())
+  name String
   items checklist_rule[]
 }
 
 model package_item {
-  id    Int                 @id @default(autoincrement())
+  id    Int @id @default(autoincrement())
   name  String
   packages checklist_rule[]
 }
 
 model checklist_rule {
-  id                  Int             @id @default(autoincrement())
+  id                  Int @id @default(autoincrement())
   quantity            String
   household_members   String
   bag_label_type      String
@@ -121,8 +121,10 @@ model checklist_rule {
   package_group_id    Int // relation scalar field (used in the `@relation` attribute above)
   organization        organization? @relation(fields: [organization_id], references: [id]) 
   organization_id     Int? // relation scalar field (used in the `@relation` attribute above)
-  submitted_on        DateTime    @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by        String?     @db.VarChar(60) @default("")
+  submitted_on        DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by        String? @db.VarChar(60) @default("")
+  last_updated        DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by     String? @db.VarChar(60) @default("")
 
   @@index([package_group_id], map: "package_group_id")
   @@index([package_item_id], map: "package_item_id")
@@ -152,6 +154,8 @@ model question {
   helper_text String? @db.VarChar(250) @default("")
   submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
   submitted_by String? @db.VarChar(60) @default("")
+  last_updated DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by String? @db.VarChar(60) @default("")
   organization_id Int
   organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "question_ibfk_1")
   form_id Int?
@@ -165,6 +169,10 @@ model question {
 model form {
   id Int @id @default(autoincrement())
   name String @db.VarChar(50)
+  submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by String? @db.VarChar(60) @default("")
+  last_updated DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by String? @db.VarChar(60) @default("")
   organization_id Int
   organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "form_ibfk_1")
   questions question[]

@@ -49,7 +49,7 @@ export const mapFormResponseToBagItems = ({
 };
 
 export const createInitialBagItemsMap = ({
-  household_members,
+  household_members = 1,
   feminine_health_care,
 }: FormResponseDTO) =>
   ({

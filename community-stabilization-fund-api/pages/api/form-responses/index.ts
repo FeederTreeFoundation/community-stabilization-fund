@@ -106,9 +106,9 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
     answers: {
       createMany: [
         ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
-            text: `${item.text}`,
-            question_id: Number(item.question_id),
-          }))
+          text: `${item.text}`,
+          question_id: Number(item.question_id),
+        }))
       ]
     }
   };

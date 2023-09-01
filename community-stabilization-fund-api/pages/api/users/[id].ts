@@ -32,7 +32,7 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 const getUserById = async (id: string, res: NextApiResponse) => {
   try {
     const user: UserDTO | null = await prisma.api_user.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     if (!user) {
@@ -75,7 +75,7 @@ const updateUserById = async (body: any, res: NextApiResponse) => {
 const deleteUserById = async (id: string, res: NextApiResponse) => {
   try {
     const results = await prisma.api_user.delete({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     if (!results) {

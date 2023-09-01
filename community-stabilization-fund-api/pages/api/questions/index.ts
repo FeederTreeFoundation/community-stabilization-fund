@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import type { AnswerDTO, QuestionDTO } from '../../../src/db';
+import type { QuestionDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { executeQuery, queries } from '../../../src/db';

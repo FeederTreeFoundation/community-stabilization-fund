@@ -1,9 +1,10 @@
-import { TextInput } from "@carbon/react";
-import { QuestionDTO } from "../../../db";
+import { TextInput, TextArea } from "@carbon/react";
+
+import type { QuestionDTO } from "../../../db";
+
+import { BasicSelect } from "../../../components";
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
-import { BasicSelect } from "../../../components";
-import { TextArea } from "@carbon/react";
 
 interface CustomQuestionInputProps {
   question: QuestionDTO;
@@ -28,7 +29,7 @@ const CustomQuestionInput = ({ question, register, errors, ...props }: CustomQue
           {...props}
         />
       </div>
-    )
+    );
   }
 
   if(question.role === 'select') {
@@ -46,7 +47,7 @@ const CustomQuestionInput = ({ question, register, errors, ...props }: CustomQue
           {...props}
         />
       </div>
-    )
+    );
   }
 
   return (
@@ -62,7 +63,7 @@ const CustomQuestionInput = ({ question, register, errors, ...props }: CustomQue
         {...props}
       />
     </div>
-  )
+  );
 };
 
 export { CustomQuestionInput };

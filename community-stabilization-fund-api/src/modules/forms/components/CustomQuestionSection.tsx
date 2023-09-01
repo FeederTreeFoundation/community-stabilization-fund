@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import type { AnswerDTO, QuestionDTO } from "../../../db";
 
 import { CustomQuestionInput } from "./CustomQuestionInput";
-import { useEffect } from "react";
 import { isEmpty } from "../../../utils";
 
 interface CustomQuestionSectionProps {
@@ -18,6 +18,7 @@ interface FormData {
 const CustomQuestionSection = ({ questions, onChange }: CustomQuestionSectionProps) => {
   const { watch, register, formState: { errors } } = useForm<FormData>();
   const custom_fields = watch('custom_fields');
+  const customFieldsJSON = JSON.stringify(custom_fields);
   
   useEffect(() => {
     function setCustomQuestionResponses() {
@@ -26,13 +27,13 @@ const CustomQuestionSection = ({ questions, onChange }: CustomQuestionSectionPro
       const customQuestionResponses = Object.entries(custom_fields).map(([key, value]) => ({
         question_id: key.charAt(key.length - 1),
         text: value
-      }))
+      }));
       
       onChange(JSON.stringify(customQuestionResponses));
     }
 
     setTimeout(setCustomQuestionResponses, 500);
-  }, [JSON.stringify(custom_fields)]);
+  }, [customFieldsJSON, custom_fields, onChange]);
   
   return (
     <>

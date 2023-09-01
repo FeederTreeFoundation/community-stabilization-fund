@@ -57,6 +57,8 @@ const UserNavigation = ({
   //   }
   // };
 
+  console.log({user});
+  
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
   // Fetch API user on page load
@@ -90,7 +92,7 @@ const UserNavigation = ({
           updateRules(res.data.checklist_rules ?? []);
         }
       });
-  }, [apiUser?.organization_id, setDefaultBagLabelType]);
+  }, [apiUser?.organization_id, setDefaultBagLabelType, updateRules, updateQuestions]);
 
   if (isLoading) {
     return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);
@@ -191,12 +193,29 @@ const UserNavigation = ({
   }
 
   function submitQuestion(data?: any) {
-    QuestionService.create(data).then((_resp) => {
-      if(typeof updateQuestions !== 'function') return;
-      // setCustomQuestions((prevQuestions: QuestionDTO[]) => (
-      //   [data, ...prevQuestions]
-      // ));
-      updateQuestions([...questions, data]);
+    if(typeof updateQuestions !== 'function') return;
+
+    const { id = '', ...rest } = data;
+    const question = { 
+      ...rest, 
+      last_updated_by: user?.email ?? '', 
+      last_updated: new Date()
+    } as QuestionDTO;
+    
+    if(!isEmpty(id)) {
+      QuestionService.update({...question, id}).then(() => {
+        console.log({question});
+        updateQuestions([
+          ...questions.filter(q => `${q.id}` !== `${id}`), 
+          question
+        ]);
+      })
+        .finally(() => handleClose('questionsModal'))
+        .catch((err) => console.error('submitQuestionError: ', err)); 
+    }
+
+    QuestionService.create(question).then(() => {
+      updateQuestions([...questions, question]);
     })
       .finally(() => handleClose('questionsModal'))
       .catch((err) => console.error('submitQuestionError: ', err));
