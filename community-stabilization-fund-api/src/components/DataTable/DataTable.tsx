@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import {Filter, TrashCan} from '@carbon/icons-react';
+import {Filter, Archive} from '@carbon/icons-react';
 import {
   DataTable as CarbonDataTable,
   TableHead,
@@ -68,7 +68,7 @@ const BasicTable = ({
               {handleArchive && (
                 <TableBatchAction
                   tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
-                  renderIcon={TrashCan}
+                  renderIcon={Archive}
                   kind='danger'
                   onClick={() => {
                     handleArchive(selectedRows);
@@ -89,6 +89,7 @@ const BasicTable = ({
                 <TableToolbarMenu
                   tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
                   renderIcon={Filter}
+                  title='Filter'
                 >
                   {toolbarActions}
                 </TableToolbarMenu>

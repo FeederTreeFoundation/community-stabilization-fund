@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import type {FormResponseDTO} from '../../../db';
 import type {
@@ -46,7 +46,11 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   const handleArchive = (rows: FormResponseDTO[]) => {
     const ids = rows.map((row) => `${row.id}`);
-    FormResponseService.archive(ids);
+    const body = {
+      archived: true,
+      archived_on: new Date(),
+    };
+    FormResponseService.update(ids, body);
     const newFormResponses = formResponsesRef.current?.filter(
       (f: FormResponseDTO) => !ids.includes(`${f.id}`)
     );
@@ -83,25 +87,29 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     FORM_RESPONSE_QUESTIONS
   ) as DataTableHeader<string>[];
 
-  const filteredRows = (filterState: string[]): FormResponseDTO[] => {
-    if (filterState.length === 0) {
-      return formResponsesRef.current;
-    } else {
-      if (filterValue !== 'is_black') {
-        return formResponsesRef.current.filter((f) =>
-          filterState.every((key) => f[key as keyof FormResponseDTO] == true)
-        );
+  const getFilteredRows = useCallback(
+    (filterState: string[]): FormResponseDTO[] => {
+      if (filterState.length === 0) {
+        return formResponsesRef.current;
       } else {
-        return formResponsesRef.current.filter((f) =>
-          filterState.every((key) => f[key as keyof FormResponseDTO] == false)
-        );
+        if (filterValue !== 'is_black') {
+          return formResponsesRef.current.filter((f) =>
+            filterState.every((key) => f[key as keyof FormResponseDTO] == true)
+          );
+        } else {
+          return formResponsesRef.current.filter((f) =>
+            filterState.every((key) => f[key as keyof FormResponseDTO] == false)
+          );
+        }
       }
-    }
-  };
+    },
+    [filterValue]
+  );
 
   useEffect(() => {
-    setFilteredFormResponses(filteredRows(filterState));
-  }, [filterState, filterState.length]);
+    const filteredRows = getFilteredRows(filterState);
+    setFilteredFormResponses(filteredRows);
+  }, [filterState, filterState.length, getFilteredRows]);
 
   useEffect(() => {
     formResponsesRef.current = formResponses;

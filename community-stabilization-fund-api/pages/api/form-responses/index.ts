@@ -11,7 +11,6 @@ const prisma = new PrismaClient({
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const {method, body} = req;
-
   switch (method) {
     case 'GET':
       getAllFormResponses(res);
@@ -29,9 +28,10 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case 'DELETE':
       if (body.ids) {
-        const {ids, ...rest} = body;
-        archiveBulkFormResponses(ids, rest, res);
+        const {ids} = body;
+        deleteFormResponse(ids, res);
       } else {
+        deleteAllFormResponses(res);
         // deleteAllFormResponses(res);
       }
       break;
@@ -130,7 +130,7 @@ const updateBulkFormResponses = async (
   res: NextApiResponse
 ) => {
   const {feminine_health_care, address, ...rest} = body;
-
+  console.log({body});
   try {
     const result = await prisma.form_response.updateMany({
       where: {id: {in: ids.map((id) => parseInt(id))}},
@@ -146,55 +146,33 @@ const updateBulkFormResponses = async (
   }
 };
 
-const archiveBulkFormResponses = async (
-  ids: string[],
-  body: any,
-  res: NextApiResponse
-) => {
-  const {...rest} = body;
+const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
+  const sql = queries.makeBulkDeleteSql('form_response', ids);
   try {
-    const result = await prisma.form_response.updateMany({
-      where: {id: {in: ids.map((id) => parseInt(id))}},
-      data: {
-        ...rest,
-        archived: true,
-        archived_on: new Date(),
-      },
-    });
-    return res.json(result);
+    const results = await executeQuery({sql});
+    if (!results) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Not Found',
+      });
+    }
+    return res.send('Successfully deleted form response with id: ' + ids);
   } catch (error) {
     console.error({error});
     throw error;
   }
 };
 
-// const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
-//   const sql = queries.makeBulkDeleteSql('form_response', ids);
-//   try {
-//     const results = await executeQuery({sql});
-//     if (!results) {
-//       return res.status(404).json({
-//         status: 404,
-//         message: 'Not Found',
-//       });
-//     }
-//     return res.send('Successfully deleted form response with id: ' + ids);
-//   } catch (error) {
-//     console.error({error});
-//     throw error;
-//   }
-// };
-
-// const deleteAllFormResponses = async (res: NextApiResponse) => {
-//   const sql = queries.truncateTableSql('form_response');
-//   try {
-//     await executeQuery({sql});
-//     return res.status(201).send('Successfully reset table form_response');
-//   } catch (error) {
-//     console.error({error});
-//     throw error;
-//   }
-// };
+const deleteAllFormResponses = async (res: NextApiResponse) => {
+  const sql = queries.truncateTableSql('form_response');
+  try {
+    await executeQuery({sql});
+    return res.status(201).send('Successfully reset table form_response');
+  } catch (error) {
+    console.error({error});
+    throw error;
+  }
+};
 
 export default formResponseHandler;
 

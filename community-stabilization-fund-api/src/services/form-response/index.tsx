@@ -11,7 +11,7 @@ const FormResponseService = {
   getAll,
   create,
   deleteAll,
-  archive: archive,
+  update: update,
   delete: _delete,
 };
 
@@ -27,13 +27,13 @@ async function create(data: any) {
   });
 }
 
-async function archive(ids: string[]) {
-  return await axiosInstance.delete<FormResponseDTO>(`${baseUrl}`, {
-    data: {
-      ids: ids,
-    },
+async function update(ids: string[], body: any) {
+  return await axiosInstance.put<FormResponseDTO>(`${baseUrl}`, {
+    ids: ids,
+    ...body,
   });
 }
+
 async function _delete(ids: string[]) {
   return await axiosInstance.delete<FormResponseDTO>(`${baseUrl}`, {
     data: {
