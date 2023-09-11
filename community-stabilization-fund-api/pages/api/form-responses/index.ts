@@ -91,14 +91,14 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       'Feminine Health Care'
     )
       ? {
-          create: {
-            feminine_members: Number(feminine_health_care?.feminine_members),
-            hygiene_items: feminine_health_care?.hygiene_items?.join(),
-            needs_plan_b: Boolean(
-              feminine_health_care?.needs_plan_b === 'true'
-            ),
-          },
-        }
+        create: {
+          feminine_members: Number(feminine_health_care?.feminine_members),
+          hygiene_items: feminine_health_care?.hygiene_items?.join(),
+          needs_plan_b: Boolean(
+            feminine_health_care?.needs_plan_b === 'true'
+          ),
+        },
+      }
       : undefined,
     address: {
       create: {
