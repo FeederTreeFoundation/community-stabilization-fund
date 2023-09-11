@@ -46,7 +46,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
 
   const handleArchive = (rows: FormResponseDTO[]) => {
     const ids = rows.map((row) => `${row.id}`);
-    FormResponseService.delete(ids);
+    FormResponseService.archive(ids);
     const newFormResponses = formResponsesRef.current?.filter(
       (f: FormResponseDTO) => !ids.includes(`${f.id}`)
     );
