@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { Filter, TrashCan } from '@carbon/icons-react';
+import {Filter, TrashCan} from '@carbon/icons-react';
 import {
   DataTable as CarbonDataTable,
   TableHead,
@@ -28,8 +28,8 @@ import type {
 
 // TEMPORARY FIX FOR CARBON DATA TABLE TYPES
 class DataTable extends React.Component<
-  DataTableProps & { children?: Function }
-  > {
+  DataTableProps & {children?: Function}
+> {
   render() {
     return (
       <CarbonDataTable {...this.props}>{this.props.children}</CarbonDataTable>
@@ -40,10 +40,10 @@ class DataTable extends React.Component<
 const BasicTable = ({
   rows,
   headers,
-  handleDelete,
+  handleArchive,
   toolbarActions,
 }: DataTableProps & {
-  handleDelete?: Function;
+  handleArchive?: Function;
   toolbarActions?: JSX.Element;
 }) => (
   <DataTable rows={rows} headers={headers}>
@@ -65,16 +65,16 @@ const BasicTable = ({
         <TableContainer {...getTableContainerProps()}>
           <TableToolbar {...getToolbarProps()}>
             <TableBatchActions {...batchActionProps}>
-              {handleDelete && (
+              {handleArchive && (
                 <TableBatchAction
                   tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
                   renderIcon={TrashCan}
                   kind='danger'
                   onClick={() => {
-                    handleDelete(selectedRows);
+                    handleArchive(selectedRows);
                   }}
                 >
-                  Delete
+                  Archive
                 </TableBatchAction>
               )}
             </TableBatchActions>
@@ -101,7 +101,7 @@ const BasicTable = ({
                 <TableSelectAll {...getSelectionProps()} />
 
                 {headers.map((header) => (
-                  <TableHeader {...getHeaderProps({ header })}>
+                  <TableHeader {...getHeaderProps({header})}>
                     {header.header}
                   </TableHeader>
                 ))}
@@ -109,8 +109,8 @@ const BasicTable = ({
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow {...getRowProps({ row })} className='table-row'>
-                  <TableSelectRow {...getSelectionProps({ row })} />
+                <TableRow {...getRowProps({row})} className='table-row'>
+                  <TableSelectRow {...getSelectionProps({row})} />
                   {row.cells.map((cell) => (
                     <TableCell key={cell.id}>{cell.value}</TableCell>
                   ))}
@@ -124,4 +124,4 @@ const BasicTable = ({
   </DataTable>
 );
 
-export { BasicTable, DataTable };
+export {BasicTable, DataTable};

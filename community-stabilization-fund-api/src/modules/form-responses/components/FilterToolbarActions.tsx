@@ -1,6 +1,6 @@
-import { Checkbox } from 'carbon-components-react';
+import {Checkbox} from 'carbon-components-react';
 
-import type { ChangeEvent } from 'react';
+import type {ChangeEvent} from 'react';
 
 import styles from '../styles/form-responses.module.css';
 
@@ -16,13 +16,13 @@ const FilterToolbarActions = ({
   function onFilter(e: ChangeEvent) {
     if (!handleFilter) return;
 
-    const { value } = e.target as HTMLInputElement;
+    const {value} = e.target as HTMLInputElement;
     handleFilter(value);
   }
   return (
     <div className={`${styles.table_toolbar_action}`}>
       <Checkbox
-        labelText={`Is Black?`}
+        labelText={`Is not Black?`}
         id='checkbox-label-1'
         value='is_black'
         checked={filterState.includes('is_black')}
@@ -57,4 +57,4 @@ const FilterToolbarActions = ({
   );
 };
 
-export { FilterToolbarActions };
+export {FilterToolbarActions};

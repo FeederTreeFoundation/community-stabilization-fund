@@ -1,23 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import type { FormResponseDTO } from '../../../db';
+import type {FormResponseDTO} from '../../../db';
 import type {
   DataTableHeader,
   DataTableRow,
 } from 'carbon-components-react/lib/components/DataTable';
-import type { FC } from 'react';
+import type {FC} from 'react';
 
-import { FilterToolbarActions } from './FilterToolbarActions';
+import {FilterToolbarActions} from './FilterToolbarActions';
 import formResponses from '../../../../pages/form-responses';
 
-import { BasicTable } from '../../../components';
+import {BasicTable} from '../../../components';
 import FormResponseService from '../../../services/form-response';
-import { FORM_RESPONSE_QUESTIONS } from '../constants';
+import {FORM_RESPONSE_QUESTIONS} from '../constants';
 
-import { getAddress, mapBooleanToResponse } from '../utils';
-
-
-
+import {getAddress, mapBooleanToResponse} from '../utils';
 
 import styles from '../styles/form-responses.module.css';
 
@@ -33,10 +30,11 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     FormResponseDTO[]
   >([]);
   const [filterState, setFilterState] = useState<string[]>([]);
-
+  const [filterValue, setFilterValue] = useState<string>('');
   const formResponsesRef = useRef(formResponses);
 
   const handleFilter = (value: string) => {
+    setFilterValue(value);
     if (filterState.includes(value)) {
       // remove previous state
       const removedFilterState = filterState.filter((state) => state !== value);
@@ -46,7 +44,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     }
   };
 
-  const handleDelete = (rows: FormResponseDTO[]) => {
+  const handleArchive = (rows: FormResponseDTO[]) => {
     const ids = rows.map((row) => `${row.id}`);
     FormResponseService.delete(ids);
     const newFormResponses = formResponsesRef.current?.filter(
@@ -71,7 +69,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     formResponses.map((resp) => {
       const feminine_health_care = !!resp.feminine_health_care;
       const address = getAddress(resp);
-      const r = { ...resp, feminine_health_care, address, id: `${resp.id}` };
+      const r = {...resp, feminine_health_care, address, id: `${resp.id}`};
 
       FORM_RESPONSE_QUESTIONS.forEach((q) => mapBooleanToResponse(r, q));
 
@@ -89,9 +87,15 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
     if (filterState.length === 0) {
       return formResponsesRef.current;
     } else {
-      return formResponsesRef.current.filter((f) =>
-        filterState.every((key) => f[key as keyof FormResponseDTO] == true)
-      );
+      if (filterValue !== 'is_black') {
+        return formResponsesRef.current.filter((f) =>
+          filterState.every((key) => f[key as keyof FormResponseDTO] == true)
+        );
+      } else {
+        return formResponsesRef.current.filter((f) =>
+          filterState.every((key) => f[key as keyof FormResponseDTO] == false)
+        );
+      }
     }
   };
 
@@ -114,7 +118,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   return (
     <div className={styles.form_responses_table}>
       <BasicTable
-        handleDelete={handleDelete}
+        handleArchive={handleArchive}
         toolbarActions={toolbarActions}
         rows={rows}
         headers={headers}
@@ -123,7 +127,7 @@ const FormResponsesTable: FC<FormResponsesTableProps> = ({
   );
 };
 
-export { FormResponsesTable };
+export {FormResponsesTable};
 
 export async function getStaticProps() {
   return {
