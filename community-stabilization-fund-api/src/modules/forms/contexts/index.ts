@@ -4,10 +4,10 @@ import type { QuestionDTO } from '../../../db';
 
 interface FormQuestionsContextProps {
   questions: QuestionDTO[];
-  disableDefaultQuestions: boolean;
+  disableDefaultQuestions: string;
   updateQuestions?: Function;
   updateDisableDefaultQuestions?: Function;
 }
 
 export const FormQuestionsContext =
-  createContext<FormQuestionsContextProps>({ questions: [], disableDefaultQuestions: false });
+  createContext<FormQuestionsContextProps>({ questions: [], disableDefaultQuestions: '' });

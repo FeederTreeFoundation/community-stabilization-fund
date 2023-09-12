@@ -17,7 +17,13 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       getAllFormResponses(res);
       break;
     case 'POST':
-      createFormResponse(body, res);
+      const { disable_default_questions, ...rest } = body;
+
+      if(disable_default_questions) {
+        createCustomFormResponse(rest, res)
+      } else {
+        createFormResponse(rest, res);
+      }
       break;
     case 'PUT':
       if(body.ids) {
@@ -110,6 +116,53 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
           question_id: Number(item.question_id),
         }))
       ]
+    }
+  };
+
+  try {
+    const result = await prisma.form_response.create({ data: formResponse });
+
+    return res
+      .status(201)
+      .send('Successfully created form response with id: ' + result.id);
+  } catch (error) {
+    console.error({error});
+    throw error;
+  }
+};
+
+const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
+  const { custom_question_responses, feminine_health_care, address, ...rest } = body;
+  console.log({rest});
+  
+
+  const customQuestionResponsesToCreate = JSON.parse(custom_question_responses);
+
+  const formResponse = {
+    ...rest,
+    household_members: null,
+    elderly_members: null,
+    youth_members: null,
+    is_black: null,
+    live_in_southside_atlanta: null,
+    live_in_pittsburgh_atlanta: null,
+    is_local: null,
+    has_flu_symptoms: null,
+    is_pick_up: null,
+    is_volunteering: null,
+    is_subscribing: null,
+    is_interested_in_membership: null,
+    packages_to_receive: null,
+    answers: {
+      createMany: {
+        data: [
+          ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
+            text: `${item.text}`,
+            question_id: Number(item.question_id),
+          }))
+        ],
+        skipDuplicates: true,
+      }
     }
   };
 

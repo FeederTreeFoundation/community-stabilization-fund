@@ -5,10 +5,10 @@ import {
   HeaderGlobalBar,
   Link,
   SkeletonIcon,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { useContext, useEffect, useState } from 'react';
 
-import type { ChecklistRuleDTO, QuestionDTO, UserDTO } from '../../../../db';
+import type { ChecklistRuleDTO, OrganizationDTO, QuestionDTO, UserDTO } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
@@ -27,11 +27,13 @@ import { createInitialBagItemsMap } from '../../../checklists/utils';
 import { FormQuestionsContext } from '../../../forms';
 
 interface UserNavigationProps {
-  setDefaultBagLabelType?: (bagLabelType: string) => void;
+  updateDefaultBagLabelType?: (bagLabelType: string) => void;
+  updateDisableDefaultQuestions?: (json: string) => void;
 }
 
 const UserNavigation = ({
-  setDefaultBagLabelType,
+  updateDefaultBagLabelType,
+  updateDisableDefaultQuestions,
 }: UserNavigationProps) => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
@@ -56,8 +58,6 @@ const UserNavigation = ({
   //     handleClose('settingsModal');
   //   }
   // };
-
-  console.log({user});
   
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
@@ -80,19 +80,21 @@ const UserNavigation = ({
   // Set defaults with API user
   useEffect(() => {
     if(isEmpty(apiUser?.organization_id)) return;
-    if(typeof setDefaultBagLabelType !== 'function') return;
+    if(typeof updateDefaultBagLabelType !== 'function') return;
     if(typeof updateRules !== 'function') return;
     if(typeof updateQuestions !== 'function') return;
+    if(typeof updateDisableDefaultQuestions !== 'function') return;
   
     OrganizationService.getById(`${apiUser?.organization_id}`)
       .then((res) => {
         if (res.data) {
-          setDefaultBagLabelType(res.data.bag_label_type ?? '');
+          updateDefaultBagLabelType(res.data.bag_label_type ?? '');
           updateQuestions(res.data.questions ?? []);
           updateRules(res.data.checklist_rules ?? []);
+          updateDisableDefaultQuestions(res.data.disable_default_questions_json ?? '')
         }
       });
-  }, [apiUser?.organization_id, setDefaultBagLabelType, updateRules, updateQuestions]);
+  }, [apiUser?.organization_id, updateDefaultBagLabelType, updateRules, updateQuestions]);
 
   if (isLoading) {
     return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);
@@ -133,8 +135,9 @@ const UserNavigation = ({
         open={!!openModalMapping['settingsModal']}
         needsSetup={isEmpty(questions)}
         handleOpen={handleOpen} 
-        handleClose={handleClose} 
-        handleChange={handleChange} 
+        handleClose={() => handleClose('settingsModal')} 
+        handleChange={onBagLabelTypeChange}
+        handleSave={saveSettings}
       />
       <ChecklistRulesModal 
         packageGroups={packageGroups} 
@@ -148,7 +151,7 @@ const UserNavigation = ({
         user={apiUser}
         questions={questions}
         open={!!openModalMapping['questionModal']}
-        handleClose={handleClose} 
+        handleClose={() => handleClose('questionModal')} 
         onSubmit={submitQuestion}
         onDelete={handleDeleteQuestion}
       />
@@ -163,7 +166,7 @@ const UserNavigation = ({
     setOpenModalMapping({[key]: false});
   }
 
-  function handleChange(e: ChangeEvent<HTMLSelectElement>) {
+  function onBagLabelTypeChange(e: ChangeEvent<HTMLSelectElement>) {
     if(typeof updateBagLabelType !== 'function') return;
 
     const bagLabelType = e.target.value;
@@ -178,10 +181,25 @@ const UserNavigation = ({
     }, 500);
   }
 
+  // TODO: Replace onBagLabelTypeChange with this function
+  function saveSettings(data: OrganizationDTO) {
+    OrganizationService.update({...data, id: apiUser?.organization_id})
+      .then((_res) => {
+        // updateBagLabelType(data.bag_label_type ?? '');
+        handleClose('settingsModal');
+        alert('Settings saved!');
+      })
+      .catch((err) => {
+        console.error('updateBagLabelTypeError: ', err)
+        alert('Error saving settings.. Please try again.');
+      });
+
+  }
+
   function submitChecklistRule(data?: any) {
     if (typeof updateRules !== 'function') return;
 
-    ChecklistRuleService.create(data)
+    ChecklistRuleService.create({...data, organization_id: apiUser?.organization_id})
       .then((resp) => {
         updateRules((prevRules: ChecklistRuleDTO[]) => (
           [data, ...prevRules]

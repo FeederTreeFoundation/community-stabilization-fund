@@ -1,6 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0';
 import { CheckmarkFilled } from '@carbon/icons-react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 
 import type { FormResponseDTO } from '../../../db/models';
 
@@ -9,6 +9,7 @@ import FormResponseService from '../../../services/form-response';
 import { FormQuestionsContext } from '../contexts';
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
+import { isEmpty } from '../../../utils';
 
 interface GroceriesAndSuppliesFormProps {
   formType?: string;
@@ -20,7 +21,14 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
   const { user, error } = useUser();
   const { questions, disableDefaultQuestions } = useContext(FormQuestionsContext);
 
-  const filteredQuestions = questions.filter(question => question.type === formType);
+  const filteredQuestions = useMemo(() => {
+    return questions.filter(question => question.type === formType)
+  }, [questions.length, formType]);
+  
+  const defaultQuestionsDisabled = useMemo(() => {
+    const raw = !isEmpty(disableDefaultQuestions) ? JSON.parse(disableDefaultQuestions) : {};
+    return formType === 'internal' ? raw['disable-internal-default-questions'] : raw['disable-default-public-questions'];
+  }, [ disableDefaultQuestions ]);
   
   if(error) {
     console.warn(error);
@@ -44,9 +52,9 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
     );
   }
 
-  if(disableDefaultQuestions) {
+  if(defaultQuestionsDisabled) {
     return (
-      <></>
+      <DefaultForm defaultQuestionsDisabled questions={filteredQuestions} onSubmit={onSubmit} />
     );
   }
 
@@ -55,6 +63,7 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
   function onSubmit(data: FormResponseDTO) {
     FormResponseService.create({
       ...data,
+      disable_default_questions: defaultQuestionsDisabled,
       submitted_by: user?.email ?? 'recipient'
     })
       .then(() => {

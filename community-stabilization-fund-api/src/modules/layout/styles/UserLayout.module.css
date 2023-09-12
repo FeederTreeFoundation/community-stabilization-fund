@@ -30,6 +30,16 @@
   margin: 20px auto;
 }
 
+.checkbox_group {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.checkbox_group legend {
+  margin-bottom: 0.2rem;
+}
+
 .heading {
   align-self: flex-start;
 }

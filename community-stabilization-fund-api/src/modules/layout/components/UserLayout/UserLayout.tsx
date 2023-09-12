@@ -27,7 +27,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
   const [checklistRules, setChecklistRules] = useState<ChecklistRuleDTO[]>([]);
   const [currentBagLabelType, setCurrentBagLabelType] = useState<string>('');
   const [questions, setQuestions] = useState<QuestionDTO[]>([]);
-  const [disableDefaultQuestions, setDisableDefaultQuestions] = useState<boolean>(false);
+  const [disableDefaultQuestions, setDisableDefaultQuestions] = useState<string>('');
 
   const { user } = useUser();
   const roles = getRoles(user);
@@ -73,7 +73,10 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                   hidden={!roles?.some(role => ['admin', 'volunteer'].includes(role))}
                 />
               </HeaderNavigation>
-              <UserNavigation setDefaultBagLabelType={setCurrentBagLabelType} />
+              <UserNavigation 
+                updateDefaultBagLabelType={setCurrentBagLabelType} 
+                updateDisableDefaultQuestions={setDisableDefaultQuestions} 
+              />
             </Header>
           </Theme>
           {children}
