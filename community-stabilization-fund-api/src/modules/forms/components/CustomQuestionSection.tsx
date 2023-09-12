@@ -25,7 +25,7 @@ const CustomQuestionSection = ({ questions, onChange }: CustomQuestionSectionPro
       if(isEmpty(custom_fields)) return;
       if(typeof onChange !== 'function') return;
       const customQuestionResponses = Object.entries(custom_fields).map(([key, value]) => ({
-        question_id: key.charAt(key.length - 1),
+        question_id: key.slice(12),
         text: value
       }));
       

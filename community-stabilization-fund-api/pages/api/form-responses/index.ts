@@ -54,6 +54,7 @@ const getAllFormResponses = async (res: NextApiResponse) => {
       include: {
         feminine_health_care: true,
         address: true,
+        answers: true,
       },
       where: {
         archived: false,
@@ -119,12 +120,14 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       },
     },
     answers: {
-      createMany: [
-        ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
-          text: `${item.text}`,
-          question_id: Number(item.question_id),
-        }))
-      ]
+      createMany: {
+        data: [
+          ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
+            text: `${item.text}`,
+            question_id: Number(item.question_id),
+          }))
+        ]
+      },
     }
   };
 
@@ -142,8 +145,6 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
 
 const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
   const { custom_question_responses, feminine_health_care, address, ...rest } = body;
-  console.log({rest});
-  
 
   const customQuestionResponsesToCreate = JSON.parse(custom_question_responses);
 
@@ -169,8 +170,7 @@ const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
             text: `${item.text}`,
             question_id: Number(item.question_id),
           }))
-        ],
-        skipDuplicates: true,
+        ]
       }
     }
   };

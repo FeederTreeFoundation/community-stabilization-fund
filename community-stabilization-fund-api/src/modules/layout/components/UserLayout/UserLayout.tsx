@@ -23,7 +23,6 @@ interface UserLayoutProps {
 }
 
 const UserLayout = ({ children }: UserLayoutProps) => {
-  const [apiUser, setApiUser] = useState<UserDTO>();
   const [selectedPage, setSelectedPage] = useState('');
   const [checklistRules, setChecklistRules] = useState<ChecklistRuleDTO[]>([]);
   const [currentBagLabelType, setCurrentBagLabelType] = useState<string>('');
