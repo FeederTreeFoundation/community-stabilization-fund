@@ -29,8 +29,11 @@ model api_user {
 model organization {
   id Int @id @default(autoincrement())
   name String @db.VarChar(50)
-  short_name String? @db.VarChar(10)
-  bag_label_type String? @db.VarChar(40)
+  short_name String? @db.VarChar(10) @default("")
+  bag_label_type String? @db.VarChar(40) @default("")
+  disable_default_questions_json String? @db.VarChar(250) @default("")
+  submitted_on DateTime? @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by String? @db.VarChar(60) @default("")
   api_users api_user[]
   questions question[]
   checklist_rules checklist_rule[]
@@ -60,16 +63,16 @@ model form_response {
   id                          Int                   @id @default(autoincrement())
   first_name                  String                @db.VarChar(20)
   last_name                   String                @db.VarChar(20)
-  email                       String?               @db.VarChar(60)
-  phone_number                String                @db.VarChar(15)
-  phone_type                  String?               @db.VarChar(7)
+  email                       String?               @db.VarChar(60) @default("")
+  phone_number                String?               @db.VarChar(15) @default("")
+  phone_type                  String?               @db.VarChar(7) @default("")
   is_black                    Boolean?              @default(false)
   is_local                    Boolean?              @default(false)
-  packages_to_receive         String?               @db.VarChar(250) @default("[]")
+  packages_to_receive         String?               @db.VarChar(250) @default("")
   has_flu_symptoms            Boolean?              @default(false)
   household_members           Int?                  @default(1)
-  item_requests               String?               @db.VarChar(100)
-  additional_information      String?               @db.VarChar(250)
+  item_requests               String?               @db.VarChar(100) @default("")
+  additional_information      String?               @db.VarChar(250) @default("")
   is_pick_up                  Boolean?              @default(false)
   is_volunteering             Boolean?              @default(false)
   is_subscribing              Boolean?              @default(false)
@@ -78,6 +81,7 @@ model form_response {
   live_in_southside_atlanta   Boolean?              @default(false)
   archived                    Boolean?              @default(false)
   archived_on                 DateTime?
+  archived_by                 String?               @db.VarChar(60) @default("")
   submitted_on                DateTime              @default(dbgenerated("NOW()")) @db.DateTime
   submitted_by                String?               @db.VarChar(60)
   elderly_members             Int?                  @default(0)

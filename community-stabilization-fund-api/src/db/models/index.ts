@@ -13,6 +13,9 @@ export interface OrganizationDTO {
   questions?: QuestionDTO[];
   checklist_rules?: ChecklistRuleDTO[];
   forms?: FormDTO[];
+  disable_default_questions_json?: string|null;
+  submitted_on?: Date|null;
+  submitted_by?: string|null;
 }
 
 export interface FeminineHealthResponseDTO {
@@ -84,9 +87,10 @@ export interface ChecklistRuleDTO {
   weeks_delayed_by?: number | null;
   package_group?: PackageGroupDTO;
   package_item?: PackageItemDTO;
+  organization?: OrganizationDTO;
   package_group_id?: number;
   package_item_id?: number;
-  organization_id: number;
+  organization_id?: number;
   submitted_on?: Date|null;
   submitted_by?: string|null;
   last_updated?: Date|null;
