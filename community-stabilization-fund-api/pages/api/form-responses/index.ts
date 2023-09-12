@@ -1,17 +1,16 @@
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
 
 import type { AnswerDTO, FormResponseDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { executeQuery, queries } from '../../../src/db';
+import {executeQuery, queries} from '../../../src/db';
 
 const prisma = new PrismaClient({
-  datasources: { db: { url: process.env.DATABASE_URL } },
+  datasources: {db: {url: process.env.DATABASE_URL}},
 });
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, body } = req;
-
+  const {method, body} = req;
   switch (method) {
     case 'GET':
       getAllFormResponses(res);
@@ -26,8 +25,8 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       }
       break;
     case 'PUT':
-      if(body.ids) {
-        const { ids, ...rest } = body;
+      if (body.ids) {
+        const {ids, ...rest} = body;
         updateBulkFormResponses(ids, rest, res);
       } else {
         res.status(400).end('Missing ids in request body');
@@ -35,10 +34,11 @@ const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case 'DELETE':
       if (body.ids) {
-        const { ids } = body;
+        const {ids} = body;
         deleteFormResponse(ids, res);
       } else {
         deleteAllFormResponses(res);
+        // deleteAllFormResponses(res);
       }
       break;
     default:
@@ -54,6 +54,9 @@ const getAllFormResponses = async (res: NextApiResponse) => {
       include: {
         feminine_health_care: true,
         address: true,
+      },
+      where: {
+        archived: false,
       },
     })) as FormResponseDTO[];
 
@@ -92,13 +95,19 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
       rest.is_interested_in_membership === 'true'
     ),
     packages_to_receive: rest.packages_to_receive.join(),
-    feminine_health_care: rest.packages_to_receive.includes('Feminine Health Care') ? {
-      create: {
-        feminine_members: Number(feminine_health_care?.feminine_members),
-        hygiene_items: feminine_health_care?.hygiene_items?.join(),
-        needs_plan_b: Boolean(feminine_health_care?.needs_plan_b === 'true'),
-      },
-    } : undefined,
+    feminine_health_care: rest.packages_to_receive.includes(
+      'Feminine Health Care'
+    )
+      ? {
+        create: {
+          feminine_members: Number(feminine_health_care?.feminine_members),
+          hygiene_items: feminine_health_care?.hygiene_items?.join(),
+          needs_plan_b: Boolean(
+            feminine_health_care?.needs_plan_b === 'true'
+          ),
+        },
+      }
+      : undefined,
     address: {
       create: {
         country: address?.country,
@@ -167,7 +176,7 @@ const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
   };
 
   try {
-    const result = await prisma.form_response.create({ data: formResponse });
+    const result = await prisma.form_response.create({data: formResponse});
 
     return res
       .status(201)
@@ -178,15 +187,19 @@ const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
   }
 };
 
-const updateBulkFormResponses = async (ids: string[], body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, ...rest } = body;
+const updateBulkFormResponses = async (
+  ids: string[],
+  body: any,
+  res: NextApiResponse
+) => {
+  const {feminine_health_care, address, ...rest} = body;
 
   try {
     const result = await prisma.form_response.updateMany({
-      where: { id: { in: ids.map(id => parseInt(id)) } },
+      where: {id: {in: ids.map((id) => parseInt(id))}},
       data: {
         ...rest,
-      }
+      },
     });
 
     return res.json(result);
@@ -199,7 +212,7 @@ const updateBulkFormResponses = async (ids: string[], body: any, res: NextApiRes
 const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
   const sql = queries.makeBulkDeleteSql('form_response', ids);
   try {
-    const results = await executeQuery({ sql });
+    const results = await executeQuery({sql});
     if (!results) {
       return res.status(404).json({
         status: 404,
@@ -216,7 +229,7 @@ const deleteFormResponse = async (ids: string[], res: NextApiResponse) => {
 const deleteAllFormResponses = async (res: NextApiResponse) => {
   const sql = queries.truncateTableSql('form_response');
   try {
-    await executeQuery({ sql });
+    await executeQuery({sql});
     return res.status(201).send('Successfully reset table form_response');
   } catch (error) {
     console.error({error});
