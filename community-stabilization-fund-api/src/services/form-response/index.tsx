@@ -1,16 +1,17 @@
 import getConfig from 'next/config';
 
-import type { FormResponseDTO } from '../../db';
+import type {FormResponseDTO} from '../../db';
 
-import { axiosInstance } from '../constants';
+import {axiosInstance} from '../constants';
 
-const { publicRuntimeConfig } = getConfig() || {};
+const {publicRuntimeConfig} = getConfig() || {};
 const baseUrl = `${publicRuntimeConfig?.apiUrl}/form-responses`;
 
 const FormResponseService = {
   getAll,
   create,
   deleteAll,
+  update: update,
   delete: _delete,
 };
 
@@ -23,6 +24,13 @@ async function create(data: any) {
     headers: {
       'Content-Type': 'application/json',
     },
+  });
+}
+
+async function update(ids: string[], body: any) {
+  return await axiosInstance.put<FormResponseDTO>(`${baseUrl}`, {
+    ids: ids,
+    ...body,
   });
 }
 
