@@ -10,16 +10,16 @@ const prisma = new PrismaClient({
 });
 
 const formResponseHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  const {method, body} = req;
+  const { method, body } = req;
+  const { disable_default_questions, ...rest } = body;
+
   switch (method) {
     case 'GET':
       getAllFormResponses(res);
       break;
     case 'POST':
-      const { disable_default_questions, ...rest } = body;
-
       if(disable_default_questions) {
-        createCustomFormResponse(rest, res)
+        createCustomFormResponse(rest, res);
       } else {
         createFormResponse(rest, res);
       }

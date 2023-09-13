@@ -54,11 +54,12 @@ const QuestionModal = ({
   });
 
   const form = watch();
+  const hasQuestions = !isEmpty(questions);
 
   useEffect(() => {
-    const initialMode = isEmpty(questions) ? 'setup' : 'add';
+    const initialMode = !hasQuestions ? 'setup' : 'add';
     setMode(initialMode);
-  }, [isEmpty(questions)]);
+  }, [hasQuestions]);
 
   if(mode === 'setup') {
     return (
@@ -72,11 +73,11 @@ const QuestionModal = ({
         onRequestClose={() => handleClose('questionModal')}
         onRequestSubmit={next}
       >
-        <p>
-          You can add custom questions that will be displayed to the user when they are filling out the form.
+        <div>
+          <p>You can add custom questions that will be displayed to the user when they are filling out the form.</p>
           <ul className='mt-4'>
             <li>
-              - Decide who can see the question by selecting the 'internal' or 'public' <strong>type</strong> field.
+              - Decide who can see the question by selecting the &apos;internal&apos; or &apos;public&apos; <strong>type</strong> field.
             </li>
             <li>
               - Add additional information to your question text using the <strong>helper text</strong> field.
@@ -91,8 +92,8 @@ const QuestionModal = ({
               - Additionally, you can hide any question from your form by selecting the <strong>hidden</strong> field.
             </li>
           </ul>
-          <div className='mt-4'>Click 'Next' to continue.</div>
-        </p>
+          <p className='mt-4'>Click &apos;Next&apos; to continue.</p>
+        </div>
       </Modal>
     );
   }
@@ -137,16 +138,16 @@ const QuestionModal = ({
       <Row className={styles.question_form_wrapper}>
         { selectedQuestion && (
           <Section level={4}>
-              <div className='row'>
-                <div className='column' >
-                  <Heading className={`${styles.heading} mb-2`} size='sm'>{`${mode.toUpperCase()} QUESTION`}</Heading>
-                </div>
-                <div className='column mr-4'>
-                  {mode === 'edit' && <Button kind='danger--ghost' size='sm' onClick={deleteQuestion}>
-                    Delete
-                  </Button>}
-                </div>
+            <div className='row'>
+              <div className='column' >
+                <Heading className={`${styles.heading} mb-2`} size='sm'>{`${mode.toUpperCase()} QUESTION`}</Heading>
               </div>
+              <div className='column mr-4'>
+                {mode === 'edit' && <Button kind='danger--ghost' size='sm' onClick={deleteQuestion}>
+                    Delete
+                </Button>}
+              </div>
+            </div>
             <TextInput
               id='question-text'
               className='mt-2'

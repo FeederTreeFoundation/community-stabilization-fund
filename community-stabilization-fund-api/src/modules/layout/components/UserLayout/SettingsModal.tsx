@@ -7,13 +7,14 @@ import {
 
 import { useContext, useEffect, useState } from "react";
 
+import type { OrganizationDTO } from '../../../../db';
 import type { ChangeEvent} from "react";
 
 import { ChecklistConfigSection } from "./ChecklistConfigSection";
 
-import styles from '../../styles/UserLayout.module.css';
-import { OrganizationDTO } from '../../../../db';
 import { FormQuestionsContext } from '../../../forms';
+
+import styles from '../../styles/UserLayout.module.css';
 
 interface SettingsModalProps {
   open: boolean;
@@ -36,12 +37,12 @@ const SettingsModal = ({
   const [defaultQuestionsDisbaled, setDefaultQuestionsDisabled] = useState<{[key: string]: boolean}>();
   // const deleteAllFormResponsesText = "WARNING: This will delete all existing form data!";
 
-  const { disableDefaultQuestions } = useContext(FormQuestionsContext)
+  const { disableDefaultQuestions } = useContext(FormQuestionsContext);
 
   useEffect(() => {
     const raw = disableDefaultQuestions? JSON.parse(disableDefaultQuestions) : {};
     setDefaultQuestionsDisabled(raw);
-  }, [disableDefaultQuestions])
+  }, [disableDefaultQuestions]);
   return (
     <Modal
       open={open}
@@ -72,18 +73,18 @@ const SettingsModal = ({
             <legend>Disable default questions on initial form?</legend>
           </div>
           <div className='row'>
-          <Checkbox 
-            id='disable-internal-default-questions'
-            labelText={'internal'}
-            checked={defaultQuestionsDisbaled?.['disable-internal-default-questions']}
-            onChange={onCheckboxChange}
-          />
-          <Checkbox 
-            labelText={'public'}
-            id='disable-public-default-questions'
-            onChange={onCheckboxChange}
-            checked={defaultQuestionsDisbaled?.['disable-public-default-questions']}
-          />
+            <Checkbox 
+              id='disable-internal-default-questions'
+              labelText={'internal'}
+              checked={defaultQuestionsDisbaled?.['disable-internal-default-questions']}
+              onChange={onCheckboxChange}
+            />
+            <Checkbox 
+              labelText={'public'}
+              id='disable-public-default-questions'
+              onChange={onCheckboxChange}
+              checked={defaultQuestionsDisbaled?.['disable-public-default-questions']}
+            />
           </div>
         </fieldset>
           
@@ -113,7 +114,7 @@ const SettingsModal = ({
       handleSave({ disable_default_questions_json } as OrganizationDTO);
     }
 
-    handleClose()
+    handleClose();
   }
 };
 

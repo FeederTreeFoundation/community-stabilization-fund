@@ -6,10 +6,10 @@ import type { FormResponseDTO } from '../../../db/models';
 
 import { DefaultForm } from './DefaultForm';
 import FormResponseService from '../../../services/form-response';
+import { isEmpty } from '../../../utils';
 import { FormQuestionsContext } from '../contexts';
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
-import { isEmpty } from '../../../utils';
 
 interface GroceriesAndSuppliesFormProps {
   formType?: string;
@@ -21,14 +21,12 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
   const { user, error } = useUser();
   const { questions, disableDefaultQuestions } = useContext(FormQuestionsContext);
 
-  const filteredQuestions = useMemo(() => {
-    return questions.filter(question => question.type === formType)
-  }, [questions.length, formType]);
+  const filteredQuestions = useMemo(() => questions.filter(question => question.type === formType), [questions, formType]);
   
   const defaultQuestionsDisabled = useMemo(() => {
     const raw = !isEmpty(disableDefaultQuestions) ? JSON.parse(disableDefaultQuestions) : {};
     return formType === 'internal' ? raw['disable-internal-default-questions'] : raw['disable-default-public-questions'];
-  }, [ disableDefaultQuestions ]);
+  }, [ disableDefaultQuestions, formType ]);
   
   if(error) {
     console.warn(error);

@@ -10,8 +10,8 @@ import {FilterToolbarActions} from './FilterToolbarActions';
 
 import {BasicTable} from '../../../components';
 import FormResponseService from '../../../services/form-response';
-import {FORM_RESPONSE_QUESTIONS} from '../constants';
 import { FormQuestionsContext } from '../../forms';
+import {FORM_RESPONSE_QUESTIONS} from '../constants';
 
 import {getAddress, mapBooleanToResponse} from '../utils';
 
@@ -31,7 +31,7 @@ const FormResponsesTable = ({
   const [filterValue, setFilterValue] = useState<string>('');
   const formResponsesRef = useRef(formResponses);
 
-  const { questions, disableDefaultQuestions } = useContext(FormQuestionsContext);
+  const { questions } = useContext(FormQuestionsContext);
 
   const handleFilter = (value: string) => {
     setFilterValue(value);
@@ -63,7 +63,7 @@ const FormResponsesTable = ({
     );
   };
 
-  const rows = createRows() as DataTableRow<string>[];
+  const rows = createRows(filteredFormResponses) as DataTableRow<string>[];
   const headers = createHeaders(FORM_RESPONSE_QUESTIONS) as DataTableHeader<string>[];
 
   const getFilteredRows = useCallback(
@@ -128,7 +128,7 @@ const FormResponsesTable = ({
     return [...defaultHeaders, ...customHeaders];
   }
 
-  function createRows() {
+  function createRows(formResponses: FormResponseDTO[]) {
     const rows = formResponses.map((resp) => {
       const feminine_health_care = !!resp.feminine_health_care;
       const address = getAddress(resp);

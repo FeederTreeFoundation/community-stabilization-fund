@@ -91,10 +91,16 @@ const UserNavigation = ({
           updateDefaultBagLabelType(res.data.bag_label_type ?? '');
           updateQuestions(res.data.questions ?? []);
           updateRules(res.data.checklist_rules ?? []);
-          updateDisableDefaultQuestions(res.data.disable_default_questions_json ?? '')
+          updateDisableDefaultQuestions(res.data.disable_default_questions_json ?? '');
         }
       });
-  }, [apiUser?.organization_id, updateDefaultBagLabelType, updateRules, updateQuestions]);
+  }, [
+    apiUser?.organization_id,
+    updateDefaultBagLabelType,
+    updateRules,
+    updateQuestions,
+    updateDisableDefaultQuestions
+  ]);
 
   if (isLoading) {
     return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);
@@ -190,7 +196,7 @@ const UserNavigation = ({
         alert('Settings saved!');
       })
       .catch((err) => {
-        console.error('updateBagLabelTypeError: ', err)
+        console.error('updateBagLabelTypeError: ', err);
         alert('Error saving settings.. Please try again.');
       });
 
@@ -200,7 +206,7 @@ const UserNavigation = ({
     if (typeof updateRules !== 'function') return;
 
     ChecklistRuleService.create({...data, organization_id: apiUser?.organization_id})
-      .then((resp) => {
+      .then((_) => {
         updateRules((prevRules: ChecklistRuleDTO[]) => (
           [data, ...prevRules]
         ));
