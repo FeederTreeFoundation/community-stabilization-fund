@@ -23,22 +23,26 @@
   margin: 0;
 }
 
-.name {
+.inline {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.name label {
+.inline label {
   font-size: 14px;
 }
 
-.name div {
+.inline div {
   width: 100%;
 }
 
-.name div:first-of-type {
+.inline div:first-of-type {
   margin-right: 1rem;
+}
+
+.inline .phone_type {
+  width: 20%;
 }
 
 .submitted {
