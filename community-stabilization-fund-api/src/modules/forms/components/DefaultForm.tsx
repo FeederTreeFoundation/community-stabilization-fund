@@ -7,7 +7,7 @@ import type { FormResponseDTO, QuestionDTO } from "../../../db";
 
 import { CustomQuestionSection } from "./CustomQuestionSection";
 import { isEmpty } from "../../../utils";
-import { COUNTRY_LIST } from "../constants";
+import { AddressSection } from "./AddressSection";
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
 
@@ -28,10 +28,10 @@ const DefaultForm = ({
   return (
     <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label htmlFor='' className='mb-2'>
-        Name (Required)
+        <label className='mb-2'>
+          Name (required)
         </label>
-        <div className={`${styles.grid} ${styles.name}`}>
+        <div className={`${styles.grid} ${styles.inline}`}>
           <div>
             <TextInput
               id='first_name'
@@ -54,6 +54,43 @@ const DefaultForm = ({
           </div>
         </div>
       </div>
+        <label className='mb-2'>
+          Phone (required)
+        </label>
+      <div className={`${styles.grid} ${styles.inline}`}>
+        <div className={styles.phone_type}>
+            <Select
+              id='phone_type'
+              invalidText='Please select an option.'
+              invalid={!!errors.phone_type}
+              defaultValue='Home'
+              labelText='Phone Type'
+              {...register('phone_type')}
+            >
+              <SelectItem
+                disabled
+                hidden
+                value='Home'
+                text='Choose an option'
+              />
+              <SelectItem value='cell' text='Cell' />
+              <SelectItem value='home' text='Home' />
+              <SelectItem value='work' text='Work' />
+            </Select>
+        </div>
+        <div>
+            <TextInput
+              id='phone'
+              invalidText='Please enter a valid phone number'
+              labelText='Phone Number'
+              placeholder={'###-###-####'}
+              type='tel'
+              invalid={isValidPhoneNumber(watch('phone_number') ?? '') || !!errors.phone_number}
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              {...register('phone_number', { required: true })}
+            />
+        </div>
+      </div>
       <div className={`${styles.grid}`}>
         <div>
           <TextInput
@@ -69,6 +106,7 @@ const DefaultForm = ({
       </div>
       { !defaultQuestionsDisabled && (
         <>
+          <AddressSection handleChange={handleAddressChange} />
           <div className={`${styles.grid}`}>
             <Select
               id='is_black'
@@ -302,82 +340,6 @@ const DefaultForm = ({
               {...register('item_requests')}
             />
           </div>
-          <div className={styles.grid}>
-            <TextInput
-              id='line1'
-              invalidText='Please enter a valid address.'
-              invalid={!!errors.address?.line1}
-              labelText='Address Line 1 (required)'
-              type='text'
-              value={ watch('address.line1') ? (watch('address.line1')?.slice(0, 30)) : ''}
-              {...register('address.line1', { required: true })}
-            />
-          </div>
-          <div className={`${styles.grid}`}>
-            <TextInput
-              id='line2'
-              invalidText='Please enter a valid address.'
-              invalid={!!errors.address?.line2}
-              labelText='Address Line 2'
-              type='text'
-              value={ watch('address.line2') ? (watch('address.line2')?.slice(0, 30)) : ''}
-              {...register('address.line2')}
-            />
-          </div>
-          <div className={`${styles.grid}`}>
-            <Select
-              id='country'
-              invalidText='Please select a country.'
-              invalid={!!errors.address?.country}
-              labelText='Country (required)'
-              {...register('address.country', { required: true })}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='United States of America'
-                text='Choose an option'
-              />
-              {COUNTRY_LIST.map((country, id) => (
-                <SelectItem key={id} value={country} text={country}>
-                  {country}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div className={`${styles.grid}`}>
-            <TextInput
-              id='city'
-              invalidText='Please enter a valid city.'
-              invalid={!!errors.address?.city}
-              labelText='City (required)'
-              type='text'
-              value={ watch('address.city') ? (watch('address.city')?.slice(0, 30)) : ''}
-              {...register('address.city', { required: true })}
-            />
-          </div>
-          <div className={`${styles.grid}`}>
-            <TextInput
-              id='state'
-              invalidText='Please enter a valid state.'
-              invalid={!!errors.address?.state}
-              labelText='State (required)'
-              type='text'
-              value={ watch('address.state') ? (watch('address.state')?.slice(0, 30)) : ''}
-              {...register('address.state', { required: true })}
-            />
-          </div>
-          <div className={`${styles.grid}`}>
-            <TextInput
-              id='zip_code'
-              invalidText='Please enter a valid zip code.'
-              invalid={!!errors.address?.zipcode}
-              labelText='Zip Code (required)'
-              type='text'
-              value={ watch('address.zipcode') ? (watch('address.zipcode')?.slice(0, 30)) : ''}
-              {...register('address.zipcode', { required: true })}
-            />
-          </div>
           <div className={`${styles.grid}`}>
             <Select
               id='pick_up'
@@ -396,38 +358,6 @@ const DefaultForm = ({
               <SelectItem value={true} text='Yes' />
               <SelectItem value={false} text='No' />
             </Select>
-          </div>
-          <div className={`${styles.grid}`}>
-            <Select
-              id='phone_type'
-              invalidText='Please select an option.'
-              invalid={!!errors.phone_type}
-              defaultValue='Home'
-              labelText='Phone Type:'
-              {...register('phone_type')}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='Home'
-                text='Choose an option'
-              />
-              <SelectItem value='cell' text='Cell' />
-              <SelectItem value='home' text='Home' />
-              <SelectItem value='work' text='Work' />
-            </Select>
-          </div>
-          <div className={`${styles.grid}`}>
-            <TextInput
-              id='phone'
-              invalidText='Please enter a valid phone number'
-              labelText='Phone Number (required)'
-              placeholder={'###-###-####'}
-              type='tel'
-              invalid={isValidPhoneNumber(watch('phone_number') ?? '') || !!errors.phone_number}
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              {...register('phone_number', { required: true })}
-            />
           </div>
           <div className={`${styles.grid}`}>
             <Select
@@ -492,6 +422,10 @@ const DefaultForm = ({
 
   function handleCustomQuestionResponse(custom_question_responses: string) {
     setValue('custom_question_responses', custom_question_responses);
+  }
+
+  function handleAddressChange(address: FormResponseDTO['address']) {
+    setValue('address', address);
   }
 };
 
