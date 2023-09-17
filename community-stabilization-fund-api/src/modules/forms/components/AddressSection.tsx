@@ -1,10 +1,14 @@
 import { TextInput, Select, SelectItem } from "@carbon/react";
-import { AddressDTO } from "../../../db";
+
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+
+import type { AddressDTO } from "../../../db";
+
 import { COUNTRY_LIST } from "../constants";
 
 import styles from "../styles/GroceriesAndSuppliesForm.module.css";
-import { useEffect } from "react";
+
 
 interface AddressSectionProps {
   handleChange: (data: AddressDTO) => void;
@@ -22,15 +26,15 @@ const AddressSection = ({ handleChange }: AddressSectionProps) => {
   return (
     <>
       <div className={styles.grid}>
-      <TextInput
-        id='line1'
-        invalidText='Please enter a valid address.'
-        invalid={!!errors.line1}
-        labelText='Address Line 1 (required)'
-        type='text'
-        value={ watch('line1') ? (watch('line1')?.slice(0, 30)) : ''}
-        {...register('line1', { required: true })}
-      />
+        <TextInput
+          id='line1'
+          invalidText='Please enter a valid address.'
+          invalid={!!errors.line1}
+          labelText='Address Line 1 (required)'
+          type='text'
+          value={ watch('line1') ? (watch('line1')?.slice(0, 30)) : ''}
+          {...register('line1', { required: true })}
+        />
       </div>
       <div className={`${styles.grid}`}>
         <TextInput
@@ -98,7 +102,7 @@ const AddressSection = ({ handleChange }: AddressSectionProps) => {
         />
       </div>
     </>
-  )
-}
+  );
+};
 
 export { AddressSection };

@@ -5,9 +5,9 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 
 import type { FormResponseDTO, QuestionDTO } from "../../../db";
 
+import { AddressSection } from "./AddressSection";
 import { CustomQuestionSection } from "./CustomQuestionSection";
 import { isEmpty } from "../../../utils";
-import { AddressSection } from "./AddressSection";
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
 
@@ -54,41 +54,41 @@ const DefaultForm = ({
           </div>
         </div>
       </div>
-        <label className='mb-2'>
+      <label className='mb-2'>
           Phone (required)
-        </label>
+      </label>
       <div className={`${styles.grid} ${styles.inline}`}>
         <div className={styles.phone_type}>
-            <Select
-              id='phone_type'
-              invalidText='Please select an option.'
-              invalid={!!errors.phone_type}
-              defaultValue='Home'
-              labelText='Phone Type'
-              {...register('phone_type')}
-            >
-              <SelectItem
-                disabled
-                hidden
-                value='Home'
-                text='Choose an option'
-              />
-              <SelectItem value='cell' text='Cell' />
-              <SelectItem value='home' text='Home' />
-              <SelectItem value='work' text='Work' />
-            </Select>
+          <Select
+            id='phone_type'
+            invalidText='Please select an option.'
+            invalid={!!errors.phone_type}
+            defaultValue='Home'
+            labelText='Phone Type'
+            {...register('phone_type')}
+          >
+            <SelectItem
+              disabled
+              hidden
+              value='Home'
+              text='Choose an option'
+            />
+            <SelectItem value='cell' text='Cell' />
+            <SelectItem value='home' text='Home' />
+            <SelectItem value='work' text='Work' />
+          </Select>
         </div>
         <div>
-            <TextInput
-              id='phone'
-              invalidText='Please enter a valid phone number'
-              labelText='Phone Number'
-              placeholder={'###-###-####'}
-              type='tel'
-              invalid={isValidPhoneNumber(watch('phone_number') ?? '') || !!errors.phone_number}
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              {...register('phone_number', { required: true })}
-            />
+          <TextInput
+            id='phone'
+            invalidText='Please enter a valid phone number'
+            labelText='Phone Number'
+            placeholder={'###-###-####'}
+            type='tel'
+            invalid={isValidPhoneNumber(watch('phone_number') ?? '') || !!errors.phone_number}
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            {...register('phone_number', { required: true })}
+          />
         </div>
       </div>
       <div className={`${styles.grid}`}>

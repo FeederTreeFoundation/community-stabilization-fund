@@ -25,7 +25,8 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
   
   const defaultQuestionsDisabled = useMemo(() => {
     const raw = !isEmpty(disableDefaultQuestions) ? JSON.parse(disableDefaultQuestions) : {};
-    return formType === 'internal' ? raw['disable-internal-default-questions'] : raw['disable-default-public-questions'];
+    const disabled = formType === 'internal' ? raw['disable-internal-default-questions'] : raw['disable-default-public-questions'];
+    return !!disabled;
   }, [ disableDefaultQuestions, formType ]);
   
   if(error) {
@@ -50,13 +51,9 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
     );
   }
 
-  if(defaultQuestionsDisabled) {
-    return (
-      <DefaultForm defaultQuestionsDisabled questions={filteredQuestions} onSubmit={onSubmit} />
-    );
-  }
-
-  return (<DefaultForm onSubmit={onSubmit} questions={filteredQuestions} />);
+  return (
+    <DefaultForm onSubmit={onSubmit} questions={filteredQuestions} defaultQuestionsDisabled={defaultQuestionsDisabled} />
+  );
 
   function onSubmit(data: FormResponseDTO) {
     FormResponseService.create({
