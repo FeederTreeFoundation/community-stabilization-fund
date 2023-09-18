@@ -40,11 +40,11 @@ model organization {
   forms form[]
 }
 
-model feminine_health_care {
+model menstrual_health_care {
   id               Int             @id @default(autoincrement())
-  feminine_members Int
+  menstruating_members Int         @default(0)
   hygiene_items    String?         @db.VarChar(250)
-  needs_plan_b     Boolean
+  needs_plan_b     Boolean         @default(false)
   form_response    form_response[]
 }
 
@@ -66,19 +66,18 @@ model form_response {
   email                       String?               @db.VarChar(60) @default("")
   phone_number                String?               @db.VarChar(15) @default("")
   phone_type                  String?               @db.VarChar(7) @default("")
-  is_black                    Boolean?              @default(false)
+  race                        String?               @db.VarChar(60) @default("")
+  ethnicity                   String?               @db.VarChar(60) @default("")
   is_local                    Boolean?              @default(false)
   packages_to_receive         String?               @db.VarChar(250) @default("")
   has_flu_symptoms            Boolean?              @default(false)
   household_members           Int?                  @default(1)
   item_requests               String?               @db.VarChar(100) @default("")
   additional_information      String?               @db.VarChar(250) @default("")
-  is_pick_up                  Boolean?              @default(false)
+  transport_preference        String?               @db.VarChar(100) @default("")
   is_volunteering             Boolean?              @default(false)
   is_subscribing              Boolean?              @default(false)
   is_interested_in_membership Boolean?              @default(false)
-  live_in_pittsburgh_atlanta  Boolean?              @default(false)
-  live_in_southside_atlanta   Boolean?              @default(false)
   archived                    Boolean?              @default(false)
   archived_on                 DateTime?
   archived_by                 String?               @db.VarChar(60) @default("")
@@ -88,13 +87,13 @@ model form_response {
   youth_members               Int?                  @default(0)
   address_id                  Int?
   address                     address?              @relation(fields: [address_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_2")
-  feminine_health_care_id     Int?
-  feminine_health_care        feminine_health_care? @relation(fields: [feminine_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
+  menstrual_health_care_id     Int?
+  menstrual_health_care        menstrual_health_care? @relation(fields: [menstrual_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
   form_id                     Int?
   form                        form?                 @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_3")
   answers                     answer[]
 
-  @@index([feminine_health_care_id], map: "feminine_health_care_id")
+  @@index([menstrual_health_care_id], map: "menstrual_health_care_id")
   @@index([address_id], map: "address_id")
   @@index([form_id], map: "form_id")
 }

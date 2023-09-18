@@ -90,7 +90,7 @@ const BagLabels = ({
   const feminineHygieneItems = getBagItems('Feminine Hygiene');
   const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
   const femineHygieneLabels =
-    packages?.includes('Feminine Health Care') &&
+    packages?.includes('Menstrual Hygiene Package') &&
     BagList(
       feminineHygieneSlicePos,
       recipientInfoList,

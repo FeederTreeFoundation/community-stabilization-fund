@@ -9,10 +9,10 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponseDTO) =>
     first_name,
     last_name,
     phone_number,
-    is_pick_up,
+    transport_preference,
     has_flu_symptoms,
     household_members,
-    feminine_health_care,
+    menstrual_health_care,
   } = formResponse;
 
   const address = getAddress(formResponse);
@@ -22,23 +22,23 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponseDTO) =>
     ` ${household_members}`,
     phone_number,
     address,
-    `${is_pick_up ? "Pick Up" : "Drop Off"}`,
+    transport_preference,
     `${has_flu_symptoms ? "Yes" : "No"}`,
     household_members,
-    feminine_health_care?.feminine_members
+    menstrual_health_care?.menstruating_members
   ];
 };
 
 export const mapFormResponseToBagItems = ({
-  feminine_health_care,
+  menstrual_health_care,
   household_members = 0,
 }: FormResponseDTO) => {
   let bagItemsMap = createInitialBagItemsMap({
     household_members,
-    feminine_health_care,
+    menstrual_health_care,
   } as FormResponseDTO);
 
-  if (feminine_health_care?.needs_plan_b) {
+  if (menstrual_health_care?.needs_plan_b) {
     bagItemsMap['Feminine Hygiene'] = [
       ...bagItemsMap['Feminine Hygiene'],
       { name: 'Plan B', quantity: 1 },
@@ -50,7 +50,7 @@ export const mapFormResponseToBagItems = ({
 
 export const createInitialBagItemsMap = ({
   household_members = 1,
-  feminine_health_care,
+  menstrual_health_care,
 }: FormResponseDTO) =>
   ({
     Groceries: [
@@ -87,11 +87,11 @@ export const createInitialBagItemsMap = ({
       { name: 'Packs of Face Mask', quantity: 1 },
     ],
     'Feminine Hygiene': [
-      { name: 'Feminine Wipes', quantity: feminine_health_care ? 15 : 0 },
-      { name: 'Regular Tampons', quantity: feminine_health_care ? 15 : 0 },
-      { name: 'Super Tampons', quantity: feminine_health_care ? 15 : 0 },
-      { name: 'Thin Pads', quantity: feminine_health_care ? 15 : 0 },
-      { name: 'Regular Pads', quantity: feminine_health_care ? 15 : 0 },
+      { name: 'Feminine Wipes', quantity: menstrual_health_care ? 15 : 0 },
+      { name: 'Regular Tampons', quantity: menstrual_health_care ? 15 : 0 },
+      { name: 'Super Tampons', quantity: menstrual_health_care ? 15 : 0 },
+      { name: 'Thin Pads', quantity: menstrual_health_care ? 15 : 0 },
+      { name: 'Regular Pads', quantity: menstrual_health_care ? 15 : 0 },
     ],
   } as BagItemsMap);
 
@@ -106,9 +106,9 @@ export const createBagItems = (
   rules: ChecklistRuleDTO[],
   formResponse: FormResponseDTO
 ) => {
-  const { household_members, feminine_health_care } = formResponse;
-  const feminine_members = feminine_health_care
-    ? feminine_health_care.feminine_members
+  const { household_members, menstrual_health_care } = formResponse;
+  const menstruating_members = menstrual_health_care
+    ? menstrual_health_care.menstruating_members
     : null;
 
   if (isEmpty(rules)) return createDefaultBagItems(label, bagItemsMap);
@@ -120,7 +120,7 @@ export const createBagItems = (
           rule.package_group?.name === `${label}` &&
           rule.package_item?.name === `${item.name}` &&
           rule.household_members ===
-            `${label === 'Feminine Hygiene' ? feminine_members : household_members}`
+            `${label === 'Feminine Hygiene' ? menstruating_members : household_members}`
       );
 
       if (found && !validateItemByDate(found))

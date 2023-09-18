@@ -18,10 +18,10 @@ export interface OrganizationDTO {
   submitted_by?: string|null;
 }
 
-export interface FeminineHealthResponseDTO {
+export interface MenstruatingHealthResponseDTO {
   id: number;
-  feminine_members: number;
-  hygiene_items: string|null;
+  menstruating_members: number;
+  hygiene_items: string|string[]|null;
   needs_plan_b?: boolean;
 }
 
@@ -43,23 +43,22 @@ export interface FormResponseDTO {
   phone_number?: string;
   phone_type?: string|null;
   address?: AddressDTO|null;
-  is_black?: boolean;
+  race?: string|null;
+  ethnicity?: string|null;
   is_local?: boolean;
   household_members?: number;
   has_flu_symptoms?: boolean;
   packages_to_receive?: string | string[];
-  feminine_health_care?: FeminineHealthResponseDTO|null;
+  menstrual_health_care?: MenstruatingHealthResponseDTO|null;
   item_requests?: string|null;
   additional_information?: string|null;
-  is_pick_up?: boolean;
+  transport_preference?: string;
   is_volunteering?: boolean;
   is_subscribing?: boolean;
   is_joining?: boolean;
   is_interested_in_membership?: boolean;
   submitted_on?: Date|null;
   submitted_by?: string|null;
-  live_in_pittsburgh_atlanta?: boolean;
-  live_in_southside_atlanta?: boolean;
   elderly_members?: number|null;
   youth_members?: number|null;
   custom_question_responses?: string|null;

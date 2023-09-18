@@ -52,7 +52,7 @@ const getAllFormResponses = async (res: NextApiResponse) => {
   try {
     const form_responses = (await prisma.form_response.findMany({
       include: {
-        feminine_health_care: true,
+        menstrual_health_care: true,
         address: true,
         answers: true,
       },
@@ -69,42 +69,36 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 };
 
 const createFormResponse = async (body: any, res: NextApiResponse) => {
-  const { custom_question_responses, feminine_health_care, address, ...rest } = body;
+  const { custom_question_responses, menstrual_health_care, address, ...rest } = body;
 
-  const customQuestionResponsesToCreate = JSON.parse(custom_question_responses);
+  console.warn({menstrual_health_care, address, rest, custom_question_responses});
+  const customQuestionResponsesToCreate = custom_question_responses 
+    ? JSON.parse(custom_question_responses)
+    : [];
 
+  
   const formResponse = {
     ...rest,
     household_members: Number(rest.household_members),
     elderly_members: Number(rest.elderly_members),
     youth_members: Number(rest.youth_members),
-    is_black: Boolean(rest.is_black === 'true'),
-    live_in_southside_atlanta: Boolean(
-      rest.live_in_southside_atlanta === 'true'
-    ),
-    live_in_pittsburgh_atlanta: Boolean(
-      rest.live_in_pittsburgh_atlanta === 'true'
-    ),
-    is_local:
-      Boolean(rest.live_in_southside_atlanta === 'true') ||
-      Boolean(rest.live_in_pittsburgh_atlanta === 'true'),
+    is_local: Boolean(rest.is_local === 'true'),
     has_flu_symptoms: Boolean(rest.has_flu_symptoms === 'true'),
-    is_pick_up: Boolean(rest.is_pick_up === 'true'),
     is_volunteering: Boolean(rest.is_volunteering === 'true'),
     is_subscribing: Boolean(rest.is_subscribing === 'true'),
     is_interested_in_membership: Boolean(
       rest.is_interested_in_membership === 'true'
     ),
     packages_to_receive: rest.packages_to_receive.join(),
-    feminine_health_care: rest.packages_to_receive.includes(
-      'Feminine Health Care'
+    menstrual_health_care: rest.packages_to_receive.includes(
+      'Menstrual Hygiene Package'
     )
       ? {
         create: {
-          feminine_members: Number(feminine_health_care?.feminine_members),
-          hygiene_items: feminine_health_care?.hygiene_items?.join(),
+          menstruating_members: Number(menstrual_health_care?.menstruating_members),
+          hygiene_items: menstrual_health_care?.hygiene_items?.join(),
           needs_plan_b: Boolean(
-            feminine_health_care?.needs_plan_b === 'true'
+            menstrual_health_care?.needs_plan_b === 'true'
           ),
         },
       }
@@ -122,7 +116,7 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
     answers: {
       createMany: {
         data: [
-          ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
+          ...customQuestionResponsesToCreate?.map((item: AnswerDTO) => ({
             text: `${item.text}`,
             question_id: Number(item.question_id),
           }))
@@ -144,7 +138,7 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
 };
 
 const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
-  const { custom_question_responses, feminine_health_care, address, ...rest } = body;
+  const { custom_question_responses, menstrual_health_care, address, ...rest } = body;
 
   const customQuestionResponsesToCreate = JSON.parse(custom_question_responses);
 
@@ -158,7 +152,7 @@ const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
     live_in_pittsburgh_atlanta: null,
     is_local: null,
     has_flu_symptoms: null,
-    is_pick_up: null,
+    transport_preference: null,
     is_volunteering: null,
     is_subscribing: null,
     is_interested_in_membership: null,
@@ -192,7 +186,7 @@ const updateBulkFormResponses = async (
   body: any,
   res: NextApiResponse
 ) => {
-  const {feminine_health_care, address, ...rest} = body;
+  const {menstrual_health_care, address, ...rest} = body;
 
   try {
     const result = await prisma.form_response.updateMany({

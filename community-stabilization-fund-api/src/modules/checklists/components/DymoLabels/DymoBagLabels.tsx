@@ -91,7 +91,7 @@ const DymoBagLabels = ({
     [3, feminineHygieneItems.length],
   ];
   const femineHygieneLabels =
-    packages?.includes('Feminine Health Care') &&
+    packages?.includes('Menstrual Hygiene Package') &&
     BagList(
       feminineHygieneSlicePos,
       recipientInfoList,

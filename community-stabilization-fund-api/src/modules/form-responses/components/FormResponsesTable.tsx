@@ -130,7 +130,7 @@ const FormResponsesTable = ({
 
   function createRows(formResponses: FormResponseDTO[]) {
     const rows = formResponses.map((resp) => {
-      const feminine_health_care = !!resp.feminine_health_care;
+      const menstrual_health_care = !!resp.menstrual_health_care;
       const address = getAddress(resp);
       
       const customFieldsMap = resp.answers?.reduce((acc: any, curr: any) => {
@@ -141,7 +141,7 @@ const FormResponsesTable = ({
       const r = {
         ...resp,
         ...customFieldsMap,
-        feminine_health_care,
+        menstrual_health_care,
         address,
         id: `${resp.id}`
       };
