@@ -70,6 +70,17 @@ const AddressSection = ({ handleChange }: AddressSectionProps) => {
         />
       </div>
       <div className={`${styles.grid}`}>
+        <TextInput
+          id='zip_code'
+          invalidText='Please enter a valid zip code.'
+          invalid={!!errors.zipcode}
+          labelText='Zip Code (required)'
+          type='text'
+          value={ watch('zipcode') ? (watch('zipcode')?.slice(0, 30)) : ''}
+          {...register('zipcode', { required: true })}
+        />
+      </div>
+      <div className={`${styles.grid}`}>
         <Select
           id='country'
           invalidText='Please select a country.'
@@ -89,17 +100,6 @@ const AddressSection = ({ handleChange }: AddressSectionProps) => {
             </SelectItem>
           ))}
         </Select>
-      </div>
-      <div className={`${styles.grid}`}>
-        <TextInput
-          id='zip_code'
-          invalidText='Please enter a valid zip code.'
-          invalid={!!errors.zipcode}
-          labelText='Zip Code (required)'
-          type='text'
-          value={ watch('zipcode') ? (watch('zipcode')?.slice(0, 30)) : ''}
-          {...register('zipcode', { required: true })}
-        />
       </div>
     </>
   );
