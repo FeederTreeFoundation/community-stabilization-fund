@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 
 import type { FormResponseDTO } from "../../../db";
 
+import { BasicRadioGroup } from "../../../components/BasicRadioGroup/BasicRadioGroup";
 import { ETHNICITY_LIST, RACE_LIST } from "../constants";
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
-import { BasicRadioGroup } from "../../../components/BasicRadioGroup/BasicRadioGroup";
 
 
 interface RaceEthnicitySectionProps {
@@ -15,7 +15,7 @@ interface RaceEthnicitySectionProps {
 }
 
 const RaceEthnicitySection = ({ handleChange }: RaceEthnicitySectionProps) => {
-  const { watch, register, setValue, formState: { errors } } = useForm<{ races: string[], ethnicities: string[]}>();
+  const { watch, register, setValue } = useForm<{ races: string[], ethnicities: string[]}>();
   const {races = [], ethnicities = []} = watch();
   
   useEffect(() => {
@@ -38,6 +38,7 @@ const RaceEthnicitySection = ({ handleChange }: RaceEthnicitySectionProps) => {
           RACE_LIST.map((option, index) => (<Checkbox 
             labelText={option}
             id={`${option}-${index}`}
+            key={`${option}-${index}`}
             value={option}
             {...register('races', { required: true })}
           />))

@@ -1,5 +1,4 @@
 import { Form, TextInput, Select, SelectItem, Checkbox, TextArea, Button }  from "@carbon/react";
-
 import { useForm } from "react-hook-form";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -9,11 +8,11 @@ import { AddressSection } from "./AddressSection";
 import { CustomQuestionSection } from "./CustomQuestionSection";
 import { MenstruatingHealthcareSection } from "./MenstruatingHealthcareSection";
 import { RaceEthnicitySection } from "./RaceEthnicitySection";
-import { RadioButtonGroup } from "@carbon/react";
+import { BasicRadioGroup } from "../../../components/BasicRadioGroup/BasicRadioGroup";
 import { isEmpty } from "../../../utils";
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
-import { BasicRadioGroup } from "../../../components/BasicRadioGroup/BasicRadioGroup";
+
 
 interface DefaultFormProps {
   defaultQuestionsDisabled?: boolean;
@@ -169,7 +168,7 @@ const DefaultForm = ({
           <BasicRadioGroup
             label='How will you be picking up your package? (required)'
             handleChange={handleTransportPrefenceChange}
-            options={["I\'m transporting myself", "I need a ride", "I can\'t make it in person"]}
+            options={["I'm transporting myself", "I need a ride", "I can't make it in person"]}
             {...register('transport_preference')}
           />
           <div className={`${styles.grid} mt-2`}>
@@ -212,7 +211,7 @@ const DefaultForm = ({
               <SelectItem value={false} text='No' />
             </Select>
           </div> */}
-           {/* TODO: Extract to its own component to be added by admin user input */}
+          {/* TODO: Extract to its own component to be added by admin user input */}
           {/* <div className={styles.grid}>
             <TextArea
               className='mb-2'

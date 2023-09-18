@@ -15,7 +15,7 @@ interface CustomFormProps {
 }
 
 const CustomForm = ({ questions }: CustomFormProps) => {
-  const { setValue, handleSubmit, formState: { isLoading, errors } } = useForm<FormResponseDTO>();
+  const { setValue, handleSubmit, formState: { isLoading } } = useForm<FormResponseDTO>();
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       {!isEmpty(questions) && <CustomQuestionSection questions={questions} onChange={handleCustomQuestionResponse} />}

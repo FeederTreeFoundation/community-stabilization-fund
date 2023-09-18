@@ -42,7 +42,7 @@ const MenstruatingHealthcareSection = ({
       </div>
       <div className={styles.grid}>
         <label>
-        If you selected "Menstrual Hygiene Package", which menstrual items would you like?
+        If you selected &#34;Menstrual Hygiene Package&#34;, which menstrual items would you like?
         </label>
         <div>
           <Checkbox

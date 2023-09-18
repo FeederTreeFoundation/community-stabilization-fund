@@ -1,4 +1,4 @@
-import { RadioButtonGroup, RadioButton } from "@carbon/react"
+import { RadioButtonGroup, RadioButton } from "@carbon/react";
 
 import styles from './BasicRadioGroup.module.css';
 
@@ -14,26 +14,26 @@ const BasicRadioGroup = ({
   legend,
   options,
   handleChange,
-  ...props}: BasicRadioGroupProps) => {
-  return (
-    <div className={`${styles.grid}`}>
-      {label && <label htmlFor="">{label}</label>}
-      <RadioButtonGroup
+  ...props}: BasicRadioGroupProps) => (
+  <div className={`${styles.grid}`}>
+    {label && <label htmlFor="">{label}</label>}
+    <RadioButtonGroup
       {...props}
       legendText={legend}
       onChange={handleChange}
       className='mt-2'
-      >
-        {
-          options.map((option, index) => (<RadioButton 
+    >
+      {
+        options.map((option, index) => (
+          <RadioButton 
             labelText={option}
             id={`${option}-${index}`}
+            key={`${option}-${index}`}
             value={option}
           />))
-        }
-      </RadioButtonGroup>
-    </div>
-  )
-}
+      }
+    </RadioButtonGroup>
+  </div>
+);
 
 export { BasicRadioGroup };

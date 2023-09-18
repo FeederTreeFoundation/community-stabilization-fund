@@ -71,7 +71,6 @@ const getAllFormResponses = async (res: NextApiResponse) => {
 const createFormResponse = async (body: any, res: NextApiResponse) => {
   const { custom_question_responses, menstrual_health_care, address, ...rest } = body;
 
-  console.warn({menstrual_health_care, address, rest, custom_question_responses});
   const customQuestionResponsesToCreate = custom_question_responses 
     ? JSON.parse(custom_question_responses)
     : [];
@@ -116,7 +115,7 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
     answers: {
       createMany: {
         data: [
-          ...customQuestionResponsesToCreate?.map((item: AnswerDTO) => ({
+          ...customQuestionResponsesToCreate.map((item: AnswerDTO) => ({
             text: `${item.text}`,
             question_id: Number(item.question_id),
           }))
