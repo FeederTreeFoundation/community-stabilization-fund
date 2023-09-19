@@ -16,8 +16,23 @@ a {
 label {
   display: block;
 }
+
 * {
   box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: center;
 }
 
 .mb-2 {
@@ -36,6 +51,10 @@ label {
   margin-bottom: 4rem;
 }
 
+.mb-10 {
+  margin-bottom: 8rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -50,6 +69,10 @@ label {
 
 .mt-8 {
   margin-top: 4rem;
+}
+
+.mt-10 {
+  margin-top: 8rem;
 }
 
 .mr-2 {
@@ -68,6 +91,10 @@ label {
   margin-right: 4rem;
 }
 
+.mr-10 {
+  margin-right: 8rem;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 }
@@ -84,6 +111,9 @@ label {
   margin-left: 4rem;
 }
 
+.ml-10 {
+  margin-left: 8rem;
+}
 
 .hidden {
   display: none !important;

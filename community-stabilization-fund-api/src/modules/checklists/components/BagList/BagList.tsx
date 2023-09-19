@@ -12,8 +12,6 @@ const BagList = (
   labelCount: number,
   bagLabelType?: string,
 ) => {
-  console.log({bagLabelType});
-  
   if(bagLabelType === BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE) {
     return slicePositions.map((pos, id) => (
       <DymoBagLabel

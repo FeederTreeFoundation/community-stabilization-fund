@@ -249,3 +249,17 @@ export const COUNTRY_LIST = [
   'Zimbabwe',
   'Åland Islands',
 ];
+
+export const RACE_LIST = [
+  'Black or African',
+  'American Indian or Alaska Native',
+  'Native Hawaiian or Other Pacific Islander',
+  'Asian',
+  'White',
+  'Other',
+];
+
+export const ETHNICITY_LIST = [
+  'Hispanic or Latino',
+  'Not Hispanic or Latino',
+];

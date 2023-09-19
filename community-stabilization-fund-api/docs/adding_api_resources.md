@@ -220,7 +220,7 @@ const checklistRuleHandler = (req: NextApiRequest, res: NextApiResponse) => {
 const getChecklistRuleById = async (id: string, res: NextApiResponse) => {
   try {
     const checklist_rule = await prisma.checklist_rule.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       include: {
         package_group: true,
         package_item: true,
@@ -235,11 +235,11 @@ const getChecklistRuleById = async (id: string, res: NextApiResponse) => {
 };
 
 const updateChecklistRuleById = async (body: any, res: NextApiResponse) => {
-  const { feminine_health_care, address, id, ...rest } = body;
+  const { id, ...rest } = body;
 
   try {
-    const result = await prisma.form_response.update({
-      where: { id: parseInt(id) },
+    const result = await prisma.checklist_rule.update({
+      where: { id: Number(id) },
       data: {
         ...rest,
       }
@@ -255,7 +255,7 @@ const updateChecklistRuleById = async (body: any, res: NextApiResponse) => {
 const deleteChecklistRuleById = async (id: string, res: NextApiResponse) => {
   try {
     const result = await prisma.checklist_rule.delete({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     return res.json(result);

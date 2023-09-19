@@ -5,30 +5,42 @@ import {
   HeaderGlobalBar,
   Link,
   SkeletonIcon,
-} from 'carbon-components-react';
-import { useContext, useState } from 'react';
+} from '@carbon/react';
+import { useContext, useEffect, useState } from 'react';
 
-import type { ChecklistRuleDTO } from '../../../../db';
+import type { ChecklistRuleDTO, OrganizationDTO, QuestionDTO, UserDTO } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
 import { ChecklistRulesModal } from './ChecklistRulesModal';
+import { QuestionModal } from './QuestionModal';
 import { SettingsModal } from './SettingsModal';
-import { ChecklistsRulesContext } from '../../..';
 import { useStorage } from '../../../../hooks';
 import { formResponseMock } from '../../../../mocks';
-// import FormResponseService from '../../../../services/form-response';
 import ChecklistRuleService from '../../../../services/checklist-rule';
 import OrganizationService from '../../../../services/organization';
+import QuestionService from '../../../../services/question';
+import UserService from '../../../../services/user';
+import { isEmpty } from '../../../../utils';
+import { ChecklistsRulesContext } from '../../../checklists';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
-import { ApiUserContext } from '../../../users/contexts';
+import { FormQuestionsContext } from '../../../forms';
 
-const UserNavigation = () => {
+interface UserNavigationProps {
+  updateDefaultBagLabelType?: (bagLabelType: string) => void;
+  updateDisableDefaultQuestions?: (json: string) => void;
+}
+
+const UserNavigation = ({
+  updateDefaultBagLabelType,
+  updateDisableDefaultQuestions,
+}: UserNavigationProps) => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
+  const [apiUser, setApiUser] = useState<UserDTO>();
 
-  const { updateRules, updateBagLabelType, bagLabelType } = useContext(ChecklistsRulesContext);
-  const { apiUser } = useContext(ApiUserContext);
+  const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
+  const { questions, updateQuestions } = useContext(FormQuestionsContext);
 
   const { state } = useStorage('api_user', '');
   const { user, error, isLoading } = useUser();
@@ -46,11 +58,53 @@ const UserNavigation = () => {
   //     handleClose('settingsModal');
   //   }
   // };
-
+  
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
+  // Fetch API user on page load
+  useEffect(() => {
+    if (!apiUserId) return;
+
+    UserService.getById(apiUserId)
+      .then((res) => {
+        if (res.data) {
+          setApiUser(res.data);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Error fetching API user');
+      });
+  }, [apiUserId]);
+
+  // Set defaults with API user
+  useEffect(() => {
+    if(isEmpty(apiUser?.organization_id)) return;
+    if(typeof updateDefaultBagLabelType !== 'function') return;
+    if(typeof updateRules !== 'function') return;
+    if(typeof updateQuestions !== 'function') return;
+    if(typeof updateDisableDefaultQuestions !== 'function') return;
+  
+    OrganizationService.getById(`${apiUser?.organization_id}`)
+      .then((res) => {
+        if (res.data) {
+          updateDefaultBagLabelType(res.data.bag_label_type ?? '');
+          updateQuestions(res.data.questions ?? []);
+          updateRules(res.data.checklist_rules ?? []);
+          updateDisableDefaultQuestions(res.data.disable_default_questions_json ?? '');
+        }
+      });
+  }, [
+    apiUser?.organization_id,
+    updateDefaultBagLabelType,
+    updateRules,
+    updateQuestions,
+    updateDisableDefaultQuestions
+  ]);
+
   if (isLoading) {
-    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);}
+    return (<HeaderGlobalBar><SkeletonIcon /></HeaderGlobalBar>);
+  }
 
   if (error || !user) {
     return (
@@ -64,7 +118,6 @@ const UserNavigation = () => {
     );
   }
 
-  // TODO: Correct logic for displaying admin users
   return (
     <>
       <HeaderGlobalBar>
@@ -85,18 +138,28 @@ const UserNavigation = () => {
         </Link>
       </HeaderGlobalBar>
       <SettingsModal 
-        openSettingsModal={!!openModalMapping['settingsModal']} 
+        open={!!openModalMapping['settingsModal']}
+        needsSetup={isEmpty(questions)}
         handleOpen={handleOpen} 
-        handleClose={handleClose} 
-        handleChange={handleChange} 
+        handleClose={() => handleClose('settingsModal')} 
+        handleChange={onBagLabelTypeChange}
+        handleSave={saveSettings}
       />
       <ChecklistRulesModal 
         packageGroups={packageGroups} 
         packageItems={packageItems} 
         openConfiguration={!!openModalMapping['checklistRulesModal']} 
         onRequestClose={() => handleClose('checklistRulesModal')} 
-        onRequestSubmit={submitChecklistRules}
+        onRequestSubmit={submitChecklistRule}
         onPackageChange={onPackageChange}
+      />
+      <QuestionModal 
+        user={apiUser}
+        questions={questions}
+        open={!!openModalMapping['questionModal']}
+        handleClose={() => handleClose('questionModal')} 
+        onSubmit={submitQuestion}
+        onDelete={handleDeleteQuestion}
       />
     </>
   );
@@ -109,35 +172,87 @@ const UserNavigation = () => {
     setOpenModalMapping({[key]: false});
   }
 
-  function handleChange(e: ChangeEvent<HTMLSelectElement>) {
+  function onBagLabelTypeChange(e: ChangeEvent<HTMLSelectElement>) {
     if(typeof updateBagLabelType !== 'function') return;
-    
-    updateBagLabelType(e.target.value);
+
+    const bagLabelType = e.target.value;
 
     setTimeout(() => {
       OrganizationService.update({id: apiUser?.organization_id, bag_label_type: bagLabelType})
         .then((_res) => {
+          updateBagLabelType(bagLabelType);
           alert('Bag label type updated!');
         })
-        .catch((err) => console.error(err));
-    }, 5000);
+        .catch((err) => console.error('updateBagLabelTypeError: ', err));
+    }, 500);
   }
 
-  function submitChecklistRules(data?: any) {
+  // TODO: Replace onBagLabelTypeChange with this function
+  function saveSettings(data: OrganizationDTO) {
+    OrganizationService.update({...data, id: apiUser?.organization_id})
+      .then((_res) => {
+        // updateBagLabelType(data.bag_label_type ?? '');
+        handleClose('settingsModal');
+        alert('Settings saved!');
+      })
+      .catch((err) => {
+        console.error('updateBagLabelTypeError: ', err);
+        alert('Error saving settings.. Please try again.');
+      });
+
+  }
+
+  function submitChecklistRule(data?: any) {
     if (typeof updateRules !== 'function') return;
 
-    ChecklistRuleService.create(data)
-      .then((resp) => {
-        console.log('resp', resp);
+    ChecklistRuleService.create({...data, organization_id: apiUser?.organization_id})
+      .then((_) => {
         updateRules((prevRules: ChecklistRuleDTO[]) => (
           [data, ...prevRules]
         ));
 
       })
       .finally(() => handleClose('checklistRulesModal'))
-      .catch((err) => console.error('err', err));
+      .catch((err) => console.error('submitChecklistRuleError: ', err));
   }
 
+  function submitQuestion(data?: any) {
+    if(typeof updateQuestions !== 'function') return;
+
+    const { id = '', ...rest } = data;
+    const question = { 
+      ...rest, 
+      last_updated_by: user?.email ?? '', 
+      last_updated: new Date()
+    } as QuestionDTO;
+    
+    if(!isEmpty(id)) {
+      QuestionService.update({...question, id}).then(() => {
+        console.log({question});
+        updateQuestions([
+          ...questions.filter(q => `${q.id}` !== `${id}`), 
+          question
+        ]);
+      })
+        .finally(() => handleClose('questionModal'))
+        .catch((err) => console.error('submitQuestionError: ', err)); 
+    }
+
+    QuestionService.create(question).then(() => {
+      updateQuestions([...questions, question]);
+    })
+      .finally(() => handleClose('questionModal'))
+      .catch((err) => console.error('submitQuestionError: ', err));
+  }
+
+  function handleDeleteQuestion(id: number) {
+    if(typeof updateQuestions !== 'function') return;
+
+    QuestionService.delete({id}).then(() => {
+      updateQuestions([...questions.filter(q => `${q.id}` !== `${id}`)]);
+    })
+      .catch((err) => console.error('deleteQuestionError: ', err));
+  }
 };
 
 export { UserNavigation };

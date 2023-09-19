@@ -17,7 +17,7 @@ import {
   TableToolbarSearch,
   TableSelectRow,
   TableSelectAll,
-} from 'carbon-components-react';
+} from '@carbon/react';
 
 import React from 'react';
 
@@ -25,6 +25,8 @@ import type {
   DataTableCustomRenderProps,
   DataTableProps,
 } from 'carbon-components-react';
+
+import styles from './BasicTable.module.css';
 
 // TEMPORARY FIX FOR CARBON DATA TABLE TYPES
 class DataTable extends React.Component<
@@ -83,7 +85,8 @@ const BasicTable = ({
                 <TableBatchAction
                   tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
                   renderIcon={Archive}
-                  kind='danger'
+                  kind='secondary'
+                  className={styles.archive_button}
                   onClick={() => {
                     handleArchive(selectedRows);
                   }}

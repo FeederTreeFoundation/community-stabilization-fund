@@ -1,0 +1,7 @@
+.grid {
+  display: grid;
+}
+
+.grid span {
+  font-size: 14px;
+}

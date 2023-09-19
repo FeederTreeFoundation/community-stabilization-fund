@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 
 import { useStorage } from '../../hooks';
-import { isEmpty } from '../../utils';
+import { getRoles, isEmpty } from '../../utils';
 
 interface RouteGuardProps {
   children: any[] | any;
@@ -13,8 +13,13 @@ function RouteGuard({ children }: RouteGuardProps) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
 
-  const { user, isLoading } = useUser();
+  const { user, error, isLoading } = useUser();
   const { state } = useStorage('api_user', '');
+
+  if(error) {
+    console.error(error);
+    alert(error);
+  }
 
   const handleAuthCheck = useCallback(authCheck, [router, user, isLoading, state]);
 
@@ -43,7 +48,6 @@ function RouteGuard({ children }: RouteGuardProps) {
       : window.sessionStorage.getItem('api_user');
     const publicPaths = [
       '/',
-      '/forms',
       '/forms/groceries-and-supplies',
       '/rent-mortgage-utilities-support',
       '/about/pittsburgh-collaborative',
@@ -53,12 +57,17 @@ function RouteGuard({ children }: RouteGuardProps) {
     ];
     const privatePaths = ['/form-responses', '/checklists'];
     const path = url.split('?')[0];
-
-    // TODO: Use Roles Based Authentication instead
+    const roles = getRoles(user);
+    
     if (!user && !isLoading && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({
         pathname: '/api/auth/login',
+      });
+    } else if(isEmpty(roles) && !isLoading && !publicPaths.includes(path)) {
+      setAuthorized(false);
+      router.push({
+        pathname: '/',
       });
     } else if (isEmpty(apiUserId) && privatePaths.includes(path)) {
       setAuthorized(false);

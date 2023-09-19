@@ -46,10 +46,10 @@ const ItemChecklistByRecipient = ({
     </p>
   ));
 
-  // Only display Feminine Hygiene items if the recipient has them, otherwise guard against the field being passed
-  const bagItemsObj: BagItemsMap = formResponse.feminine_health_care
+  // Only display Menstrual Hygiene items if the recipient has them, otherwise guard against the field being passed
+  const bagItemsObj: BagItemsMap = formResponse.menstrual_health_care
     ? bagItemsMap
-    : omit('Feminine Hygiene', bagItemsMap);
+    : omit('Menstrual Hygiene', bagItemsMap);
 
   const bagItemTables = Object.keys(bagItemsObj).map((key) => {
     const bagItems = createBagItems(key, bagItemsObj, rules, formResponse);

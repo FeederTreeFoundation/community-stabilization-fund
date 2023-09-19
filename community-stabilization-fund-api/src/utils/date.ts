@@ -1,13 +1,17 @@
 import dayjs from 'dayjs';
-dayjs().format();
 
-export const addDays = (dt: Date | string, days: number) => {
-  const date = dayjs(dt).add(days, 'day').format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A');
+const defaultFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZ';
+dayjs().format(defaultFormat);
+
+export const getDate = (date?: Date|string) => dayjs(date);
+
+export const addDays = (dt: Date | string, days: number, format?: string) => {
+  const date = dayjs(dt).add(days, 'day').format(format || defaultFormat);
   return date;
 };
 
-export const addWeeks = (dt: Date | string, weeks: number) => {
-  const date = dayjs(dt).add(weeks, 'week').format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A');
+export const addWeeks = (dt: Date | string, weeks: number, format?: string) => {
+  const date = dayjs(dt).add(weeks, 'week').format(format || defaultFormat);
   return date;
 };
 

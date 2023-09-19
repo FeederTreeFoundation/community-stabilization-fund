@@ -17,6 +17,10 @@ export const ROUTES = {
     PATH: '/rent-mortgage-utilities-support',
     PAGE_TITLE: 'Rent Mortgage Utilities Support',
   },
+  'volunteer-groceries-and-supplies': {
+    PATH: '/forms/volunteers/groceries-and-supplies',
+    PAGE_TITLE: 'Groceries and Supplies Volunteer Form',
+  },
 };
 
 export const axiosInstance = axios.create({
