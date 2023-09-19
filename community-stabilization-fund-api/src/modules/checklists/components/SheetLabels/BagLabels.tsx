@@ -86,8 +86,8 @@ const BagLabels = ({
     );
 
   labelCount = 0;
-  const feminineHygieneTHead = 'Feminine Hygiene Bag';
-  const feminineHygieneItems = getBagItems('Feminine Hygiene');
+  const feminineHygieneTHead = 'Menstrual Hygiene Bag';
+  const feminineHygieneItems = getBagItems('Menstrual Hygiene');
   const feminineHygieneSlicePos = [[0, feminineHygieneItems.length]];
   const femineHygieneLabels =
     packages?.includes('Menstrual Hygiene Package') &&
