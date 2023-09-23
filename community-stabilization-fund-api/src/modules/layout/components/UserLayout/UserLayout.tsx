@@ -55,6 +55,12 @@ const UserLayout = ({ children }: UserLayoutProps) => {
               <HeaderItem route={ROUTES.root} prefix='CMB' />
               <HeaderNavigation aria-label='Community Stabilization Fund'>
                 <HeaderItem
+                  route={ROUTES['organizations']}
+                  selectedPage={selectedPage}
+                  changeSelectedPage={setSelectedPage}
+                  hidden={!roles?.some(role => ['super admin'].includes(role))}
+                />
+                <HeaderItem
                   route={ROUTES['form-responses']}
                   selectedPage={selectedPage}
                   changeSelectedPage={setSelectedPage}

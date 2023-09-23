@@ -55,7 +55,7 @@ function RouteGuard({ children }: RouteGuardProps) {
       '/about/swope-dreams',
       '/donate',
     ];
-    const privatePaths = ['/form-responses', '/checklists'];
+    const privatePaths = ['/form-responses', '/checklists', '/organizations'];
     const path = url.split('?')[0];
     const roles = getRoles(user);
     
