@@ -50,15 +50,13 @@ const getAllOrganizations = async (res: NextApiResponse) => {
 };
 
 const createOrganization = async (body: any, res: NextApiResponse) => {
-  const { api_users, ...rest } = body;
+  const { api_users = [], ...rest } = body;
 
   const organization = {
     ...rest,
-    api_users: api_users.map((api_user: any) => ({ 
-      connect: {
-        where: { id: api_user?.id ?? 0 },
-      }
-    }))
+    api_users: {
+      connect: api_users.map((user: {id: string}) => ({id: user.id})),
+    },
   };
   
   try {
