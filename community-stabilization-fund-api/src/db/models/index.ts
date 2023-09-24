@@ -4,12 +4,21 @@ export interface UserDTO {
   organization_id?: number|null;
 }
 
+export interface ApiKeyDTO {
+  id: number;
+  name: string;
+  api_user_id?: number|null;
+  api_user?: UserDTO;
+  organization_id?: number|null;
+  organization?: OrganizationDTO;
+}
+
 export interface OrganizationDTO {
   id: number;
   name: string;
   short_name?: string;
   bag_label_type?: string;
-  api_users?: UserDTO[];
+  api_keys?: ApiKeyDTO[];
   questions?: QuestionDTO[];
   checklist_rules?: ChecklistRuleDTO[];
   forms?: FormDTO[];

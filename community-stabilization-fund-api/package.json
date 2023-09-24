@@ -33,7 +33,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",
     "react-phone-number-input": "^3.2.25",
-    "serverless-mysql": "^1.5.4"
+    "serverless-mysql": "^1.5.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/carbon__icons-react": "^11.7.0",
@@ -42,6 +43,7 @@
     "@types/node": "18.7.3",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
+    "@types/uuid": "^9.0.4",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.5",
     "eslint-plugin-react-hooks": "^4.6.0",

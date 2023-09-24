@@ -8,22 +8,21 @@ datasource db {
 }
 
 model api_key {
-  id          Int       @id @default(autoincrement())
-  name        String?   @db.VarChar(20)
+  id Int @id @default(autoincrement())
+  name String? @db.VarChar(50)
   api_user_id Int?
-  api_user    api_user? @relation(fields: [api_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "api_key_ibfk_1")
+  api_user api_user? @relation(fields: [api_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "api_key_ibfk_1")
+  organization_id Int?
+  organization organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "api_user_ibfk_1")
 
+  @@index([organization_id], map: "organization_id")
   @@index([api_user_id], map: "api_user_id")
 }
 
 model api_user {
   id              Int      @id @default(autoincrement())
-  name            String   @db.VarChar(20)
+  name            String   @db.VarChar(50)
   api_key         api_key[]
-  organization_id Int?
-  organization    organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "api_user_ibfk_1")
-
-  @@index([organization_id], map: "organization_id")
 }
 
 model organization {
@@ -34,18 +33,18 @@ model organization {
   disable_default_questions_json String? @db.VarChar(250) @default("")
   submitted_on DateTime? @default(dbgenerated("NOW()")) @db.DateTime
   submitted_by String? @db.VarChar(60) @default("")
-  api_users api_user[]
+  api_keys api_key[]
   questions question[]
   checklist_rules checklist_rule[]
   forms form[]
 }
 
 model menstrual_health_care {
-  id               Int             @id @default(autoincrement())
-  menstruating_members Int         @default(0)
-  hygiene_items    String?         @db.VarChar(250)
-  needs_plan_b     Boolean         @default(false)
-  form_response    form_response[]
+  id Int @id @default(autoincrement())
+  menstruating_members Int @default(0)
+  hygiene_items String? @db.VarChar(250)
+  needs_plan_b Boolean @default(false)
+  form_response form_response[]
 }
 
 model address {
@@ -87,8 +86,8 @@ model form_response {
   youth_members               Int?                  @default(0)
   address_id                  Int?
   address                     address?              @relation(fields: [address_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_2")
-  menstrual_health_care_id     Int?
-  menstrual_health_care        menstrual_health_care? @relation(fields: [menstrual_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
+  menstrual_health_care_id    Int?
+  menstrual_health_care       menstrual_health_care? @relation(fields: [menstrual_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
   form_id                     Int?
   form                        form?                 @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_3")
   answers                     answer[]

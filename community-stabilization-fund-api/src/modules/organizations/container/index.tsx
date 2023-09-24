@@ -44,7 +44,8 @@ const OrganizationsContainer = () => {
   }
 
   function submitOrganization(data: OrganizationDTO) {
-    const api_users = [{ id: Number(state) }];
+    const name = user?.nickname ?? user?.name?.replace(/ /g, '').toLowerCase();
+    const api_users = [{ id: Number(state), name  }];
     const submitted_by = user?.email;
     
     OrganizationService.create({...data, api_users, submitted_by: user?.email})

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import {v4 as uuidv4} from 'uuid';
 
 import type { OrganizationDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -38,7 +39,7 @@ const getAllOrganizations = async (res: NextApiResponse) => {
   try {
     const organizations = (await prisma.organization.findMany({
       include: {
-        api_users: false,
+        api_keys: true,
       },
     })) as OrganizationDTO[];
 
@@ -54,9 +55,16 @@ const createOrganization = async (body: any, res: NextApiResponse) => {
 
   const organization = {
     ...rest,
-    api_users: {
-      connect: api_users.map((user: {id: string}) => ({id: user.id})),
-    },
+    api_keys: {
+      create: api_users.map((api_user: any) => ({
+        name: uuidv4(), api_user: { 
+          connectOrCreate: {
+            where: { id: api_user.id },
+            create: { name: api_user.name },
+          } 
+        }
+      }))
+    }
   };
   
   try {
@@ -64,7 +72,7 @@ const createOrganization = async (body: any, res: NextApiResponse) => {
   
     return res
       .status(201)
-      .send('Successfully created form response with id: ' + result.id);
+      .send('Successfully created organization with id: ' + result.id);
   } catch (error) {
     console.error({error});
     throw error;
