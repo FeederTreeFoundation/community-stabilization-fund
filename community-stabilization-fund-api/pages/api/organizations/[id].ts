@@ -33,7 +33,7 @@ const getOrganizationById = async (id: string, res: NextApiResponse) => {
     const organization = await prisma.organization.findUnique({
       where: { id: Number(id) },
       include: {
-        api_users: false,
+        api_keys: false,
         questions: true,
         checklist_rules: true
       },

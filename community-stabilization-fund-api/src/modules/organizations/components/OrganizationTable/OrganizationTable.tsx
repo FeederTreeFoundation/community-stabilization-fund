@@ -14,9 +14,11 @@ interface OrganizationTableProps {
 
 const OrganizationTable = ({ organizations }: OrganizationTableProps) => { 
   const [filteredIds, setFilteredIds] = useState<string[]>([]);
-  const filteredOrganizations = organizations.filter((org) => !filteredIds.includes(`${org.id}`));
 
-  const headers = createHeaders<OrganizationDTO>(organizations[0]);
+  const filteredOrganizations = organizations.filter((org) => !filteredIds.includes(`${org.id}`));
+  const { api_keys, ...rest } = organizations[0] ?? {};
+
+  const headers = createHeaders<OrganizationDTO>(rest);
   const rows = createRows<OrganizationDTO>(filteredOrganizations, "id");
 
   return (
