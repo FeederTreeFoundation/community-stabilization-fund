@@ -13,6 +13,10 @@ export const ROUTES = {
     PATH: '/checklists',
     PAGE_TITLE: 'Checklists',
   },
+  organizations: {
+    PATH: '/organizations',
+    PAGE_TITLE: 'Organizations',
+  },
   'rent-mortgage-utilities-support': {
     PATH: '/rent-mortgage-utilities-support',
     PAGE_TITLE: 'Rent Mortgage Utilities Support',
@@ -20,6 +24,10 @@ export const ROUTES = {
   'volunteer-groceries-and-supplies': {
     PATH: '/forms/volunteers/groceries-and-supplies',
     PAGE_TITLE: 'Groceries and Supplies Volunteer Form',
+  },
+  'groceries-and-supplies': {
+    PATH: '/forms/groceries-and-supplies',
+    PAGE_TITLE: 'Groceries and Supplies Recipient Form',
   },
 };
 
