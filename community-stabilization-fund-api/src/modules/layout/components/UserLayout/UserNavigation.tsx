@@ -24,19 +24,23 @@ import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
 import { ChecklistRulesModal } from './ChecklistRulesModal';
+import { PackageItemModal } from './PackageItemModal';
+import { PackageGroupModal } from './PackageGroupModal';
 import { QuestionModal } from './QuestionModal';
 import { SettingsModal } from './SettingsModal';
-import { PackageItemModal } from './PackageItemModal';
+
 import { useStorage } from '../../../../hooks';
 import { formResponseMock } from '../../../../mocks';
 import ChecklistRuleService from '../../../../services/checklist-rule';
 import OrganizationService from '../../../../services/organization';
 import QuestionService from '../../../../services/question';
 import UserService from '../../../../services/user';
+import PackageItemService from '../../../../services/package-item';
 import { isEmpty } from '../../../../utils';
 import { ChecklistsRulesContext } from '../../../checklists';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
 import { FormQuestionsContext } from '../../../forms';
+import PackageGroupService from '../../../../services/package-group';
 
 interface UserNavigationProps {
   updateDefaultBagLabelType?: (bagLabelType: string) => void;
@@ -191,6 +195,12 @@ const UserNavigation = ({
       <PackageItemModal
         open={!!openModalMapping['addPackageItemModal']}
         handleClose={() => handleClose('packageItemModal')}
+        onSubmit={submitPackageItem}
+      />
+      <PackageGroupModal
+        open={!!openModalMapping['addPackageGroupModal']}
+        handleClose={() => handleClose('addPackageGroupModal')}
+        onSubmit={submitPackageGroup}
       />
     </>
   );
@@ -247,6 +257,18 @@ const UserNavigation = ({
       })
       .finally(() => handleClose('checklistRulesModal'))
       .catch((err) => console.error('submitChecklistRuleError: ', err));
+  }
+
+  function submitPackageItem(data?: any) {
+    PackageItemService.create({
+      ...data,
+    });
+  }
+
+  function submitPackageGroup(data?: any) {
+    PackageGroupService.create({
+      ...data,
+    });
   }
 
   function submitQuestion(data?: any) {
