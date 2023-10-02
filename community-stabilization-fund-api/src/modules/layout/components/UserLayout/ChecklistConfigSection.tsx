@@ -1,9 +1,9 @@
-import { Button, Column } from "carbon-components-react";
+import { Button, Column } from 'carbon-components-react';
 
-import type { ChangeEvent } from "react";
+import type { ChangeEvent } from 'react';
 
-import { BasicSelect } from "../../../../components";
-import { BAG_LABEL_TYPES } from "../../../checklists";
+import { BasicSelect } from '../../../../components';
+import { BAG_LABEL_TYPES } from '../../../checklists';
 
 interface ChecklistConfigSectionProps {
   handleOpen: (key: string) => void;
@@ -12,14 +12,26 @@ interface ChecklistConfigSectionProps {
 
 const ChecklistConfigSection = ({
   handleOpen,
-  handleChange
+  handleChange,
 }: ChecklistConfigSectionProps) => {
-  const items = [BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE, BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE];
+  const items = [
+    BAG_LABEL_TYPES.DYMO_LABELS.OPTION_ONE,
+    BAG_LABEL_TYPES.SHEET_LABELS.OPTION_ONE,
+  ];
 
   return (
     <Column>
-      <Button kind={'primary'} onClick={() => handleOpen('checklistRulesModal')}>
+      <Button
+        kind={'primary'}
+        onClick={() => handleOpen('checklistRulesModal')}
+      >
         Configure Package Item Rules
+      </Button>
+      <Button
+        kind={'primary'}
+        onClick={() => handleOpen('addPackageItemModal')}
+      >
+        Add Package Item
       </Button>
       <p className='mt-4'>
         <BasicSelect
@@ -33,7 +45,6 @@ const ChecklistConfigSection = ({
       </p>
     </Column>
   );
-
 };
 
 export { ChecklistConfigSection };
