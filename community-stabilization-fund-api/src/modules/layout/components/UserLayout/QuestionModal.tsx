@@ -12,16 +12,16 @@ import {
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { QuestionDTO, UserDTO } from '../../../../db';
+import type { QuestionDTO } from '../../../../db';
 
 import { BasicSelect } from '../../../../components';
 import { isEmpty } from '../../../../utils';
 import { QUESTION_FORM } from '../../constants';
 
 import styles from '../../styles/UserLayout.module.css';
+import { useStorage } from '../../../../hooks';
 
 export interface QuestionModalProps {
-  user?: UserDTO;
   questions: QuestionDTO[];
   open: boolean;
   handleClose: (key: string) => void;
@@ -30,7 +30,6 @@ export interface QuestionModalProps {
 }
 
 const QuestionModal = ({
-  user,
   questions,
   open,
   handleClose,
@@ -42,6 +41,8 @@ const QuestionModal = ({
   const [selectedQuestion, setSelectedQuestion] = useState<QuestionDTO>();
   const [questionInput, setQuestionInput] = useState<string>('');
   const [overflowOpen, setOverflowOpen] = useState<boolean>(true);
+
+  const { state: organization_id } = useStorage('organization_id', '')
 
   const {
     watch,
@@ -220,7 +221,7 @@ const QuestionModal = ({
   );
 
   function addQuestion() {
-    onSubmit({ ...form, organization_id: user?.organization_id } as QuestionDTO);
+    onSubmit({ ...form, organization_id } as QuestionDTO);
     reset();
   }
 

@@ -37,19 +37,18 @@ const UserNavigation = ({
 }: UserNavigationProps) => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
-  const [apiUser, setApiUser] = useState<UserDTO>();
 
   const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
   const { questions, updateQuestions } = useContext(FormQuestionsContext);
 
-  const { state } = useStorage('api_user', '');
+  const { state: apiUserId  } = useStorage('api_user_id', '');
+  const { state: organizationId } = useStorage('organization_id', '');
   const { user, error, isLoading } = useUser();
 
   const bagItemsMap = createInitialBagItemsMap(formResponseMock);
   const packageGroups = Object.keys(bagItemsMap);
   const packageItems = selectedPackage ? bagItemsMap[selectedPackage].map(item => item.name) : [];
 
-  const apiUserId = state;
   const userPath = apiUserId ? `/admin/users/${apiUserId}` : '/admin/login';
 
   // const deleteAllFormResponses = async () => {
@@ -61,33 +60,18 @@ const UserNavigation = ({
   
   const onPackageChange = (packageGroup?: string) => setSelectedPackage(packageGroup as keyof BagItemsMap);
 
-  // Fetch API user on page load
   useEffect(() => {
-    if (!apiUserId) return;
-
-    UserService.getById(apiUserId)
-      .then((res) => {
-        if (res.data) {
-          setApiUser(res.data);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('Error fetching API user');
-      });
-  }, [apiUserId]);
-
-  // Set defaults with API user
-  useEffect(() => {
-    if(isEmpty(apiUser?.organization_id)) return;
+    if(isEmpty(organizationId)) return;
     if(typeof updateDefaultBagLabelType !== 'function') return;
     if(typeof updateRules !== 'function') return;
     if(typeof updateQuestions !== 'function') return;
     if(typeof updateDisableDefaultQuestions !== 'function') return;
   
-    OrganizationService.getById(`${apiUser?.organization_id}`)
+    OrganizationService.getById(`${organizationId}`)
       .then((res) => {
-        if (res.data) {
+        const found = res.data.api_keys?.find((key) => key.api_user_id === apiUserId);
+
+        if (found) {
           updateDefaultBagLabelType(res.data.bag_label_type ?? '');
           updateQuestions(res.data.questions ?? []);
           updateRules(res.data.checklist_rules ?? []);
@@ -95,7 +79,7 @@ const UserNavigation = ({
         }
       });
   }, [
-    apiUser?.organization_id,
+    organizationId,
     updateDefaultBagLabelType,
     updateRules,
     updateQuestions,
@@ -154,7 +138,6 @@ const UserNavigation = ({
         onPackageChange={onPackageChange}
       />
       <QuestionModal 
-        user={apiUser}
         questions={questions}
         open={!!openModalMapping['questionModal']}
         handleClose={() => handleClose('questionModal')} 
@@ -178,7 +161,7 @@ const UserNavigation = ({
     const bagLabelType = e.target.value;
 
     setTimeout(() => {
-      OrganizationService.update({id: apiUser?.organization_id, bag_label_type: bagLabelType})
+      OrganizationService.update({id: organizationId, bag_label_type: bagLabelType})
         .then((_res) => {
           updateBagLabelType(bagLabelType);
           alert('Bag label type updated!');
@@ -189,7 +172,7 @@ const UserNavigation = ({
 
   // TODO: Replace onBagLabelTypeChange with this function
   function saveSettings(data: OrganizationDTO) {
-    OrganizationService.update({...data, id: apiUser?.organization_id})
+    OrganizationService.update({...data, id: organizationId})
       .then((_res) => {
         // updateBagLabelType(data.bag_label_type ?? '');
         handleClose('settingsModal');
@@ -205,7 +188,7 @@ const UserNavigation = ({
   function submitChecklistRule(data?: any) {
     if (typeof updateRules !== 'function') return;
 
-    ChecklistRuleService.create({...data, organization_id: apiUser?.organization_id})
+    ChecklistRuleService.create({...data, organization_id: organizationId})
       .then((_) => {
         updateRules((prevRules: ChecklistRuleDTO[]) => (
           [data, ...prevRules]

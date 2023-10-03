@@ -1,7 +1,7 @@
 export interface UserDTO {
   id: number;
   name: string;
-  organization_id?: number|null;
+  api_keys?: ApiKeyDTO[];
 }
 
 export interface ApiKeyDTO {

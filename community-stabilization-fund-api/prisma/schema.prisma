@@ -22,7 +22,7 @@ model api_key {
 model api_user {
   id              Int      @id @default(autoincrement())
   name            String   @db.VarChar(50)
-  api_key         api_key[]
+  api_keys         api_key[]
 }
 
 model organization {

@@ -14,7 +14,7 @@ function RouteGuard({ children }: RouteGuardProps) {
   const [authorized, setAuthorized] = useState(false);
 
   const { user, error, isLoading } = useUser();
-  const { state } = useStorage('api_user', '');
+  const { state } = useStorage('api_user_id', '');
 
   if(error) {
     console.error(error);
@@ -43,9 +43,9 @@ function RouteGuard({ children }: RouteGuardProps) {
 
   function authCheck(url: string, _opts: any) {
     // redirect to login page if accessing a private page and not logged in
-    const apiUserId = state === window.sessionStorage.getItem('api_user') 
+    const apiUserId = state === window.sessionStorage.getItem('api_user_id') 
       ? state 
-      : window.sessionStorage.getItem('api_user');
+      : window.sessionStorage.getItem('api_user_id');
     const publicPaths = [
       '/',
       '/forms/groceries-and-supplies',

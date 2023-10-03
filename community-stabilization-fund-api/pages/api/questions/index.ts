@@ -71,7 +71,7 @@ const createQuestion = async (body: any, res: NextApiResponse) => {
       }
     },
   };
-  
+
   try {
     const result = await prisma.question.create({ data: question });
   
