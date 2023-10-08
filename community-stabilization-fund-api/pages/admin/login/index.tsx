@@ -7,7 +7,7 @@ import type { NextPage } from 'next';
 import { useStorage } from '../../../src/hooks';
 import UserService from '../../../src/services/user';
 
-const AdminLoginPage: NextPage = (_props) => {
+const AdminLoginPage: NextPage = (props) => {
   const [apiKey, setApiKey] = useState('');
   const [warn, setWarn] = useState(false);
   const [error, setError] = useState<Error>();

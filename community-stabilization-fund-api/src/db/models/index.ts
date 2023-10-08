@@ -1,9 +1,3 @@
-export interface UserDTO {
-  id: number;
-  name: string;
-  api_keys?: ApiKeyDTO[];
-}
-
 export interface ApiKeyDTO {
   id: number;
   name: string;
@@ -11,6 +5,12 @@ export interface ApiKeyDTO {
   api_user?: UserDTO;
   organization_id?: number|null;
   organization?: OrganizationDTO;
+}
+
+export interface UserDTO {
+  id: number;
+  name: string;
+  api_keys?: ApiKeyDTO[];
 }
 
 export interface OrganizationDTO {
