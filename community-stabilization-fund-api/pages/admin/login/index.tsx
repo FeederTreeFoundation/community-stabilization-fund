@@ -7,7 +7,7 @@ import type { NextPage } from 'next';
 import { useStorage } from '../../../src/hooks';
 import UserService from '../../../src/services/user';
 
-const AdminLoginPage: NextPage = (props) => {
+const AdminLoginPage: NextPage = (_props) => {
   const [apiKey, setApiKey] = useState('');
   const [warn, setWarn] = useState(false);
   const [error, setError] = useState<Error>();
@@ -36,7 +36,7 @@ const AdminLoginPage: NextPage = (props) => {
 
     UserService.login(apiUser, token)
       .then((res) => {
-        const {api_user_id, organization_id } = res?.data;
+        const {api_user_id, organization_id } = res?.data ?? {};
         if (!api_user_id || Number.isNaN(api_user_id)) throw new Error('User not found');
 
         const returnPaths = ['/admin/login', '/form-responses', '/checklists', '/organizations'];

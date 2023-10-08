@@ -15,12 +15,12 @@ import { useForm } from 'react-hook-form';
 import type { FormDTO, QuestionDTO } from '../../../../db';
 
 import { BasicSelect } from '../../../../components';
+import { useStorage } from '../../../../hooks';
+import FormService from '../../../../services/form';
 import { isEmpty } from '../../../../utils';
 import { QUESTION_FORM } from '../../constants';
 
 import styles from '../../styles/UserLayout.module.css';
-import { useStorage } from '../../../../hooks';
-import FormService from '../../../../services/form';
 
 export interface QuestionModalProps {
   questions: QuestionDTO[];
@@ -45,7 +45,7 @@ const QuestionModal = ({
   const [questionInput, setQuestionInput] = useState<string>('');
   const [overflowOpen, setOverflowOpen] = useState<boolean>(true);
 
-  const { state: organization_id } = useStorage('organization_id', '')
+  const { state: organization_id } = useStorage('organization_id', '');
 
   const {
     watch,
@@ -277,7 +277,7 @@ const QuestionModal = ({
 
   function next() {
     setMode('add');
-    FormService.create({name: 'Default Form', organization_id})
+    FormService.create({name: 'Default Form', organization_id});
   }
 
   function handleFilter({ item, inputValue }: { item: QuestionDTO, inputValue: string }) {

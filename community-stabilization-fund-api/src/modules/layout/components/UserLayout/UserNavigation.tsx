@@ -81,6 +81,7 @@ const UserNavigation = ({
         }
       });
   }, [
+    apiUserId,
     organizationId,
     updateDefaultBagLabelType,
     updateRules,

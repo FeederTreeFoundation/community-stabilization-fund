@@ -1,7 +1,6 @@
 
 import { PrismaClient } from '@prisma/client';
 
-import type { UserDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient({
