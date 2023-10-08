@@ -13,6 +13,15 @@ export interface ApiKeyDTO {
   organization?: OrganizationDTO;
 }
 
+export interface ApiKeyDTO {
+  id: number;
+  name: string;
+  api_user_id?: number|null;
+  api_user?: UserDTO;
+  organization_id?: number|null;
+  organization?: OrganizationDTO;
+}
+
 export interface OrganizationDTO {
   id: number;
   name: string;
