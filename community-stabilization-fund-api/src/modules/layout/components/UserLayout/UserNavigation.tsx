@@ -12,22 +12,20 @@ import {
   Link,
   SkeletonIcon,
 } from '@carbon/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
-import {
-  PackageItemDTO,
-  type ChecklistRuleDTO,
-  type OrganizationDTO,
-  type QuestionDTO,
-  type UserDTO,
-  PackageGroupDTO,
+import type {
+  ChecklistRuleDTO,
+  FormDTO,
+  OrganizationDTO,
+  QuestionDTO,
 } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
 import { ChecklistRulesModal } from './ChecklistRulesModal';
-import { PackageItemModal } from './PackageItemModal';
 import { PackageGroupModal } from './PackageGroupModal';
+import { PackageItemModal } from './PackageItemModal';
 import { QuestionModal } from './QuestionModal';
 import { SettingsModal } from './SettingsModal';
 
@@ -35,14 +33,14 @@ import { useStorage } from '../../../../hooks';
 import { formResponseMock } from '../../../../mocks';
 import ChecklistRuleService from '../../../../services/checklist-rule';
 import OrganizationService from '../../../../services/organization';
-import QuestionService from '../../../../services/question';
-import UserService from '../../../../services/user';
+import PackageGroupService from '../../../../services/package-group';
 import PackageItemService from '../../../../services/package-item';
+import QuestionService from '../../../../services/question';
+
 import { isEmpty } from '../../../../utils';
 import { ChecklistsRulesContext } from '../../../checklists';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
 import { FormQuestionsContext } from '../../../forms';
-import PackageGroupService from '../../../../services/package-group';
 
 interface UserNavigationProps {
   updateDefaultBagLabelType?: (bagLabelType: string) => void;
@@ -57,14 +55,19 @@ const UserNavigation = ({
     [key: string]: boolean;
   }>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
-  const [apiUser, setApiUser] = useState<UserDTO>();
   const [packageGroups, setPackageGroups] = useState([]);
   const [packageItems, setPackageItems] = useState([]);
+
+  const formsRef = useRef<FormDTO[]>([]);
+
   const { updateRules, updateBagLabelType } = useContext(
     ChecklistsRulesContext
   );
   const { questions, updateQuestions } = useContext(FormQuestionsContext);
-  const { state } = useStorage('api_user', '');
+
+  const { state: apiUserId } = useStorage('api_user_id', '');
+  const { state: organizationId } = useStorage('organization_id', '');
+
   const { user, error, isLoading } = useUser();
 
   useEffect(() => {
@@ -110,7 +113,6 @@ const UserNavigation = ({
   //   ? bagItemsMap[selectedPackage].map((item) => item.name)
   //   : [];
 
-  const apiUserId = state;
   const userPath = apiUserId ? `/admin/users/${apiUserId}` : '/admin/login';
 
   // const deleteAllFormResponses = async () => {
@@ -123,42 +125,31 @@ const UserNavigation = ({
   const onPackageChange = (packageGroup?: string) =>
     setSelectedPackage(packageGroup as keyof BagItemsMap);
 
-  // Fetch API user on page load
   useEffect(() => {
-    if (!apiUserId) return;
-
-    UserService.getById(apiUserId)
-      .then((res) => {
-        if (res.data) {
-          setApiUser(res.data);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('Error fetching API user');
-      });
-  }, [apiUserId]);
-
-  // Set defaults with API user
-  useEffect(() => {
-    if (isEmpty(apiUser?.organization_id)) return;
+    if (isEmpty(organizationId)) return;
     if (typeof updateDefaultBagLabelType !== 'function') return;
     if (typeof updateRules !== 'function') return;
     if (typeof updateQuestions !== 'function') return;
     if (typeof updateDisableDefaultQuestions !== 'function') return;
 
-    OrganizationService.getById(`${apiUser?.organization_id}`).then((res) => {
-      if (res.data) {
+    OrganizationService.getById(`${organizationId}`).then((res) => {
+      const found = res.data.api_keys?.find(
+        (key) => `${key.api_user_id}` === `${apiUserId}`
+      );
+
+      if (found) {
         updateDefaultBagLabelType(res.data.bag_label_type ?? '');
         updateQuestions(res.data.questions ?? []);
         updateRules(res.data.checklist_rules ?? []);
         updateDisableDefaultQuestions(
           res.data.disable_default_questions_json ?? ''
         );
+        formsRef.current = res.data.forms ?? [];
       }
     });
   }, [
-    apiUser?.organization_id,
+    apiUserId,
+    organizationId,
     updateDefaultBagLabelType,
     updateRules,
     updateQuestions,
@@ -224,8 +215,8 @@ const UserNavigation = ({
         onPackageChange={onPackageChange}
       />
       <QuestionModal
-        user={apiUser}
         questions={questions}
+        forms={formsRef.current}
         open={!!openModalMapping['questionModal']}
         handleClose={() => handleClose('questionModal')}
         onSubmit={submitQuestion}
@@ -260,7 +251,7 @@ const UserNavigation = ({
 
     setTimeout(() => {
       OrganizationService.update({
-        id: apiUser?.organization_id,
+        id: organizationId,
         bag_label_type: bagLabelType,
       })
         .then((_res) => {
@@ -273,7 +264,7 @@ const UserNavigation = ({
 
   // TODO: Replace onBagLabelTypeChange with this function
   function saveSettings(data: OrganizationDTO) {
-    OrganizationService.update({ ...data, id: apiUser?.organization_id })
+    OrganizationService.update({ ...data, id: organizationId })
       .then((_res) => {
         // updateBagLabelType(data.bag_label_type ?? '');
         handleClose('settingsModal');
@@ -288,10 +279,7 @@ const UserNavigation = ({
   function submitChecklistRule(data?: any) {
     if (typeof updateRules !== 'function') return;
 
-    ChecklistRuleService.create({
-      ...data,
-      organization_id: apiUser?.organization_id,
-    })
+    ChecklistRuleService.create({ ...data, organization_id: organizationId })
       .then((_) => {
         updateRules((prevRules: ChecklistRuleDTO[]) => [data, ...prevRules]);
       })

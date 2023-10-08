@@ -13,7 +13,6 @@ import { isEmpty } from "../../../utils";
 
 import styles from '../styles/GroceriesAndSuppliesForm.module.css';
 
-
 interface DefaultFormProps {
   defaultQuestionsDisabled?: boolean;
   questions?: QuestionDTO[];

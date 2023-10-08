@@ -22,7 +22,7 @@ model api_key {
 model api_user {
   id              Int      @id @default(autoincrement())
   name            String   @db.VarChar(50)
-  api_key         api_key[]
+  api_keys         api_key[]
 }
 
 model organization {
@@ -57,6 +57,32 @@ model address {
   line1 String @db.VarChar(30)
   line2 String? @db.VarChar(30)
   form_response form_response[]
+}
+
+model form {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by String? @db.VarChar(60) @default("")
+  last_updated DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by String? @db.VarChar(60) @default("")
+  organization_id Int
+  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "form_ibfk_1")
+  form_questions form_question[]
+  form_responses form_response[]
+
+  @@index([organization_id], map: "organization_id")
+}
+
+model form_question {
+  id Int @id @default(autoincrement())
+  form_id Int
+  form form @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_question_ibfk_1")
+  question_id Int
+  question question @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_question_ibfk_2")
+
+  @@index([form_id], map: "form_id")
+  @@index([question_id], map: "question_id")
 }
 
 model form_response {
@@ -163,25 +189,8 @@ model question {
   last_updated_by String? @db.VarChar(60) @default("")
   organization_id Int
   organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "question_ibfk_1")
-  form_id Int?
-  form form? @relation(fields: [form_id], references: [id], onDelete: Cascade, map: "question_ibfk_2")
+  form_questions form_question[]
   answers answer[]
-
-  @@index([organization_id], map: "organization_id")
-  @@index([form_id], map: "form_id")
-}
-
-model form {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(50)
-  submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by String? @db.VarChar(60) @default("")
-  last_updated DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  last_updated_by String? @db.VarChar(60) @default("")
-  organization_id Int
-  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "form_ibfk_1")
-  questions question[]
-  form_responses form_response[]
 
   @@index([organization_id], map: "organization_id")
 }

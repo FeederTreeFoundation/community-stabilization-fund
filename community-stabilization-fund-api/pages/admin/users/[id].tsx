@@ -27,7 +27,7 @@ const AdminPage = () => {
   
   const router = useRouter();
   const { user, error, isLoading} = useUser();
-  const { state } = useStorage('api_user', '');
+  const { state } = useStorage('api_user_id', '');
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [apiError, setApiError] = useState<Error | undefined>(error);

@@ -1,7 +1,6 @@
 
 import { PrismaClient } from '@prisma/client';
 
-import type { UserDTO } from '../../../src/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient({
@@ -31,8 +30,11 @@ const userHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
 const getUserById = async (id: string, res: NextApiResponse) => {
   try {
-    const user: UserDTO | null = await prisma.api_user.findUnique({
+    const user = await prisma.api_user.findUnique({
       where: { id: Number(id) },
+      include: {
+        api_keys: true,
+      },
     });
 
     if (!user) {

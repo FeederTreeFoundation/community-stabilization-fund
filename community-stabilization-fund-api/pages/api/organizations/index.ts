@@ -39,7 +39,8 @@ const getAllOrganizations = async (res: NextApiResponse) => {
   try {
     const organizations = (await prisma.organization.findMany({
       include: {
-        api_keys: true,
+        api_keys: false,
+        forms: false,
       },
     })) as OrganizationDTO[];
 
