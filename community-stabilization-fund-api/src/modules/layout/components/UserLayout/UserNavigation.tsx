@@ -14,11 +14,13 @@ import {
 } from '@carbon/react';
 import { useContext, useEffect, useState } from 'react';
 
-import type {
-  ChecklistRuleDTO,
-  OrganizationDTO,
-  QuestionDTO,
-  UserDTO,
+import {
+  PackageItemDTO,
+  type ChecklistRuleDTO,
+  type OrganizationDTO,
+  type QuestionDTO,
+  type UserDTO,
+  PackageGroupDTO,
 } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
@@ -56,20 +58,57 @@ const UserNavigation = ({
   }>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
   const [apiUser, setApiUser] = useState<UserDTO>();
-
+  const [packageGroups, setPackageGroups] = useState([]);
+  const [packageItems, setPackageItems] = useState([]);
   const { updateRules, updateBagLabelType } = useContext(
     ChecklistsRulesContext
   );
   const { questions, updateQuestions } = useContext(FormQuestionsContext);
-
   const { state } = useStorage('api_user', '');
   const { user, error, isLoading } = useUser();
 
-  const bagItemsMap = createInitialBagItemsMap(formResponseMock);
-  const packageGroups = Object.keys(bagItemsMap);
-  const packageItems = selectedPackage
-    ? bagItemsMap[selectedPackage].map((item) => item.name)
-    : [];
+  useEffect(() => {
+    PackageGroupService.getAll().then((res) => {
+      if (res.data.length === 0) {
+        const bagItemsMap = createInitialBagItemsMap(formResponseMock);
+        const packageGroups = Object.keys(bagItemsMap);
+        const packageItems = selectedPackage
+          ? bagItemsMap[selectedPackage].map((item) => item.name)
+          : [];
+        setPackageGroups(packageGroups);
+        setPackageItems(packageItems);
+      } else {
+        // Get this working.
+        console.log(res.data.length);
+        console.log(res.data);
+        const bagItemsMap = createInitialBagItemsMap(formResponseMock);
+        const packageGroups = res.data.map((group) => group.name);
+        setPackageGroups(packageGroups);
+        PackageItemService.getAll().then((res) => {
+          if (res.data.length > 0) {
+            const packageItems = res.data.map((item) => item.name);
+            setPackageItems(packageItems);
+          }
+        });
+        // const bagItemsMap = createInitialBagItemsMap(res.data);
+        // // setPackageGroups(Object.keys(bagItemsMap));
+        // const packageItems = selectedPackage
+        //   ? bagItemsMap[selectedPackage].map((item) => item.name)
+        //   : [];
+        // console.log(bagItemsMap);
+        // setPackageItems(packageItems);
+      }
+    });
+  }, [selectedPackage]);
+
+  // TODO: Replace with package item and package group data
+  // Use mock for default if no package items or package groups
+  // Check if they want defaults disabled or not
+  // const bagItemsMap = createInitialBagItemsMap(formResponseMock);
+  // const packageGroups = Object.keys(bagItemsMap);
+  // const packageItems = selectedPackage
+  //   ? bagItemsMap[selectedPackage].map((item) => item.name)
+  //   : [];
 
   const apiUserId = state;
   const userPath = apiUserId ? `/admin/users/${apiUserId}` : '/admin/login';
@@ -193,6 +232,7 @@ const UserNavigation = ({
         onDelete={handleDeleteQuestion}
       />
       <PackageItemModal
+        packageGroups={packageGroups}
         open={!!openModalMapping['addPackageItemModal']}
         handleClose={() => handleClose('packageItemModal')}
         onSubmit={submitPackageItem}

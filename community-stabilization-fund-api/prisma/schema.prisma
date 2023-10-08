@@ -31,6 +31,7 @@ model organization {
   short_name String? @db.VarChar(10) @default("")
   bag_label_type String? @db.VarChar(40) @default("")
   disable_default_questions_json String? @db.VarChar(250) @default("")
+  disable_default_checklist_items_json String? @db.VarChar(250) @default("")
   submitted_on DateTime? @default(dbgenerated("NOW()")) @db.DateTime
   submitted_by String? @db.VarChar(60) @default("")
   api_keys api_key[]
@@ -108,6 +109,8 @@ model package_item {
   name  String
   packages checklist_rule[]
 }
+
+
 
 model checklist_rule {
   id                  Int @id @default(autoincrement())

@@ -33,6 +33,12 @@ const ChecklistConfigSection = ({
       >
         Add Package Item
       </Button>
+      <Button
+        kind={'primary'}
+        onClick={() => handleOpen('addPackageGroupModal')}
+      >
+        Add Package Group
+      </Button>
       <p className='mt-4'>
         <BasicSelect
           id='bag-label-type'
