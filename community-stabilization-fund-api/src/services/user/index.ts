@@ -20,18 +20,18 @@ const UserService = {
 };
 
 async function login(apiUser: string, token: string) {
-  const res = await axiosInstance.post<{ id: number }>(
+  const res = await axiosInstance.post<{ api_user_id: number, organization_id: number }>(
     `${publicRuntimeConfig?.apiUrl}/users/authenticate`,
     { apiUser, token }
   );
 
-  if(res.data?.id) axiosInstance.defaults.headers.common['authorization'] = token;
+  if(res.data?.api_user_id) axiosInstance.defaults.headers.common['authorization'] = token;
   return res;
 }
 
 async function logout() {
   // WIP: Remove authorization token instead of user id
-  sessionStorage.removeItem('api_user');
+  sessionStorage.removeItem('api_user_id');
   Router.push('/admin/login');
 }
 

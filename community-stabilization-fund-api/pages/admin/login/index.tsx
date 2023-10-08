@@ -12,7 +12,8 @@ const AdminLoginPage: NextPage = () => {
   const [warn, setWarn] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const { setValue } = useStorage('api_user', '');
+  const { setValue: setApiUserId } = useStorage('api_user_id', '');
+  const { setValue: setOrganizationId } = useStorage('organization_id', '');
 
   const router = useRouter();
 
@@ -35,16 +36,17 @@ const AdminLoginPage: NextPage = () => {
 
     UserService.login(apiUser, token)
       .then((res) => {
-        const userId = res?.data.id;
-        if (!userId || Number.isNaN(userId)) throw new Error('User not found');
+        const {api_user_id, organization_id } = res?.data ?? {};
+        if (!api_user_id || Number.isNaN(api_user_id)) throw new Error('User not found');
 
-        const returnPaths = ['/admin/login', '/form-responses', '/checklists'];
+        const returnPaths = ['/admin/login', '/form-responses', '/checklists', '/organizations'];
         const queryReturnUrl = router.query.returnUrl as string;
         const returnUrl = returnPaths.includes(queryReturnUrl) ? queryReturnUrl : null;
        
-        setValue(`${userId}`);
+        setApiUserId(`${api_user_id}`);
+        setOrganizationId(`${organization_id}`);
         router.push({
-          pathname: `/admin/users/${userId}`,
+          pathname: `/admin/users/${api_user_id}`,
           query: { returnUrl },
         });
       })

@@ -27,15 +27,16 @@ const authenticateUser = async (body: any, res: NextApiResponse) => {
   try {
     const results = await prisma.api_user.findMany({
       where: { name: apiUser },
-      include: { api_key: { where: { name: token } } },
+      include: { api_keys: { where: { name: token } } },
     });
 
     if(results.length === 0) {
       return res.status(401).send(`ERROR: There is no apikey matching ${apiUser}:${token}`);
     }
   
-    const id = results[0]?.id;
-    return res.status(200).json({ id });
+    const api_user_id = results[0]?.id;
+    const organization_id = results[0]?.api_keys[0]?.organization_id;
+    return res.status(200).json({ api_user_id, organization_id });
   } catch (error) {
     return res.status(400).send({ error });
   }

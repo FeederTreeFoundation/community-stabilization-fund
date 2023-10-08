@@ -12,17 +12,19 @@ import {
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { QuestionDTO, UserDTO } from '../../../../db';
+import type { FormDTO, QuestionDTO } from '../../../../db';
 
 import { BasicSelect } from '../../../../components';
+import { useStorage } from '../../../../hooks';
+import FormService from '../../../../services/form';
 import { isEmpty } from '../../../../utils';
 import { QUESTION_FORM } from '../../constants';
 
 import styles from '../../styles/UserLayout.module.css';
 
 export interface QuestionModalProps {
-  user?: UserDTO;
   questions: QuestionDTO[];
+  forms: FormDTO[];
   open: boolean;
   handleClose: (key: string) => void;
   onSubmit: (data: QuestionDTO) => void;
@@ -30,9 +32,9 @@ export interface QuestionModalProps {
 }
 
 const QuestionModal = ({
-  user,
-  questions,
-  open,
+  questions = [],
+  forms = [],
+  open = false,
   handleClose,
   onSubmit,
   onDelete,
@@ -42,6 +44,8 @@ const QuestionModal = ({
   const [selectedQuestion, setSelectedQuestion] = useState<QuestionDTO>();
   const [questionInput, setQuestionInput] = useState<string>('');
   const [overflowOpen, setOverflowOpen] = useState<boolean>(true);
+
+  const { state: organization_id } = useStorage('organization_id', '');
 
   const {
     watch,
@@ -54,12 +58,12 @@ const QuestionModal = ({
   });
 
   const form = watch();
-  const hasQuestions = !isEmpty(questions);
+  const hasForms = !isEmpty(forms);
 
   useEffect(() => {
-    const initialMode = !hasQuestions ? 'setup' : 'add';
+    const initialMode = !hasForms ? 'setup' : 'add';
     setMode(initialMode);
-  }, [hasQuestions]);
+  }, [hasForms]);
 
   if(mode === 'setup') {
     return (
@@ -220,7 +224,7 @@ const QuestionModal = ({
   );
 
   function addQuestion() {
-    onSubmit({ ...form, organization_id: user?.organization_id } as QuestionDTO);
+    onSubmit({ ...form, organization_id } as QuestionDTO);
     reset();
   }
 
@@ -273,6 +277,7 @@ const QuestionModal = ({
 
   function next() {
     setMode('add');
+    FormService.create({name: 'Default Form', organization_id});
   }
 
   function handleFilter({ item, inputValue }: { item: QuestionDTO, inputValue: string }) {

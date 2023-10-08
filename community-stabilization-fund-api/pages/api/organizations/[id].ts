@@ -33,9 +33,10 @@ const getOrganizationById = async (id: string, res: NextApiResponse) => {
     const organization = await prisma.organization.findUnique({
       where: { id: Number(id) },
       include: {
-        api_keys: false,
+        api_keys: true,
         questions: true,
-        checklist_rules: true
+        checklist_rules: true,
+        forms: true,
       },
     }) as OrganizationDTO;
 

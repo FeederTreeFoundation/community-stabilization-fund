@@ -17,7 +17,7 @@ const OrganizationsContainer = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { user } = useUser();
-  const { state } = useStorage('api_user', '');
+  const { state } = useStorage('api_user_id', '');
 
   useEffect(() => {
     const fetchOrganizations = async () => {

@@ -49,7 +49,12 @@ const createUser = async (body: UserDTO, res: NextApiResponse) => {
   const user = {
     ...body,
     name: body.name ?? '',
-    organization_id: body.organization_id ?? 0,
+    api_keys: {
+      create: body.api_keys?.map(key => ({
+        ...key,
+        name: key.name ?? '',
+      })) ?? [],
+    },
   };
 
   try {

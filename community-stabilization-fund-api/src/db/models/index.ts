@@ -1,9 +1,3 @@
-export interface UserDTO {
-  id: number;
-  name: string;
-  organization_id?: number|null;
-}
-
 export interface ApiKeyDTO {
   id: number;
   name: string;
@@ -11,6 +5,12 @@ export interface ApiKeyDTO {
   api_user?: UserDTO;
   organization_id?: number|null;
   organization?: OrganizationDTO;
+}
+
+export interface UserDTO {
+  id: number;
+  name: string;
+  api_keys?: ApiKeyDTO[];
 }
 
 export interface OrganizationDTO {
@@ -42,6 +42,26 @@ export interface AddressDTO {
   zipcode: string;
   line1: string;
   line2?: string|null;
+}
+
+export interface FormDTO {
+  id: number;
+  name: string;
+  organization_id: number;
+  questions?: QuestionDTO[];
+  form_responses?: FormResponseDTO[];
+  submitted_on?: Date|null;
+  submitted_by?: string|null;
+  last_updated?: Date|null;
+  last_updated_by?: string|null;
+}
+
+export interface FormQuestionDTO {
+  id: number;
+  question?: QuestionDTO;
+  question_id?: number;
+  form?: FormDTO;
+  form_id?: number;
 }
 
 export interface FormResponseDTO {
@@ -122,20 +142,8 @@ export interface QuestionDTO {
   options?: string;
   helper_text?: string;
   answers?: AnswerDTO[];
+  form_questions?: FormQuestionDTO[];
   organization_id: number;
-  form_id?: number;
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
-  last_updated?: Date|null;
-  last_updated_by?: string|null;
-}
-
-export interface FormDTO {
-  id: number;
-  name: string;
-  organization_id: number;
-  questions?: QuestionDTO[];
-  form_responses?: FormResponseDTO[];
   submitted_on?: Date|null;
   submitted_by?: string|null;
   last_updated?: Date|null;

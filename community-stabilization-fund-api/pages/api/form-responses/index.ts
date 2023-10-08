@@ -121,6 +121,12 @@ const createFormResponse = async (body: any, res: NextApiResponse) => {
           }))
         ]
       },
+    },
+    form: {
+      connectOrCreate: {
+        where: { id: rest.form_id ?? 0 },
+        create: { name: 'Default Form' },
+      }
     }
   };
 
@@ -164,6 +170,12 @@ const createCustomFormResponse = async (body: any, res: NextApiResponse) => {
             question_id: Number(item.question_id),
           }))
         ]
+      }
+    },
+    form: {
+      connectOrCreate: {
+        where: { id: rest.form_id ?? 1 },
+        create: { name: 'Default Form' },
       }
     }
   };
