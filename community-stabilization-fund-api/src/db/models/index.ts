@@ -44,6 +44,26 @@ export interface AddressDTO {
   line2?: string|null;
 }
 
+export interface FormDTO {
+  id: number;
+  name: string;
+  organization_id: number;
+  questions?: QuestionDTO[];
+  form_responses?: FormResponseDTO[];
+  submitted_on?: Date|null;
+  submitted_by?: string|null;
+  last_updated?: Date|null;
+  last_updated_by?: string|null;
+}
+
+export interface FormQuestionDTO {
+  id: number;
+  question?: QuestionDTO;
+  question_id?: number;
+  form?: FormDTO;
+  form_id?: number;
+}
+
 export interface FormResponseDTO {
   id: number;
   first_name: string;
@@ -122,20 +142,8 @@ export interface QuestionDTO {
   options?: string;
   helper_text?: string;
   answers?: AnswerDTO[];
+  form_questions?: FormQuestionDTO[];
   organization_id: number;
-  form_id?: number;
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
-  last_updated?: Date|null;
-  last_updated_by?: string|null;
-}
-
-export interface FormDTO {
-  id: number;
-  name: string;
-  organization_id: number;
-  questions?: QuestionDTO[];
-  form_responses?: FormResponseDTO[];
   submitted_on?: Date|null;
   submitted_by?: string|null;
   last_updated?: Date|null;

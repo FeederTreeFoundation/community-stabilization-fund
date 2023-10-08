@@ -6,9 +6,9 @@ import {
   Link,
   SkeletonIcon,
 } from '@carbon/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
-import type { ChecklistRuleDTO, OrganizationDTO, QuestionDTO, UserDTO } from '../../../../db';
+import type { ChecklistRuleDTO, FormDTO, OrganizationDTO, QuestionDTO } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
 import type { ChangeEvent } from 'react';
 
@@ -20,7 +20,6 @@ import { formResponseMock } from '../../../../mocks';
 import ChecklistRuleService from '../../../../services/checklist-rule';
 import OrganizationService from '../../../../services/organization';
 import QuestionService from '../../../../services/question';
-import UserService from '../../../../services/user';
 import { isEmpty } from '../../../../utils';
 import { ChecklistsRulesContext } from '../../../checklists';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
@@ -37,6 +36,8 @@ const UserNavigation = ({
 }: UserNavigationProps) => {
   const [openModalMapping, setOpenModalMapping] = useState<{[key: string]: boolean}>({});
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
+
+  const formsRef = useRef<FormDTO[]>([]);
 
   const { updateRules, updateBagLabelType } = useContext(ChecklistsRulesContext);
   const { questions, updateQuestions } = useContext(FormQuestionsContext);
@@ -66,16 +67,17 @@ const UserNavigation = ({
     if(typeof updateRules !== 'function') return;
     if(typeof updateQuestions !== 'function') return;
     if(typeof updateDisableDefaultQuestions !== 'function') return;
-  
+
     OrganizationService.getById(`${organizationId}`)
       .then((res) => {
-        const found = res.data.api_keys?.find((key) => key.api_user_id === apiUserId);
-
+        const found = res.data.api_keys?.find((key) => `${key.api_user_id}` === `${apiUserId}`);
+        
         if (found) {
           updateDefaultBagLabelType(res.data.bag_label_type ?? '');
           updateQuestions(res.data.questions ?? []);
           updateRules(res.data.checklist_rules ?? []);
           updateDisableDefaultQuestions(res.data.disable_default_questions_json ?? '');
+          formsRef.current = res.data.forms ?? [];
         }
       });
   }, [
@@ -139,6 +141,7 @@ const UserNavigation = ({
       />
       <QuestionModal 
         questions={questions}
+        forms={formsRef.current}
         open={!!openModalMapping['questionModal']}
         handleClose={() => handleClose('questionModal')} 
         onSubmit={submitQuestion}

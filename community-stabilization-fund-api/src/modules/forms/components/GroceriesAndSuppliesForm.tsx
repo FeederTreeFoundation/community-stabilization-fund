@@ -20,8 +20,9 @@ const GroceriesAndSuppliesForm = ({ formType = 'public' }: GroceriesAndSuppliesF
 
   const { user, error } = useUser();
   const { questions, disableDefaultQuestions } = useContext(FormQuestionsContext);
-
-  const filteredQuestions = useMemo(() => questions.filter(question => question.type === formType), [questions, formType]);
+ 
+  // TODO: fetch formQuestions from db
+  const filteredQuestions = useMemo(() => questions.filter(question => question.type === formType ), [questions, formType]);
   
   const defaultQuestionsDisabled = useMemo(() => {
     const raw = !isEmpty(disableDefaultQuestions) ? JSON.parse(disableDefaultQuestions) : {};

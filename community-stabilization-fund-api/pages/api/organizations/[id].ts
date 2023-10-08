@@ -35,7 +35,8 @@ const getOrganizationById = async (id: string, res: NextApiResponse) => {
       include: {
         api_keys: true,
         questions: true,
-        checklist_rules: true
+        checklist_rules: true,
+        forms: true,
       },
     }) as OrganizationDTO;
 
