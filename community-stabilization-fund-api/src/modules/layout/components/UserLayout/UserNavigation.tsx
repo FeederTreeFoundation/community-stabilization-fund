@@ -41,6 +41,7 @@ import { isEmpty } from '../../../../utils';
 import { ChecklistsRulesContext } from '../../../checklists';
 import { createInitialBagItemsMap } from '../../../checklists/utils';
 import { FormQuestionsContext } from '../../../forms';
+import PackageGroupItemModal from './PackageGroupItemModel';
 
 interface UserNavigationProps {
   updateDefaultBagLabelType?: (bagLabelType: string) => void;
@@ -84,12 +85,16 @@ const UserNavigation = ({
         // Get this working.
         console.log(res.data.length);
         console.log(res.data);
-        const bagItemsMap = createInitialBagItemsMap(formResponseMock);
-        const packageGroups = res.data.map((group) => group.name);
+        // const bagItemsMap = createInitialBagItemsMap(formResponseMock);
+        const packageGroups = res.data.map((group) => {
+          group.id, group.name;
+        });
         setPackageGroups(packageGroups);
         PackageItemService.getAll().then((res) => {
           if (res.data.length > 0) {
-            const packageItems = res.data.map((item) => item.name);
+            const packageItems = res.data.map((item) => {
+              item.id, item.name;
+            });
             setPackageItems(packageItems);
           }
         });
@@ -232,6 +237,13 @@ const UserNavigation = ({
         open={!!openModalMapping['addPackageGroupModal']}
         handleClose={() => handleClose('addPackageGroupModal')}
         onSubmit={submitPackageGroup}
+      />
+      <PackageGroupItemModal
+        packageGroups={packageGroups}
+        packageItems={packageItems}
+        open={!!openModalMapping['addPackageGroupItemModal']}
+        handleClose={() => handleClose('addPackageGroupItemModal')}
+        // onSubmit={submitPackageGroup}
       />
     </>
   );

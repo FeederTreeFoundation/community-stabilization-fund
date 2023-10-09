@@ -127,16 +127,26 @@ model form_response {
 model package_group {
   id Int @id @default(autoincrement())
   name String
-  items checklist_rule[]
+  checklist_rules checklist_rule[]
+  package_group_items package_group_items[]
 }
 
 model package_item {
   id    Int @id @default(autoincrement())
   name  String
-  packages checklist_rule[]
+  checklist_rules checklist_rule[]
+  package_group_items package_group_items[]
 }
 
-
+model package_group_items {
+  id Int @id @default(autoincrement())
+  package_item        package_item @relation(fields: [package_item_id], references: [id])
+  package_item_id     Int // relation scalar field (used in the `@relation` attribute above)
+  package_group       package_group @relation(fields: [package_group_id], references: [id])
+  package_group_id    Int // relation scalar field (used in the `@relation` attribute above)
+  @@index([package_group_id], map: "package_group_id")
+  @@index([package_item_id], map: "package_item_id")
+}
 
 model checklist_rule {
   id                  Int @id @default(autoincrement())
