@@ -38,11 +38,28 @@ const PackageGroupItemModal = ({
       onRequestSubmit={createPackageGroupItem}
       onRequestClose={() => handleClose('addPackageItemModal')}
     >
-      {console.log(customGroups, customItems)}
-      <TextInput
-        labelText='Package group'
-        {...register('name', { required: true })}
-      />
+      <Select id='select-custom-group' labelText='Select custom group'>
+        <SelectItem value='' text='' />
+        {customGroups &&
+          customGroups.map((customGroup) => (
+            <SelectItem
+              key={customGroup.id}
+              value={customGroup.id}
+              text={customGroup.name}
+            />
+          ))}
+      </Select>
+      <Select id='select-custom-item' labelText='Select custom item'>
+        <SelectItem value='' text='' />
+        {customItems &&
+          customItems.map((customItem) => (
+            <SelectItem
+              key={customItem.id}
+              value={customItem.id}
+              text={customItem.name}
+            />
+          ))}
+      </Select>
     </Modal>
   );
   function createPackageGroupItem() {
