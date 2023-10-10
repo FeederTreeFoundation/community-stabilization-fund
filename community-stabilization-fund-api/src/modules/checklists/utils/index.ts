@@ -50,6 +50,10 @@ export const mapFormResponseToBagItems = ({
   return bagItemsMap;
 };
 
+export const createBagItemsMap = ({ data }) => {
+  console.log('data found', data);
+};
+
 export const createInitialBagItemsMap = ({
   household_members = 1,
   menstrual_health_care,

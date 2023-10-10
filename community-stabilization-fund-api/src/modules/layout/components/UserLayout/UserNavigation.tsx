@@ -18,6 +18,8 @@ import type {
   ChecklistRuleDTO,
   FormDTO,
   OrganizationDTO,
+  PackageGroupDTO,
+  PackageItemDTO,
   QuestionDTO,
 } from '../../../../db';
 import type { BagItemsMap } from '../../../checklists/types';
@@ -39,7 +41,11 @@ import QuestionService from '../../../../services/question';
 
 import { isEmpty } from '../../../../utils';
 import { ChecklistsRulesContext } from '../../../checklists';
-import { createInitialBagItemsMap } from '../../../checklists/utils';
+import {
+  createBagItems,
+  createBagItemsMap,
+  createInitialBagItemsMap,
+} from '../../../checklists/utils';
 import { FormQuestionsContext } from '../../../forms';
 import PackageGroupItemModal from './PackageGroupItemModel';
 
@@ -58,6 +64,8 @@ const UserNavigation = ({
   const [selectedPackage, setSelectedPackage] = useState<keyof BagItemsMap>('');
   const [packageGroups, setPackageGroups] = useState([]);
   const [packageItems, setPackageItems] = useState([]);
+  const [customGroups, setCustomGroups] = useState([]);
+  const [customItems, setCustomItems] = useState([]);
 
   const formsRef = useRef<FormDTO[]>([]);
 
@@ -72,42 +80,19 @@ const UserNavigation = ({
   const { user, error, isLoading } = useUser();
 
   useEffect(() => {
-    PackageGroupService.getAll().then((res) => {
-      if (res.data.length === 0) {
-        const bagItemsMap = createInitialBagItemsMap(formResponseMock);
-        const packageGroups = Object.keys(bagItemsMap);
-        const packageItems = selectedPackage
-          ? bagItemsMap[selectedPackage].map((item) => item.name)
-          : [];
-        setPackageGroups(packageGroups);
-        setPackageItems(packageItems);
-      } else {
-        // Get this working.
-        console.log(res.data.length);
-        console.log(res.data);
-        // const bagItemsMap = createInitialBagItemsMap(formResponseMock);
-        const packageGroups = res.data.map((group) => {
-          group.id, group.name;
-        });
-        setPackageGroups(packageGroups);
-        PackageItemService.getAll().then((res) => {
-          if (res.data.length > 0) {
-            const packageItems = res.data.map((item) => {
-              item.id, item.name;
-            });
-            setPackageItems(packageItems);
-          }
-        });
-        // const bagItemsMap = createInitialBagItemsMap(res.data);
-        // // setPackageGroups(Object.keys(bagItemsMap));
-        // const packageItems = selectedPackage
-        //   ? bagItemsMap[selectedPackage].map((item) => item.name)
-        //   : [];
-        // console.log(bagItemsMap);
-        // setPackageItems(packageItems);
-      }
-    });
+    const bagItemsMap = createInitialBagItemsMap(formResponseMock);
+    const packageGroups = Object.keys(bagItemsMap);
+    const packageItems = selectedPackage
+      ? bagItemsMap[selectedPackage].map((item) => item.name)
+      : [];
+    setPackageGroups(packageGroups);
+    setPackageItems(packageItems);
   }, [selectedPackage]);
+
+  useEffect(() => {
+    PackageGroupService.getAll().then((res) => setCustomGroups(res.data));
+    PackageItemService.getAll().then((res) => setCustomItems(res.data));
+  }, []);
 
   // TODO: Replace with package item and package group data
   // Use mock for default if no package items or package groups
@@ -228,7 +213,6 @@ const UserNavigation = ({
         onDelete={handleDeleteQuestion}
       />
       <PackageItemModal
-        packageGroups={packageGroups}
         open={!!openModalMapping['addPackageItemModal']}
         handleClose={() => handleClose('packageItemModal')}
         onSubmit={submitPackageItem}
@@ -239,8 +223,8 @@ const UserNavigation = ({
         onSubmit={submitPackageGroup}
       />
       <PackageGroupItemModal
-        packageGroups={packageGroups}
-        packageItems={packageItems}
+        customGroups={customGroups}
+        customItems={customItems}
         open={!!openModalMapping['addPackageGroupItemModal']}
         handleClose={() => handleClose('addPackageGroupItemModal')}
         // onSubmit={submitPackageGroup}

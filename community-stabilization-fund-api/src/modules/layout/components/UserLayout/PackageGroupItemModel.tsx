@@ -1,5 +1,5 @@
 import { TextInput } from '@carbon/react';
-import { Modal } from 'carbon-components-react';
+import { Modal, Select, SelectItem } from 'carbon-components-react';
 import { useForm } from 'react-hook-form';
 
 import type { PackageGroupDTO } from '../../../../db';
@@ -14,6 +14,8 @@ interface PackageGroupItemModalProps {
 }
 
 const PackageGroupItemModal = ({
+  customGroups,
+  customItems,
   handleClose,
   open,
   onSubmit,
@@ -36,6 +38,7 @@ const PackageGroupItemModal = ({
       onRequestSubmit={createPackageGroupItem}
       onRequestClose={() => handleClose('addPackageItemModal')}
     >
+      {console.log(customGroups, customItems)}
       <TextInput
         labelText='Package group'
         {...register('name', { required: true })}
