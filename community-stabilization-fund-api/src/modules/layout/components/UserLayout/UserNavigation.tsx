@@ -48,6 +48,7 @@ import {
 } from '../../../checklists/utils';
 import { FormQuestionsContext } from '../../../forms';
 import PackageGroupItemModal from './PackageGroupItemModel';
+import PackageGroupItemService from '../../../../services/package-group-item';
 
 interface UserNavigationProps {
   updateDefaultBagLabelType?: (bagLabelType: string) => void;
@@ -227,7 +228,7 @@ const UserNavigation = ({
         customItems={customItems}
         open={!!openModalMapping['addPackageGroupItemModal']}
         handleClose={() => handleClose('addPackageGroupItemModal')}
-        // onSubmit={submitPackageGroup}
+        onSubmit={submitPackageGroupItem}
       />
     </>
   );
@@ -291,6 +292,12 @@ const UserNavigation = ({
 
   function submitPackageGroup(data?: any) {
     PackageGroupService.create({
+      ...data,
+    });
+  }
+
+  function submitPackageGroupItem(data?: any) {
+    PackageGroupItemService.create({
       ...data,
     });
   }

@@ -1,9 +1,9 @@
 export interface ApiKeyDTO {
   id: number;
   name: string;
-  api_user_id?: number|null;
+  api_user_id?: number | null;
   api_user?: UserDTO;
-  organization_id?: number|null;
+  organization_id?: number | null;
   organization?: OrganizationDTO;
 }
 
@@ -22,15 +22,15 @@ export interface OrganizationDTO {
   questions?: QuestionDTO[];
   checklist_rules?: ChecklistRuleDTO[];
   forms?: FormDTO[];
-  disable_default_questions_json?: string|null;
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
+  disable_default_questions_json?: string | null;
+  submitted_on?: Date | null;
+  submitted_by?: string | null;
 }
 
 export interface MenstruatingHealthResponseDTO {
   id: number;
   menstruating_members: number;
-  hygiene_items: string|string[]|null;
+  hygiene_items: string | string[] | null;
   needs_plan_b?: boolean;
 }
 
@@ -41,7 +41,7 @@ export interface AddressDTO {
   state: string;
   zipcode: string;
   line1: string;
-  line2?: string|null;
+  line2?: string | null;
 }
 
 export interface FormDTO {
@@ -50,10 +50,10 @@ export interface FormDTO {
   organization_id: number;
   questions?: QuestionDTO[];
   form_responses?: FormResponseDTO[];
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
-  last_updated?: Date|null;
-  last_updated_by?: string|null;
+  submitted_on?: Date | null;
+  submitted_by?: string | null;
+  last_updated?: Date | null;
+  last_updated_by?: string | null;
 }
 
 export interface FormQuestionDTO {
@@ -68,31 +68,36 @@ export interface FormResponseDTO {
   id: number;
   first_name: string;
   last_name: string;
-  email?: string|null;
+  email?: string | null;
   phone_number?: string;
-  phone_type?: string|null;
-  address?: AddressDTO|null;
-  race?: string|null;
-  ethnicity?: string|null;
+  phone_type?: string | null;
+  address?: AddressDTO | null;
+  race?: string | null;
+  ethnicity?: string | null;
   is_local?: boolean;
   household_members?: number;
   has_flu_symptoms?: boolean;
   packages_to_receive?: string | string[];
-  menstrual_health_care?: MenstruatingHealthResponseDTO|null;
-  item_requests?: string|null;
-  additional_information?: string|null;
+  menstrual_health_care?: MenstruatingHealthResponseDTO | null;
+  item_requests?: string | null;
+  additional_information?: string | null;
   transport_preference?: string;
   is_volunteering?: boolean;
   is_subscribing?: boolean;
   is_joining?: boolean;
   is_interested_in_membership?: boolean;
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
-  elderly_members?: number|null;
-  youth_members?: number|null;
-  custom_question_responses?: string|null;
+  submitted_on?: Date | null;
+  submitted_by?: string | null;
+  elderly_members?: number | null;
+  youth_members?: number | null;
+  custom_question_responses?: string | null;
   answers?: AnswerDTO[];
-  form_id?: number|null;
+  form_id?: number | null;
+}
+
+export interface PackageGroupItemDTO {
+  packageGroupID: number;
+  packageItemID: number;
 }
 
 export interface PackageGroupDTO {
@@ -119,10 +124,10 @@ export interface ChecklistRuleDTO {
   package_group_id?: number;
   package_item_id?: number;
   organization_id?: number;
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
-  last_updated?: Date|null;
-  last_updated_by?: string|null;
+  submitted_on?: Date | null;
+  submitted_by?: string | null;
+  last_updated?: Date | null;
+  last_updated_by?: string | null;
 }
 
 export interface AnswerDTO {
@@ -144,8 +149,8 @@ export interface QuestionDTO {
   answers?: AnswerDTO[];
   form_questions?: FormQuestionDTO[];
   organization_id: number;
-  submitted_on?: Date|null;
-  submitted_by?: string|null;
-  last_updated?: Date|null;
-  last_updated_by?: string|null;
+  submitted_on?: Date | null;
+  submitted_by?: string | null;
+  last_updated?: Date | null;
+  last_updated_by?: string | null;
 }

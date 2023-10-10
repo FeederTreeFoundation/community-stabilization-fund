@@ -2,7 +2,7 @@ import { TextInput } from '@carbon/react';
 import { Modal, Select, SelectItem } from 'carbon-components-react';
 import { useForm } from 'react-hook-form';
 
-import type { PackageGroupDTO } from '../../../../db';
+import type { PackageGroupDTO, PackageGroupItemDTO } from '../../../../db';
 
 // import { TextInput } from 'carbon-components';
 interface PackageGroupItemModalProps {
@@ -25,7 +25,7 @@ const PackageGroupItemModal = ({
     register,
     reset,
     formState: { errors },
-  } = useForm<PackageGroupDTO>();
+  } = useForm<PackageGroupItemDTO>();
   const form = watch();
   return (
     <Modal
@@ -38,7 +38,11 @@ const PackageGroupItemModal = ({
       onRequestSubmit={createPackageGroupItem}
       onRequestClose={() => handleClose('addPackageItemModal')}
     >
-      <Select id='select-custom-group' labelText='Select custom group'>
+      <Select
+        id='select-custom-group'
+        labelText='Select custom group'
+        {...register('packageGroupID', { required: true })}
+      >
         <SelectItem value='' text='' />
         {customGroups &&
           customGroups.map((customGroup) => (
@@ -49,7 +53,11 @@ const PackageGroupItemModal = ({
             />
           ))}
       </Select>
-      <Select id='select-custom-item' labelText='Select custom item'>
+      <Select
+        id='select-custom-item'
+        labelText='Select custom item'
+        {...register('packageItemID', { required: true })}
+      >
         <SelectItem value='' text='' />
         {customItems &&
           customItems.map((customItem) => (
