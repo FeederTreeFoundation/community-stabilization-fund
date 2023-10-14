@@ -35,7 +35,13 @@ const PackageGroupModal = ({
       size={'md'}
       onRequestSubmit={createPackageGroup}
       onRequestClose={() => handleClose('addPackageItemModal')}
-    ></Modal>
+    >
+      {' '}
+      <TextInput
+        labelText='Package Group Name'
+        {...register('name', { required: true })}
+      />
+    </Modal>
   );
   function createPackageGroup() {
     onSubmit({
