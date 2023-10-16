@@ -8,114 +8,115 @@ datasource db {
 }
 
 model api_key {
-  id Int @id @default(autoincrement())
-  name String? @db.VarChar(50)
-  api_user_id Int?
-  api_user api_user? @relation(fields: [api_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "api_key_ibfk_1")
+  id              Int           @id @default(autoincrement())
+  name            String?       @db.VarChar(50)
+  api_user_id     Int?
+  api_user        api_user?     @relation(fields: [api_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "api_key_ibfk_1")
   organization_id Int?
-  organization organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "api_user_ibfk_1")
+  organization    organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "api_user_ibfk_1")
 
   @@index([organization_id], map: "organization_id")
   @@index([api_user_id], map: "api_user_id")
 }
 
 model api_user {
-  id              Int      @id @default(autoincrement())
-  name            String   @db.VarChar(50)
-  api_keys         api_key[]
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(50)
+  api_keys api_key[]
 }
 
 model organization {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(50)
-  short_name String? @db.VarChar(10) @default("")
-  bag_label_type String? @db.VarChar(40) @default("")
-  disable_default_questions_json String? @db.VarChar(250) @default("")
-  submitted_on DateTime? @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by String? @db.VarChar(60) @default("")
-  api_keys api_key[]
-  questions question[]
-  checklist_rules checklist_rule[]
-  forms form[]
+  id                                   Int              @id @default(autoincrement())
+  name                                 String           @db.VarChar(50)
+  short_name                           String?          @default("") @db.VarChar(10)
+  bag_label_type                       String?          @default("") @db.VarChar(40)
+  disable_default_questions_json       String?          @default("") @db.VarChar(250)
+  disable_default_checklist_items_json String?          @default("") @db.VarChar(250)
+  submitted_on                         DateTime?        @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by                         String?          @default("") @db.VarChar(60)
+  api_keys                             api_key[]
+  questions                            question[]
+  checklist_rules                      checklist_rule[]
+  forms                                form[]
 }
 
 model menstrual_health_care {
-  id Int @id @default(autoincrement())
-  menstruating_members Int @default(0)
-  hygiene_items String? @db.VarChar(250)
-  needs_plan_b Boolean @default(false)
-  form_response form_response[]
+  id                   Int             @id @default(autoincrement())
+  menstruating_members Int             @default(0)
+  hygiene_items        String?         @db.VarChar(250)
+  needs_plan_b         Boolean         @default(false)
+  form_response        form_response[]
 }
 
 model address {
-  id Int @id @default(autoincrement())
-  city String @db.VarChar(30)
-  state String @db.VarChar(30)
-  country String @db.VarChar(30)
-  zipcode String @db.VarChar(15)
-  line1 String @db.VarChar(30)
-  line2 String? @db.VarChar(30)
+  id            Int             @id @default(autoincrement())
+  city          String          @db.VarChar(30)
+  state         String          @db.VarChar(30)
+  country       String          @db.VarChar(30)
+  zipcode       String          @db.VarChar(15)
+  line1         String          @db.VarChar(30)
+  line2         String?         @db.VarChar(30)
   form_response form_response[]
 }
 
 model form {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(50)
-  submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by String? @db.VarChar(60) @default("")
-  last_updated DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  last_updated_by String? @db.VarChar(60) @default("")
+  id              Int             @id @default(autoincrement())
+  name            String          @db.VarChar(50)
+  submitted_on    DateTime        @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by    String?         @default("") @db.VarChar(60)
+  last_updated    DateTime        @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by String?         @default("") @db.VarChar(60)
   organization_id Int
-  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "form_ibfk_1")
-  form_questions form_question[]
-  form_responses form_response[]
+  organization    organization    @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "form_ibfk_1")
+  form_questions  form_question[]
+  form_responses  form_response[]
 
   @@index([organization_id], map: "organization_id")
 }
 
 model form_question {
-  id Int @id @default(autoincrement())
-  form_id Int
-  form form @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_question_ibfk_1")
+  id          Int      @id @default(autoincrement())
+  form_id     Int
+  form        form     @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_question_ibfk_1")
   question_id Int
-  question question @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_question_ibfk_2")
+  question    question @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_question_ibfk_2")
 
   @@index([form_id], map: "form_id")
   @@index([question_id], map: "question_id")
 }
 
 model form_response {
-  id                          Int                   @id @default(autoincrement())
-  first_name                  String                @db.VarChar(20)
-  last_name                   String                @db.VarChar(20)
-  email                       String?               @db.VarChar(60) @default("")
-  phone_number                String?               @db.VarChar(15) @default("")
-  phone_type                  String?               @db.VarChar(7) @default("")
-  race                        String?               @db.VarChar(60) @default("")
-  ethnicity                   String?               @db.VarChar(60) @default("")
-  is_local                    Boolean?              @default(false)
-  packages_to_receive         String?               @db.VarChar(250) @default("")
-  has_flu_symptoms            Boolean?              @default(false)
-  household_members           Int?                  @default(1)
-  item_requests               String?               @db.VarChar(100) @default("")
-  additional_information      String?               @db.VarChar(250) @default("")
-  transport_preference        String?               @db.VarChar(100) @default("")
-  is_volunteering             Boolean?              @default(false)
-  is_subscribing              Boolean?              @default(false)
-  is_interested_in_membership Boolean?              @default(false)
-  archived                    Boolean?              @default(false)
+  id                          Int                    @id @default(autoincrement())
+  first_name                  String                 @db.VarChar(20)
+  last_name                   String                 @db.VarChar(20)
+  email                       String?                @default("") @db.VarChar(60)
+  phone_number                String?                @default("") @db.VarChar(15)
+  phone_type                  String?                @default("") @db.VarChar(7)
+  race                        String?                @default("") @db.VarChar(60)
+  ethnicity                   String?                @default("") @db.VarChar(60)
+  is_local                    Boolean?               @default(false)
+  packages_to_receive         String?                @default("") @db.VarChar(250)
+  has_flu_symptoms            Boolean?               @default(false)
+  household_members           Int?                   @default(1)
+  item_requests               String?                @default("") @db.VarChar(100)
+  additional_information      String?                @default("") @db.VarChar(250)
+  transport_preference        String?                @default("") @db.VarChar(100)
+  is_volunteering             Boolean?               @default(false)
+  is_subscribing              Boolean?               @default(false)
+  is_interested_in_membership Boolean?               @default(false)
+  archived                    Boolean?               @default(false)
   archived_on                 DateTime?
-  archived_by                 String?               @db.VarChar(60) @default("")
-  submitted_on                DateTime              @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by                String?               @db.VarChar(60)
-  elderly_members             Int?                  @default(0)
-  youth_members               Int?                  @default(0)
+  archived_by                 String?                @default("") @db.VarChar(60)
+  submitted_on                DateTime               @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by                String?                @db.VarChar(60)
+  elderly_members             Int?                   @default(0)
+  youth_members               Int?                   @default(0)
   address_id                  Int?
-  address                     address?              @relation(fields: [address_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_2")
+  address                     address?               @relation(fields: [address_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_2")
   menstrual_health_care_id    Int?
   menstrual_health_care       menstrual_health_care? @relation(fields: [menstrual_health_care_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_1")
   form_id                     Int?
-  form                        form?                 @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_3")
+  form                        form?                  @relation(fields: [form_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "form_response_ibfk_3")
   answers                     answer[]
 
   @@index([menstrual_health_care_id], map: "menstrual_health_care_id")
@@ -124,35 +125,48 @@ model form_response {
 }
 
 model package_group {
-  id Int @id @default(autoincrement())
-  name String
-  items checklist_rule[]
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  checklist_rules     checklist_rule[]
+  package_group_items package_group_item[]
 }
 
 model package_item {
-  id    Int @id @default(autoincrement())
-  name  String
-  packages checklist_rule[]
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  checklist_rules     checklist_rule[]
+  package_group_items package_group_item[]
+}
+
+model package_group_item {
+  id               Int           @id @default(autoincrement())
+  package_item     package_item  @relation(fields: [package_item_id], references: [id])
+  package_item_id  Int // relation scalar field (used in the `@relation` attribute above)
+  package_group    package_group @relation(fields: [package_group_id], references: [id])
+  package_group_id Int // relation scalar field (used in the `@relation` attribute above)
+
+  @@index([package_group_id], map: "package_group_id")
+  @@index([package_item_id], map: "package_item_id")
 }
 
 model checklist_rule {
-  id                  Int @id @default(autoincrement())
-  quantity            String
-  household_members   String
-  bag_label_type      String
-  delayed_until       DateTime?
-  days_delayed_by     Int?
-  weeks_delayed_by    Int?
-  package_item        package_item @relation(fields: [package_item_id], references: [id])
-  package_item_id     Int // relation scalar field (used in the `@relation` attribute above)
-  package_group       package_group @relation(fields: [package_group_id], references: [id])
-  package_group_id    Int // relation scalar field (used in the `@relation` attribute above)
-  organization        organization? @relation(fields: [organization_id], references: [id]) 
-  organization_id     Int? // relation scalar field (used in the `@relation` attribute above)
-  submitted_on        DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by        String? @db.VarChar(60) @default("")
-  last_updated        DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  last_updated_by     String? @db.VarChar(60) @default("")
+  id                Int           @id @default(autoincrement())
+  quantity          String
+  household_members String
+  bag_label_type    String
+  delayed_until     DateTime?
+  days_delayed_by   Int?
+  weeks_delayed_by  Int?
+  package_item      package_item  @relation(fields: [package_item_id], references: [id])
+  package_item_id   Int // relation scalar field (used in the `@relation` attribute above)
+  package_group     package_group @relation(fields: [package_group_id], references: [id])
+  package_group_id  Int // relation scalar field (used in the `@relation` attribute above)
+  organization      organization? @relation(fields: [organization_id], references: [id])
+  organization_id   Int? // relation scalar field (used in the `@relation` attribute above)
+  submitted_on      DateTime      @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by      String?       @default("") @db.VarChar(60)
+  last_updated      DateTime      @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by   String?       @default("") @db.VarChar(60)
 
   @@index([package_group_id], map: "package_group_id")
   @@index([package_item_id], map: "package_item_id")
@@ -160,34 +174,34 @@ model checklist_rule {
 }
 
 model answer {
-  id Int @id @default(autoincrement())
-  text String @db.VarChar(500)
-  question_id Int
-  question question @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "answer_ibfk_1")
+  id               Int            @id @default(autoincrement())
+  text             String         @db.VarChar(500)
+  question_id      Int
+  question         question       @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "answer_ibfk_1")
   form_response_id Int?
-  form_response form_response? @relation(fields: [form_response_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "answer_ibfk_2")
+  form_response    form_response? @relation(fields: [form_response_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "answer_ibfk_2")
 
   @@index([question_id], map: "question_id")
   @@index([form_response_id], map: "form_response_id")
 }
 
 model question {
-  id Int @id @default(autoincrement())
-  text String @db.VarChar(250)
-  hidden Boolean @default(false)
-  type String @db.VarChar(20)
-  required Boolean @default(false)
-  role String? @db.VarChar(20) @default("textinput")
-  options String? @db.VarChar(500) @default("")
-  helper_text String? @db.VarChar(250) @default("")
-  submitted_on DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  submitted_by String? @db.VarChar(60) @default("")
-  last_updated DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  last_updated_by String? @db.VarChar(60) @default("")
+  id              Int             @id @default(autoincrement())
+  text            String          @db.VarChar(250)
+  hidden          Boolean         @default(false)
+  type            String          @db.VarChar(20)
+  required        Boolean         @default(false)
+  role            String?         @default("textinput") @db.VarChar(20)
+  options         String?         @default("") @db.VarChar(500)
+  helper_text     String?         @default("") @db.VarChar(250)
+  submitted_on    DateTime        @default(dbgenerated("NOW()")) @db.DateTime
+  submitted_by    String?         @default("") @db.VarChar(60)
+  last_updated    DateTime        @default(dbgenerated("NOW()")) @db.DateTime
+  last_updated_by String?         @default("") @db.VarChar(60)
   organization_id Int
-  organization organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "question_ibfk_1")
-  form_questions form_question[]
-  answers answer[]
+  organization    organization    @relation(fields: [organization_id], references: [id], onDelete: Cascade, map: "question_ibfk_1")
+  form_questions  form_question[]
+  answers         answer[]
 
   @@index([organization_id], map: "organization_id")
 }

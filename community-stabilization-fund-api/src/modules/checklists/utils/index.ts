@@ -4,7 +4,9 @@ import type { BagItemsMap } from '../types';
 import { addDays, addWeeks, compareDates, isEmpty } from '../../../utils';
 import { getAddress } from '../../form-responses';
 
-export const mapFormResponseToRecipientInfo = (formResponse: FormResponseDTO) => {
+export const mapFormResponseToRecipientInfo = (
+  formResponse: FormResponseDTO
+) => {
   const {
     first_name,
     last_name,
@@ -23,9 +25,9 @@ export const mapFormResponseToRecipientInfo = (formResponse: FormResponseDTO) =>
     phone_number,
     address,
     transport_preference,
-    `${has_flu_symptoms ? "Yes" : "No"}`,
+    `${has_flu_symptoms ? 'Yes' : 'No'}`,
     household_members,
-    menstrual_health_care?.menstruating_members
+    menstrual_health_care?.menstruating_members,
   ];
 };
 
@@ -46,6 +48,10 @@ export const mapFormResponseToBagItems = ({
   }
 
   return bagItemsMap;
+};
+
+export const createBagItemsMap = ({ data }) => {
+  console.log('data found', data);
 };
 
 export const createInitialBagItemsMap = ({
@@ -120,11 +126,14 @@ export const createBagItems = (
           rule.package_group?.name === `${label}` &&
           rule.package_item?.name === `${item.name}` &&
           rule.household_members ===
-            `${label === 'Menstrual Hygiene' ? menstruating_members : household_members}`
+            `${
+              label === 'Menstrual Hygiene'
+                ? menstruating_members
+                : household_members
+            }`
       );
 
-      if (found && !validateItemByDate(found))
-        return '';
+      if (found && !validateItemByDate(found)) return '';
 
       return found
         ? `${item.name} (x${found.quantity})`
@@ -133,9 +142,7 @@ export const createBagItems = (
     .filter((x) => !isEmpty(x));
 };
 
-export const validateItemByDate = (
-  rule: ChecklistRuleDTO
-) => {
+export const validateItemByDate = (rule: ChecklistRuleDTO) => {
   let delayUntil = null;
 
   if (rule) {
