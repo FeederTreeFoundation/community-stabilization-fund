@@ -45,8 +45,10 @@ const getAllPackageItems = async (res: NextApiResponse, query: any) => {
 
   try {
     const packageItems = (await prisma.package_item.findMany({
-      skip: (page - 1) * perPage,
-      take: perPage,
+      // include: {
+      //   // checklist_rules: true,
+      //   package_group_items: true,
+      // },
     })) as PackageItemDTO[];
 
     return res.json([...(packageItems ?? [])]);

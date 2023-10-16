@@ -28,8 +28,27 @@ const PackageGroupHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const createPackageGroup = async (body: any, res: NextApiResponse) => {
+  console.log({ body });
+  const packageGroup = {
+    ...body,
+    checklist_rules: {
+      create: [],
+    },
+    package_items: {
+      create: [
+        {
+          package_item: {
+            create: {
+              name: 'Chicken',
+            },
+          },
+        },
+      ],
+    },
+  };
   try {
-    const result = await prisma.package_group.create({ data: body });
+    const result = await prisma.package_group.create({ data: packageGroup });
+
     return res
       .status(201)
       .send('Successfully created question with id: ' + result.id);
@@ -45,8 +64,10 @@ const getAllPackageGroups = async (res: NextApiResponse, query: any) => {
 
   try {
     const packageGroups = (await prisma.package_group.findMany({
-      skip: (page - 1) * perPage,
-      take: perPage,
+      // include: {
+      //   // checklist_rules: true,
+      //   package_group_items: true,
+      // },
     })) as PackageGroupDTO[];
 
     return res.json([...(packageGroups ?? [])]);

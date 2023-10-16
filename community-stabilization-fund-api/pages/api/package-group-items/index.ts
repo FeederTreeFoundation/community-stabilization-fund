@@ -22,15 +22,16 @@ const PackageGroupItemHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
 const createPackageGroupItem = async (body: any, res: NextApiResponse) => {
   const { ...rest } = body;
+  console.log('rest: ', rest);
   const packageGroupItem = {
     package_group_id: {
-      connect: {
-        id: Number(rest.package_group_id),
+      connectOrCreate: {
+        id: Number(rest.packageGroupId),
       },
     },
     package_item_id: {
-      connect: {
-        id: Number(rest.package_item_id),
+      connectOrCreate: {
+        id: Number(rest.packageItemId),
       },
     },
   };
