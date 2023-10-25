@@ -28,7 +28,7 @@
     "carbon-components-react": "^8.35.0",
     "carbon-icons": "^7.0.7",
     "dayjs": "^1.11.9",
-    "next": "12.2.5",
+    "next": "13.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",
