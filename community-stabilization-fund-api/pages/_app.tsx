@@ -3,9 +3,9 @@ import React from 'react';
 
 import type { AppProps } from 'next/app';
 
-import ErrorBoundary from './errorboundary';
-
 import { RouteGuard } from '../src/components';
+import ErrorBoundary from '../src/components/ErrorBoundary/errorboundary';
+
 import { Layout } from '../src/modules/layout';
 
 import '../styles/globals.css';

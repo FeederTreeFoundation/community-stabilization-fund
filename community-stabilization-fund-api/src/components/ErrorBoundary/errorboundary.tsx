@@ -22,7 +22,11 @@ class ErrorBoundary extends Component<Props, State> {
   render() {
     // Check if the error is thrown
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <div className='error'>
+          <h1>Something went wrong.</h1>
+        </div>
+      );
     }
 
     // Return children components in case of no error
