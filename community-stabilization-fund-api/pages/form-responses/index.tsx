@@ -22,9 +22,20 @@ const FormResponsesPage: NextPage = () => {
     getResponses();
   }, []);
 
-  if(error) return <html>{error.message}</html>;
+  if (error) return <html>{error.message}</html>;
 
-  return <FormResponsesTable formResponses={formResponses} />;
+  return (
+    <>
+      <FormResponsesTable formResponses={formResponses} />
+      <button
+        onClick={() => {
+          throw new Error('Unhandled error');
+        }}
+      >
+        Error
+      </button>
+    </>
+  );
 };
 
 export default FormResponsesPage;

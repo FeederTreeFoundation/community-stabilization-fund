@@ -4,6 +4,8 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 
 import { RouteGuard } from '../src/components';
+import ErrorBoundary from '../src/components/ErrorBoundary/errorboundary';
+
 import { Layout } from '../src/modules/layout';
 
 import '../styles/globals.css';
@@ -13,7 +15,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
       <RouteGuard>
-        <Layout><Component {...pageProps} /></Layout>
+        <ErrorBoundary>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ErrorBoundary>
       </RouteGuard>
     </UserProvider>
   );
