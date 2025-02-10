@@ -38,6 +38,10 @@ const AdminPage = () => {
   const apiUserId = `${state}`;
 
   useEffect(() => {
+    if(apiUserId === '' || typeof apiUserId !== 'string') {
+      router.push('/admin/login');
+    }
+
     setTimeout(() => {
       if(!isEmpty(returnUrl) && !isEmpty(apiUser) && !isEmpty(apiUserId)) {
         router.push(`${returnUrl}`);
