@@ -41,10 +41,13 @@ To debug all other errors:
 
 **_ in another shell/terminal _**
 
-1. Ask team member for env variables to populate `.env*` file
-2. Start up your mysql server
-3. Run `npm run seed` to create your database
-4. Run `npm run migrations:create` to migrate tables
+1. Setup your `.env` file with a `DATABASE_URL` env variable
+
+```
+export DATABASE_URL="mysql://root:password@127.0.0.1:3306/csf_db"
+```
+2. Start up your `mysql` server
+3. Run `npm run migrations:create` to setup database
 
 ***READ MORE:*** [Prisma](https://www.prisma.io/docs/guides/migrate/developing-with-prisma-migrate/team-development)
 
