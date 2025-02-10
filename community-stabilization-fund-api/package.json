@@ -20,7 +20,7 @@
     "seed": "npm run seed"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^1.9.2",
+    "@auth0/nextjs-auth0": "^1.9.3",
     "@carbon/icons-react": "^11.54.0",
     "@carbon/react": "^1.35.0",
     "@prisma/client": "^4.12.0",
