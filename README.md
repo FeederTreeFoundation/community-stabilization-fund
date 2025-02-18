@@ -25,6 +25,39 @@ API Interface for Community Stabilization Fund
 3. Run `npm install --legacy-peer-deps`
 4. Run `npm run dev`
 
+### Setting Up Auth0
+
+1. Setup your `.env.local` file
+
+```
+AUTH0_SECRET='use [openssl rand -hex 32] to generate a 32 bytes value'
+AUTH0_BASE_URL='http://localhost:3000'
+AUTH0_ISSUER_BASE_URL='https://feedertreelabs-dev.us.auth0.com'
+AUTH0_CLIENT_ID='your client id'
+AUTH0_CLIENT_SECRET='your client secret'
+```
+
+***READ MORE:*** [Auth0](https://auth0.com/docs/get-started)
+
+### Setting Up Database
+
+**_ in another shell/terminal _**
+
+1. Setup your `.env` file
+
+```
+export DATABASE_URL="mysql://root:password@127.0.0.1:3306/csf_db"
+export NEXT_PUBLIC_NODE_ENV="local"
+export NEXT_PUBLIC_VERCEL_URL="localhost:3000"
+```
+2. Start up your `mysql` server
+3. Run `npm run migrations:create` to setup database
+
+***READ MORE:*** [Prisma](https://www.prisma.io/docs/guides/migrate/developing-with-prisma-migrate/team-development)
+
+### Adding API Resources
+- [docs/adding_api_resources.md](docs/adding_api_resources.md)
+
 ## Deployments
 
 Deployments will fail if you have linting issues, typing errors or other bugs caught in the code.
@@ -35,38 +68,30 @@ To resolve linting issues:
 To debug all other errors:
 - Run `npm run build`
 
-## MySQL
-
-### Setting Up Database
-
-**_ in another shell/terminal _**
-
-1. Ask team member for env variables to populate `.env*` file
-2. Start up your mysql server
-3. Run `npm run seed` to create your database
-4. Run `npm run migrations:create` to migrate tables
-
-***READ MORE:*** [Prisma](https://www.prisma.io/docs/guides/migrate/developing-with-prisma-migrate/team-development)
-
-### Adding API Resources
-- [docs/adding_api_resources.md](docs/adding_api_resources.md)
-
-### Additional Tools
+## Additional Tools
 - [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 
-### Troubleshooting
+## Troubleshooting
 
-If you have issues with your environment variables, you can try changing them inside the .bashrc, or .zshrc file in your root folder or using the Command Line Interface to explicitly set them with the `export` call:
+- If you have issues with your environment variables, you can try changing them inside your `.bashrc`, or `.zshrc` file in your root folder or using the CLI to explicitly set them with the `export` command:
 
 _CLI_
 ```sh
-export USERNAME='root'
-export PASSWORD='password'
+export CSF_USERNAME='root'
+export CSF_PASSWORD='password'
 ```
 
-If you come across an error that says Client does not support authentication protocol:
+- If you come across an error that says Client does not support authentication protocol:
 
 https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
+
+- If your database can't connect to localhost because of an ::1 connection error:
+
+Use 127.0.0.1 as your database host
+
+```sh
+export CSF_HOSTNAME='127.0.0.1'
+```
 
 ## Environments
 
